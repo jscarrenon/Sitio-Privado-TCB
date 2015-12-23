@@ -236,6 +236,10 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\" />
+    <Folder Include="Frontend\app\" />
+    <Folder Include="Frontend\img\" />
+    <Folder Include="Frontend\sass\" />
+    <Folder Include="Frontend\templates\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
