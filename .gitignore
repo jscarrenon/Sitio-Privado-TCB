@@ -21,6 +21,8 @@ build/
 bld/
 [Bb]in/
 [Oo]bj/
+[Cc]ontent/
+[Pp]ackages/
 
 # Visual Studo 2015 cache/options directory
 .vs/
@@ -193,4 +195,6 @@ FakesAssemblies/
 *.plg
 
 # Visual Studio 6 workspace options file
-*.opt
+*.opt`
+
+*.DS_Store

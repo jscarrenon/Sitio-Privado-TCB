@@ -1,0 +1,24 @@
+{
+  "version": "1.0.0",
+  "name": "SitioPrivado",
+  "private": true,
+  "devDependencies": {
+    "gulp": "3.9.0",
+    "gulp-jshint": "1.11.0",
+    "del": "1.2.0",
+    "gulp-debug": "^2.1.0",
+    "gulp-filter": "^3.0.1",
+    "gulp-install": "^0.5.0",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-sass": "^2.1.0",
+    "gulp-ng-html2js": "^0.2.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-watch": "^4.3.5",
+    "gulp-batch": "^1.0.5",
+    "gulp-plumber": "^1.0.1",
+    "jshint-stylish": "^2.0.1"
+  },
+  "dependencies": {
+    "gulp-jshint": "^1.12.0"
+  }
+}
