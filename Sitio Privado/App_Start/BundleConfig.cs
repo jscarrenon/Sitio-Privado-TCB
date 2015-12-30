@@ -22,7 +22,8 @@ namespace Sitio_Privado
                         "~/Content/lib/angular-i18n/angular-locale_es-cl.js",
                         "~/Content/lib/angular-messages/angular-messages.min.js",
                         "~/Content/lib/angular-resource/angular-resource.min.js",
-                        "~/Content/lib/angular-ui-router/release/angular-ui-router.min.js"
+                        "~/Content/lib/angular-ui-router/release/angular-ui-router.min.js",
+                        "~/Content/lib/angular-route/angular-route.min.js"
                     ));
 
             //Scripts extras
