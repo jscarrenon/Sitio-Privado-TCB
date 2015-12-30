@@ -198,3 +198,8 @@ FakesAssemblies/
 *.opt`
 
 *.DS_Store
+
+# TypeScript
+.build/
+*/app/**/*.js
+*/app/**/*.js.map

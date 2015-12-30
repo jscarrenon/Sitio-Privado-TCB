@@ -202,7 +202,6 @@
     <Content Include="app\posts\edit.html" />
     <Content Include="app\posts\list.html" />
     <Content Include="favicon.ico" />
-    <Content Include="Frontend\app\app.js" />
     <Content Include="Global.asax" />
     <Content Include="gulpfile.js" />
     <Content Include="package.json" />
@@ -244,10 +243,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\" />
-    <Folder Include="Frontend\img\" />
-    <Folder Include="Frontend\sass\" />
-    <Folder Include="Frontend\templates\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

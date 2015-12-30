@@ -2,14 +2,7 @@
   "name": "SitioPrivado",
   "private": true,
   "dependencies": {
-    "angular": "^1.4.7",
-    "angular-ui-router": "^0.2.15",
-    "angular-messages": "~1.4.7",
-    "angular-resource": "~1.4.7",
-    "ui-router-extras": "~0.1.0",
-    "components-font-awesome": "~4.4.0",
-    "sc-date-time": "~1.1.3",
-    "angular-i18n": "~1.4.7",
+    "angular": "^1.4.7",    
     "angular-route": "~1.4.8"
   }
 }

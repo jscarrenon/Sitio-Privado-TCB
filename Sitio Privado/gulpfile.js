@@ -1,161 +1,77 @@
-﻿/// <binding AfterBuild='build' Clean='clean' ProjectOpened='watch' />
+/// <binding BeforeBuild='clean' AfterBuild='css-task, vendors-task, spa-task' Clean='clean' />
 /*
 This file in the main entry point for defining Gulp tasks and using Gulp plugins.
 Click here to learn more. http://go.microsoft.com/fwlink/?LinkId=518007
 */
 
-var gulp = require('gulp'),
-jshint = require('gulp-jshint'),
-del = require('del'),
-debug = require('gulp-debug'),
-filter = require('gulp-filter'),
-sass = require('gulp-sass'),
-sourcemaps = require('gulp-sourcemaps'),
-ngHtml2Js = require('gulp-ng-html2js'),
-concat = require("gulp-concat"),
-watch = require('gulp-watch'),
-batch = require('gulp-batch'),
-plumber = require('gulp-plumber'),
+var gulp = require('gulp');
+var inject = require('gulp-inject');
+var concat = require('gulp-concat');
+var print = require('gulp-print');
+var angularFilesort = require('gulp-angular-filesort');
+var uglify = require('gulp-uglify');
+var del = require('del');
 
-paths = {
-    app: {
-        src: './Frontend/app/**/*',
-        dest: './Content/app/'
-    },
-    styles: {
-        src: './Frontend/sass/**/*',
-        dest: './Content/css/'
-    },
-    templates: {
-        src: './Frontend/templates/**/*',
-        dest: './Content/templates/'
-    },
-    statics: {
-        src: './Frontend/img/**/*',
-        dest: './Content/img/'
-    }
+var paths = {
+    index: './views/home/index.cshtml',
+    domainFiles: ['./app/domain/*.js'],
+    appFiles: ['./app/*.js', './app/posts/*.js', './app/common/services/*.js'],
+    styles: ['./Styles/site.css'],
+    bower_components: ['./bower_components/angular-route/angular-route.js',
+                                 './bower_components/angular/angular.js',
+                                 './bower_components/jquery/dist/jquery.js']
 };
 
-var apps = ['login', 'user', 'admin'];
-
-gulp.task('clean-js', function (done) {
-    del([paths.app.dest + '/**'], done);    // Delete everything
+gulp.task('clean', function () {
+    return del(['.build']);
 });
 
-gulp.task('clean-css', function (done) {
-    del([paths.styles.dest + '/**'], done);    // Delete everything
+gulp.task('spa-task', function () {
+    var target = gulp.src(paths.index);
+
+    var appDomainStream = gulp.src(paths.domainFiles);
+    var appStream = gulp.src(paths.appFiles);
+
+    return target
+                .pipe(inject(appDomainStream
+                        .pipe(print())
+                        .pipe(concat('domain.js'))
+                        .pipe(uglify())
+                        .pipe(gulp.dest('.build/spa')), { name: 'domain' }))
+                        .pipe(gulp.dest('./views/home/'))
+                .pipe(inject(appStream
+                        .pipe(print())
+                        .pipe(concat('app.js'))
+                        .pipe(uglify())
+                        .pipe(gulp.dest('.build/spa')), { name: 'app' }))
+                        .pipe(gulp.dest('./views/home/'))
 });
 
-gulp.task('clean-templates', function (done) {
-    del([paths.templates.dest + '/**'], done);    // Delete everything
+gulp.task('vendors-task', function () {
+    var target = gulp.src(paths.index);
+
+    var vendorStream = gulp.src(paths.bower_components);
+
+    return target
+        .pipe(inject(
+            vendorStream.pipe(print())
+                        .pipe(angularFilesort()) // comment out and the application will break
+                        .pipe(concat('vendors.js'))
+                        .pipe(gulp.dest('.build/vendors')), { name: 'vendors' }))
+        .pipe(gulp.dest('./views/home/'));
 });
 
-gulp.task('clean-statics', function (done) {
-    del([paths.statics.dest + '/**'], done);    // Delete everything
-});
+gulp.task('css-task', function () {
+    var target = gulp.src(paths.index);
 
-gulp.task('clean', ['clean-css', 'clean-js', 'clean-templates', 'clean-statics']);
+    var customCssStream = gulp.src(paths.styles);
 
-gulp.task('build-js', ['clean-js'], function () {
-    var jsFilter = filter(['**/*.js'], { restore: true });
-
-    return gulp.src(paths.app.src)
-        .pipe(jsFilter)
-        .pipe(jshint())
-        .pipe(jshint.reporter('jshint-stylish'))
-        .pipe(jshint.reporter('fail'))
-        .pipe(jsFilter.restore)
-
-        .pipe(gulp.dest(paths.app.dest));
-});
-
-gulp.task('build-css', ['clean-css'], function () {
-    return gulp.src(paths.styles.src)
-        .pipe(sourcemaps.init())
-        .pipe(sass())
-        .pipe(sourcemaps.write('maps'))
-        .pipe(gulp.dest(paths.styles.dest));
-});
-
-gulp.task('build-templates', ['clean-templates'], function () {
-    var htmlFilter = filter(['**/*.html'], { restore: true });
-    var templatesPipe = gulp.src(paths.templates.src)
-                        .pipe(htmlFilter);
-
-    for (var i = 0; i < apps.length; i++) {
-        var appFilter = filter([apps[i] + '/**/*'], { restore: true });
-
-        templatesPipe
-            .pipe(appFilter)
-            .pipe(ngHtml2Js({
-                moduleName: function (file) {
-                    var pathParts = file.path.split(/[\\\/]+/);
-                    var app = pathParts[pathParts.length - 3];
-                    var module = pathParts[pathParts.length - 2];
-
-                    return app + '.' + module;
-                },
-                prefix: '/Content/templates/',
-                declareModule: false
-            }))
-            .pipe(concat(apps[i] + '/templates.js'))
-            .pipe(appFilter.restore);
-    }
-
-    return templatesPipe
-        .pipe(htmlFilter.restore)
-        .pipe(gulp.dest(paths.templates.dest));
-});
-
-gulp.task('build-statics', ['clean-statics'], function () {
-    return gulp.src(paths.statics.src)
-        .pipe(gulp.dest(paths.statics.dest));
-});
-
-gulp.task('build', ['bower', 'build-js', 'build-css', 'build-templates', 'build-statics']);
-
-gulp.task('watch-js', function () {
-    gulp.src(paths.app.src)
-    .pipe(plumber())
-    .pipe(watch(paths.app.src, batch(function (events, done) {
-        gulp.start('build-js', done);
-    })))
-    ;
-});
-
-gulp.task('watch-css', function () {
-    gulp.src(paths.styles.src)
-    .pipe(plumber())
-    .pipe(watch(paths.styles.src, batch(function (events, done) {
-        gulp.start('build-css', done);
-    })))
-    ;
-});
-
-gulp.task('watch-templates', function () {
-    gulp.src(paths.templates.src)
-    .pipe(plumber())
-    .pipe(watch(paths.templates.src, batch(function (events, done) {
-        gulp.start('build-templates', done);
-    })))
-    ;
-});
-
-gulp.task('watch-statics', function () {
-    gulp.src(paths.statics.src)
-    .pipe(plumber())
-    .pipe(watch(paths.statics.src, batch(function (events, done) {
-        gulp.start('build-statics', done);
-    })));
-});
-
-gulp.task('watch', ['watch-templates', 'watch-js', 'watch-css', 'watch-statics']);
-
-gulp.task('bower', function () {
-
-    var install = require("gulp-install");
-
-    return gulp.src(['./bower.json'])
-        .pipe(install());
+    return target
+        .pipe(inject(
+            customCssStream.pipe(print())
+            .pipe(concat('appStyles.css'))
+            .pipe(gulp.dest('.build/css')), { name: 'styles' })
+            )
+        .pipe(gulp.dest('./views/home/'));
 });
 

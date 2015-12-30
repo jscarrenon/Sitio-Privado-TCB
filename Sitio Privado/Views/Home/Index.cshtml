@@ -1,25 +1,34 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+
+@{
     Layout = null;
 }
-
 <!DOCTYPE html>
 <html ng-app="chsakellBlogApp">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Tanner - Sitio Privado</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/angular", "~/bundles/extras")
-    <link href="~/Styles/site.css" rel="stylesheet" />
-    <script src="~/app/app.js"></script>
-    <script src="~/app/domain/IEntity.js"></script>
-    <script src="~/app/domain/Post.js"></script>
-    <script src="~/app/common/services/constantService.js"></script>
-    <script src="~/app/common/services/dataService.js"></script>
-    <script src="~/app/posts/postsCtrl.js"></script>
-    <script src="~/app/posts/postAddCtrl.js"></script>
-    <script src="~/app/posts/postEditCtrl.js"></script>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <!-- styles:css -->
+    <link rel="stylesheet" href="/.build/css/appStyles.css">
+    <!-- endinject -->
+    <!-- vendors:js -->
+
+    <script src="/.build/vendors/vendors.js"></script>
+
+    <!-- endinject -->
+    <!-- domain:js -->
+    <script src="/.build/spa/domain.js"></script>
+    <!-- endinject -->
+    <!-- app:js -->
+    <script src="/.build/spa/app.js"></script>
+    <!-- endinject -->
+    @*<script src="~/app/app.js"></script>
+        <script src="~/app/domain/IEntity.js"></script>
+        <script src="~/app/domain/Post.js"></script>
+        <script src="~/app/common/services/constantService.js"></script>
+        <script src="~/app/common/services/dataService.js"></script>
+        <script src="~/app/posts/postsCtrl.js"></script>
+        <script src="~/app/posts/postAddCtrl.js"></script>
+        <script src="~/app/posts/postEditCtrl.js"></script>*@
 </head>
 <body>
     <div id="wrap">
@@ -49,7 +58,6 @@
                     </a>
                 </div>
             </div>
-
             <ng-view></ng-view>
         </div>
     </div>
