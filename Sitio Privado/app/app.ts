@@ -3,8 +3,8 @@
         constructor($routeProvider: ng.route.IRouteProvider) {
             $routeProvider
                 .when("/", {
-                    templateUrl: "/app/posts/list.html",
-                    controller: "PostsCtrl as vm"
+                    templateUrl: "/app/home/index.html",
+                    controller: "HomeCtrl as ctrl"
                 })
                 .when("/edit/:id", {
                     templateUrl: "/app/posts/edit.html",
@@ -19,6 +19,6 @@
     }
     Config.$inject = ['$routeProvider'];
 
-    var mainApp = angular.module('chsakellBlogApp', ['ngRoute']);
+    var mainApp = angular.module('tannerPrivadoApp', ['ngRoute']);
     mainApp.config(Config);
 }

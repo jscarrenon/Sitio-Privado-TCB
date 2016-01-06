@@ -9,6 +9,8 @@
     "gulp-inject": "3.0.0",
     "gulp-print": "2.0.1",
     "gulp-angular-filesort": "1.1.1",
-    "gulp-header": "1.7.1"
+    "gulp-header": "1.7.1",
+    "gulp-less": "3.0.5",
+    "merge-stream": "1.0.0"
   }
 }

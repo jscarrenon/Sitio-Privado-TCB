@@ -12,6 +12,6 @@
         }
     }
 
-    angular.module('chsakellBlogApp')
+    angular.module('tannerPrivadoApp')
         .service('constantService', ConstantService);
 }

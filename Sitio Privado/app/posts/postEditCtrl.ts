@@ -34,6 +34,6 @@
                 });
         }
     }
-    angular.module('chsakellBlogApp')
+    angular.module('tannerPrivadoApp')
         .controller('PostEditCtrl', PostEditCtrl);
 }
