@@ -9,7 +9,7 @@ using Microsoft.Owin.Security;
 using Sitio_Privado.Models;
 
 namespace Sitio_Privado.Controllers
-{
+{/*
     [Authorize]
     public class ManageController : Controller
     {
@@ -298,7 +298,7 @@ namespace Sitio_Privado.Controllers
         }
 
         //
-        // POST: /Manage/LinkLogin
+        //POST: /Manage/LinkLogin
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LinkLogin(string provider)
@@ -384,4 +384,4 @@ namespace Sitio_Privado.Controllers
 
 #endregion
     }
-}
+*/}
