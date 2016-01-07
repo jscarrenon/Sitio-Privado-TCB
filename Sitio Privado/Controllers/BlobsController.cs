@@ -12,7 +12,8 @@ namespace Sitio_Privado.Controllers
         // GET: Blobs
         public ActionResult Index()
         {
-            return View(objbl.GetBlobList());
+            //return View(objbl.GetBlobList());
+            return View(BlBlobs.GetContainerList());
         }
         [HttpPost]
         public ActionResult Add(HttpPostedFileBase pic)

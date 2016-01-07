@@ -18,6 +18,7 @@ namespace Sitio_Privado
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(aux);
 
             CloudBlobClient blobclient = storageAccount.CreateCloudBlobClient();
+
             CloudBlobContainer blobcontainer = blobclient.GetContainerReference("test-container");
             if (blobcontainer.CreateIfNotExists())
                 blobcontainer.SetPermissions(new BlobContainerPermissions
@@ -43,6 +44,21 @@ namespace Sitio_Privado
                 blob.UploadFromStream(pic.InputStream);
             }
         }
+
+        public static List<String> GetContainerList() {
+            String aux = ConfigurationManager.ConnectionStrings["StorageConnection"].ConnectionString;
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(aux);
+
+            CloudBlobClient blobclient = storageAccount.CreateCloudBlobClient();
+
+            IEnumerable<CloudBlobContainer> list = blobclient.ListContainers();
+            List<string> containers = new List<string>();
+            foreach (CloudBlobContainer cbc in list) {
+               containers.Add(cbc.Name);
+            }
+            return containers;
+        }
+
         internal void DeleteBlob(string name)
         {
             Uri ur = new Uri(name);
