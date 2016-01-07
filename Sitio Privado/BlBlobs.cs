@@ -18,7 +18,7 @@ namespace Sitio_Privado
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(aux);
 
             CloudBlobClient blobclient = storageAccount.CreateCloudBlobClient();
-            CloudBlobContainer blobcontainer = blobclient.GetContainerReference("myvideos");
+            CloudBlobContainer blobcontainer = blobclient.GetContainerReference("test-container");
             if (blobcontainer.CreateIfNotExists())
                 blobcontainer.SetPermissions(new BlobContainerPermissions
                 { PublicAccess = BlobContainerPublicAccessType.Blob });

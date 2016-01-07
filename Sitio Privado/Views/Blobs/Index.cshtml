@@ -2,5 +2,10 @@
 @{
     ViewBag.Title = "Index";
 }
+
 <h2>Index</h2>
 
+@foreach (var element in Model)
+{
+    <p>@Html.DisplayFor(m => element)</p>
+}
