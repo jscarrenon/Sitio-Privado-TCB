@@ -8,6 +8,7 @@ namespace Sitio_Privado.Controllers
 {
     public class HomeController : Controller
     {
+        [Policies.PolicyAuthorize(Policy = "B2C_1_SignIn")]
         public ActionResult Index()
         {
             return View();
