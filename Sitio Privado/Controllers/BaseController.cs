@@ -10,9 +10,9 @@ namespace Sitio_Privado.Controllers
 {
     public abstract class BaseController : Controller
     {
-        public virtual new AppUser User
+        public virtual Usuario Usuario
         {
-            get { return new AppUser(base.User as ClaimsPrincipal); }
+            get { return new Usuario(base.User as ClaimsPrincipal); }
         }
     }
 }

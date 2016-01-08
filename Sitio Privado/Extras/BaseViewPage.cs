@@ -10,17 +10,17 @@ namespace Sitio_Privado.Extras
 {
     public abstract class BaseViewPage : WebViewPage
     {
-        public virtual new AppUser User
+        public virtual Usuario Usuario
         {
-            get { return new AppUser(base.User as ClaimsPrincipal); }
+            get { return new Usuario(base.User as ClaimsPrincipal); }
         }
     }
 
     public abstract class BaseViewPage<TModel> : WebViewPage<TModel>
     {
-        public virtual new AppUser User
+        public virtual Usuario Usuario
         {
-            get { return new AppUser(base.User as ClaimsPrincipal); }
+            get { return new Usuario(base.User as ClaimsPrincipal); }
         }
     }
 }
