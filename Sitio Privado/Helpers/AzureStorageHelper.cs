@@ -14,7 +14,7 @@ namespace Sitio_Privado
     {
         private const string ConnectionString = "StorageConnection";
 
-        CloudBlobClient clientConnection;
+        public CloudBlobClient clientConnection;
 
         public AzureStorageHelper() {
             String connectionString = ConfigurationManager.ConnectionStrings[ConnectionString].ConnectionString;
@@ -28,30 +28,20 @@ namespace Sitio_Privado
 
         public IEnumerable<IListBlobItem> GetBlobsFromContainer(string containerName) {
             IEnumerable<IListBlobItem> result = null;
-            CloudBlobContainer blobContainer = clientConnection.GetContainerReference(containerName);
+            var blobContainer = clientConnection.GetContainerReference(containerName);
             if (blobContainer.Exists()) {
                 result = blobContainer.ListBlobs(null, true, BlobListingDetails.All);
             }
             return result;
         }
 
-        /*public void AddBlob(HttpPostedFileBase pic)
+        public ICloudBlob GetBlob(string containerName, string fileName)
         {
-            if (pic.ContentLength > 0)
-            {
-                CloudBlobContainer blobcontainer = GetBLOBRef();
-                CloudBlockBlob blob = blobcontainer.GetBlockBlobReference(pic.FileName);
-                blob.UploadFromStream(pic.InputStream);
-            }
-        }
+            // Retrieve reference to a previously created container.
+            CloudBlobContainer container = clientConnection.GetContainerReference(containerName);
 
-        internal void DeleteBlob(string name)
-        {
-            Uri ur = new Uri(name);
-            string fname = Path.GetFileName(ur.LocalPath);
-            CloudBlobContainer blobcontainer = GetBLOBRef();
-            CloudBlockBlob blob = blobcontainer.GetBlockBlobReference(fname);
-            blob.Delete();
-        }*/
+            // Retrieve reference to a blob named "photo1.jpg".
+            return container.GetBlobReferenceFromServer(fileName);
+        }
     }
 }

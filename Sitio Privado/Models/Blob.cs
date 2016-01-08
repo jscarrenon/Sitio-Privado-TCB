@@ -7,6 +7,7 @@ namespace Sitio_Privado.Models
 {
     public class Blob
     {
-        public String Name { get; set; }
+        public string Name { get; set; }
+        public string Url { get; set; }
     }
 }
