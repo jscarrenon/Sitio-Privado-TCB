@@ -34,39 +34,6 @@ namespace Sitio_Privado.Controllers
             }
         }
 
-        public void SignUp()
-        {
-            if (!Request.IsAuthenticated)
-            {
-                HttpContext.GetOwinContext().Authentication.Challenge(
-                    new AuthenticationProperties(
-                        new Dictionary<string, string>
-                        {
-                            {Startup.PolicyKey, Startup.SignUpPolicyId}
-                        })
-                    {
-                        RedirectUri = "/",
-                    }, OpenIdConnectAuthenticationDefaults.AuthenticationType);
-            }
-        }
-
-
-        public void Profile()
-        {
-            if (Request.IsAuthenticated)
-            {
-                HttpContext.GetOwinContext().Authentication.Challenge(
-                    new AuthenticationProperties(
-                        new Dictionary<string, string>
-                        {
-                            {Startup.PolicyKey, Startup.ProfilePolicyId}
-                        })
-                    {
-                        RedirectUri = "/",
-                    }, OpenIdConnectAuthenticationDefaults.AuthenticationType);
-            }
-        }
-
         public void SignOut()
         {
             // To sign out the user, you should issue an OpenIDConnect sign out request using the last policy that the user executed.
