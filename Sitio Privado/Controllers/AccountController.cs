@@ -13,7 +13,7 @@ using System.Security.Claims;
 
 namespace Sitio_Privado.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         public void SignIn()
         {
