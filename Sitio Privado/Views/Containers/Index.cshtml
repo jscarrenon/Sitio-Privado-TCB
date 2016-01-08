@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Sitio_Privado.Models.Blob>
+﻿@model IEnumerable<Sitio_Privado.Models.Container>
 
 @{
     ViewBag.Title = "Index";
@@ -20,7 +20,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Name)
+           <a href="@item.Link">@Html.DisplayFor(modelItem => item.Name)</a>
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
