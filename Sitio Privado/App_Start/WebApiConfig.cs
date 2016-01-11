@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Web.Http;
 
 namespace Sitio_Privado
@@ -10,6 +11,8 @@ namespace Sitio_Privado
         public static void Register(HttpConfiguration config)
         {
             // TODO: Add any additional configuration code.
+            //var appXmlType = config.Formatters.XmlFormatter.SupportedMediaTypes.FirstOrDefault(t => t.MediaType == "application/xml");
+            //config.Formatters.XmlFormatter.SupportedMediaTypes.Remove(appXmlType);
 
             // Web API routes
             config.MapHttpAttributeRoutes();
