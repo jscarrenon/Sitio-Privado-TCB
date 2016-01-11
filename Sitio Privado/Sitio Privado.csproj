@@ -206,7 +206,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\UsuarioModel.cs" />
+    <Compile Include="Models\UsuarioModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Post.cs" />
     <Compile Include="PolicyAuthHelpers\HttpDocumentRetriever.cs" />
@@ -380,6 +380,7 @@
     <TypeScriptCompile Include="app\common\services\constantService.ts" />
     <TypeScriptCompile Include="app\common\services\dataService.ts" />
     <TypeScriptCompile Include="app\domain\IEntity.ts" />
+    <TypeScriptCompile Include="app\domain\Usuario.ts" />
     <TypeScriptCompile Include="app\domain\Post.ts" />
     <TypeScriptCompile Include="app\home\homeCtrl.ts" />
     <TypeScriptCompile Include="app\posts\postAddCtrl.ts" />

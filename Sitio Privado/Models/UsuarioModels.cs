@@ -12,6 +12,8 @@ namespace Sitio_Privado.Models
 
     public class Usuario : ClaimsPrincipal, ICustomPrincipal
     {
+        public Usuario() { }
+
         public Usuario(ClaimsPrincipal principal) : base (principal) { }
 
         public bool Autenticado { get { return this.Identity.IsAuthenticated; } }
@@ -22,5 +24,26 @@ namespace Sitio_Privado.Models
 
         public string NombreCompleto { get { return Nombres + " " + Apellidos; } }
 
+    }
+
+    /// <summary>
+    /// Necesario para poder serializar los campos del usuario (evita referencias circulares de clase Usuario)
+    /// </summary>
+    public class UsuarioDTO
+    {
+        public bool Autenticado { get; set; }
+
+        public string Nombres { get; set; }
+
+        public string Apellidos { get; set; }
+
+        public string NombreCompleto { get { return Nombres + " " + Apellidos; } }
+
+        public UsuarioDTO(Usuario usuario)
+        {
+            Nombres = usuario.Nombres;
+            Apellidos = usuario.Apellidos;
+            Autenticado = usuario.Autenticado;
+        }
     }
 }

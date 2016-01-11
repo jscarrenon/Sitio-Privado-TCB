@@ -10,6 +10,8 @@ using Microsoft.Owin.Security.OpenIdConnect;
 using Microsoft.Owin.Security.Cookies;
 using Sitio_Privado.Policies;
 using System.Security.Claims;
+using Sitio_Privado.Models;
+using System.Web.Http;
 
 namespace Sitio_Privado.Controllers
 {
