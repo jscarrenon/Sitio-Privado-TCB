@@ -13,13 +13,15 @@ using System.Net;
 
 namespace Sitio_Privado.Helpers
 {
-    public class SyncApiHelper
+    public class SyncApiClientHelper
     {
         private const string AadInstance = "https://login.microsoftonline.com/";
         private const string AadGraphResourceId = "https://graph.windows.net/";
         private const string AadGraphEndpoint = "https://graph.windows.net/";
         private const string AadGraphSuffix = "";
         private const string AadGraphVersion = "api-version=beta";
+
+        private const string UsersApiPath = "/users";
 
         private static string Tenant = ConfigurationManager.AppSettings["b2c:Tenant"];
         private static string ClientId = ConfigurationManager.AppSettings["b2c:ClientId"];
@@ -28,7 +30,7 @@ namespace Sitio_Privado.Helpers
         private AuthenticationContext authContext;
         private ClientCredential credential;
 
-        public SyncApiHelper() {
+        public SyncApiClientHelper() {
             // The AuthenticationContext is ADAL's primary class, in which you indicate the direcotry to use.
             this.authContext = new AuthenticationContext("https://login.microsoftonline.com/" + Tenant);
 
@@ -39,12 +41,12 @@ namespace Sitio_Privado.Helpers
 
         public async Task<HttpResponseMessage> CreateUser(string json)
         {
-            return await SendGraphPostRequest("/users", json);
+            return await SendGraphPostRequest(UsersApiPath, json);
         }
 
         public async Task<HttpResponseMessage> GetAllUsers(string query)
         {
-            return await SendGraphGetRequest("/users", query);
+            return await SendGraphGetRequest(UsersApiPath, query);
         }
 
         private async Task<HttpResponseMessage> SendGraphPostRequest(string api, string json)
