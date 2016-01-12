@@ -35,10 +35,24 @@ namespace Sitio_Privado.Controllers
             return await syncApiHelper.CreateUser(json);
         }
 
+        [HttpPatch]
+        public async Task<HttpResponseMessage> UpdateUser(string id, HttpRequestMessage request) {
+            HttpResponseMessage getUserResponse = await syncApiHelper.GetUserByRut(id);
+            dynamic userResponse = JObject.Parse(await getUserResponse.Content.ReadAsStringAsync()).GetValue("value").ElementAt(0);
+            dynamic content = JObject.Parse(await request.Content.ReadAsStringAsync());
+            string json = GetUpdateUserRequestBody(content);
+            return await syncApiHelper.UpdateUser(userResponse.objectId.ToString(), json);
+        }
+
+        private string GetUpdateUserRequestBody(dynamic content)
+        {
+            JObject json = new JObject();
+            json.Add("givenName", "Guille");
+            return json.ToString();
+        }
+
         private string GetCreateUserRequestBody(dynamic content)
         {
-            //TODO: handle additional paramenters
-
             JObject json = new JObject();
             //Fixed parameters
             json.Add("accountEnabled", true);

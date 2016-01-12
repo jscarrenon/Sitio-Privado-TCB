@@ -39,6 +39,11 @@ namespace Sitio_Privado.Helpers
             this.credential = new ClientCredential(ClientId, ClientSecret);
         }
 
+        public async Task<HttpResponseMessage> UpdateUser(string id, string json)
+        {
+            return await SendGraphPatchRequest(UsersApiPath + "/" + id, json);
+        }
+
         public async Task<HttpResponseMessage> CreateUser(string json)
         {
             return await SendGraphPostRequest(UsersApiPath, json);
@@ -47,6 +52,17 @@ namespace Sitio_Privado.Helpers
         public async Task<HttpResponseMessage> GetAllUsers(string query)
         {
             return await SendGraphGetRequest(UsersApiPath, query);
+        }
+
+        public async Task<HttpResponseMessage> GetUserByRut(string rut)
+        {
+            StringBuilder queryBuilder = new StringBuilder();
+            queryBuilder.Append("$filter=");
+            queryBuilder.Append(ConfigurationManager.AppSettings["b2c:Extensions"]);
+            queryBuilder.Append("RUT eq '");
+            queryBuilder.Append(rut);
+            queryBuilder.Append("'");
+            return await SendGraphGetRequest(UsersApiPath, queryBuilder.ToString());
         }
 
         private async Task<HttpResponseMessage> SendGraphPostRequest(string api, string json)
@@ -88,6 +104,28 @@ namespace Sitio_Privado.Helpers
             // Append the access token for the Graph API to the Authorization header of the request, using the Bearer scheme.
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, url);
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", result.AccessToken);
+            HttpResponseMessage response = await http.SendAsync(request);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                string error = await response.Content.ReadAsStringAsync();
+                object formatted = JsonConvert.DeserializeObject(error);
+                throw new WebException("Error Calling the Graph API: \n" + JsonConvert.SerializeObject(formatted, Formatting.Indented));
+            }
+
+            return response;
+        }
+
+        private async Task<HttpResponseMessage> SendGraphPatchRequest(string api, string json)
+        {
+            // NOTE: This client uses ADAL v2, not ADAL v4
+            AuthenticationResult result = authContext.AcquireToken(AadGraphResourceId, credential);
+            HttpClient http = new HttpClient();
+            string url = AadGraphEndpoint + Tenant + api + "?" + AadGraphVersion;
+
+            HttpRequestMessage request = new HttpRequestMessage(new HttpMethod("PATCH"), url);
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", result.AccessToken);
+            request.Content = new StringContent(json, Encoding.UTF8, "application/json");
             HttpResponseMessage response = await http.SendAsync(request);
 
             if (!response.IsSuccessStatusCode)
