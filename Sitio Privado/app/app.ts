@@ -6,9 +6,9 @@
                     templateUrl: "/app/home/index.html",
                     controller: "HomeCtrl as ctrl"
                 })
-                .when("/edit/:id", {
-                    templateUrl: "/app/posts/edit.html",
-                    controller: "PostEditCtrl as vm"
+                .when("/inversiones", {
+                    templateUrl: "/app/inversiones/index.html",
+                    controller: "InversionesCtrl as ctrl"
                 })
                 .when("/add", {
                     templateUrl: "/app/posts/add.html",

@@ -217,6 +217,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\home\index.html" />
+    <Content Include="app\inversiones\index.html" />
     <Content Include="app\posts\add.html" />
     <Content Include="app\posts\edit.html" />
     <Content Include="app\posts\list.html" />
@@ -383,6 +384,7 @@
     <TypeScriptCompile Include="app\domain\Usuario.ts" />
     <TypeScriptCompile Include="app\domain\Post.ts" />
     <TypeScriptCompile Include="app\home\homeCtrl.ts" />
+    <TypeScriptCompile Include="app\inversiones\inversionesCtrl.ts" />
     <TypeScriptCompile Include="app\posts\postAddCtrl.ts" />
     <TypeScriptCompile Include="app\posts\postEditCtrl.ts" />
     <TypeScriptCompile Include="app\posts\postsCtrl.ts" />
