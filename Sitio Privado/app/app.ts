@@ -6,6 +6,10 @@
                     templateUrl: "/app/home/index.html",
                     controller: "HomeCtrl as ctrl"
                 })
+                .when("/mis-inversiones", {
+                    templateUrl: "/app/mis-inversiones/index.html",
+                    controller: "MisInversionesCtrl as ctrl"
+                })
                 .when("/inversiones", {
                     templateUrl: "/app/inversiones/index.html",
                     controller: "InversionesCtrl as ctrl"

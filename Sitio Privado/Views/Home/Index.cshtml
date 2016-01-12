@@ -26,21 +26,17 @@
     <!-- endinject -->
 </head>
 <body>
-    <div class="modal-links">
-        <button class="pop" onclick="modal1();">Circularización Pendiente</button>
-        <button class="pop" onclick="modal2();">Documento Pendiente</button>
-    </div>
 
     @Html.Partial("_LoginPartial")
-
+    
     <div id="bar">
         <div class="in">
-            <div class="logo"><a href="/#/" class="clink"></a></div>
+            <div class="logo"><a href="#/" class="clink"></a></div>
             <div class="menubar">
-                <div class="menuitem"><a href="mis-inversiones_nacionales.html" class="clink">Mis Inversiones</a></div>
+                <div class="menuitem"><a href="#/mis-inversiones" class="clink">Mis Inversiones</a></div>
                 <div class="menuitem"><a href="productos.html" class="clink">Productos y Servicios</a></div>
                 <div class="menuitem"><a href="info_estatutos.html" class="clink">Información Financiera</a></div>
-                <div class="menuitem"><a href="/#/inversiones" class="clink">Inversión a su Medida</a></div>
+                <div class="menuitem"><a href="#/inversiones" class="clink">Inversión a su Medida</a></div>
             </div>
         </div>
     </div>
@@ -70,8 +66,8 @@
             <a href="inversiones.html" class="clink"></a>
         </div>
     </div>
-    <div id="container-full">
-        <ng-view></ng-view>           
-    </div><!--end container-full-->
+
+    <ng-view></ng-view>
+
 </body>
 </html>
