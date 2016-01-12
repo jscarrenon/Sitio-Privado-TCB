@@ -11,8 +11,6 @@ namespace Sitio_Privado
         public static void Register(HttpConfiguration config)
         {
             // TODO: Add any additional configuration code.
-            //var appXmlType = config.Formatters.XmlFormatter.SupportedMediaTypes.FirstOrDefault(t => t.MediaType == "application/xml");
-            //config.Formatters.XmlFormatter.SupportedMediaTypes.Remove(appXmlType);
 
             // Web API routes
             config.MapHttpAttributeRoutes();
