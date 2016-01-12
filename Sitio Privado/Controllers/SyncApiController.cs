@@ -15,21 +15,22 @@ namespace Sitio_Privado.Controllers
     public class SyncApiController : ApiController
     {
         #region Graph API Parameters
+        private static string ExtensionsPrefixe = ConfigurationManager.AppSettings["b2c:Extensions"];
         private static string AccountEnabledParamKey = "accountEnabled";
         private static string CreationTypeParamKey = "creationType";
         private static string PasswordPoliciesParamKey = "passwordPolicies";
         private static string GivenNameParamKey = "givenName";
         private static string SurnameParamKey = "surname";
-        private static string RutParamKey = ConfigurationManager.AppSettings["b2c:Extensions"] + "RUT";
-        private static string WorkAddressParamKey = ConfigurationManager.AppSettings["b2c:Extensions"] + "WorkAddress";
-        private static string HomeAddressParamKey = ConfigurationManager.AppSettings["b2c:Extensions"] + "HomeAddress";
+        private static string RutParamKey = ExtensionsPrefixe + "RUT";
+        private static string WorkAddressParamKey = ExtensionsPrefixe + "WorkAddress";
+        private static string HomeAddressParamKey = ExtensionsPrefixe + "HomeAddress";
         private static string CountryParamKey = "country";
         private static string CityParamKey = "city";
-        private static string WorkPhoneParamKey = ConfigurationManager.AppSettings["b2c:Extensions"] + "WorkPhoneNumber";
-        private static string HomePhoneParamKey = ConfigurationManager.AppSettings["b2c:Extensions"] + "HomePhoneNumber";
-        private static string EmailParamKey = ConfigurationManager.AppSettings["b2c:Extensions"] + "Email";
-        private static string CheckingAccountParamKey = ConfigurationManager.AppSettings["b2c:Extensions"] + "CheckingAccount";
-        private static string BankParamKey = ConfigurationManager.AppSettings["b2c:Extensions"] + "Bank";
+        private static string WorkPhoneParamKey = ExtensionsPrefixe + "WorkPhoneNumber";
+        private static string HomePhoneParamKey = ExtensionsPrefixe + "HomePhoneNumber";
+        private static string EmailParamKey = ExtensionsPrefixe + "Email";
+        private static string CheckingAccountParamKey = ExtensionsPrefixe + "CheckingAccount";
+        private static string BankParamKey = ExtensionsPrefixe + "Bank";
         private static string DisplayNameParamKey = "displayName";
         private static string PasswordParamKey = "password";
         private static string ForcePasswordChangeParamKey = "forceChangePasswordNextLogin";
@@ -40,7 +41,6 @@ namespace Sitio_Privado.Controllers
         #endregion
 
         private SyncApiClientHelper syncApiHelper = new SyncApiClientHelper();
-        private static string ExtensionsPrefixe = ConfigurationManager.AppSettings["b2c:Extensions"];
 
         [HttpGet]
         public async Task<HttpResponseMessage> GetUsers() {
