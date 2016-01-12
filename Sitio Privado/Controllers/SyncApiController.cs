@@ -78,17 +78,53 @@ namespace Sitio_Privado.Controllers
         {
             HttpResponseMessage getUserResponse = await syncApiHelper.GetUserByRut(id);
             dynamic userResponse = JObject.Parse(await getUserResponse.Content.ReadAsStringAsync()).GetValue("value").ElementAt(0);
-            dynamic content = JObject.Parse(await request.Content.ReadAsStringAsync());
+            JObject content = JObject.Parse(await request.Content.ReadAsStringAsync());
             string json = GetUpdateUserRequestBody(content);
             //TODO: Change response
             return await syncApiHelper.UpdateUser(userResponse.objectId.ToString(), json);
         }
 
-        private string GetUpdateUserRequestBody(dynamic content)
+        private string GetUpdateUserRequestBody(JObject content)
         {
             //TODO: update
             JObject json = new JObject();
-            json.Add(GivenNameParamKey, "Guille");
+
+            if (content.GetValue(WorkAddressParam) != null)
+                json.Add(WorkAddressParamKey, content.GetValue(WorkAddressParam));
+            
+            if (content.GetValue(HomeAddressParam) != null)
+                json.Add(HomeAddressParamKey, content.GetValue(HomeAddressParam));
+            
+            if (content.GetValue(CountryParam) != null)
+                json.Add(CountryParamKey, content.GetValue(CountryParam));
+            
+            if (content.GetValue(CityParam) != null)
+                json.Add(CityParamKey, content.GetValue(CityParam));
+            
+            if (content.GetValue(WorkPhoneParam) != null)
+                json.Add(WorkPhoneParamKey, content.GetValue(WorkPhoneParam));
+
+            if (content.GetValue(HomePhoneParam) != null)
+                json.Add(HomePhoneParamKey, content.GetValue(HomePhoneParam));
+            
+            if (content.GetValue(EmailParam) != null)
+                json.Add(EmailParamKey, content.GetValue(EmailParam));
+
+            if (content.GetValue(CheckingAccountParam) != null)
+                json.Add(CheckingAccountParamKey, content.GetValue(CheckingAccountParam));
+            
+            if (content.GetValue(BankParam) != null)
+                json.Add(BankParamKey, content.GetValue(BankParam));
+
+            /*if (content.GetValue(TemporalPasswordParam) != null)
+            {
+                //Temporal password
+                JObject passwordProfile = new JObject();
+                passwordProfile.Add(PasswordParamKey, content.GetValue(TemporalPasswordParam));
+                passwordProfile.Add(ForcePasswordChangeParamKey, true);
+                json.Add(PasswordProfileParamKey, passwordProfile);
+            }*/
+
             return json.ToString();
         }
 
@@ -101,31 +137,31 @@ namespace Sitio_Privado.Controllers
             json.Add(PasswordPoliciesParamKey, "DisablePasswordExpiration");
 
             //General information
-            json.Add(GivenNameParamKey, content.GetValue(NameParam).ToString());
-            json.Add(SurnameParamKey, content.GetValue(SurnameParam).ToString());
-            json.Add(RutParamKey, content.GetValue(RutParam).ToString());
-            json.Add(WorkAddressParamKey, content.GetValue(WorkAddressParam).ToString());
-            json.Add(HomeAddressParamKey, content.GetValue(HomeAddressParam).ToString());
-            json.Add(CountryParamKey, content.GetValue(CountryParam).ToString());
-            json.Add(CityParamKey, content.GetValue(CityParam).ToString());
-            json.Add(WorkPhoneParamKey, content.GetValue(WorkPhoneParam).ToString());
-            json.Add(HomePhoneParamKey, content.GetValue(HomePhoneParam).ToString());
-            json.Add(EmailParamKey, content.GetValue(EmailParam).ToString());
-            json.Add(CheckingAccountParamKey, content.GetValue(CheckingAccountParam).ToString());
-            json.Add(BankParamKey, content.GetValue(BankParam).ToString());
+            json.Add(GivenNameParamKey, content.GetValue(NameParam));
+            json.Add(SurnameParamKey, content.GetValue(SurnameParam));
+            json.Add(RutParamKey, content.GetValue(RutParam));
+            json.Add(WorkAddressParamKey, content.GetValue(WorkAddressParam));
+            json.Add(HomeAddressParamKey, content.GetValue(HomeAddressParam));
+            json.Add(CountryParamKey, content.GetValue(CountryParam));
+            json.Add(CityParamKey, content.GetValue(CityParam));
+            json.Add(WorkPhoneParamKey, content.GetValue(WorkPhoneParam));
+            json.Add(HomePhoneParamKey, content.GetValue(HomePhoneParam));
+            json.Add(EmailParamKey, content.GetValue(EmailParam));
+            json.Add(CheckingAccountParamKey, content.GetValue(CheckingAccountParam));
+            json.Add(BankParamKey, content.GetValue(BankParam));
             json.Add(DisplayNameParamKey, content.GetValue(NameParam).ToString() + " " + 
                 content.GetValue(SurnameParam).ToString());
             
             //Temporal password
             JObject passwordProfile = new JObject();
-            passwordProfile.Add(PasswordParamKey, content.GetValue(TemporalPasswordParam).ToString());
+            passwordProfile.Add(PasswordParamKey, content.GetValue(TemporalPasswordParam));
             passwordProfile.Add(ForcePasswordChangeParamKey, true);
             json.Add(PasswordProfileParamKey, passwordProfile);
 
             //Rut as login identifier
             JObject signInAlternative = new JObject();
             signInAlternative.Add(SignInTypeParamKey, "userName");
-            signInAlternative.Add(SignInValueParamKey, content.GetValue(RutParam).ToString());
+            signInAlternative.Add(SignInValueParamKey, content.GetValue(RutParam));
             JArray signInAlternativesArray = new JArray(signInAlternative);
             json.Add(SignInAlternativesParamKey, signInAlternativesArray);
 
