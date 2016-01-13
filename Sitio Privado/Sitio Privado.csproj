@@ -218,6 +218,7 @@
   <ItemGroup>
     <Content Include="app\common\templates\footer.html" />
     <Content Include="app\home\index.html" />
+    <Content Include="app\home\mis-datos.html" />
     <Content Include="app\inversiones\index.html" />
     <Content Include="app\mis-inversiones\circularizacion.html" />
     <Content Include="app\mis-inversiones\circularizacion_anterior.html" />

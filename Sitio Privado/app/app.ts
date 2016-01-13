@@ -14,6 +14,10 @@
                     templateUrl: "/app/inversiones/index.html",
                     controller: "InversionesCtrl as ctrl"
                 })
+                .when("/mis-datos", {
+                    templateUrl: "/app/home/mis-datos.html",
+                    controller: "HomeCtrl as ctrl"
+                })
                 .when("/add", {
                     templateUrl: "/app/posts/add.html",
                     controller: "PostAddCtrl as vm"
