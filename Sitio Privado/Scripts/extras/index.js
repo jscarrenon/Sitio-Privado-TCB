@@ -1,8 +1,5 @@
 ﻿$(document).ready(function () {
     $("#bar").sticky({ topSpacing: 0 });
-});
-
-$(document).ready(function () {
     $("#tabbar").sticky({ topSpacing: 0 });
 });
 
@@ -19,6 +16,22 @@ var modal2 = function () {
         class: 'modal-style modal2',
         source: 'html',
         content: '<div class="pretitle">Pendiente</div><div class="title">Documentos Pendientes de Firma</div><div class="text">Estimado Cliente,<br/> Usted tiene documentos (operaciones y/o contratos) pendientes de ser firmados electrónicamente. Por favor proceda a revisarlos.</div><div class="button green"><a href="#" class="clink">Revisar</a></div><button class="modal-close" onclick="rem();"></button>'
+    });
+}
+
+var modal3 = function () {
+    uglipop({
+        class: 'modal-style modal3',
+        source: 'html',
+        content: '<div class="title">Confirmar Firma Electrónica</div><div class="text">¿Desea confirmar y firmar electrónicamente la(s) operacion(es) y/o contrato(s) seleccionados?</div><button class="pop" onclick="modal4();">Confirmar</button><button class="modal-close" onclick="rem();"></button>'
+    });
+}
+
+var modal4 = function () {
+    uglipop({
+        class: 'modal-style modal4',
+        source: 'html',
+        content: '<div class="title">Ingresar Clave</div><div class="text">Ingrese su clave de acceso para finalizar el proceso de firma electrónica.</div><form><div class="input-field">RUT (Ej: 12123123-K)<input type="text" placeholder="Ingrese su RUT"></div><div class="input-field">Contraseña<input type="password" placeholder="Ingrese su contraseña"></div></form><div class="button green"><a href="#" class="clink">Finalizar</a></div><button class="modal-close" onclick="rem();"></button>'
     });
 }
 
