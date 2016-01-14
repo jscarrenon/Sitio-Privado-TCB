@@ -10,10 +10,12 @@ using Microsoft.Owin.Security.OpenIdConnect;
 using Microsoft.Owin.Security.Cookies;
 using Sitio_Privado.Policies;
 using System.Security.Claims;
+using Sitio_Privado.Models;
+using System.Web.Http;
 
 namespace Sitio_Privado.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         public void SignIn()
         {
@@ -27,39 +29,6 @@ namespace Sitio_Privado.Controllers
                         new Dictionary<string, string>
                         {
                             {Startup.PolicyKey, Startup.SignInPolicyId}
-                        })
-                    {
-                        RedirectUri = "/",
-                    }, OpenIdConnectAuthenticationDefaults.AuthenticationType);
-            }
-        }
-
-        public void SignUp()
-        {
-            if (!Request.IsAuthenticated)
-            {
-                HttpContext.GetOwinContext().Authentication.Challenge(
-                    new AuthenticationProperties(
-                        new Dictionary<string, string>
-                        {
-                            {Startup.PolicyKey, Startup.SignUpPolicyId}
-                        })
-                    {
-                        RedirectUri = "/",
-                    }, OpenIdConnectAuthenticationDefaults.AuthenticationType);
-            }
-        }
-
-
-        public void Profile()
-        {
-            if (Request.IsAuthenticated)
-            {
-                HttpContext.GetOwinContext().Authentication.Challenge(
-                    new AuthenticationProperties(
-                        new Dictionary<string, string>
-                        {
-                            {Startup.PolicyKey, Startup.ProfilePolicyId}
                         })
                     {
                         RedirectUri = "/",

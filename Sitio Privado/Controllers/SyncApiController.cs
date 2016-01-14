@@ -70,10 +70,14 @@ namespace Sitio_Privado.Controllers
         [HttpPost]
         public async Task<HttpResponseMessage> CreateUser(HttpRequestMessage request)
         {
-            JObject content = JObject.Parse(await request.Content.ReadAsStringAsync());
-            string json = GetCreateUserRequestBody(content);
-            //TODO: Change response
-            return await syncApiHelper.CreateUser(json);
+            JObject requestBody = JObject.Parse(await request.Content.ReadAsStringAsync());
+            string graphApiRequestBody = GetCreateUserGraphApiRequestBody(requestBody);
+            HttpResponseMessage graphApiResponse = await syncApiHelper.CreateUser(graphApiRequestBody);
+            JObject graphApiResponseContent = (JObject)await graphApiResponse.Content.ReadAsAsync(typeof(JObject));
+            string responseBody = GetUserResponseBody(graphApiResponseContent);
+            HttpResponseMessage response = new HttpResponseMessage(graphApiResponse.StatusCode);
+            response.Content = new StringContent(responseBody, Encoding.UTF8, "application/json");
+            return response;
         }
 
         [HttpPatch]
@@ -82,7 +86,7 @@ namespace Sitio_Privado.Controllers
             HttpResponseMessage getUserResponse = await syncApiHelper.GetUserByRut(id);
             dynamic userResponse = JObject.Parse(await getUserResponse.Content.ReadAsStringAsync()).GetValue("value").ElementAt(0);
             JObject content = JObject.Parse(await request.Content.ReadAsStringAsync());
-            string json = GetUpdateUserRequestBody(content);
+            string json = GetUpdateUserGraphApiRequestBody(content);
             //TODO: Change response
             return await syncApiHelper.UpdateUser(userResponse.objectId.ToString(), json);
         }
@@ -90,15 +94,15 @@ namespace Sitio_Privado.Controllers
         [HttpGet]
         public async Task<HttpResponseMessage> GetUser(string id) {
             HttpResponseMessage getUserResponse = await syncApiHelper.GetUserByRut(id);
-            var userResponse = JObject.Parse(await getUserResponse.Content.ReadAsStringAsync()).GetValue("value").ElementAt(0);
-            JObject responseContent = GetUserResponseBody(userResponse);
+            JObject userResponse = (JObject)await getUserResponse.Content.ReadAsAsync(typeof(JObject));
+            string responseContent = GetUserResponseBody(userResponse);
             HttpResponseMessage response = new HttpResponseMessage();
             response.StatusCode = getUserResponse.StatusCode;
             response.Content = new StringContent(responseContent.ToString(), Encoding.UTF8,"application/json");
             return response;
         }
 
-        private JObject GetUserResponseBody(JToken content)
+        private string GetUserResponseBody(JObject content)
         {
             JObject response = new JObject();
             response.Add(NameParam, content.Value<string>(GivenNameParamKey));
@@ -113,10 +117,10 @@ namespace Sitio_Privado.Controllers
             response.Add(EmailParam, content.Value<string>(EmailParamKey));
             response.Add(CheckingAccountParam, content.Value<string>(CheckingAccountParamKey));
             response.Add(BankParam, content.Value<string>(BankParamKey));
-            return response;
+            return response.ToString();
         }
 
-        private string GetUpdateUserRequestBody(JObject content)
+        private string GetUpdateUserGraphApiRequestBody(JObject content)
         {
             //TODO: update
             JObject json = new JObject();
@@ -160,7 +164,7 @@ namespace Sitio_Privado.Controllers
             return json.ToString();
         }
 
-        private string GetCreateUserRequestBody(JObject content)
+        private string GetCreateUserGraphApiRequestBody(JObject content)
         {
             JObject json = new JObject();
             //Fixed parameters

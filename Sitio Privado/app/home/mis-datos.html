@@ -1,0 +1,90 @@
+﻿<div id="container-full">
+
+    <div id="header">
+        <div class="in">
+            <div class="head">
+                <div class="title">Mis Datos</div>
+                <div class="subtitle"></div>
+            </div>
+        </div>
+    </div>
+    <div id="content">
+        <div class="in">
+
+            <div class="two-col">
+
+                <div class="user-info white-box">
+                    <div class="info-col">
+                        <div class="info-input">
+                            Nombre / Razón Social
+                            <input type="text" value="{{ctrl.usuario.NombreCompleto}}" disabled>
+                        </div>
+                        <div class="info-input">
+                            RUT
+                            <input type="text" value="{{ctrl.usuario.Rut}}" disabled>
+                        </div>
+                        <div class="info-input">
+                            Dirección Comercial
+                            <input type="text" value="{{ctrl.usuario.DireccionComercial}}" disabled>
+                        </div>
+                        <div class="info-input">
+                            Dirección Particular
+                            <input type="text" value="{{ctrl.usuario.DireccionParticular}}" disabled>
+                        </div>
+                        <div class="info-input">
+                            Ciudad y País
+                            <input type="text" value="{{ctrl.usuario.CiudadPais}}" disabled>
+                        </div>
+                    </div>
+                    <div class="info-col">
+                        <div class="info-input">
+                            Teléfono Comercial
+                            <input type="text" value="{{ctrl.usuario.TelefonoComercial}}" disabled>
+                        </div>
+                        <div class="info-input">
+                            Teléfono Particular
+                            <input type="text" value="{{ctrl.usuario.TelefonoParticular}}" disabled>
+                        </div>
+                        <div class="info-input">
+                            E-mail
+                            <input type="text" value="{{ctrl.usuario.Email}}" disabled>
+                        </div>
+                        <div class="info-input">
+                            Nº Cuenta Corriente
+                            <input type="text" value="{{ctrl.usuario.CuentaCorriente}}" disabled>
+                        </div>
+                        <div class="info-input">
+                            Banco
+                            <input type="text" value="{{ctrl.usuario.Banco}}" disabled>
+                        </div>
+                    </div>
+                    <div class="edit-note">Si necesita cambiar su información contacte a su Ejecutivo de Inversiones.</div>
+                </div>
+
+            </div><!--end two-col-->
+
+            <div class="three-col home">
+                <div class="executive white-box">
+                    <div class="photo"></div>
+                    <div class="text">
+                        <div class="name">Mario Correa Pérez</div>
+                        <div class="contact">
+                            Tel: (+56 2) 2731 8933<br />
+                            E-mail: <a href="mailto:mail">mcorreap@tanner.cl</a>
+                        </div>
+                        <div class="info">
+                            Fecha de acreditación: 09/11/2015<br />
+                            Sucursal: Santiago
+                        </div>
+                    </div>
+                    <div class="button blue call"><a href="tel:9999999" class="clink">Llamar</a></div>
+                    <div id="clear"></div>
+                </div>
+            </div>
+            <div id="clear"></div>
+
+            <ng-include src="ctrl.constantService.templateFooterURI"></ng-include>
+
+        </div><!--end in-->
+    </div><!--end content-->
+</div><!--end container-full-->

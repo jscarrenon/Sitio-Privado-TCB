@@ -91,6 +91,6 @@
         }
     }
 
-    angular.module('chsakellBlogApp')
+    angular.module('tannerPrivadoApp')
         .service('dataService', DataService);
 } 
