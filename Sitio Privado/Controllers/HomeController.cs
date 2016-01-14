@@ -20,5 +20,13 @@ namespace Sitio_Privado.Controllers
 
             return Json(new UsuarioDTO(usuario), JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult TestWebService()
+        {
+            InformacionClienteAgente.tann_info_cliente infocliente = new InformacionClienteAgente.tann_info_cliente();
+            InformacionClienteAgente._agente agente = infocliente.cli_info_agente("8411855-9", 31);
+
+            return Json(agente, JsonRequestBehavior.AllowGet);
+        }
     }
 }
