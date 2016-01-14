@@ -62,7 +62,7 @@ namespace Sitio_Privado.Helpers
 
         public async Task<HttpResponseMessage> GetUserByObjectId(string id)
         {
-            return await SendGraphGetRequest("/me", null);
+            return await SendGraphGetRequest(UsersApiPath + "/" + id, null);
         }
 
         private async Task<HttpResponseMessage> SendGraphPostRequest(string api, string json)

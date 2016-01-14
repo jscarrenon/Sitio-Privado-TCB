@@ -53,25 +53,25 @@ namespace Sitio_Privado.Models
 
         public string Apellidos { get { return this.Autenticado ? this.FindFirst(CustomClaimTypes.Apellidos) != null ? this.FindFirst(CustomClaimTypes.Apellidos).Value : "" : ""; } }
 
-        public string Rut { get { return this.Autenticado ? this.FindFirst(CustomClaimTypes.Rut) != null ? this.FindFirst(CustomClaimTypes.Rut).Value : "" : ""; } }
+        public string Rut { get; set; }
 
-        public string DireccionComercial { get { return this.Autenticado ? this.FindFirst(CustomClaimTypes.DireccionComercial) != null ? this.FindFirst(CustomClaimTypes.DireccionComercial).Value : "" : ""; } }
+        public string DireccionComercial { get; set; }
 
-        public string DireccionParticular { get { return this.Autenticado ? this.FindFirst(CustomClaimTypes.DireccionParticular) != null ? this.FindFirst(CustomClaimTypes.DireccionParticular).Value : "" : ""; } }
+        public string DireccionParticular { get; set; }
 
         public string Ciudad { get { return this.Autenticado ? this.FindFirst(CustomClaimTypes.Ciudad) != null ? this.FindFirst(CustomClaimTypes.Ciudad).Value : "" : ""; } }
 
         public string Pais { get { return this.Autenticado ? this.FindFirst(CustomClaimTypes.Pais) != null ? this.FindFirst(CustomClaimTypes.Pais).Value : "" : ""; } }
 
-        public string TelefonoComercial { get { return this.Autenticado ? this.FindFirst(CustomClaimTypes.TelefonoComercial) != null ? this.FindFirst(CustomClaimTypes.TelefonoComercial).Value : "" : ""; } }
+        public string TelefonoComercial { get; set; }
 
-        public string TelefonoParticular { get { return this.Autenticado ? this.FindFirst(CustomClaimTypes.TelefonoParticular) != null ? this.FindFirst(CustomClaimTypes.TelefonoParticular).Value : "" : ""; } }
+        public string TelefonoParticular { get; set; }
 
-        public string Email { get { return this.Autenticado ? this.FindFirst(CustomClaimTypes.Email) != null ? this.FindFirst(CustomClaimTypes.Email).Value : "" : ""; } }
+        public string Email { get; set; }
 
-        public string CuentaCorriente { get { return this.Autenticado ? this.FindFirst(CustomClaimTypes.CuentaCorriente) != null ? this.FindFirst(CustomClaimTypes.CuentaCorriente).Value : "" : ""; } }
+        public string CuentaCorriente { get; set; }
 
-        public string Banco { get { return this.Autenticado ? this.FindFirst(CustomClaimTypes.Banco) != null ? this.FindFirst(CustomClaimTypes.Banco).Value : "" : ""; } }
+        public string Banco { get; set; }
 
         public string NombreCompleto { get { return Nombres + " " + Apellidos; } }
 
