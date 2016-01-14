@@ -61,12 +61,6 @@ namespace Sitio_Privado.Controllers
 
         private SyncApiClientHelper syncApiHelper = new SyncApiClientHelper();
 
-        [HttpGet]
-        public async Task<HttpResponseMessage> GetUsers()
-        {
-            return await syncApiHelper.GetAllUsers(null);
-        }
-
         [HttpPost]
         public async Task<HttpResponseMessage> CreateUser(HttpRequestMessage request)
         {
@@ -93,12 +87,11 @@ namespace Sitio_Privado.Controllers
 
         [HttpGet]
         public async Task<HttpResponseMessage> GetUser(string id) {
-            HttpResponseMessage getUserResponse = await syncApiHelper.GetUserByRut(id);
-            JObject userResponse = (JObject)await getUserResponse.Content.ReadAsAsync(typeof(JObject));
-            string responseContent = GetUserResponseBody(userResponse);
-            HttpResponseMessage response = new HttpResponseMessage();
-            response.StatusCode = getUserResponse.StatusCode;
-            response.Content = new StringContent(responseContent.ToString(), Encoding.UTF8,"application/json");
+            HttpResponseMessage graphApiResponse = await syncApiHelper.GetUserByRut(id);
+            JObject graphApiResponseContent = (JObject)await graphApiResponse.Content.ReadAsAsync(typeof(JObject));
+            string responseBody = GetUserResponseBody(graphApiResponseContent);
+            HttpResponseMessage response = new HttpResponseMessage(graphApiResponse.StatusCode);
+            response.Content = new StringContent(responseBody.ToString(), Encoding.UTF8,"application/json");
             return response;
         }
 

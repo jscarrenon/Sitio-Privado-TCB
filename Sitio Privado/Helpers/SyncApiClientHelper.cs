@@ -49,11 +49,6 @@ namespace Sitio_Privado.Helpers
             return await SendGraphPostRequest(UsersApiPath, json);
         }
 
-        public async Task<HttpResponseMessage> GetAllUsers(string query)
-        {
-            return await SendGraphGetRequest(UsersApiPath, query);
-        }
-
         public async Task<HttpResponseMessage> GetUserByRut(string rut)
         {
             StringBuilder queryBuilder = new StringBuilder();
