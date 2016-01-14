@@ -213,7 +213,27 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
-    <Compile Include="Web References\InfoClienteAgente\Reference.cs">
+    <Compile Include="Web References\CategoriaInversionista\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\ConsultaSaldosFondosMutuos\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\ConsultaSaldosFondosPrivados\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\IndicesLiquidezSolvencia\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\InformacionClienteAgente\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.map</DependentUpon>
@@ -337,11 +357,50 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Content Include="Web References\InfoClienteAgente\Reference.map">
+    <Content Include="Web References\CategoriaInversionista\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </Content>
-    <None Include="Web References\InfoClienteAgente\tann_info_cliente.disco" />
+    <None Include="Web References\CategoriaInversionista\tann_catsvc.disco" />
+    <Content Include="Web References\ConsultaSaldosFondosMutuos\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </Content>
+    <Content Include="Web References\ConsultaSaldosFondosMutuos\saldo_ffmm.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <None Include="Web References\ConsultaSaldosFondosMutuos\tann_fondos_mutuos.disco" />
+    <Content Include="Web References\ConsultaSaldosFondosPrivados\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </Content>
+    <None Include="Web References\ConsultaSaldosFondosPrivados\tann_fondo_invpriv.disco" />
+    <Content Include="Web References\IndicesLiquidezSolvencia\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </Content>
+    <None Include="Web References\IndicesLiquidezSolvencia\tann_indicadores.disco" />
+    <Content Include="Web References\InformacionClienteAgente\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </Content>
+    <None Include="Web References\CategoriaInversionista\tann_catsvc.wsdl" />
+    <Content Include="Web References\CategoriaInversionista\_categoria.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <Content Include="Web References\CategoriaInversionista\_producto.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <None Include="Web References\ConsultaSaldosFondosMutuos\tann_fondos_mutuos.wsdl" />
+    <None Include="Web References\ConsultaSaldosFondosPrivados\tann_fondo_invpriv.wsdl" />
+    <Content Include="Web References\ConsultaSaldosFondosPrivados\_resumen.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <None Include="Web References\IndicesLiquidezSolvencia\tann_indicadores.wsdl" />
+    <Content Include="Web References\IndicesLiquidezSolvencia\_indicadores.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <None Include="Web References\InformacionClienteAgente\tann_info_cliente.disco" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -356,8 +415,8 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <None Include="Web References\InfoClienteAgente\tann_info_cliente.wsdl" />
-    <Content Include="Web References\InfoClienteAgente\_agente.datasource">
+    <None Include="Web References\InformacionClienteAgente\tann_info_cliente.wsdl" />
+    <Content Include="Web References\InformacionClienteAgente\_agente1.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
   </ItemGroup>
@@ -410,9 +469,53 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
+    <WebReferenceUrl Include="http://172.17.1.12:8088/tann_catsvc.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\CategoriaInversionista\</RelPath>
+      <UpdateFromURL>http://172.17.1.12:8088/tann_catsvc.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Sitio_Privado_CategoriaInversionista_tann_catsvc</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://172.17.1.12:8088/tann_fondos_mutuos.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\ConsultaSaldosFondosMutuos\</RelPath>
+      <UpdateFromURL>http://172.17.1.12:8088/tann_fondos_mutuos.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Sitio_Privado_ConsultaSaldosFondosMutuos_tann_fondos_mutuos</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://172.17.1.12:8088/tann_fondo_invpriv.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\ConsultaSaldosFondosPrivados\</RelPath>
+      <UpdateFromURL>http://172.17.1.12:8088/tann_fondo_invpriv.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Sitio_Privado_ConsultaSaldosFondosPrivados_tann_fondo_invpriv</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://172.17.1.12:8088/tann_indicadores.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\IndicesLiquidezSolvencia\</RelPath>
+      <UpdateFromURL>http://172.17.1.12:8088/tann_indicadores.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Sitio_Privado_IndicesLiquidezSolvencia_tann_indicadores</CachedSettingsPropName>
+    </WebReferenceUrl>
     <WebReferenceUrl Include="http://172.17.1.12:8088/tann_info_cliente.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
-      <RelPath>Web References\InfoClienteAgente\</RelPath>
+      <RelPath>Web References\InformacionClienteAgente\</RelPath>
       <UpdateFromURL>http://172.17.1.12:8088/tann_info_cliente.asmx</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
