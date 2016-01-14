@@ -16,6 +16,7 @@ namespace Sitio_Privado.Controllers
     public class SyncApiController : ApiController
     {
         #region Graph API Parameters
+        //Keys used by Azure GraphAPI
         private static string ExtensionsPrefixe = ConfigurationManager.AppSettings["b2c:Extensions"];
         private static string AccountEnabledParamKey = "accountEnabled";
         private static string CreationTypeParamKey = "creationType";
@@ -42,6 +43,7 @@ namespace Sitio_Privado.Controllers
         #endregion
 
         #region SyncAPIController Parameters
+        //Keys used by our API
         private static string NameParam = "names";
         private static string SurnameParam = "surnames";
         private static string RutParam = "rut";
