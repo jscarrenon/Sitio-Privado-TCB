@@ -1,0 +1,73 @@
+﻿<div class="status-message" style="display:none;">
+    <div class="ok">Se han firmado todas las operaciones seleccionadas.</div>
+    <div class="error">Ha ocurrido un error. Por favor inténtelo de nuevo.</div>
+</div>
+
+<div class="one-col">
+    <div class="section-title">Documentos Pendientes (al 19/12/2015)</div>
+
+    <div id="cont-table">
+        <table class="balance">
+            <tr>
+                <th class="small-box">Firmar</th>
+                <th class="small-box">Leído</th>
+                <th>Producto</th>
+                <th>Tipo de Documento</th>
+                <th>Nº Folio</th>
+                <th>Fecha de Operación</th>
+                <th>Documento</th>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="sign"></td>
+                <td><input type="checkbox" name="read" checked disabled></td>
+                <td>Simultánea</td>
+                <td>Operación</td>
+                <td>123456</td>
+                <td>21 Ago 2015</td>
+                <td><a href="#doc">Ver Documento</a></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="sign"></td>
+                <td><input type="checkbox" name="read" checked disabled></td>
+                <td>Simultánea</td>
+                <td>Operación</td>
+                <td>123456</td>
+                <td>21 Ago 2015</td>
+                <td><a href="#doc">Ver Documento</a></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="sign"></td>
+                <td><input type="checkbox" name="read" disabled></td>
+                <td>Simultánea</td>
+                <td>Operación</td>
+                <td>123456</td>
+                <td>21 Ago 2015</td>
+                <td><a href="#doc">Ver Documento</a></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="table-tools">
+        <div class="select-all">
+            <input type="checkbox" name="select" value="value"><label>Seleccionar todos</label>
+        </div>
+        <div class="pagination">
+            <div class="pag-button prev2"><a href="#" class="clink"></a></div>
+            <div class="pag-button prev"><a href="#" class="clink"></a></div>
+            <div class="nums">1 de 14</div>
+            <div class="pag-button next"><a href="#" class="clink"></a></div>
+            <div class="pag-button next2"><a href="#" class="clink"></a></div>
+        </div>
+    </div>
+
+    <div class="sign-note">
+        <input type="checkbox" name="select" value="value">
+        Declaro conocer y aceptar la(s) operacion(es) y/o contrato(s) seleccionado(s), los cuales fueron instruidos por mi persona a Tanner Corredores de Bolsa S.A., y que, en cumplimiento a lo establecido en los contratos vigentes, confirmo electrónicamente mi total aceptación sobre los términos y condiciones indicados en los mismos.<br />
+        <button class="pop button green" onclick="modal3();">Firmar</button>
+    </div>
+
+    <div class="legal">
+        La información sobre los saldos presentados más arriba corresponde exclusivamente a aquellos clientes titulares directos, en Principal Administradores General de Fondos S.A.
+    </div>
+
+</div><!--end one-col -->

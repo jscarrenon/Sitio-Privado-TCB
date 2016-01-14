@@ -191,23 +191,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="App_Start\DataRepository.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\PostsController.cs" />
+    <Compile Include="Extras\BaseViewPage.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Post.cs" />
+    <Compile Include="Models\UsuarioModels.cs" />
     <Compile Include="PolicyAuthHelpers\HttpDocumentRetriever.cs" />
     <Compile Include="PolicyAuthHelpers\PolicyAuthorize.cs" />
     <Compile Include="PolicyAuthHelpers\PolicyConfigurationManager.cs" />
@@ -215,16 +210,119 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app\posts\add.html" />
-    <Content Include="app\posts\edit.html" />
-    <Content Include="app\posts\list.html" />
+    <Content Include="app\common\templates\footer.html" />
+    <Content Include="app\home\index.html" />
+    <Content Include="app\home\mis-datos.html" />
+    <Content Include="app\inversiones\index.html" />
+    <Content Include="app\mis-inversiones\circularizacion.html" />
+    <Content Include="app\mis-inversiones\circularizacion_anterior.html" />
+    <Content Include="app\mis-inversiones\circularizacion_anual-2015.html" />
+    <Content Include="app\mis-inversiones\circularizacion_aprobar.html" />
+    <Content Include="app\mis-inversiones\estado-documentos.html" />
+    <Content Include="app\mis-inversiones\estado-documentos_firmados.html" />
+    <Content Include="app\mis-inversiones\estado-documentos_pendientes.html" />
+    <Content Include="app\mis-inversiones\fondos-mutuos.html" />
+    <Content Include="app\mis-inversiones\fondos-privados.html" />
+    <Content Include="app\mis-inversiones\index.html" />
+    <Content Include="app\mis-inversiones\nacionales.html" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="gulpfile.js" />
     <Content Include="package.json" />
     <Content Include=".bowerrc" />
     <Content Include="bower.json" />
-    <Content Include="Styles\site.css" />
+    <Content Include="Resources\fonts\Gotham-Medium.svg" />
+    <Content Include="Resources\fonts\GothamBold.svg" />
+    <Content Include="Resources\fonts\GothamBook.svg" />
+    <Content Include="Resources\img\home_indicadores.jpg" />
+    <Content Include="Resources\img\home_inversiones.jpg" />
+    <Content Include="Resources\img\home_productos.jpg" />
+    <Content Include="Resources\img\icon_arrow-down.png" />
+    <Content Include="Resources\img\icon_arrow-down2.png" />
+    <Content Include="Resources\img\icon_backhome.png" />
+    <Content Include="Resources\img\icon_circularizacion.png" />
+    <Content Include="Resources\img\icon_circularizacionh.png" />
+    <Content Include="Resources\img\icon_close-modal.png" />
+    <Content Include="Resources\img\icon_comite.png" />
+    <Content Include="Resources\img\icon_comiteh.png" />
+    <Content Include="Resources\img\icon_custodia.png" />
+    <Content Include="Resources\img\icon_custodiah.png" />
+    <Content Include="Resources\img\icon_docs-normativos.png" />
+    <Content Include="Resources\img\icon_docs-normativos_gris.png" />
+    <Content Include="Resources\img\icon_download.png" />
+    <Content Include="Resources\img\icon_estado-documentos.png" />
+    <Content Include="Resources\img\icon_estado-documentosh.png" />
+    <Content Include="Resources\img\icon_estatutos.png" />
+    <Content Include="Resources\img\icon_estatutosh.png" />
+    <Content Include="Resources\img\icon_external-link-white.png" />
+    <Content Include="Resources\img\icon_external-link.png" />
+    <Content Include="Resources\img\icon_filter.png" />
+    <Content Include="Resources\img\icon_fondos-mutuos.png" />
+    <Content Include="Resources\img\icon_fondos-mutuosh.png" />
+    <Content Include="Resources\img\icon_fondos-privados.png" />
+    <Content Include="Resources\img\icon_fondos-privadosh.png" />
+    <Content Include="Resources\img\icon_go-back.png" />
+    <Content Include="Resources\img\icon_hechos-esenciales.png" />
+    <Content Include="Resources\img\icon_indices.png" />
+    <Content Include="Resources\img\icon_indicesh.png" />
+    <Content Include="Resources\img\icon_inv-internacionales.png" />
+    <Content Include="Resources\img\icon_inv-nacionales.png" />
+    <Content Include="Resources\img\icon_inv-nacionalesh.png" />
+    <Content Include="Resources\img\icon_li-arrow.png" />
+    <Content Include="Resources\img\icon_link.png" />
+    <Content Include="Resources\img\icon_lock.png" />
+    <Content Include="Resources\img\icon_logout.png" />
+    <Content Include="Resources\img\icon_mis-datos.png" />
+    <Content Include="Resources\img\icon_miteh.png" />
+    <Content Include="Resources\img\icon_mobile_home.png" />
+    <Content Include="Resources\img\icon_mobile_info.png" />
+    <Content Include="Resources\img\icon_mobile_inversion.png" />
+    <Content Include="Resources\img\icon_mobile_inversiones.png" />
+    <Content Include="Resources\img\icon_mobile_logout.png" />
+    <Content Include="Resources\img\icon_mobile_prod.png" />
+    <Content Include="Resources\img\icon_mobile_productos.png" />
+    <Content Include="Resources\img\icon_mobile_target.png" />
+    <Content Include="Resources\img\icon_mobile_user.png" />
+    <Content Include="Resources\img\icon_next.png" />
+    <Content Include="Resources\img\icon_next2.png" />
+    <Content Include="Resources\img\icon_normativosh.png" />
+    <Content Include="Resources\img\icon_otros-docs.png" />
+    <Content Include="Resources\img\icon_otros-docsh.png" />
+    <Content Include="Resources\img\icon_otros-docs_gris.png" />
+    <Content Include="Resources\img\icon_pdf.png" />
+    <Content Include="Resources\img\icon_prev.png" />
+    <Content Include="Resources\img\icon_prev2.png" />
+    <Content Include="Resources\img\icon_ready.png" />
+    <Content Include="Resources\img\icon_status-error.png" />
+    <Content Include="Resources\img\icon_status-ok.png" />
+    <Content Include="Resources\img\icon_triangle.png" />
+    <Content Include="Resources\img\icon_user.png" />
+    <Content Include="Resources\img\img_firma.png" />
+    <Content Include="Resources\img\img_login1.jpg" />
+    <Content Include="Resources\img\img_login2.jpg" />
+    <Content Include="Resources\img\img_pagresivo.jpg" />
+    <Content Include="Resources\img\img_pconservador.jpg" />
+    <Content Include="Resources\img\img_pmoderado.jpg" />
+    <Content Include="Resources\img\login_logo.png" />
+    <Content Include="Resources\img\logo_mobile_tannerclientes.png" />
+    <Content Include="Resources\img\logo_mobile_tannerclientes2.png" />
+    <Content Include="Resources\img\logo_tannerclientes.png" />
+    <Content Include="Resources\img\prod_admin-cartera.jpg" />
+    <Content Include="Resources\img\prod_ahorro-previsional.jpg" />
+    <Content Include="Resources\img\prod_distribucion-fm.jpg" />
+    <Content Include="Resources\img\prod_irf.jpg" />
+    <Content Include="Resources\img\prod_moneda-ext.jpg" />
+    <Content Include="Resources\img\prod_operaciones-prestamo.jpg" />
+    <Content Include="Resources\img\prod_operaciones-simultaneas.jpg" />
+    <Content Include="Resources\img\prod_pactos.jpg" />
+    <Content Include="Resources\img\prod_renta-fija-inter.jpg" />
+    <Content Include="Resources\img\prod_renta-variable-internacional.jpg" />
+    <Content Include="Resources\img\prod_renta-variable-nacional.jpg" />
+    <Content Include="Scripts\extras\index.js" />
+    <Content Include="Scripts\extras\jquery.slicknav.min.js" />
+    <Content Include="Scripts\extras\jquery.sticky.js" />
+    <Content Include="Scripts\extras\uglipop.min.js" />
+    <Content Include="Styles\slicknav.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -232,51 +330,47 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\ConfirmEmail.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\ResetPassword.cshtml" />
-    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\SendCode.cshtml" />
-    <Content Include="Views\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
-    <Content Include="Views\Manage\ChangePassword.cshtml" />
-    <Content Include="Views\Manage\Index.cshtml" />
-    <Content Include="Views\Manage\ManageLogins.cshtml" />
-    <Content Include="Views\Manage\SetPassword.cshtml" />
-    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
-    <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\App\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+    <Content Include="Styles\style.less" />
+    <Content Include="Resources\fonts\Gotham-Medium.eot" />
+    <Content Include="Resources\fonts\Gotham-Medium.ttf" />
+    <Content Include="Resources\fonts\Gotham-Medium.woff" />
+    <Content Include="Resources\fonts\GothamBold.eot" />
+    <Content Include="Resources\fonts\GothamBold.ttf" />
+    <Content Include="Resources\fonts\GothamBold.woff" />
+    <Content Include="Resources\fonts\GothamBook.eot" />
+    <Content Include="Resources\fonts\GothamBook.otf" />
+    <Content Include="Resources\fonts\GothamBook.ttf" />
+    <Content Include="Resources\fonts\GothamBook.woff" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app\app.ts" />
+    <TypeScriptCompile Include="app\common\controllers\bodyCtrl.ts" />
     <TypeScriptCompile Include="app\common\services\constantService.ts" />
     <TypeScriptCompile Include="app\common\services\dataService.ts" />
     <TypeScriptCompile Include="app\domain\IEntity.ts" />
-    <TypeScriptCompile Include="app\domain\Post.ts" />
-    <TypeScriptCompile Include="app\posts\postAddCtrl.ts" />
-    <TypeScriptCompile Include="app\posts\postEditCtrl.ts" />
-    <TypeScriptCompile Include="app\posts\postsCtrl.ts" />
+    <TypeScriptCompile Include="app\domain\Usuario.ts" />
+    <TypeScriptCompile Include="app\home\homeCtrl.ts" />
+    <TypeScriptCompile Include="app\inversiones\inversionesCtrl.ts" />
+    <TypeScriptCompile Include="app\mis-inversiones\misInversionesDocumentosCtrl.ts" />
+    <TypeScriptCompile Include="app\mis-inversiones\misInversionesCtrl.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-animate.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-cookies.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-mocks.d.ts" />

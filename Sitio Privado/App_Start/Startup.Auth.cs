@@ -47,7 +47,7 @@ namespace Sitio_Privado
                 Notifications = new OpenIdConnectAuthenticationNotifications
                 {
                     AuthenticationFailed = AuthenticationFailed,
-                    RedirectToIdentityProvider = OnRedirectToIdentityProvider,
+                    //RedirectToIdentityProvider = OnRedirectToIdentityProvider,
                 },
                 Scope = "openid",
                 ResponseType = "id_token",

@@ -1,0 +1,93 @@
+﻿<div class="modal-links">
+    <button class="pop" onclick="modal1();">Circularización Pendiente</button>
+    <button class="pop" onclick="modal2();">Documento Pendiente</button>
+</div>
+<div id="container-full">
+
+    <div id="header">
+        <div class="in">
+            <div class="head">
+                <div class="title">Hola, {{ ctrl.usuario.NombreCompleto }}</div>
+                <div class="subtitle">Bienvenido(a) a Tanner Clientes, lo invitamos a revisar sus inversiones y crecer con nosotros.</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="content">
+        <div class="in">
+
+            <div class="one-col home">
+                <div class="section-title">Destacados</div>
+
+                <div class="content-box white-box">
+                    <div class="img inversiones"></div>
+                    <div class="text">
+                        <div class="title">Inversión a su medida</div>
+                        <div class="description">Productos de inversión de acuerdo a cada perfil</div>
+                        <div class="button blue"><a href="#/inversiones" class="clink" ng-click="bodyCtrl.seleccionarSeccion(4)">Ver</a></div>
+                    </div>
+                </div>
+                <div class="content-box white-box">
+                    <div class="img productos"></div>
+                    <div class="text">
+                        <div class="title">Productos y Servicios</div>
+                        <div class="description">Productos y Servicios para su horizonte de inversión y perfil de riesgo.</div>
+                        <div class="button blue"><a href="productos.html" class="clink" ng-click="bodyCtrl.seleccionarSeccion(2)">Ver</a></div>
+                    </div>
+                </div>
+                <div class="content-box white-box">
+                    <div class="img indicadores"></div>
+                    <div class="text">
+                        <div class="title">Indicadores Económicos</div>
+                        <div class="description">Revise el mercado global</div>
+                        <div class="button blue"><a href="#" class="clink">Ir </a></div>
+                    </div>
+                </div>
+            </div><!--end home destacados-->
+
+            <div class="two-col home">
+                <div class="section-title">Acceso Rápido</div>
+
+                <div class="go-to white-box">
+                    <div class="cartola-resumen"><a href="#/mis-inversiones" class="clink" ng-click="bodyCtrl.seleccionarSeccion(1)">Cartola Resumen</a></div>
+                </div>
+                <div class="go-to white-box">
+                    <div class="estado-docs"><a href="#/mis-inversiones" class="clink" ng-click="bodyCtrl.seleccionarSeccion(1)">Estado de Documentos</a></div><!--KUNDER: corregir-->
+                </div>
+                <div class="go-to white-box">
+                    <div class="hechos-esenciales"><a href="http://www.google.cl" target="_blank" class="clink">Hechos Esenciales<img src="../.build/img/icon_external-link.png" class="external-link" /></a></div>
+                </div>
+                <div class="go-to white-box">
+                    <div class="mis-datos"><a href="#/mis-datos" class="clink" ng-click="bodyCtrl.seleccionarSeccion(-1)">Mis Datos</a></div>
+                </div>
+
+            </div><!--end home acceso rapido-->
+
+            <div class="three-col home">
+                <div class="section-title">Ejecutivo de Inversiones</div>
+
+                <div class="executive white-box">
+                    <div class="photo"></div>
+                    <div class="text">
+                        <div class="name">Mario Correa Pérez</div>
+                        <div class="contact">
+                            Tel: (+56 2) 2731 8933<br />
+                            E-mail: <a href="mailto:mail">mcorreap@tanner.cl</a>
+                        </div>
+                        <div class="info">
+                            Fecha de acreditación: 09/11/2015<br />
+                            Sucursal: Santiago
+                        </div>
+                    </div>
+                    <div class="button blue call"><a href="tel:9999999" class="clink">Llamar</a></div>
+                    <div id="clear"></div>
+                </div>
+            </div>
+            <div id="clear"></div>
+
+            <ng-include src="ctrl.constantService.templateFooterURI"></ng-include>
+
+        </div><!--end in-->
+    </div><!--end content-->
+
+</div><!--end container-full-->
