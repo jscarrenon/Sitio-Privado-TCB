@@ -6,6 +6,7 @@ using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -82,6 +83,35 @@ namespace Sitio_Privado.Controllers
             string json = GetUpdateUserRequestBody(content);
             //TODO: Change response
             return await syncApiHelper.UpdateUser(userResponse.objectId.ToString(), json);
+        }
+
+        [HttpGet]
+        public async Task<HttpResponseMessage> GetUser(string id) {
+            HttpResponseMessage getUserResponse = await syncApiHelper.GetUserByRut(id);
+            var userResponse = JObject.Parse(await getUserResponse.Content.ReadAsStringAsync()).GetValue("value").ElementAt(0);
+            JObject responseContent = GetUserResponseBody(userResponse);
+            HttpResponseMessage response = new HttpResponseMessage();
+            response.StatusCode = getUserResponse.StatusCode;
+            response.Content = new StringContent(responseContent.ToString(), Encoding.UTF8,"application/json");
+            return response;
+        }
+
+        private JObject GetUserResponseBody(JToken content)
+        {
+            JObject response = new JObject();
+            response.Add(NameParam, content.Value<string>(GivenNameParamKey));
+            response.Add(SurnameParam, content.Value<string>(SurnameParamKey));
+            response.Add(RutParam, content.Value<string>(RutParamKey));
+            response.Add(WorkAddressParam, content.Value<string>(WorkAddressParamKey));
+            response.Add(HomeAddressParam, content.Value<string>(HomeAddressParamKey));
+            response.Add(CountryParam, content.Value<string>(CountryParamKey));
+            response.Add(CityParam, content.Value<string>(CityParamKey));
+            response.Add(WorkPhoneParam, content.Value<string>(WorkPhoneParamKey));
+            response.Add(HomePhoneParam, content.Value<string>(HomePhoneParamKey));
+            response.Add(EmailParam, content.Value<string>(EmailParamKey));
+            response.Add(CheckingAccountParam, content.Value<string>(CheckingAccountParamKey));
+            response.Add(BankParam, content.Value<string>(BankParamKey));
+            return response;
         }
 
         private string GetUpdateUserRequestBody(JObject content)
