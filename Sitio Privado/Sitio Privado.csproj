@@ -191,7 +191,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="App_Start\DataRepository.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
@@ -199,16 +198,11 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\PostsController.cs" />
     <Compile Include="Extras\BaseViewPage.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\UsuarioModels.cs" />
-    <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Post.cs" />
     <Compile Include="PolicyAuthHelpers\HttpDocumentRetriever.cs" />
     <Compile Include="PolicyAuthHelpers\PolicyAuthorize.cs" />
     <Compile Include="PolicyAuthHelpers\PolicyConfigurationManager.cs" />
@@ -231,9 +225,6 @@
     <Content Include="app\mis-inversiones\fondos-privados.html" />
     <Content Include="app\mis-inversiones\index.html" />
     <Content Include="app\mis-inversiones\nacionales.html" />
-    <Content Include="app\posts\add.html" />
-    <Content Include="app\posts\edit.html" />
-    <Content Include="app\posts\list.html" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="gulpfile.js" />
@@ -344,27 +335,7 @@
     </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\ConfirmEmail.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\ResetPassword.cshtml" />
-    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\SendCode.cshtml" />
-    <Content Include="Views\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
-    <Content Include="Views\Manage\ChangePassword.cshtml" />
-    <Content Include="Views\Manage\Index.cshtml" />
-    <Content Include="Views\Manage\ManageLogins.cshtml" />
-    <Content Include="Views\Manage\SetPassword.cshtml" />
-    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
-    <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -396,14 +367,10 @@
     <TypeScriptCompile Include="app\common\services\dataService.ts" />
     <TypeScriptCompile Include="app\domain\IEntity.ts" />
     <TypeScriptCompile Include="app\domain\Usuario.ts" />
-    <TypeScriptCompile Include="app\domain\Post.ts" />
     <TypeScriptCompile Include="app\home\homeCtrl.ts" />
     <TypeScriptCompile Include="app\inversiones\inversionesCtrl.ts" />
     <TypeScriptCompile Include="app\mis-inversiones\misInversionesDocumentosCtrl.ts" />
     <TypeScriptCompile Include="app\mis-inversiones\misInversionesCtrl.ts" />
-    <TypeScriptCompile Include="app\posts\postAddCtrl.ts" />
-    <TypeScriptCompile Include="app\posts\postEditCtrl.ts" />
-    <TypeScriptCompile Include="app\posts\postsCtrl.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-animate.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-cookies.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-mocks.d.ts" />

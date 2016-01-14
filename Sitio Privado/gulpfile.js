@@ -19,7 +19,7 @@ var paths = {
     index: './Views/Home/Index.cshtml',
     homeFolder: './Views/Home/',
     domainFiles: ['./app/domain/*.js'],
-    appFiles: ['./app/*.js', './app/posts/*.js', './app/common/services/*.js', './app/common/controllers/*.js', './app/home/*.js', './app/inversiones/*.js', './app/mis-inversiones/*.js'],
+    appFiles: ['./app/*.js', './app/common/services/*.js', './app/common/controllers/*.js', './app/home/*.js', './app/inversiones/*.js', './app/mis-inversiones/*.js'],
     stylesCss: ['./Styles/*.css'],
     stylesLess: ['./Styles/*.less'],
     scripts: ['./Scripts/extras/*.js'],

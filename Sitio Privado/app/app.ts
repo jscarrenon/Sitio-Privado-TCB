@@ -18,10 +18,6 @@
                     templateUrl: "/app/home/mis-datos.html",
                     controller: "HomeCtrl as ctrl"
                 })
-                .when("/add", {
-                    templateUrl: "/app/posts/add.html",
-                    controller: "PostAddCtrl as vm"
-                })
                 .otherwise({ redirectTo: '/' });
         }
     }
