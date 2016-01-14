@@ -13,7 +13,7 @@ using System.Net;
 
 namespace Sitio_Privado.Helpers
 {
-    public class SyncApiClientHelper
+    public class GraphApiClientHelper
     {
         private const string AadInstance = "https://login.microsoftonline.com/";
         private const string AadGraphResourceId = "https://graph.windows.net/";
@@ -30,7 +30,7 @@ namespace Sitio_Privado.Helpers
         private AuthenticationContext authContext;
         private ClientCredential credential;
 
-        public SyncApiClientHelper() {
+        public GraphApiClientHelper() {
             // The AuthenticationContext is ADAL's primary class, in which you indicate the direcotry to use.
             this.authContext = new AuthenticationContext("https://login.microsoftonline.com/" + Tenant);
 
@@ -58,6 +58,11 @@ namespace Sitio_Privado.Helpers
             queryBuilder.Append(rut);
             queryBuilder.Append("'");
             return await SendGraphGetRequest(UsersApiPath, queryBuilder.ToString());
+        }
+
+        public async Task<HttpResponseMessage> GetUserByObjectId(string id)
+        {
+            return await SendGraphGetRequest("/me", null);
         }
 
         private async Task<HttpResponseMessage> SendGraphPostRequest(string api, string json)

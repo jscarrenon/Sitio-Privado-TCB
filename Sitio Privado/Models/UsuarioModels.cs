@@ -14,7 +14,7 @@ namespace Sitio_Privado.Models
         public const string DireccionComercial = "direccioncomercial";
         public const string DireccionParticular = ClaimTypes.StreetAddress;
         public const string Ciudad = "city";
-        public const string Pais = ClaimTypes.Country;
+        public const string Pais = "country";
         public const string TelefonoComercial = "telefonocomercial";
         public const string TelefonoParticular = ClaimTypes.HomePhone;
         public const string Email = ClaimTypes.Email;
@@ -42,7 +42,7 @@ namespace Sitio_Privado.Models
     }
 
     public class Usuario : ClaimsPrincipal, ICustomPrincipal
-    {
+    {//Obtener el aud desde Identity, obtener el usuario y guardar los extension attributes
         public Usuario() { }
 
         public Usuario(ClaimsPrincipal principal) : base (principal) { }

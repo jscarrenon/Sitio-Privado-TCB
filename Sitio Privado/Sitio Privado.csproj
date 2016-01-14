@@ -235,7 +235,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SyncApiController.cs" />
-    <Compile Include="Helpers\SyncApiClientHelper.cs" />
+    <Compile Include="Helpers\GraphApiClientHelper.cs" />
     <Compile Include="Extras\BaseViewPage.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

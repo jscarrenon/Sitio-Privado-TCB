@@ -59,7 +59,7 @@ namespace Sitio_Privado.Controllers
         private static string TemporalPasswordParam = "temporalPassword";
         #endregion
 
-        private SyncApiClientHelper syncApiHelper = new SyncApiClientHelper();
+        private GraphApiClientHelper syncApiHelper = new GraphApiClientHelper();
 
         [HttpPost]
         public async Task<HttpResponseMessage> CreateUser(HttpRequestMessage request)
