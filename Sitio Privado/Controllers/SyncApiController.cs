@@ -77,19 +77,21 @@ namespace Sitio_Privado.Controllers
         [HttpPatch]
         public async Task<HttpResponseMessage> UpdateUser(string id, HttpRequestMessage request)
         {
-            HttpResponseMessage getUserResponse = await syncApiHelper.GetUserByRut(id);
-            dynamic userResponse = JObject.Parse(await getUserResponse.Content.ReadAsStringAsync()).GetValue("value").ElementAt(0);
-            JObject content = JObject.Parse(await request.Content.ReadAsStringAsync());
-            string json = GetUpdateUserGraphApiRequestBody(content);
-            //TODO: Change response
-            return await syncApiHelper.UpdateUser(userResponse.objectId.ToString(), json);
+            HttpResponseMessage userGraphApiResponse = await syncApiHelper.GetUserByRut(id);
+            JObject userGraphApiResponseContent = (JObject)await userGraphApiResponse.Content.ReadAsAsync(typeof(JObject));
+            string userGraphId = userGraphApiResponseContent.GetValue("value").ElementAt(0).Value<string>("objectId");
+            JObject requestContent = (JObject)await request.Content.ReadAsAsync(typeof(JObject));
+            string requestJsonBody = GetUpdateUserGraphApiRequestBody(requestContent);
+            HttpResponseMessage updateUserGraphApiResponse = await syncApiHelper.UpdateUser(userGraphId, requestJsonBody);
+            HttpResponseMessage response = new HttpResponseMessage(updateUserGraphApiResponse.StatusCode);
+            return response;
         }
 
         [HttpGet]
         public async Task<HttpResponseMessage> GetUser(string id) {
             HttpResponseMessage graphApiResponse = await syncApiHelper.GetUserByRut(id);
             JObject graphApiResponseContent = (JObject)await graphApiResponse.Content.ReadAsAsync(typeof(JObject));
-            string responseBody = GetUserResponseBody(graphApiResponseContent);
+            string responseBody = GetUserResponseBody((JObject)graphApiResponseContent.GetValue("value").ElementAt(0));
             HttpResponseMessage response = new HttpResponseMessage(graphApiResponse.StatusCode);
             response.Content = new StringContent(responseBody.ToString(), Encoding.UTF8,"application/json");
             return response;
