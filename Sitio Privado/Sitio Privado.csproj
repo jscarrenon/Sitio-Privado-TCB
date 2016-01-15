@@ -385,7 +385,7 @@
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </Content>
-	<None Include="Web References\InformacionClienteAgente\tann_info_cliente.disco" />
+    <None Include="Web References\InformacionClienteAgente\tann_info_cliente.disco" />
     <None Include="Web References\CategoriaInversionista\tann_catsvc.wsdl" />
     <Content Include="Web References\CategoriaInversionista\_categoria.datasource">
       <DependentUpon>Reference.map</DependentUpon>
@@ -467,7 +467,6 @@
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-sanitize.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
-    <TypeScriptCompile Include="Scripts\typings\slicknav\slicknav.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
