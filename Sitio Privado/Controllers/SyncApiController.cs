@@ -50,13 +50,28 @@ namespace Sitio_Privado.Controllers
         [HttpPatch]
         public async Task<HttpResponseMessage> UpdateUser(string id, HttpRequestMessage request)
         {
-            HttpResponseMessage userGraphApiResponse = await syncApiHelper.GetUserByRut(id);
-            JObject userGraphApiResponseContent = (JObject)await userGraphApiResponse.Content.ReadAsAsync(typeof(JObject));
-            string userGraphId = userGraphApiResponseContent.GetValue("value").ElementAt(0).Value<string>("objectId");
+            HttpResponseMessage response = new HttpResponseMessage();
+
             JObject requestContent = (JObject)await request.Content.ReadAsAsync(typeof(JObject));
             string requestJsonBody = GetUpdateUserGraphApiRequestBody(requestContent);
+            if (requestJsonBody == null) {
+                response.StatusCode = HttpStatusCode.BadRequest;
+                return response;
+            }
+
+            HttpResponseMessage getGraphApiResponse = await syncApiHelper.GetUserByRut(id);
+            JObject getGraphApiResponseContent = (JObject)await getGraphApiResponse.Content.ReadAsAsync(typeof(JObject));
+            JArray usersGraphApiResponse = (JArray)getGraphApiResponseContent.GetValue("value");
+
+            if (usersGraphApiResponse.Count <= 0)
+            {
+                response.StatusCode = HttpStatusCode.NotFound;
+                return response;
+            }
+
+            string userGraphId = usersGraphApiResponse.First.Value<string>("objectId");
             HttpResponseMessage updateUserGraphApiResponse = await syncApiHelper.UpdateUser(userGraphId, requestJsonBody);
-            HttpResponseMessage response = new HttpResponseMessage(updateUserGraphApiResponse.StatusCode);
+            response.StatusCode = updateUserGraphApiResponse.StatusCode;
             return response;
         }
 
@@ -102,6 +117,9 @@ namespace Sitio_Privado.Controllers
 
         private string GetUpdateUserGraphApiRequestBody(JObject content)
         {
+            if (content == null)
+                return null;
+
             //TODO: update
             JObject json = new JObject();
 
