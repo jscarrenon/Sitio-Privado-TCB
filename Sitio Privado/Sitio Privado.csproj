@@ -351,7 +351,6 @@
     <Content Include="Resources\img\prod_renta-variable-internacional.jpg" />
     <Content Include="Resources\img\prod_renta-variable-nacional.jpg" />
     <Content Include="Scripts\extras\index.js" />
-    <Content Include="Scripts\extras\jquery.slicknav.min.js" />
     <Content Include="Scripts\extras\jquery.sticky.js" />
     <Content Include="Scripts\extras\uglipop.min.js" />
     <Content Include="Styles\slicknav.css" />
@@ -386,7 +385,7 @@
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </Content>
-	<None Include="Web References\InformacionClienteAgente\tann_info_cliente.disco" />	
+	<None Include="Web References\InformacionClienteAgente\tann_info_cliente.disco" />
     <None Include="Web References\CategoriaInversionista\tann_catsvc.wsdl" />
     <Content Include="Web References\CategoriaInversionista\_categoria.datasource">
       <DependentUpon>Reference.map</DependentUpon>
@@ -406,7 +405,7 @@
     <None Include="Web References\InformacionClienteAgente\tann_info_cliente.wsdl" />
     <Content Include="Web References\InformacionClienteAgente\_agente1.datasource">
       <DependentUpon>Reference.map</DependentUpon>
-    </Content>		
+    </Content>
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -450,6 +449,7 @@
     <TypeScriptCompile Include="app\common\controllers\bodyCtrl.ts" />
     <TypeScriptCompile Include="app\common\services\constantService.ts" />
     <TypeScriptCompile Include="app\common\services\dataService.ts" />
+    <TypeScriptCompile Include="app\common\typings\slicknav.ts" />
     <TypeScriptCompile Include="app\domain\AgenteInput.ts" />
     <TypeScriptCompile Include="app\domain\IInput.ts" />
     <TypeScriptCompile Include="app\domain\IEntity.ts" />
