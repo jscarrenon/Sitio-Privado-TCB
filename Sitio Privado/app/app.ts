@@ -1,6 +1,4 @@
-﻿///<reference path="../Scripts/typings/slicknav/slicknav.d.ts" />
-
-module app {
+﻿module app {
     class Config {
         constructor($routeProvider: ng.route.IRouteProvider) {
             $routeProvider

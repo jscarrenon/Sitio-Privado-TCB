@@ -319,7 +319,6 @@
     <Content Include="Resources\img\prod_renta-variable-internacional.jpg" />
     <Content Include="Resources\img\prod_renta-variable-nacional.jpg" />
     <Content Include="Scripts\extras\index.js" />
-    <Content Include="Scripts\extras\jquery.slicknav.min.js" />
     <Content Include="Scripts\extras\jquery.sticky.js" />
     <Content Include="Scripts\extras\uglipop.min.js" />
     <Content Include="Styles\slicknav.css" />
@@ -365,6 +364,7 @@
     <TypeScriptCompile Include="app\common\controllers\bodyCtrl.ts" />
     <TypeScriptCompile Include="app\common\services\constantService.ts" />
     <TypeScriptCompile Include="app\common\services\dataService.ts" />
+    <TypeScriptCompile Include="app\common\typings\slicknav.ts" />
     <TypeScriptCompile Include="app\domain\IEntity.ts" />
     <TypeScriptCompile Include="app\domain\Usuario.ts" />
     <TypeScriptCompile Include="app\home\homeCtrl.ts" />
@@ -379,7 +379,6 @@
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-sanitize.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
-    <TypeScriptCompile Include="Scripts\typings\slicknav\slicknav.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
