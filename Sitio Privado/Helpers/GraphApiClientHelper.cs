@@ -42,10 +42,8 @@ namespace Sitio_Privado.Helpers
         public static string SignInAlternativesParamKey = "alternativeSignInNamesInfo";
         #endregion
 
-        private const string AadInstance = "https://login.microsoftonline.com/";
         private const string AadGraphResourceId = "https://graph.windows.net/";
         private const string AadGraphEndpoint = "https://graph.windows.net/";
-        private const string AadGraphSuffix = "";
         private const string AadGraphVersion = "api-version=beta";
 
         private const string UsersApiPath = "/users";
@@ -78,13 +76,8 @@ namespace Sitio_Privado.Helpers
 
         public async Task<HttpResponseMessage> GetUserByRut(string rut)
         {
-            StringBuilder queryBuilder = new StringBuilder();
-            queryBuilder.Append("$filter=");
-            queryBuilder.Append(ConfigurationManager.AppSettings["b2c:Extensions"]);
-            queryBuilder.Append("RUT eq '");
-            queryBuilder.Append(rut);
-            queryBuilder.Append("'");
-            return await SendGraphGetRequest(UsersApiPath, queryBuilder.ToString());
+            string query = "$filter=" + RutParamKey + " eq '" + rut + "'";
+            return await SendGraphGetRequest(UsersApiPath, query);
         }
 
         public async Task<HttpResponseMessage> GetUserByObjectId(string id)

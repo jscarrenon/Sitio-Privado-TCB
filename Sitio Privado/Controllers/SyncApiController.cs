@@ -61,7 +61,8 @@ namespace Sitio_Privado.Controllers
         }
 
         [HttpGet]
-        public async Task<HttpResponseMessage> GetUser(string id) {
+        public async Task<HttpResponseMessage> GetUser(string id)
+        {
             HttpResponseMessage graphApiResponse = await syncApiHelper.GetUserByRut(id);
             JObject graphApiResponseContent = (JObject)await graphApiResponse.Content.ReadAsAsync(typeof(JObject));
             string responseBody = GetUserResponseBody((JObject)graphApiResponseContent.GetValue("value").ElementAt(0));
