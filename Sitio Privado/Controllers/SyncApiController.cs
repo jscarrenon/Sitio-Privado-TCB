@@ -63,11 +63,22 @@ namespace Sitio_Privado.Controllers
         [HttpGet]
         public async Task<HttpResponseMessage> GetUser(string id)
         {
+            HttpResponseMessage response = new HttpResponseMessage();
+
             HttpResponseMessage graphApiResponse = await syncApiHelper.GetUserByRut(id);
             JObject graphApiResponseContent = (JObject)await graphApiResponse.Content.ReadAsAsync(typeof(JObject));
-            string responseBody = GetUserResponseBody((JObject)graphApiResponseContent.GetValue("value").ElementAt(0));
-            HttpResponseMessage response = new HttpResponseMessage(graphApiResponse.StatusCode);
-            response.Content = new StringContent(responseBody.ToString(), Encoding.UTF8,"application/json");
+            JArray graphApiResponseUsers = (JArray)graphApiResponseContent.GetValue("value");
+            if (graphApiResponseUsers.Count > 0)
+            {
+                response.StatusCode = HttpStatusCode.OK;
+                string responseBody = GetUserResponseBody((JObject)graphApiResponseUsers.First);
+                response.Content = new StringContent(responseBody.ToString(), Encoding.UTF8, "application/json");
+            }
+            else
+            {
+                response.StatusCode = HttpStatusCode.NotFound;
+            }
+            
             return response;
         }
 
