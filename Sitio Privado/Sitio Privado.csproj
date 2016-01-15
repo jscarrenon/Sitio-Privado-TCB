@@ -451,6 +451,8 @@
     <TypeScriptCompile Include="app\common\services\constantService.ts" />
     <TypeScriptCompile Include="app\common\services\dataService.ts" />
     <TypeScriptCompile Include="app\common\typings\slicknav.ts" />
+    <TypeScriptCompile Include="app\domain\Categoria.ts" />
+    <TypeScriptCompile Include="app\domain\CategoriaInput.ts" />
     <TypeScriptCompile Include="app\domain\AgenteInput.ts" />
     <TypeScriptCompile Include="app\domain\IInput.ts" />
     <TypeScriptCompile Include="app\domain\IEntity.ts" />
