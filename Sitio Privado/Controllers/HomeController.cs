@@ -47,6 +47,12 @@ namespace Sitio_Privado.Controllers
             usuario.DireccionComercial = graphApiResponseContent.Value<string>(GraphApiClientHelper.WorkAddressParamKey);
             usuario.DireccionParticular = graphApiResponseContent.Value<string>(GraphApiClientHelper.HomeAddressParamKey);
             usuario.Rut = graphApiResponseContent.Value<string>(GraphApiClientHelper.RutParamKey);
+
+        public JsonResult TestWebService()
+        {
+            Agente agente = new Agente(new AgenteInput() { _rut = "8411855-9", _sec = 31 });
+
+            return Json(agente, JsonRequestBehavior.AllowGet);
         }
     }
 }

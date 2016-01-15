@@ -66,20 +66,20 @@
             <div class="three-col home">
                 <div class="section-title">Ejecutivo de Inversiones</div>
 
-                <div class="executive white-box">
-                    <div class="photo"></div>
+                <div class="executive white-box" ng-controller="WebserviceCtrl as webserviceCtrl">
+                    <div class="photo"><img src="{{webserviceCtrl.agente.PathImg}}" /></div>
                     <div class="text">
-                        <div class="name">Mario Correa Pérez</div>
+                        <div class="name">{{webserviceCtrl.agente.Nombre}}</div>
                         <div class="contact">
-                            Tel: (+56 2) 2731 8933<br />
-                            E-mail: <a href="mailto:mail">mcorreap@tanner.cl</a>
+                            Tel: {{webserviceCtrl.agente.Telefono}}<br />
+                            E-mail: <a href="mailto:{{webserviceCtrl.agente.Email}}">{{webserviceCtrl.agente.Email}}</a>
                         </div>
                         <div class="info">
-                            Fecha de acreditación: 09/11/2015<br />
-                            Sucursal: Santiago
+                            Fecha de acreditación: {{webserviceCtrl.agente.FechaAcreditacion}}<br />
+                            Sucursal: {{webserviceCtrl.agente.Sucursal}}
                         </div>
                     </div>
-                    <div class="button blue call"><a href="tel:9999999" class="clink">Llamar</a></div>
+                    <div class="button blue call"><a href="tel:{{webserviceCtrl.agente.Telefono}}" class="clink">Llamar</a></div>
                     <div id="clear"></div>
                 </div>
             </div>
