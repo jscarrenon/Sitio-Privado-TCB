@@ -16,6 +16,7 @@ namespace Sitio_Privado.Controllers
 {
     public class HomeController : BaseController
     {
+        private static string ObjectIdClaim = "http://schemas.microsoft.com/identity/claims/objectidentifier";
         GraphApiClientHelper graphApiHelper = new GraphApiClientHelper();
 
         public ActionResult Index()
@@ -32,19 +33,20 @@ namespace Sitio_Privado.Controllers
 
         private async Task SetUserExtendedAttributes(Usuario usuario)
         {
-            IEnumerable<Claim> asd = ((ClaimsIdentity)usuario.Identity).Claims.Where(c => c.Type == "http://schemas.microsoft.com/identity/claims/objectidentifier");
-            Claim claim = asd.First();
-            string id = claim.Value;
-            HttpResponseMessage response = await graphApiHelper.GetUserByObjectId(id);
+            //Retrieve user info
+            Claim idClaim = ((ClaimsIdentity)usuario.Identity).Claims.Where(c => c.Type == ObjectIdClaim).First();
+            HttpResponseMessage response = await graphApiHelper.GetUserByObjectId(idClaim.Value);
             JObject graphApiResponseContent = (JObject)await response.Content.ReadAsAsync(typeof(JObject));
-            usuario.Banco = graphApiResponseContent.Value<string>(ConfigurationManager.AppSettings["b2c:Extensions"] + "Bank");
-            usuario.CuentaCorriente = graphApiResponseContent.Value<string>(ConfigurationManager.AppSettings["b2c:Extensions"] + "CheckingAccount");
-            usuario.Email = graphApiResponseContent.Value<string>(ConfigurationManager.AppSettings["b2c:Extensions"] + "Email");
-            usuario.TelefonoComercial = graphApiResponseContent.Value<string>(ConfigurationManager.AppSettings["b2c:Extensions"] + "WorkPhoneNumber");
-            usuario.TelefonoParticular = graphApiResponseContent.Value<string>(ConfigurationManager.AppSettings["b2c:Extensions"] + "HomePhoneNumber");
-            usuario.DireccionComercial = graphApiResponseContent.Value<string>(ConfigurationManager.AppSettings["b2c:Extensions"] + "WorkAddress");
-            usuario.DireccionParticular = graphApiResponseContent.Value<string>(ConfigurationManager.AppSettings["b2c:Extensions"] + "HomeAddress");
-            usuario.Rut = graphApiResponseContent.Value<string>(ConfigurationManager.AppSettings["b2c:Extensions"] + "RUT");
+
+            //Save used info
+            usuario.Banco = graphApiResponseContent.Value<string>(GraphApiClientHelper.BankParamKey);
+            usuario.CuentaCorriente = graphApiResponseContent.Value<string>(GraphApiClientHelper.CheckingAccountParamKey);
+            usuario.Email = graphApiResponseContent.Value<string>(GraphApiClientHelper.EmailParamKey);
+            usuario.TelefonoComercial = graphApiResponseContent.Value<string>(GraphApiClientHelper.WorkPhoneParamKey);
+            usuario.TelefonoParticular = graphApiResponseContent.Value<string>(GraphApiClientHelper.HomePhoneParamKey);
+            usuario.DireccionComercial = graphApiResponseContent.Value<string>(GraphApiClientHelper.WorkAddressParamKey);
+            usuario.DireccionParticular = graphApiResponseContent.Value<string>(GraphApiClientHelper.HomeAddressParamKey);
+            usuario.Rut = graphApiResponseContent.Value<string>(GraphApiClientHelper.RutParamKey);
         }
     }
 }

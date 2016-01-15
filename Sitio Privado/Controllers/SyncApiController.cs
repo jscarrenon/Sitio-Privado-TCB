@@ -15,33 +15,6 @@ namespace Sitio_Privado.Controllers
     //TODO: include authentication
     public class SyncApiController : ApiController
     {
-        #region Graph API Parameters
-        //Keys used by Azure GraphAPI
-        private static string ExtensionsPrefixe = ConfigurationManager.AppSettings["b2c:Extensions"];
-        private static string AccountEnabledParamKey = "accountEnabled";
-        private static string CreationTypeParamKey = "creationType";
-        private static string PasswordPoliciesParamKey = "passwordPolicies";
-        private static string GivenNameParamKey = "givenName";
-        private static string SurnameParamKey = "surname";
-        private static string RutParamKey = ExtensionsPrefixe + "RUT";
-        private static string WorkAddressParamKey = ExtensionsPrefixe + "WorkAddress";
-        private static string HomeAddressParamKey = ExtensionsPrefixe + "HomeAddress";
-        private static string CountryParamKey = "country";
-        private static string CityParamKey = "city";
-        private static string WorkPhoneParamKey = ExtensionsPrefixe + "WorkPhoneNumber";
-        private static string HomePhoneParamKey = ExtensionsPrefixe + "HomePhoneNumber";
-        private static string EmailParamKey = ExtensionsPrefixe + "Email";
-        private static string CheckingAccountParamKey = ExtensionsPrefixe + "CheckingAccount";
-        private static string BankParamKey = ExtensionsPrefixe + "Bank";
-        private static string DisplayNameParamKey = "displayName";
-        private static string PasswordParamKey = "password";
-        private static string ForcePasswordChangeParamKey = "forceChangePasswordNextLogin";
-        private static string PasswordProfileParamKey = "passwordProfile";
-        private static string SignInTypeParamKey = "type";
-        private static string SignInValueParamKey = "value";
-        private static string SignInAlternativesParamKey = "alternativeSignInNamesInfo";
-        #endregion
-
         #region SyncAPIController Parameters
         //Keys used by our API
         private static string NameParam = "names";
@@ -163,38 +136,38 @@ namespace Sitio_Privado.Controllers
         {
             JObject json = new JObject();
             //Fixed parameters
-            json.Add(AccountEnabledParamKey, true);
-            json.Add(CreationTypeParamKey, "NameCoexistence");
-            json.Add(PasswordPoliciesParamKey, "DisablePasswordExpiration");
+            json.Add(GraphApiClientHelper.AccountEnabledParamKey, true);
+            json.Add(GraphApiClientHelper.CreationTypeParamKey, "NameCoexistence");
+            json.Add(GraphApiClientHelper.PasswordPoliciesParamKey, "DisablePasswordExpiration");
 
             //General information
-            json.Add(GivenNameParamKey, content.GetValue(NameParam));
-            json.Add(SurnameParamKey, content.GetValue(SurnameParam));
-            json.Add(RutParamKey, content.GetValue(RutParam));
-            json.Add(WorkAddressParamKey, content.GetValue(WorkAddressParam));
-            json.Add(HomeAddressParamKey, content.GetValue(HomeAddressParam));
-            json.Add(CountryParamKey, content.GetValue(CountryParam));
-            json.Add(CityParamKey, content.GetValue(CityParam));
-            json.Add(WorkPhoneParamKey, content.GetValue(WorkPhoneParam));
-            json.Add(HomePhoneParamKey, content.GetValue(HomePhoneParam));
-            json.Add(EmailParamKey, content.GetValue(EmailParam));
-            json.Add(CheckingAccountParamKey, content.GetValue(CheckingAccountParam));
-            json.Add(BankParamKey, content.GetValue(BankParam));
-            json.Add(DisplayNameParamKey, content.GetValue(NameParam).ToString() + " " + 
+            json.Add(GraphApiClientHelper.GivenNameParamKey, content.GetValue(NameParam));
+            json.Add(GraphApiClientHelper.SurnameParamKey, content.GetValue(SurnameParam));
+            json.Add(GraphApiClientHelper.RutParamKey, content.GetValue(RutParam));
+            json.Add(GraphApiClientHelper.WorkAddressParamKey, content.GetValue(WorkAddressParam));
+            json.Add(GraphApiClientHelper.HomeAddressParamKey, content.GetValue(HomeAddressParam));
+            json.Add(GraphApiClientHelper.CountryParamKey, content.GetValue(CountryParam));
+            json.Add(GraphApiClientHelper.CityParamKey, content.GetValue(CityParam));
+            json.Add(GraphApiClientHelper.WorkPhoneParamKey, content.GetValue(WorkPhoneParam));
+            json.Add(GraphApiClientHelper.HomePhoneParamKey, content.GetValue(HomePhoneParam));
+            json.Add(GraphApiClientHelper.EmailParamKey, content.GetValue(EmailParam));
+            json.Add(GraphApiClientHelper.CheckingAccountParamKey, content.GetValue(CheckingAccountParam));
+            json.Add(GraphApiClientHelper.BankParamKey, content.GetValue(BankParam));
+            json.Add(GraphApiClientHelper.DisplayNameParamKey, content.GetValue(NameParam).ToString() + " " + 
                 content.GetValue(SurnameParam).ToString());
             
             //Temporal password
             JObject passwordProfile = new JObject();
-            passwordProfile.Add(PasswordParamKey, content.GetValue(TemporalPasswordParam));
-            passwordProfile.Add(ForcePasswordChangeParamKey, true);
-            json.Add(PasswordProfileParamKey, passwordProfile);
+            passwordProfile.Add(GraphApiClientHelper.PasswordParamKey, content.GetValue(TemporalPasswordParam));
+            passwordProfile.Add(GraphApiClientHelper.ForcePasswordChangeParamKey, true);
+            json.Add(GraphApiClientHelper.PasswordProfileParamKey, passwordProfile);
 
             //Rut as login identifier
             JObject signInAlternative = new JObject();
-            signInAlternative.Add(SignInTypeParamKey, "userName");
-            signInAlternative.Add(SignInValueParamKey, content.GetValue(RutParam));
+            signInAlternative.Add(GraphApiClientHelper.SignInTypeParamKey, "userName");
+            signInAlternative.Add(GraphApiClientHelper.SignInValueParamKey, content.GetValue(RutParam));
             JArray signInAlternativesArray = new JArray(signInAlternative);
-            json.Add(SignInAlternativesParamKey, signInAlternativesArray);
+            json.Add(GraphApiClientHelper.SignInAlternativesParamKey, signInAlternativesArray);
 
             return json.ToString();
         }
