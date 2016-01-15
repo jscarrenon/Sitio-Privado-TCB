@@ -15,6 +15,33 @@ namespace Sitio_Privado.Helpers
 {
     public class GraphApiClientHelper
     {
+        #region Graph API Parameters
+        //Keys used by Azure GraphAPI
+        private static string ExtensionsPrefixe = ConfigurationManager.AppSettings["b2c:Extensions"];
+        public static string AccountEnabledParamKey = "accountEnabled";
+        public static string CreationTypeParamKey = "creationType";
+        public static string PasswordPoliciesParamKey = "passwordPolicies";
+        public static string GivenNameParamKey = "givenName";
+        public static string SurnameParamKey = "surname";
+        public static string RutParamKey = ExtensionsPrefixe + "RUT";
+        public static string WorkAddressParamKey = ExtensionsPrefixe + "WorkAddress";
+        public static string HomeAddressParamKey = ExtensionsPrefixe + "HomeAddress";
+        public static string CountryParamKey = "country";
+        public static string CityParamKey = "city";
+        public static string WorkPhoneParamKey = ExtensionsPrefixe + "WorkPhoneNumber";
+        public static string HomePhoneParamKey = ExtensionsPrefixe + "HomePhoneNumber";
+        public static string EmailParamKey = ExtensionsPrefixe + "Email";
+        public static string CheckingAccountParamKey = ExtensionsPrefixe + "CheckingAccount";
+        public static string BankParamKey = ExtensionsPrefixe + "Bank";
+        public static string DisplayNameParamKey = "displayName";
+        public static string PasswordParamKey = "password";
+        public static string ForcePasswordChangeParamKey = "forceChangePasswordNextLogin";
+        public static string PasswordProfileParamKey = "passwordProfile";
+        public static string SignInTypeParamKey = "type";
+        public static string SignInValueParamKey = "value";
+        public static string SignInAlternativesParamKey = "alternativeSignInNamesInfo";
+        #endregion
+
         private const string AadInstance = "https://login.microsoftonline.com/";
         private const string AadGraphResourceId = "https://graph.windows.net/";
         private const string AadGraphEndpoint = "https://graph.windows.net/";
