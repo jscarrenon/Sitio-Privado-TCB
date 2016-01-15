@@ -22,7 +22,7 @@ var paths = {
     appFiles: ['./app/*.js', './app/common/services/*.js', './app/common/controllers/*.js', './app/common/typings/*.js', './app/home/*.js', './app/inversiones/*.js', './app/mis-inversiones/*.js'],
     stylesCss: ['./Styles/*.css'],
     stylesLess: ['./Styles/*.less'],
-    scripts: ['./Scripts/extras/*.js', './Scripts/typings/slicknav/slicknav.js'],
+    scripts: ['./Scripts/extras/jquery.sticky.js','./Scripts/extras/*.js'],
     bower_components: ['./bower_components/angular-route/angular-route.js',
                                  './bower_components/angular/angular.js',
                                  './bower_components/jquery/dist/jquery.js'],
