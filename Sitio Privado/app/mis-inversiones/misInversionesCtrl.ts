@@ -22,13 +22,14 @@
             this.seccionId = 0;
             this.seleccionarSeccion(this.seccionId);
 
-            //IMPORTANTE: aquí se debe usar librería js "slicknav", pero primero debe definirse el declaration file (.d.ts)
-            /*$(function () {
-                $('#menu2').slicknav({
+            ////IMPORTANTE: aquí se debe usar librería js "slicknav", pero primero debe definirse el declaration file (.d.ts)
+            $(function () {
+                (<any>$('#menu2')).slicknav({
                     label: 'Mis Inversiones', //important: active section name
                     prependTo: '#sidemenu'
                 });
-            });*/
+            });
+            
         }
 
         seleccionarSeccion(id: number): void {
