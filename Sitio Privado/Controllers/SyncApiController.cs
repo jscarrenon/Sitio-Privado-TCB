@@ -6,6 +6,7 @@ using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -37,12 +38,22 @@ namespace Sitio_Privado.Controllers
         [HttpPost]
         public async Task<HttpResponseMessage> CreateUser(HttpRequestMessage request)
         {
+            HttpResponseMessage response = new HttpResponseMessage();
+
             JObject requestBody = JObject.Parse(await request.Content.ReadAsStringAsync());
+            if (!CheckNeededAttributesForCreatingUser(requestBody))
+            {
+                response.StatusCode = HttpStatusCode.BadRequest;
+                JObject json = new JObject();
+                json.Add("message", "One or more required parameters is missing");
+                response.Content = new StringContent(json.ToString(), Encoding.UTF8, "application/json");
+                return response;
+            }
             string graphApiRequestBody = GetCreateUserGraphApiRequestBody(requestBody);
             HttpResponseMessage graphApiResponse = await syncApiHelper.CreateUser(graphApiRequestBody);
             JObject graphApiResponseContent = (JObject)await graphApiResponse.Content.ReadAsAsync(typeof(JObject));
             string responseBody = GetUserResponseBody(graphApiResponseContent);
-            HttpResponseMessage response = new HttpResponseMessage(graphApiResponse.StatusCode);
+            response.StatusCode = graphApiResponse.StatusCode;
             response.Content = new StringContent(responseBody, Encoding.UTF8, "application/json");
             return response;
         }
@@ -120,7 +131,6 @@ namespace Sitio_Privado.Controllers
             if (content == null)
                 return null;
 
-            //TODO: update
             JObject json = new JObject();
 
             if (content.GetValue(WorkAddressParam) != null)
@@ -149,15 +159,6 @@ namespace Sitio_Privado.Controllers
             
             if (content.GetValue(BankParam) != null)
                 json.Add(GraphApiClientHelper.BankParamKey, content.GetValue(BankParam));
-
-            /*if (content.GetValue(TemporalPasswordParam) != null)
-            {
-                //Temporal password
-                JObject passwordProfile = new JObject();
-                passwordProfile.Add(PasswordParamKey, content.GetValue(TemporalPasswordParam));
-                passwordProfile.Add(ForcePasswordChangeParamKey, true);
-                json.Add(PasswordProfileParamKey, passwordProfile);
-            }*/
 
             return json.ToString();
         }
@@ -200,6 +201,14 @@ namespace Sitio_Privado.Controllers
             json.Add(GraphApiClientHelper.SignInAlternativesParamKey, signInAlternativesArray);
 
             return json.ToString();
+        }
+
+        private bool CheckNeededAttributesForCreatingUser(JObject requestBody)
+        {
+            if (requestBody.GetValue(NameParam) == null || requestBody.GetValue(SurnameParam) == null ||
+                requestBody.GetValue(RutParam) == null || requestBody.GetValue(TemporalPasswordParam) == null)
+                return false;
+            return true;
         }
     }
 }
