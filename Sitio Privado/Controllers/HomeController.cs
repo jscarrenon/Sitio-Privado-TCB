@@ -23,8 +23,7 @@ namespace Sitio_Privado.Controllers
 
         public JsonResult TestWebService()
         {
-            InformacionClienteAgente.tann_info_cliente infocliente = new InformacionClienteAgente.tann_info_cliente();
-            InformacionClienteAgente._agente agente = infocliente.cli_info_agente("8411855-9", 31);
+            Agente agente = new Agente(new AgenteInput() { _rut = "8411855-9", _sec = 31 });
 
             return Json(agente, JsonRequestBehavior.AllowGet);
         }

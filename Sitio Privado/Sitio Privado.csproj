@@ -196,12 +196,14 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AgenteController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Extras\BaseViewPage.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AgenteModel.cs" />
     <Compile Include="Models\UsuarioModels.cs" />
     <Compile Include="PolicyAuthHelpers\HttpDocumentRetriever.cs" />
     <Compile Include="PolicyAuthHelpers\PolicyAuthorize.cs" />
@@ -213,11 +215,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
-    <Compile Include="Web References\InfoClienteAgente\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.map</DependentUpon>
-    </Compile>
+    <Compile Include="Web References\CategoriaInversionista\Reference.cs" />
+    <Compile Include="Web References\ConsultaSaldosFondosMutuos\Reference.cs" />
+    <Compile Include="Web References\ConsultaSaldosFondosPrivados\Reference.cs" />
+    <Compile Include="Web References\IndicesLiquidezSolvencia\Reference.cs" />
+    <Compile Include="Web References\InformacionClienteAgente\Reference.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\common\templates\footer.html" />
@@ -337,11 +339,24 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Content Include="Web References\InfoClienteAgente\Reference.map">
-      <Generator>MSDiscoCodeGenerator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </Content>
-    <None Include="Web References\InfoClienteAgente\tann_info_cliente.disco" />
+    <None Include="Web References\CategoriaInversionista\tann_catsvc.disco" />
+    <None Include="Web References\ConsultaSaldosFondosMutuos\tann_fondos_mutuos.disco" />
+    <None Include="Web References\ConsultaSaldosFondosPrivados\tann_fondo_invpriv.disco" />
+    <None Include="Web References\IndicesLiquidezSolvencia\tann_indicadores.disco" />
+    <Content Include="Web References\CategoriaInversionista\Reference.map" />
+    <None Include="Web References\CategoriaInversionista\tann_catsvc.wsdl" />
+    <Content Include="Web References\CategoriaInversionista\_categoria.datasource" />
+    <Content Include="Web References\CategoriaInversionista\_producto.datasource" />
+    <Content Include="Web References\ConsultaSaldosFondosMutuos\Reference.map" />
+    <Content Include="Web References\ConsultaSaldosFondosMutuos\saldo_ffmm.datasource" />
+    <None Include="Web References\ConsultaSaldosFondosMutuos\tann_fondos_mutuos.wsdl" />
+    <Content Include="Web References\ConsultaSaldosFondosPrivados\Reference.map" />
+    <None Include="Web References\ConsultaSaldosFondosPrivados\tann_fondo_invpriv.wsdl" />
+    <Content Include="Web References\ConsultaSaldosFondosPrivados\_resumen.datasource" />
+    <Content Include="Web References\IndicesLiquidezSolvencia\Reference.map" />
+    <None Include="Web References\IndicesLiquidezSolvencia\tann_indicadores.wsdl" />
+    <Content Include="Web References\IndicesLiquidezSolvencia\_indicadores.datasource" />
+    <None Include="Web References\InformacionClienteAgente\tann_info_cliente.disco" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -356,10 +371,9 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <None Include="Web References\InfoClienteAgente\tann_info_cliente.wsdl" />
-    <Content Include="Web References\InfoClienteAgente\_agente.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </Content>
+    <Content Include="Web References\InformacionClienteAgente\Reference.map" />
+    <None Include="Web References\InformacionClienteAgente\tann_info_cliente.wsdl" />
+    <Content Include="Web References\InformacionClienteAgente\_agente1.datasource" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -385,10 +399,14 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app\app.ts" />
+    <TypeScriptCompile Include="app\common\controllers\webserviceCtrl.ts" />
     <TypeScriptCompile Include="app\common\controllers\bodyCtrl.ts" />
     <TypeScriptCompile Include="app\common\services\constantService.ts" />
     <TypeScriptCompile Include="app\common\services\dataService.ts" />
+    <TypeScriptCompile Include="app\domain\AgenteInput.ts" />
+    <TypeScriptCompile Include="app\domain\IInput.ts" />
     <TypeScriptCompile Include="app\domain\IEntity.ts" />
+    <TypeScriptCompile Include="app\domain\Agente.ts" />
     <TypeScriptCompile Include="app\domain\Usuario.ts" />
     <TypeScriptCompile Include="app\home\homeCtrl.ts" />
     <TypeScriptCompile Include="app\inversiones\inversionesCtrl.ts" />
@@ -402,25 +420,13 @@
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-sanitize.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\slicknav\slicknav.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
     <WebReferences Include="Web References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WebReferenceUrl Include="http://172.17.1.12:8088/tann_info_cliente.asmx">
-      <UrlBehavior>Dynamic</UrlBehavior>
-      <RelPath>Web References\InfoClienteAgente\</RelPath>
-      <UpdateFromURL>http://172.17.1.12:8088/tann_info_cliente.asmx</UpdateFromURL>
-      <ServiceLocationURL>
-      </ServiceLocationURL>
-      <CachedDynamicPropName>
-      </CachedDynamicPropName>
-      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
-      <CachedSettingsPropName>Sitio_Privado_InfoClienteAgente_tann_info_cliente</CachedSettingsPropName>
-    </WebReferenceUrl>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -35,7 +35,7 @@ namespace Sitio_Privado.InformacionClienteAgente {
         
         /// <remarks/>
         public tann_info_cliente() {
-            this.Url = global::Sitio_Privado.Properties.Settings.Default.Sitio_Privado_InfoClienteAgente_tann_info_cliente;
+            this.Url = global::Sitio_Privado.Properties.Settings.Default.Sitio_Privado_InformacionClienteAgente_tann_info_cliente;
             if ((this.IsLocalFileSystemWebService(this.Url) == true)) {
                 this.UseDefaultCredentials = true;
                 this.useDefaultCredentialsSetExplicitly = false;

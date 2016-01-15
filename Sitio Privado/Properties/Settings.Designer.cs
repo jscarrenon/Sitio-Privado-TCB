@@ -26,16 +26,6 @@ namespace Sitio_Privado.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://172.17.1.12:8088/tann_info_cliente.asmx")]
-        public string Sitio_Privado_InfoClienteAgente_tann_info_cliente {
-            get {
-                return ((string)(this["Sitio_Privado_InfoClienteAgente_tann_info_cliente"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
         [global::System.Configuration.DefaultSettingValueAttribute("http://172.17.1.12:8088/tann_catsvc.asmx")]
         public string Sitio_Privado_CategoriaInversionista_tann_catsvc {
             get {
@@ -70,6 +60,18 @@ namespace Sitio_Privado.Properties {
         public string Sitio_Privado_IndicesLiquidezSolvencia_tann_indicadores {
             get {
                 return ((string)(this["Sitio_Privado_IndicesLiquidezSolvencia_tann_indicadores"]));
+            }
+        }
+
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://172.17.1.12:8088/tann_info_cliente.asmx")]
+        public string Sitio_Privado_InformacionClienteAgente_tann_info_cliente
+        {
+            get
+            {
+                return ((string)(this["Sitio_Privado_InformacionClienteAgente_tann_info_cliente"]));
             }
         }
     }

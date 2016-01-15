@@ -18,7 +18,7 @@ var del = require('del');
 var paths = {
     index: './Views/Home/Index.cshtml',
     homeFolder: './Views/Home/',
-    domainFiles: ['./app/domain/*.js'],
+    domainFiles: ['./app/domain/IEntity.js', './app/domain/IInput.js', './app/domain/*.js'],
     appFiles: ['./app/*.js', './app/common/services/*.js', './app/common/controllers/*.js', './app/home/*.js', './app/inversiones/*.js', './app/mis-inversiones/*.js'],
     stylesCss: ['./Styles/*.css'],
     stylesLess: ['./Styles/*.less'],
