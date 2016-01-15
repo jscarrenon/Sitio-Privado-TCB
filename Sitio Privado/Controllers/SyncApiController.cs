@@ -73,18 +73,18 @@ namespace Sitio_Privado.Controllers
         private string GetUserResponseBody(JObject content)
         {
             JObject response = new JObject();
-            response.Add(NameParam, content.Value<string>(GivenNameParamKey));
-            response.Add(SurnameParam, content.Value<string>(SurnameParamKey));
-            response.Add(RutParam, content.Value<string>(RutParamKey));
-            response.Add(WorkAddressParam, content.Value<string>(WorkAddressParamKey));
-            response.Add(HomeAddressParam, content.Value<string>(HomeAddressParamKey));
-            response.Add(CountryParam, content.Value<string>(CountryParamKey));
-            response.Add(CityParam, content.Value<string>(CityParamKey));
-            response.Add(WorkPhoneParam, content.Value<string>(WorkPhoneParamKey));
-            response.Add(HomePhoneParam, content.Value<string>(HomePhoneParamKey));
-            response.Add(EmailParam, content.Value<string>(EmailParamKey));
-            response.Add(CheckingAccountParam, content.Value<string>(CheckingAccountParamKey));
-            response.Add(BankParam, content.Value<string>(BankParamKey));
+            response.Add(NameParam, content.Value<string>(GraphApiClientHelper.GivenNameParamKey));
+            response.Add(SurnameParam, content.Value<string>(GraphApiClientHelper.SurnameParamKey));
+            response.Add(RutParam, content.Value<string>(GraphApiClientHelper.RutParamKey));
+            response.Add(WorkAddressParam, content.Value<string>(GraphApiClientHelper.WorkAddressParamKey));
+            response.Add(HomeAddressParam, content.Value<string>(GraphApiClientHelper.HomeAddressParamKey));
+            response.Add(CountryParam, content.Value<string>(GraphApiClientHelper.CountryParamKey));
+            response.Add(CityParam, content.Value<string>(GraphApiClientHelper.CityParamKey));
+            response.Add(WorkPhoneParam, content.Value<string>(GraphApiClientHelper.WorkPhoneParamKey));
+            response.Add(HomePhoneParam, content.Value<string>(GraphApiClientHelper.HomePhoneParamKey));
+            response.Add(EmailParam, content.Value<string>(GraphApiClientHelper.EmailParamKey));
+            response.Add(CheckingAccountParam, content.Value<string>(GraphApiClientHelper.CheckingAccountParamKey));
+            response.Add(BankParam, content.Value<string>(GraphApiClientHelper.BankParamKey));
             return response.ToString();
         }
 
@@ -94,31 +94,31 @@ namespace Sitio_Privado.Controllers
             JObject json = new JObject();
 
             if (content.GetValue(WorkAddressParam) != null)
-                json.Add(WorkAddressParamKey, content.GetValue(WorkAddressParam));
+                json.Add(GraphApiClientHelper.WorkAddressParamKey, content.GetValue(WorkAddressParam));
             
             if (content.GetValue(HomeAddressParam) != null)
-                json.Add(HomeAddressParamKey, content.GetValue(HomeAddressParam));
+                json.Add(GraphApiClientHelper.HomeAddressParamKey, content.GetValue(HomeAddressParam));
             
             if (content.GetValue(CountryParam) != null)
-                json.Add(CountryParamKey, content.GetValue(CountryParam));
+                json.Add(GraphApiClientHelper.CountryParamKey, content.GetValue(CountryParam));
             
             if (content.GetValue(CityParam) != null)
-                json.Add(CityParamKey, content.GetValue(CityParam));
+                json.Add(GraphApiClientHelper.CityParamKey, content.GetValue(CityParam));
             
             if (content.GetValue(WorkPhoneParam) != null)
-                json.Add(WorkPhoneParamKey, content.GetValue(WorkPhoneParam));
+                json.Add(GraphApiClientHelper.WorkPhoneParamKey, content.GetValue(WorkPhoneParam));
 
             if (content.GetValue(HomePhoneParam) != null)
-                json.Add(HomePhoneParamKey, content.GetValue(HomePhoneParam));
+                json.Add(GraphApiClientHelper.HomePhoneParamKey, content.GetValue(HomePhoneParam));
             
             if (content.GetValue(EmailParam) != null)
-                json.Add(EmailParamKey, content.GetValue(EmailParam));
+                json.Add(GraphApiClientHelper.EmailParamKey, content.GetValue(EmailParam));
 
             if (content.GetValue(CheckingAccountParam) != null)
-                json.Add(CheckingAccountParamKey, content.GetValue(CheckingAccountParam));
+                json.Add(GraphApiClientHelper.CheckingAccountParamKey, content.GetValue(CheckingAccountParam));
             
             if (content.GetValue(BankParam) != null)
-                json.Add(BankParamKey, content.GetValue(BankParam));
+                json.Add(GraphApiClientHelper.BankParamKey, content.GetValue(BankParam));
 
             /*if (content.GetValue(TemporalPasswordParam) != null)
             {
