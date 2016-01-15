@@ -14,13 +14,14 @@
         constructor(private constantService: app.common.services.ConstantService,
             private dataService: app.common.services.DataService) {
 
-            this.agenteInput = new app.domain.AgenteInput("asdsa", 12323);
+            this.agenteInput = new app.domain.AgenteInput("8411855-9", 31);
             this.getAgente(this.agenteInput);
         }
 
         getAgente(input: app.domain.IAgenteInput): void {
             this.dataService.postWebService(this.constantService.apiAgenteURI, input)
                 .then((result: app.domain.IAgente) => {
+                    console.log(result);
                     this.agente = result;
                 });
         }
