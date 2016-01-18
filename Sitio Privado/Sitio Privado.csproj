@@ -362,34 +362,29 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Content Include="Web References\CategoriaInversionista\Reference.map">
+    <None Include="Web References\CategoriaInversionista\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
-    </Content>
+    </None>
     <None Include="Web References\CategoriaInversionista\tann_catsvc.disco" />
-    <Content Include="Web References\ConsultaSaldosFondosMutuos\Reference.map">
+    <None Include="Web References\ConsultaSaldosFondosMutuos\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
-    </Content>
+    </None>
     <Content Include="Web References\ConsultaSaldosFondosMutuos\saldo_ffmm.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
     <None Include="Web References\ConsultaSaldosFondosMutuos\tann_fondos_mutuos.disco" />
-    <Content Include="Web References\ConsultaSaldosFondosPrivados\Reference.map">
+    <None Include="Web References\ConsultaSaldosFondosPrivados\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
-    </Content>
+    </None>
     <None Include="Web References\ConsultaSaldosFondosPrivados\tann_fondo_invpriv.disco" />
-    <Content Include="Web References\IndicesLiquidezSolvencia\Reference.map">
+    <None Include="Web References\IndicesLiquidezSolvencia\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
-    </Content>
+    </None>
     <None Include="Web References\IndicesLiquidezSolvencia\tann_indicadores.disco" />
-    <Content Include="Web References\InformacionClienteAgente\Reference.map">
-      <Generator>MSDiscoCodeGenerator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </Content>
-    <None Include="Web References\InformacionClienteAgente\tann_info_cliente.disco" />
     <None Include="Web References\CategoriaInversionista\tann_catsvc.wsdl" />
     <Content Include="Web References\CategoriaInversionista\_categoria.datasource">
       <DependentUpon>Reference.map</DependentUpon>
@@ -406,10 +401,11 @@
     <Content Include="Web References\IndicesLiquidezSolvencia\_indicadores.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
-    <None Include="Web References\InformacionClienteAgente\tann_info_cliente.wsdl" />
-    <Content Include="Web References\InformacionClienteAgente\_agente1.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
+    <Content Include="Web References\InformacionClienteAgente\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
     </Content>
+    <None Include="Web References\InformacionClienteAgente\tann_info_cliente.disco" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -424,6 +420,10 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <None Include="Web References\InformacionClienteAgente\tann_info_cliente.wsdl" />
+    <Content Include="Web References\InformacionClienteAgente\_agente.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

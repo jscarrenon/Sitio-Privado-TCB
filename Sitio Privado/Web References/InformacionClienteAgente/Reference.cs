@@ -138,7 +138,15 @@ namespace Sitio_Privado.InformacionClienteAgente {
         
         private string _emailField;
         
+        private string _fonoField;
+        
         private string _pathimgField;
+        
+        private string _fechacertField;
+        
+        private string _fechavctoField;
+        
+        private string _glosacertField;
         
         /// <remarks/>
         public int _codigo {
@@ -181,12 +189,52 @@ namespace Sitio_Privado.InformacionClienteAgente {
         }
         
         /// <remarks/>
+        public string _fono {
+            get {
+                return this._fonoField;
+            }
+            set {
+                this._fonoField = value;
+            }
+        }
+        
+        /// <remarks/>
         public string _pathimg {
             get {
                 return this._pathimgField;
             }
             set {
                 this._pathimgField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string _fechacert {
+            get {
+                return this._fechacertField;
+            }
+            set {
+                this._fechacertField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string _fechavcto {
+            get {
+                return this._fechavctoField;
+            }
+            set {
+                this._fechavctoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string _glosacert {
+            get {
+                return this._glosacertField;
+            }
+            set {
+                this._glosacertField = value;
             }
         }
     }
