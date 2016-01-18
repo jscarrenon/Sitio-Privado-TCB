@@ -10,6 +10,11 @@
         pesos: number;
     }
 
+    export interface IDiccionarioFondo {
+        tipo: string;
+        saldos: IFondoMutuo[];
+    }
+
     export class FondoMutuo extends app.domain.EntityBase implements IFondoMutuo {
         constructor(public descripcion: string,
             public tipo: string,
@@ -32,4 +37,6 @@
             this.pesos = pesos;
         }
     }
+
+
 }
