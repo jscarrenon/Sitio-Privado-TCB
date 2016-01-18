@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using Sitio_Privado.Helpers;
+using Sitio_Privado.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -38,8 +39,10 @@ namespace Sitio_Privado.Controllers
         [HttpPost]
         public async Task<HttpResponseMessage> CreateUser(HttpRequestMessage request)
         {
+            //Response
             HttpResponseMessage response = new HttpResponseMessage();
 
+            //Read request's parameters
             JObject requestBody = JObject.Parse(await request.Content.ReadAsStringAsync());
             if (!CheckNeededAttributesForCreatingUser(requestBody))
             {
@@ -49,12 +52,25 @@ namespace Sitio_Privado.Controllers
                 response.Content = new StringContent(json.ToString(), Encoding.UTF8, "application/json");
                 return response;
             }
-            string graphApiRequestBody = GetCreateUserGraphApiRequestBody(requestBody);
-            HttpResponseMessage graphApiResponse = await syncApiHelper.CreateUser(graphApiRequestBody);
-            JObject graphApiResponseContent = (JObject)await graphApiResponse.Content.ReadAsAsync(typeof(JObject));
-            string responseBody = GetUserResponseBody(graphApiResponseContent);
+
+            //Create user
+            GraphUserModel graphUser = GetGraphUserCreateRequest(requestBody);
+            GraphApiResponseInfo graphApiResponse = await syncApiHelper.CreateUser(graphUser);
+            
+            //Read result and set response
             response.StatusCode = graphApiResponse.StatusCode;
-            response.Content = new StringContent(responseBody, Encoding.UTF8, "application/json");
+            if (graphApiResponse.StatusCode == HttpStatusCode.Created)
+            {
+                string responseBody = GetUserResponseBody(graphApiResponse.User);
+                response.Content = new StringContent(responseBody, Encoding.UTF8, "application/json");
+            }
+            else
+            {
+                JObject errorMessage = new JObject();
+                //TODO: filter error messages
+                errorMessage.Add("message", graphApiResponse.Message);
+                response.Content = new StringContent(errorMessage.ToString(), Encoding.UTF8, "application/json");
+            }
             return response;
         }
 
@@ -86,7 +102,7 @@ namespace Sitio_Privado.Controllers
             return response;
         }
 
-        [HttpGet]
+        /*[HttpGet]
         public async Task<HttpResponseMessage> GetUser(string id)
         {
             HttpResponseMessage response = new HttpResponseMessage();
@@ -106,23 +122,23 @@ namespace Sitio_Privado.Controllers
             }
             
             return response;
-        }
+        }*/
 
-        private string GetUserResponseBody(JObject content)
+        private string GetUserResponseBody(GraphUserModel user)
         {
             JObject response = new JObject();
-            response.Add(NameParam, content.Value<string>(GraphApiClientHelper.GivenNameParamKey));
-            response.Add(SurnameParam, content.Value<string>(GraphApiClientHelper.SurnameParamKey));
-            response.Add(RutParam, content.Value<string>(GraphApiClientHelper.RutParamKey));
-            response.Add(WorkAddressParam, content.Value<string>(GraphApiClientHelper.WorkAddressParamKey));
-            response.Add(HomeAddressParam, content.Value<string>(GraphApiClientHelper.HomeAddressParamKey));
-            response.Add(CountryParam, content.Value<string>(GraphApiClientHelper.CountryParamKey));
-            response.Add(CityParam, content.Value<string>(GraphApiClientHelper.CityParamKey));
-            response.Add(WorkPhoneParam, content.Value<string>(GraphApiClientHelper.WorkPhoneParamKey));
-            response.Add(HomePhoneParam, content.Value<string>(GraphApiClientHelper.HomePhoneParamKey));
-            response.Add(EmailParam, content.Value<string>(GraphApiClientHelper.EmailParamKey));
-            response.Add(CheckingAccountParam, content.Value<string>(GraphApiClientHelper.CheckingAccountParamKey));
-            response.Add(BankParam, content.Value<string>(GraphApiClientHelper.BankParamKey));
+            response.Add(NameParam, user.Name);
+            response.Add(SurnameParam, user.Surname);
+            response.Add(RutParam, user.Rut);
+            response.Add(WorkAddressParam, user.WorkAddress);
+            response.Add(HomeAddressParam, user.HomeAddress);
+            response.Add(CountryParam, user.Country);
+            response.Add(CityParam, user.City);
+            response.Add(WorkPhoneParam, user.WorkPhone);
+            response.Add(HomePhoneParam, user.HomePhone);
+            response.Add(EmailParam, user.Email);
+            response.Add(CheckingAccountParam, user.CheckingAccount);
+            response.Add(BankParam, user.Bank);
             return response.ToString();
         }
 
@@ -163,44 +179,23 @@ namespace Sitio_Privado.Controllers
             return json.ToString();
         }
 
-        private string GetCreateUserGraphApiRequestBody(JObject content)
+        private GraphUserModel GetGraphUserCreateRequest(JObject content)
         {
-            JObject json = new JObject();
-            //Fixed parameters
-            json.Add(GraphApiClientHelper.AccountEnabledParamKey, true);
-            json.Add(GraphApiClientHelper.CreationTypeParamKey, "NameCoexistence");
-            json.Add(GraphApiClientHelper.PasswordPoliciesParamKey, "DisablePasswordExpiration");
-
-            //General information
-            json.Add(GraphApiClientHelper.GivenNameParamKey, content.GetValue(NameParam));
-            json.Add(GraphApiClientHelper.SurnameParamKey, content.GetValue(SurnameParam));
-            json.Add(GraphApiClientHelper.RutParamKey, content.GetValue(RutParam));
-            json.Add(GraphApiClientHelper.WorkAddressParamKey, content.GetValue(WorkAddressParam));
-            json.Add(GraphApiClientHelper.HomeAddressParamKey, content.GetValue(HomeAddressParam));
-            json.Add(GraphApiClientHelper.CountryParamKey, content.GetValue(CountryParam));
-            json.Add(GraphApiClientHelper.CityParamKey, content.GetValue(CityParam));
-            json.Add(GraphApiClientHelper.WorkPhoneParamKey, content.GetValue(WorkPhoneParam));
-            json.Add(GraphApiClientHelper.HomePhoneParamKey, content.GetValue(HomePhoneParam));
-            json.Add(GraphApiClientHelper.EmailParamKey, content.GetValue(EmailParam));
-            json.Add(GraphApiClientHelper.CheckingAccountParamKey, content.GetValue(CheckingAccountParam));
-            json.Add(GraphApiClientHelper.BankParamKey, content.GetValue(BankParam));
-            json.Add(GraphApiClientHelper.DisplayNameParamKey, content.GetValue(NameParam).ToString() + " " + 
-                content.GetValue(SurnameParam).ToString());
-            
-            //Temporal password
-            JObject passwordProfile = new JObject();
-            passwordProfile.Add(GraphApiClientHelper.PasswordParamKey, content.GetValue(TemporalPasswordParam));
-            passwordProfile.Add(GraphApiClientHelper.ForcePasswordChangeParamKey, true);
-            json.Add(GraphApiClientHelper.PasswordProfileParamKey, passwordProfile);
-
-            //Rut as login identifier
-            JObject signInAlternative = new JObject();
-            signInAlternative.Add(GraphApiClientHelper.SignInTypeParamKey, "userName");
-            signInAlternative.Add(GraphApiClientHelper.SignInValueParamKey, content.GetValue(RutParam));
-            JArray signInAlternativesArray = new JArray(signInAlternative);
-            json.Add(GraphApiClientHelper.SignInAlternativesParamKey, signInAlternativesArray);
-
-            return json.ToString();
+            GraphUserModel user = new GraphUserModel();
+            user.Name = content.GetValue(NameParam).ToString();
+            user.Surname = content.GetValue(SurnameParam).ToString();
+            user.Rut = content.GetValue(RutParam).ToString();
+            user.WorkAddress = content.GetValue(WorkAddressParam).ToString();
+            user.HomeAddress = content.GetValue(HomeAddressParam).ToString();
+            user.Country = content.GetValue(CountryParam).ToString();
+            user.City = content.GetValue(CityParam).ToString();
+            user.WorkPhone = content.GetValue(WorkPhoneParam).ToString();
+            user.HomePhone = content.GetValue(HomePhoneParam).ToString();
+            user.Email = content.GetValue(EmailParam).ToString();
+            user.CheckingAccount = content.GetValue(CheckingAccountParam).ToString();
+            user.Bank = content.GetValue(BankParam).ToString();
+            user.TemporalPassword = content.GetValue(TemporalPasswordParam).ToString();
+            return user;
         }
 
         private bool CheckNeededAttributesForCreatingUser(JObject requestBody)

@@ -10,6 +10,8 @@ using System.Net.Http.Headers;
 using System.Text;
 using Newtonsoft.Json;
 using System.Net;
+using Sitio_Privado.Models;
+using Newtonsoft.Json.Linq;
 
 namespace Sitio_Privado.Helpers
 {
@@ -69,8 +71,9 @@ namespace Sitio_Privado.Helpers
             return await SendGraphPatchRequest(UsersApiPath + "/" + id, json);
         }
 
-        public async Task<HttpResponseMessage> CreateUser(string json)
+        public async Task<GraphApiResponseInfo> CreateUser(GraphUserModel graphUser)
         {
+            string json = GetCreateUserRequestBody(graphUser);
             return await SendGraphPostRequest(UsersApiPath, json);
         }
 
@@ -85,7 +88,7 @@ namespace Sitio_Privado.Helpers
             return await SendGraphGetRequest(UsersApiPath + "/" + id, null);
         }
 
-        private async Task<HttpResponseMessage> SendGraphPostRequest(string api, string json)
+        private async Task<GraphApiResponseInfo> SendGraphPostRequest(string api, string json)
         {
             // NOTE: This client uses ADAL v2, not ADAL v4
             AuthenticationResult result = authContext.AcquireToken(AadGraphResourceId, credential);
@@ -95,13 +98,18 @@ namespace Sitio_Privado.Helpers
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, url);
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", result.AccessToken);
             request.Content = new StringContent(json, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = await http.SendAsync(request);
+            HttpResponseMessage graphApiResponse = await http.SendAsync(request);
 
-            if (!response.IsSuccessStatusCode)
+            GraphApiResponseInfo response = new GraphApiResponseInfo();
+            response.StatusCode = graphApiResponse.StatusCode;
+            JObject bodyResponse = (JObject)await graphApiResponse.Content.ReadAsAsync(typeof(JObject));
+            if (graphApiResponse.IsSuccessStatusCode)
             {
-                string error = await response.Content.ReadAsStringAsync();
-                object formatted = JsonConvert.DeserializeObject(error);
-                throw new WebException("Error Calling the Graph API: \n" + JsonConvert.SerializeObject(formatted, Formatting.Indented));
+                response.User = GetUserDataCreateResponse(bodyResponse);
+            }
+            else
+            {
+                response.Message = bodyResponse.GetValue("odata.error").Value<JToken>("message").Value<string>("value");
             }
         
             return response;
@@ -156,6 +164,64 @@ namespace Sitio_Privado.Helpers
             }
 
             return response;
+        }
+
+        private string GetCreateUserRequestBody(GraphUserModel graphUser)
+        {
+            JObject json = new JObject();
+            //Fixed parameters
+            json.Add(AccountEnabledParamKey, true);
+            json.Add(CreationTypeParamKey, "NameCoexistence");
+            json.Add(PasswordPoliciesParamKey, "DisablePasswordExpiration");
+
+            //General information
+            json.Add(GivenNameParamKey, graphUser.Name);
+            json.Add(SurnameParamKey, graphUser.Surname);
+            json.Add(RutParamKey, graphUser.Rut);
+            json.Add(WorkAddressParamKey, graphUser.WorkAddress);
+            json.Add(HomeAddressParamKey, graphUser.HomeAddress);
+            json.Add(CountryParamKey, graphUser.Country);
+            json.Add(CityParamKey, graphUser.City);
+            json.Add(WorkPhoneParamKey, graphUser.WorkPhone);
+            json.Add(HomePhoneParamKey, graphUser.HomePhone);
+            json.Add(EmailParamKey, graphUser.Email);
+            json.Add(CheckingAccountParamKey, graphUser.CheckingAccount);
+            json.Add(BankParamKey, graphUser.CheckingAccount);
+            json.Add(DisplayNameParamKey, graphUser.DisplayName);
+
+            //Temporal password
+            JObject passwordProfile = new JObject();
+            passwordProfile.Add(PasswordParamKey, graphUser.TemporalPassword);
+            passwordProfile.Add(ForcePasswordChangeParamKey, true);
+            json.Add(PasswordProfileParamKey, passwordProfile);
+
+            //Rut as login identifier
+            JObject signInAlternative = new JObject();
+            signInAlternative.Add(SignInTypeParamKey, "userName");
+            signInAlternative.Add(SignInValueParamKey, graphUser.Rut);
+            JArray signInAlternativesArray = new JArray(signInAlternative);
+            json.Add(SignInAlternativesParamKey, signInAlternativesArray);
+
+            return json.ToString();
+        }
+
+        private GraphUserModel GetUserDataCreateResponse(JObject body)
+        {
+            GraphUserModel user = new GraphUserModel();
+            user.Name = body.GetValue(GivenNameParamKey).ToString();
+            user.Surname = body.GetValue(SurnameParamKey).ToString();
+            user.Rut = body.GetValue(RutParamKey).ToString();
+            user.Email = body.GetValue(EmailParamKey).ToString();
+            user.Country = body.GetValue(CountryParamKey).ToString();
+            user.City = body.GetValue(CityParamKey).ToString();
+            user.Bank = body.GetValue(BankParamKey).ToString();
+            user.CheckingAccount = body.GetValue(CheckingAccountParamKey).ToString();
+            user.HomeAddress = body.GetValue(HomeAddressParamKey).ToString();
+            user.HomePhone = body.GetValue(HomePhoneParamKey).ToString();
+            user.WorkAddress = body.GetValue(WorkAddressParamKey).ToString();
+            user.WorkPhone = body.GetValue(WorkPhoneParamKey).ToString();
+            user.ObjectId = body.GetValue("objectId").ToString();
+            return user;
         }
     }
 }
