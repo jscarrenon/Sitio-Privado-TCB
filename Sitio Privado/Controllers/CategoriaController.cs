@@ -11,6 +11,7 @@ namespace Sitio_Privado.Controllers
 {
     public class CategoriaController : ApiController
     {
+        // GET api/categoria
         public IHttpActionResult Get()
         {
             try
@@ -31,7 +32,6 @@ namespace Sitio_Privado.Controllers
                 return NotFound();
             }
         }
-
 
         // POST api/categoria
         public IHttpActionResult Post([FromBody]CategoriaInput input)
