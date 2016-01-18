@@ -74,7 +74,7 @@ namespace Sitio_Privado.Controllers
             return response;
         }
 
-        [HttpPatch]
+        /*[HttpPatch]
         public async Task<HttpResponseMessage> UpdateUser(string id, HttpRequestMessage request)
         {
             HttpResponseMessage response = new HttpResponseMessage();
@@ -100,14 +100,16 @@ namespace Sitio_Privado.Controllers
             HttpResponseMessage updateUserGraphApiResponse = await syncApiHelper.UpdateUser(userGraphId, requestJsonBody);
             response.StatusCode = updateUserGraphApiResponse.StatusCode;
             return response;
-        }
+        }*/
 
-        /*[HttpGet]
+        [HttpGet]
         public async Task<HttpResponseMessage> GetUser(string id)
         {
             HttpResponseMessage response = new HttpResponseMessage();
 
-            HttpResponseMessage graphApiResponse = await syncApiHelper.GetUserByRut(id);
+
+
+            /*HttpResponseMessage graphApiResponse = await syncApiHelper.GetUserByRut(id);
             JObject graphApiResponseContent = (JObject)await graphApiResponse.Content.ReadAsAsync(typeof(JObject));
             JArray graphApiResponseUsers = (JArray)graphApiResponseContent.GetValue("value");
             if (graphApiResponseUsers.Count > 0)
@@ -119,10 +121,25 @@ namespace Sitio_Privado.Controllers
             else
             {
                 response.StatusCode = HttpStatusCode.NotFound;
+            }*/
+
+            GraphApiResponseInfo graphApiResponse = await syncApiHelper.GetUserByRut(id);
+            response.StatusCode = graphApiResponse.StatusCode;
+            if(response.StatusCode == HttpStatusCode.OK)
+            {
+                string responseBody = GetUserResponseBody(graphApiResponse.User);
+                response.Content = new StringContent(responseBody, Encoding.UTF8, "application/json");
+            }
+            else
+            {
+                JObject errorMessage = new JObject();
+                //TODO: filter error messages
+                errorMessage.Add("message", graphApiResponse.Message);
+                response.Content = new StringContent(errorMessage.ToString(), Encoding.UTF8, "application/json");
             }
             
             return response;
-        }*/
+        }
 
         private string GetUserResponseBody(GraphUserModel user)
         {

@@ -34,7 +34,7 @@ namespace Sitio_Privado.Controllers
         private async Task SetUserExtendedAttributes(Usuario usuario)
         {
             //Retrieve user info
-            Claim idClaim = ((ClaimsIdentity)usuario.Identity).Claims.Where(c => c.Type == ObjectIdClaim).First();
+            /*Claim idClaim = ((ClaimsIdentity)usuario.Identity).Claims.Where(c => c.Type == ObjectIdClaim).First();
             HttpResponseMessage response = await graphApiHelper.GetUserByObjectId(idClaim.Value);
             JObject graphApiResponseContent = (JObject)await response.Content.ReadAsAsync(typeof(JObject));
 
@@ -46,7 +46,7 @@ namespace Sitio_Privado.Controllers
             usuario.TelefonoParticular = graphApiResponseContent.Value<string>(GraphApiClientHelper.HomePhoneParamKey);
             usuario.DireccionComercial = graphApiResponseContent.Value<string>(GraphApiClientHelper.WorkAddressParamKey);
             usuario.DireccionParticular = graphApiResponseContent.Value<string>(GraphApiClientHelper.HomeAddressParamKey);
-            usuario.Rut = graphApiResponseContent.Value<string>(GraphApiClientHelper.RutParamKey);
+            usuario.Rut = graphApiResponseContent.Value<string>(GraphApiClientHelper.RutParamKey);*/
         }
         public JsonResult TestWebService()
         {

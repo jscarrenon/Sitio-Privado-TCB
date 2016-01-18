@@ -77,13 +77,13 @@ namespace Sitio_Privado.Helpers
             return await SendGraphPostRequest(UsersApiPath, json);
         }
 
-        public async Task<HttpResponseMessage> GetUserByRut(string rut)
+        public async Task<GraphApiResponseInfo> GetUserByRut(string rut)
         {
-            string query = "$filter=" + RutParamKey + " eq '" + rut + "'";
+            string query = "$filter=" + RutParamKey + " eq '" + rut + "'";//TODO: user parameters
             return await SendGraphGetRequest(UsersApiPath, query);
         }
 
-        public async Task<HttpResponseMessage> GetUserByObjectId(string id)
+        public async Task<GraphApiResponseInfo> GetUserByObjectId(string id)
         {
             return await SendGraphGetRequest(UsersApiPath + "/" + id, null);
         }
@@ -115,7 +115,7 @@ namespace Sitio_Privado.Helpers
             return response;
         }
 
-        private async Task<HttpResponseMessage> SendGraphGetRequest(string api, string query)
+        private async Task<GraphApiResponseInfo> SendGraphGetRequest(string api, string query)
         {
             // First, use ADAL to acquire a token using the app's identity (the credential)
             // The first parameter is the resource we want an access_token for; in this case, the Graph API.
@@ -132,13 +132,31 @@ namespace Sitio_Privado.Helpers
             // Append the access token for the Graph API to the Authorization header of the request, using the Bearer scheme.
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, url);
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", result.AccessToken);
-            HttpResponseMessage response = await http.SendAsync(request);
+            HttpResponseMessage graphApiResponse = await http.SendAsync(request);
 
-            if (!response.IsSuccessStatusCode)
+            //Set response
+            GraphApiResponseInfo response = new GraphApiResponseInfo();
+            response.StatusCode = graphApiResponse.StatusCode;
+            JObject bodyResponse = (JObject)await graphApiResponse.Content.ReadAsAsync(typeof(JObject));
+
+            //TODO: update codes
+            if (graphApiResponse.IsSuccessStatusCode)
             {
-                string error = await response.Content.ReadAsStringAsync();
-                object formatted = JsonConvert.DeserializeObject(error);
-                throw new WebException("Error Calling the Graph API: \n" + JsonConvert.SerializeObject(formatted, Formatting.Indented));
+                JArray graphApiResponseUsers = (JArray)bodyResponse.GetValue("value");
+                if(graphApiResponseUsers.Count > 0)
+                {
+                    GraphUserModel user = GetUserDataCreateResponse((JObject)graphApiResponseUsers.First);
+                    response.User = user;
+                }
+                else
+                {
+                    response.StatusCode = HttpStatusCode.NotFound;
+                    response.Message = "Any object matching that Rut was found."; 
+                }
+            }
+            else
+            {
+                response.Message = bodyResponse.GetValue("odata.error").Value<JToken>("message").Value<string>("value");
             }
 
             return response;
