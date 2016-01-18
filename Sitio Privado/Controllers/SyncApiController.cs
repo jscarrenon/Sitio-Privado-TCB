@@ -107,22 +107,6 @@ namespace Sitio_Privado.Controllers
         {
             HttpResponseMessage response = new HttpResponseMessage();
 
-
-
-            /*HttpResponseMessage graphApiResponse = await syncApiHelper.GetUserByRut(id);
-            JObject graphApiResponseContent = (JObject)await graphApiResponse.Content.ReadAsAsync(typeof(JObject));
-            JArray graphApiResponseUsers = (JArray)graphApiResponseContent.GetValue("value");
-            if (graphApiResponseUsers.Count > 0)
-            {
-                response.StatusCode = HttpStatusCode.OK;
-                string responseBody = GetUserResponseBody((JObject)graphApiResponseUsers.First);
-                response.Content = new StringContent(responseBody.ToString(), Encoding.UTF8, "application/json");
-            }
-            else
-            {
-                response.StatusCode = HttpStatusCode.NotFound;
-            }*/
-
             GraphApiResponseInfo graphApiResponse = await syncApiHelper.GetUserByRut(id);
             response.StatusCode = graphApiResponse.StatusCode;
             if(response.StatusCode == HttpStatusCode.OK)

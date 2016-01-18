@@ -127,7 +127,24 @@ namespace Sitio_Privado.Helpers
         public async Task<GraphApiResponseInfo> GetUserByObjectId(string id)
         {
             HttpResponseMessage graphResponse = await SendGraphGetRequest(UsersApiPath + "/" + id, null);
-            return null;
+            
+            //Set response
+            GraphApiResponseInfo response = new GraphApiResponseInfo();
+            response.StatusCode = graphResponse.StatusCode;
+            JObject bodyResponse = (JObject)await graphResponse.Content.ReadAsAsync(typeof(JObject));
+
+            //TODO: update codes
+            if (graphResponse.IsSuccessStatusCode)
+            {
+                GraphUserModel user = GetUserDataCreateResponse(bodyResponse);
+                response.User = user;
+            }
+            else
+            {
+                response.Message = bodyResponse.GetValue("odata.error").Value<JToken>("message").Value<string>("value");
+            }
+
+            return response;
         }
 
         private async Task<HttpResponseMessage> SendGraphPostRequest(string api, string json)
@@ -208,7 +225,7 @@ namespace Sitio_Privado.Helpers
             json.Add(HomePhoneParamKey, graphUser.HomePhone);
             json.Add(EmailParamKey, graphUser.Email);
             json.Add(CheckingAccountParamKey, graphUser.CheckingAccount);
-            json.Add(BankParamKey, graphUser.CheckingAccount);
+            json.Add(BankParamKey, graphUser.Bank);
             json.Add(DisplayNameParamKey, graphUser.DisplayName);
 
             //Temporal password
