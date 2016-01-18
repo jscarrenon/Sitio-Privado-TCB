@@ -7,6 +7,8 @@
         getCategoria(input: app.domain.ICategoriaInput): void;
         producto: app.domain.IProducto;
         getProducto(input: app.domain.IProductoInput): void;
+        categorias: app.domain.ICategoria[];
+        getCategorias(): void;
     }
 
     export class WebserviceCtrl implements IWebserviceViewModel {
@@ -17,6 +19,7 @@
         categoriaInput: app.domain.ICategoriaInput;
         producto: app.domain.IProducto;
         productoInput: app.domain.IProductoInput;
+        categorias: app.domain.ICategoria[];
 
         static $inject = ['constantService', 'dataService'];
         constructor(private constantService: app.common.services.ConstantService,
@@ -33,6 +36,9 @@
             //Test de Producto
             this.productoInput = new app.domain.ProductoInput(1);
             this.getProducto(this.productoInput);
+
+            //Test de Categorías
+            this.getCategorias();
 
         }
 
@@ -55,6 +61,13 @@
                 .then((result: app.domain.IProducto) => {
                     this.producto = result;
                 });
+        }
+
+        getCategorias(): void {
+            this.dataService.get(this.constantService.apiCategoriaURI)
+                .then((result: app.domain.ICategoria[]) => {
+                    this.categorias = result;
+            });
         }
     }
 
