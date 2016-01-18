@@ -196,6 +196,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\CategoriaController.cs" />
     <Compile Include="Controllers\AgenteController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -205,6 +206,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AgenteModel.cs" />
+    <Compile Include="Models\CategoriaInversionista\ProductoModel.cs" />
     <Compile Include="Models\CategoriaInversionista\CategoriaModel.cs" />
     <Compile Include="Models\UsuarioModels.cs" />
     <Compile Include="PolicyAuthHelpers\HttpDocumentRetriever.cs" />
@@ -453,11 +455,13 @@
     <TypeScriptCompile Include="app\common\services\dataService.ts" />
     <TypeScriptCompile Include="app\common\typings\slicknav.ts" />
     <TypeScriptCompile Include="app\domain\Categoria.ts" />
+    <TypeScriptCompile Include="app\domain\ProductoInput.ts" />
     <TypeScriptCompile Include="app\domain\CategoriaInput.ts" />
     <TypeScriptCompile Include="app\domain\AgenteInput.ts" />
     <TypeScriptCompile Include="app\domain\IInput.ts" />
     <TypeScriptCompile Include="app\domain\IEntity.ts" />
     <TypeScriptCompile Include="app\domain\Agente.ts" />
+    <TypeScriptCompile Include="app\domain\Producto.ts" />
     <TypeScriptCompile Include="app\domain\Usuario.ts" />
     <TypeScriptCompile Include="app\home\homeCtrl.ts" />
     <TypeScriptCompile Include="app\inversiones\inversionesCtrl.ts" />
