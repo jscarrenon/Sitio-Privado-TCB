@@ -417,18 +417,18 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </Content>
     <None Include="Web References\CategoriaInversionista\tann_catsvc.disco" />
-    <Content Include="Web References\ConsultaSaldosFondosMutuos\Reference.map">
+    <None Include="Web References\ConsultaSaldosFondosMutuos\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
-    </Content>
+    </None>
     <Content Include="Web References\ConsultaSaldosFondosMutuos\saldo_ffmm.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
     <None Include="Web References\ConsultaSaldosFondosMutuos\tann_fondos_mutuos.disco" />
-    <Content Include="Web References\ConsultaSaldosFondosPrivados\Reference.map">
+    <None Include="Web References\ConsultaSaldosFondosPrivados\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
-    </Content>
+    </None>
     <None Include="Web References\ConsultaSaldosFondosPrivados\tann_fondo_invpriv.disco" />
     <Content Include="Web References\IndicesLiquidezSolvencia\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>

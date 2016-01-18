@@ -174,6 +174,8 @@ namespace Sitio_Privado.ConsultaSaldosFondosMutuos {
         
         private string rentaField;
         
+        private string csbisField;
+        
         private decimal pesosField;
         
         /// <remarks/>
@@ -233,6 +235,16 @@ namespace Sitio_Privado.ConsultaSaldosFondosMutuos {
             }
             set {
                 this.rentaField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string csbis {
+            get {
+                return this.csbisField;
+            }
+            set {
+                this.csbisField = value;
             }
         }
         
