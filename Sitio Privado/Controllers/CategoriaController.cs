@@ -11,8 +11,8 @@ namespace Sitio_Privado.Controllers
 {
     public class CategoriaController : ApiController
     {
-        // GET api/categoria
-        public IHttpActionResult Get()
+        [HttpGet]
+        public IHttpActionResult GetList()
         {
             try
             {
@@ -33,8 +33,8 @@ namespace Sitio_Privado.Controllers
             }
         }
 
-        // POST api/categoria
-        public IHttpActionResult Post([FromBody]CategoriaInput input)
+        [HttpPost]
+        public IHttpActionResult GetSingle([FromBody]CategoriaInput input)
         {
             try
             {
@@ -47,8 +47,8 @@ namespace Sitio_Privado.Controllers
             }
         }
 
-        // POST api/categoria
-        public IHttpActionResult Post([FromBody]CategoriaClienteInput input)
+        [HttpPost]
+        public IHttpActionResult GetSingleCliente([FromBody]CategoriaClienteInput input)
         {
             try
             {

@@ -11,8 +11,8 @@ namespace Sitio_Privado.Controllers
 {
     public class ProductoController : ApiController
     {
-        // GET api/producto
-        public IHttpActionResult Get()
+        [HttpGet]
+        public IHttpActionResult GetList()
         {
             try
             {
@@ -33,8 +33,8 @@ namespace Sitio_Privado.Controllers
             }
         }
 
-        // POST api/producto
-        public IHttpActionResult Post([FromBody]ProductoInput input)
+        [HttpPost]
+        public IHttpActionResult GetSingle([FromBody]ProductoInput input)
         {
             try
             {

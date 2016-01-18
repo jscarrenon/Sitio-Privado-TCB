@@ -56,42 +56,42 @@
         }
 
         getAgente(input: app.domain.IAgenteInput): void {
-            this.dataService.postWebService(this.constantService.apiAgenteURI, input)
+            this.dataService.postWebService(this.constantService.apiAgenteURI + 'getSingle', input)
                 .then((result: app.domain.IAgente) => {
                     this.agente = result;
                 });
         }
 
         getCategoria(input: app.domain.ICategoriaInput): void {
-            this.dataService.postWebService(this.constantService.apiCategoriaURI, input)
+            this.dataService.postWebService(this.constantService.apiCategoriaURI + 'getSingle', input)
                 .then((result: app.domain.ICategoria) => {
                     this.categoria = result;
                 });
         }
 
         getProducto(input: app.domain.IProductoInput): void {
-            this.dataService.postWebService(this.constantService.apiProductoURI, input)
+            this.dataService.postWebService(this.constantService.apiProductoURI + 'getSingle', input)
                 .then((result: app.domain.IProducto) => {
                     this.producto = result;
                 });
         }
 
         getCategorias(): void {
-            this.dataService.get(this.constantService.apiCategoriaURI)
+            this.dataService.get(this.constantService.apiCategoriaURI + 'getList')
                 .then((result: app.domain.ICategoria[]) => {
                     this.categorias = result;
             });
         }
 
         getProductos(): void {
-            this.dataService.get(this.constantService.apiProductoURI)
+            this.dataService.get(this.constantService.apiProductoURI + 'getList')
                 .then((result: app.domain.IProducto[]) => {
                     this.productos = result;
                 });
         }
 
         getCategoriaCliente(input: app.domain.ICategoriaClienteInput): void {
-            this.dataService.postWebService(this.constantService.apiCategoriaURI, input)
+            this.dataService.postWebService(this.constantService.apiCategoriaURI + 'getSingleCliente', input)
                 .then((result: app.domain.ICategoria) => {
                     this.categoriaCliente = result;
                 });
