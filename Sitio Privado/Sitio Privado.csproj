@@ -527,6 +527,8 @@
     <TypeScriptCompile Include="app\common\services\dataService.ts" />
     <TypeScriptCompile Include="app\common\typings\slicknav.ts" />
     <TypeScriptCompile Include="app\domain\AgenteInput.ts" />
+    <TypeScriptCompile Include="app\domain\FondoMutuo.ts" />
+    <TypeScriptCompile Include="app\domain\FondoMutuoInput.ts" />
     <TypeScriptCompile Include="app\domain\IInput.ts" />
     <TypeScriptCompile Include="app\domain\IEntity.ts" />
     <TypeScriptCompile Include="app\domain\Agente.ts" />
