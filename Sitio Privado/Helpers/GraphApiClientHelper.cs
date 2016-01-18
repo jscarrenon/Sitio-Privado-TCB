@@ -66,9 +66,19 @@ namespace Sitio_Privado.Helpers
             this.credential = new ClientCredential(ClientId, ClientSecret);
         }
 
-        public async Task<HttpResponseMessage> UpdateUser(string id, string json)
+        public async Task<GraphApiResponseInfo> UpdateUser(string id, string json)
         {
-            return await SendGraphPatchRequest(UsersApiPath + "/" + id, json);
+            string path = UsersApiPath + "/" + id;
+            HttpResponseMessage graphResponse = await SendGraphPatchRequest(path, json);
+            GraphApiResponseInfo response = new GraphApiResponseInfo();
+            response.StatusCode = graphResponse.StatusCode;
+
+            if (!graphResponse.IsSuccessStatusCode)
+            {
+                response.Message = "Could not find any object matching that Rut";
+            }
+
+            return response;
         }
 
         public async Task<GraphApiResponseInfo> CreateUser(GraphUserModel graphUser)
@@ -82,7 +92,7 @@ namespace Sitio_Privado.Helpers
             JObject bodyResponse = (JObject)await graphResponse.Content.ReadAsAsync(typeof(JObject));
             if (graphResponse.IsSuccessStatusCode)
             {
-                response.User = GetUserDataCreateResponse(bodyResponse);
+                response.User = GetUserResponse(bodyResponse);
             }
             else
             {
@@ -107,7 +117,7 @@ namespace Sitio_Privado.Helpers
                 JArray graphApiResponseUsers = (JArray)bodyResponse.GetValue("value");
                 if (graphApiResponseUsers.Count > 0)
                 {
-                    GraphUserModel user = GetUserDataCreateResponse((JObject)graphApiResponseUsers.First);
+                    GraphUserModel user = GetUserResponse((JObject)graphApiResponseUsers.First);
                     response.User = user;
                 }
                 else
@@ -136,7 +146,7 @@ namespace Sitio_Privado.Helpers
             //TODO: update codes
             if (graphResponse.IsSuccessStatusCode)
             {
-                GraphUserModel user = GetUserDataCreateResponse(bodyResponse);
+                GraphUserModel user = GetUserResponse(bodyResponse);
                 response.User = user;
             }
             else
@@ -195,13 +205,6 @@ namespace Sitio_Privado.Helpers
             request.Content = new StringContent(json, Encoding.UTF8, "application/json");
             HttpResponseMessage response = await http.SendAsync(request);
 
-            if (!response.IsSuccessStatusCode)
-            {
-                string error = await response.Content.ReadAsStringAsync();
-                object formatted = JsonConvert.DeserializeObject(error);
-                throw new WebException("Error Calling the Graph API: \n" + JsonConvert.SerializeObject(formatted, Formatting.Indented));
-            }
-
             return response;
         }
 
@@ -244,7 +247,7 @@ namespace Sitio_Privado.Helpers
             return json.ToString();
         }
 
-        private GraphUserModel GetUserDataCreateResponse(JObject body)
+        private GraphUserModel GetUserResponse(JObject body)
         {
             GraphUserModel user = new GraphUserModel();
             user.Name = body.GetValue(GivenNameParamKey).ToString();

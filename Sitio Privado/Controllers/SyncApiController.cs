@@ -74,11 +74,12 @@ namespace Sitio_Privado.Controllers
             return response;
         }
 
-        /*[HttpPatch]
+        [HttpPatch]
         public async Task<HttpResponseMessage> UpdateUser(string id, HttpRequestMessage request)
         {
             HttpResponseMessage response = new HttpResponseMessage();
 
+            //Read request's parameters
             JObject requestContent = (JObject)await request.Content.ReadAsAsync(typeof(JObject));
             string requestJsonBody = GetUpdateUserGraphApiRequestBody(requestContent);
             if (requestJsonBody == null) {
@@ -86,22 +87,33 @@ namespace Sitio_Privado.Controllers
                 return response;
             }
 
-            HttpResponseMessage getGraphApiResponse = await syncApiHelper.GetUserByRut(id);
-            JObject getGraphApiResponseContent = (JObject)await getGraphApiResponse.Content.ReadAsAsync(typeof(JObject));
-            JArray usersGraphApiResponse = (JArray)getGraphApiResponseContent.GetValue("value");
+            //Get user
+            GraphApiResponseInfo getGraphResponse = await syncApiHelper.GetUserByRut(id);
 
-            if (usersGraphApiResponse.Count <= 0)
+            if (getGraphResponse.User == null)
             {
                 response.StatusCode = HttpStatusCode.NotFound;
+                JObject errorMessage = new JObject();
+                //TODO: filter error messages
+                errorMessage.Add("message", getGraphResponse.Message);
+                response.Content = new StringContent(errorMessage.ToString(), Encoding.UTF8, "application/json");
                 return response;
             }
 
-            string userGraphId = usersGraphApiResponse.First.Value<string>("objectId");
-            HttpResponseMessage updateUserGraphApiResponse = await syncApiHelper.UpdateUser(userGraphId, requestJsonBody);
-            response.StatusCode = updateUserGraphApiResponse.StatusCode;
-            return response;
-        }*/
+            string userGraphId = getGraphResponse.User.ObjectId;
+            GraphApiResponseInfo graphResponse = await syncApiHelper.UpdateUser(userGraphId, requestJsonBody);
+            response.StatusCode = graphResponse.StatusCode;
 
+            if (graphResponse.StatusCode != HttpStatusCode.NoContent)
+            {
+                JObject errorMessage = new JObject();
+                //TODO: filter error messages
+                errorMessage.Add("message", graphResponse.Message);
+                response.Content = new StringContent(errorMessage.ToString(), Encoding.UTF8, "application/json");
+            }
+            return response;
+        }
+    
         [HttpGet]
         public async Task<HttpResponseMessage> GetUser(string id)
         {
