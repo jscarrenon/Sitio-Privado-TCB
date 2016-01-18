@@ -74,21 +74,63 @@ namespace Sitio_Privado.Helpers
         public async Task<GraphApiResponseInfo> CreateUser(GraphUserModel graphUser)
         {
             string json = GetCreateUserRequestBody(graphUser);
-            return await SendGraphPostRequest(UsersApiPath, json);
+            HttpResponseMessage graphResponse = await SendGraphPostRequest(UsersApiPath, json);
+
+            GraphApiResponseInfo response = new GraphApiResponseInfo();
+
+            response.StatusCode = graphResponse.StatusCode;
+            JObject bodyResponse = (JObject)await graphResponse.Content.ReadAsAsync(typeof(JObject));
+            if (graphResponse.IsSuccessStatusCode)
+            {
+                response.User = GetUserDataCreateResponse(bodyResponse);
+            }
+            else
+            {
+                response.Message = bodyResponse.GetValue("odata.error").Value<JToken>("message").Value<string>("value");
+            }
+            return response;
         }
 
         public async Task<GraphApiResponseInfo> GetUserByRut(string rut)
         {
             string query = "$filter=" + RutParamKey + " eq '" + rut + "'";//TODO: user parameters
-            return await SendGraphGetRequest(UsersApiPath, query);
+            HttpResponseMessage graphResponse = await SendGraphGetRequest(UsersApiPath, query);
+
+            //Set response
+            GraphApiResponseInfo response = new GraphApiResponseInfo();
+            response.StatusCode = graphResponse.StatusCode;
+            JObject bodyResponse = (JObject)await graphResponse.Content.ReadAsAsync(typeof(JObject));
+
+            //TODO: update codes
+            if (graphResponse.IsSuccessStatusCode)
+            {
+                JArray graphApiResponseUsers = (JArray)bodyResponse.GetValue("value");
+                if (graphApiResponseUsers.Count > 0)
+                {
+                    GraphUserModel user = GetUserDataCreateResponse((JObject)graphApiResponseUsers.First);
+                    response.User = user;
+                }
+                else
+                {
+                    response.StatusCode = HttpStatusCode.NotFound;
+                    response.Message = "Could not find any object matching that Rut";
+                }
+            }
+            else
+            {
+                response.Message = bodyResponse.GetValue("odata.error").Value<JToken>("message").Value<string>("value");
+            }
+
+            return response;
         }
 
         public async Task<GraphApiResponseInfo> GetUserByObjectId(string id)
         {
-            return await SendGraphGetRequest(UsersApiPath + "/" + id, null);
+            HttpResponseMessage graphResponse = await SendGraphGetRequest(UsersApiPath + "/" + id, null);
+            return null;
         }
 
-        private async Task<GraphApiResponseInfo> SendGraphPostRequest(string api, string json)
+        private async Task<HttpResponseMessage> SendGraphPostRequest(string api, string json)
         {
             // NOTE: This client uses ADAL v2, not ADAL v4
             AuthenticationResult result = authContext.AcquireToken(AadGraphResourceId, credential);
@@ -99,23 +141,10 @@ namespace Sitio_Privado.Helpers
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", result.AccessToken);
             request.Content = new StringContent(json, Encoding.UTF8, "application/json");
             HttpResponseMessage graphApiResponse = await http.SendAsync(request);
-
-            GraphApiResponseInfo response = new GraphApiResponseInfo();
-            response.StatusCode = graphApiResponse.StatusCode;
-            JObject bodyResponse = (JObject)await graphApiResponse.Content.ReadAsAsync(typeof(JObject));
-            if (graphApiResponse.IsSuccessStatusCode)
-            {
-                response.User = GetUserDataCreateResponse(bodyResponse);
-            }
-            else
-            {
-                response.Message = bodyResponse.GetValue("odata.error").Value<JToken>("message").Value<string>("value");
-            }
-        
-            return response;
+            return graphApiResponse;
         }
 
-        private async Task<GraphApiResponseInfo> SendGraphGetRequest(string api, string query)
+        private async Task<HttpResponseMessage> SendGraphGetRequest(string api, string query)
         {
             // First, use ADAL to acquire a token using the app's identity (the credential)
             // The first parameter is the resource we want an access_token for; in this case, the Graph API.
@@ -134,32 +163,7 @@ namespace Sitio_Privado.Helpers
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", result.AccessToken);
             HttpResponseMessage graphApiResponse = await http.SendAsync(request);
 
-            //Set response
-            GraphApiResponseInfo response = new GraphApiResponseInfo();
-            response.StatusCode = graphApiResponse.StatusCode;
-            JObject bodyResponse = (JObject)await graphApiResponse.Content.ReadAsAsync(typeof(JObject));
-
-            //TODO: update codes
-            if (graphApiResponse.IsSuccessStatusCode)
-            {
-                JArray graphApiResponseUsers = (JArray)bodyResponse.GetValue("value");
-                if(graphApiResponseUsers.Count > 0)
-                {
-                    GraphUserModel user = GetUserDataCreateResponse((JObject)graphApiResponseUsers.First);
-                    response.User = user;
-                }
-                else
-                {
-                    response.StatusCode = HttpStatusCode.NotFound;
-                    response.Message = "Any object matching that Rut was found."; 
-                }
-            }
-            else
-            {
-                response.Message = bodyResponse.GetValue("odata.error").Value<JToken>("message").Value<string>("value");
-            }
-
-            return response;
+            return graphApiResponse;
         }
 
         private async Task<HttpResponseMessage> SendGraphPatchRequest(string api, string json)

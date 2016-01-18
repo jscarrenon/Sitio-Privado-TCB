@@ -34,19 +34,21 @@ namespace Sitio_Privado.Controllers
         private async Task SetUserExtendedAttributes(Usuario usuario)
         {
             //Retrieve user info
-            /*Claim idClaim = ((ClaimsIdentity)usuario.Identity).Claims.Where(c => c.Type == ObjectIdClaim).First();
-            HttpResponseMessage response = await graphApiHelper.GetUserByObjectId(idClaim.Value);
-            JObject graphApiResponseContent = (JObject)await response.Content.ReadAsAsync(typeof(JObject));
+            Claim idClaim = ((ClaimsIdentity)usuario.Identity).Claims.Where(c => c.Type == ObjectIdClaim).First();
+            GraphApiResponseInfo response = await graphApiHelper.GetUserByObjectId(idClaim.Value);
 
-            //Save used info
-            usuario.Banco = graphApiResponseContent.Value<string>(GraphApiClientHelper.BankParamKey);
-            usuario.CuentaCorriente = graphApiResponseContent.Value<string>(GraphApiClientHelper.CheckingAccountParamKey);
-            usuario.Email = graphApiResponseContent.Value<string>(GraphApiClientHelper.EmailParamKey);
-            usuario.TelefonoComercial = graphApiResponseContent.Value<string>(GraphApiClientHelper.WorkPhoneParamKey);
-            usuario.TelefonoParticular = graphApiResponseContent.Value<string>(GraphApiClientHelper.HomePhoneParamKey);
-            usuario.DireccionComercial = graphApiResponseContent.Value<string>(GraphApiClientHelper.WorkAddressParamKey);
-            usuario.DireccionParticular = graphApiResponseContent.Value<string>(GraphApiClientHelper.HomeAddressParamKey);
-            usuario.Rut = graphApiResponseContent.Value<string>(GraphApiClientHelper.RutParamKey);*/
+            if(response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                //Save used info
+                usuario.Banco = response.User.Bank;
+                usuario.CuentaCorriente = response.User.CheckingAccount;
+                usuario.Email = response.User.Email;
+                usuario.TelefonoComercial = response.User.WorkPhone;
+                usuario.TelefonoParticular = response.User.HomePhone;
+                usuario.DireccionComercial = response.User.WorkAddress;
+                usuario.DireccionParticular = response.User.HomeAddress;
+                usuario.Rut = response.User.Rut;
+            }
         }
         public JsonResult TestWebService()
         {
