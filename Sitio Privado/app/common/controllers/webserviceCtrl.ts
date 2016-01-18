@@ -9,8 +9,8 @@
 
         agente: app.domain.IAgente;
         agenteInput: app.domain.IAgenteInput;
-        fondoMutuo: app.domain.IFondoMutuo;
-        fondoMutuoInput: app.domain.IFondoMutuoInput;
+        fondosMutuos: app.domain.IFondoMutuo[];
+        fondosMutuosInput: app.domain.IFondoMutuoInput;
 
         static $inject = ['constantService', 'dataService'];
         constructor(private constantService: app.common.services.ConstantService,
@@ -18,8 +18,8 @@
 
             this.agenteInput = new app.domain.AgenteInput("8411855-9", 31);
             this.getAgente(this.agenteInput);
-            this.fondoMutuoInput = new app.domain.FondoMutuoInput("8411855-9");
-            this.
+            this.fondosMutuosInput = new app.domain.FondoMutuoInput(84118559);
+            this.getFondosMutuos(this.fondosMutuosInput);
         }
 
         getAgente(input: app.domain.IAgenteInput): void {
@@ -31,9 +31,10 @@
         }
 
         getFondosMutuos(input: app.domain.IFondoMutuoInput): void {
-            this.dataService.postWebService(this.constantService.apiAgenteURI, input)
-                .then((result: app.domain.IFondoMutuo) => {
+            this.dataService.postWebService(this.constantService.apiFondosMutuosURI, input)
+                .then((result: app.domain.IFondoMutuo[]) => {
                     console.log(result);
+                    this.fondosMutuos = result;
                 });
         }
     }

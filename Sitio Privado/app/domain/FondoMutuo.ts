@@ -5,6 +5,7 @@
         ctaPisys: string;
         valorCuota: number;
         saldoCuota: number;
+        csbis: string;
         renta: string;
         pesos: number;
     }
@@ -15,6 +16,7 @@
             public ctaPisys: string,
             public valorCuota: number,
             public saldoCuota: number,
+            public csbis: string,
             public renta: string,
             public pesos: number) {
 
@@ -25,6 +27,7 @@
             this.ctaPisys = ctaPisys;
             this.valorCuota = valorCuota;
             this.saldoCuota = saldoCuota;
+            this.csbis = csbis;
             this.renta = renta;
             this.pesos = pesos;
         }
