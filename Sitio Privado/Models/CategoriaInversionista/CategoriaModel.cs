@@ -8,6 +8,11 @@ namespace Sitio_Privado.Models.CategoriaInversionista
         public int ident_cat { get; set; }
     }
 
+    public class CategoriaClienteInput
+    {
+        public int rut_cli { get; set; }
+    }
+
     public class Categoria
     {
         public int identificador { get; set; }
@@ -39,8 +44,22 @@ namespace Sitio_Privado.Models.CategoriaInversionista
             foreach (_producto producto in categoria.Productos)
             {                
                 productos.Add(new Producto(producto));
+            }            
+        }
+
+        public Categoria(CategoriaClienteInput input)
+        {
+            tann_catsvc webService = new tann_catsvc();
+            _categoria categoria = webService.tann_cns_cat_cli(input.rut_cli);
+            identificador = categoria.identificador;
+            descriptor = categoria.descriptor;
+            comentario = categoria.comentario;
+            productos = new List<Producto>();
+
+            foreach (_producto producto in categoria.Productos)
+            {
+                productos.Add(new Producto(producto));
             }
-            
         }
     }
 }

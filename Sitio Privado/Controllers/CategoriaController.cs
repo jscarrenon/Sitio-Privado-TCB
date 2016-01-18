@@ -46,5 +46,19 @@ namespace Sitio_Privado.Controllers
                 return NotFound();
             }
         }
+
+        // POST api/categoria
+        public IHttpActionResult Post([FromBody]CategoriaClienteInput input)
+        {
+            try
+            {
+                Categoria categoria = new Categoria(input);
+                return Ok(categoria);
+            }
+            catch (Exception e)
+            {
+                return NotFound();
+            }
+        }
     }
 }
