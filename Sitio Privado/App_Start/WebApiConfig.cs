@@ -21,16 +21,16 @@ namespace Sitio_Privado
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            /*config.Routes.MapHttpRoute(
+            config.Routes.MapHttpRoute(
                 name: "SyncApi",
-                routeTemplate: "SyncApi/sers/{action}/{id}",
+                routeTemplate: "SyncApi/Users/{action}/{id}",
                 defaults: new
                 {
                     controller = "SyncApi",
                     action = "All",
                     id = RouteParameter.Optional
                 }
-            );*/
+            );
 
             // WebAPI when dealing with JSON & JavaScript!
             // Setup json serialization to serialize classes to camel (std. Json format)
