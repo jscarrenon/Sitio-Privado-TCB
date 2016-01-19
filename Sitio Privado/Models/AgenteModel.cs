@@ -14,19 +14,15 @@ namespace Sitio_Privado.Models
 
     public class Agente
     {
-        public int Codigo { get; set; }
-
-        public string Nombre { get; set; }
-
-        public string Sucursal { get; set; }
-
-        public string Email { get; set; }
-
-        public string PathImg { get; set; }
-
-        public string Telefono { get; set; }
-
-        public string FechaAcreditacion { get; set; }
+        public int codigo { get; set; }
+        public string nombre { get; set; }
+        public string sucursal { get; set; }
+        public string email { get; set; }
+        public string pathImg { get; set; }
+        public string telefono { get; set; }
+        public string fechaInicioAcreditacion { get; set; }
+        public string fechaExpiracionAcreditacion { get; set; }
+        public string descriptor { get; set; }
 
         public Agente() { }
 
@@ -34,11 +30,15 @@ namespace Sitio_Privado.Models
         {
             tann_info_cliente webService = new tann_info_cliente();
             _agente agente = webService.cli_info_agente(input._rut, input._sec);
-            Codigo = agente._codigo;
-            Nombre = agente._nombre;
-            Sucursal = agente._sucursal;
-            Email = agente._email;
-            PathImg = agente._pathimg;
+            codigo = agente._codigo;
+            nombre = agente._nombre;
+            sucursal = agente._sucursal;
+            email = agente._email;
+            pathImg = agente._pathimg;
+            telefono = agente._fono;
+            fechaInicioAcreditacion = agente._fechacert;
+            fechaExpiracionAcreditacion = agente._fechavcto;
+            descriptor = agente._glosacert;
         }
     }
 }

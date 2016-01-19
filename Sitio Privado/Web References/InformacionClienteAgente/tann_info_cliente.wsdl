@@ -23,7 +23,11 @@
           <s:element minOccurs="0" maxOccurs="1" name="_nombre" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="_sucursal" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="_email" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="_fono" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="_pathimg" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="_fechacert" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="_fechavcto" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="_glosacert" type="s:string" />
         </s:sequence>
       </s:complexType>
     </s:schema>
