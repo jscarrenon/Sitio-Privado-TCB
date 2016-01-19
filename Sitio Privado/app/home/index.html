@@ -67,19 +67,19 @@
                 <div class="section-title">Ejecutivo de Inversiones</div>
 
                 <div class="executive white-box" ng-controller="WebserviceCtrl as webserviceCtrl">
-                    <div class="photo"><img src="{{webserviceCtrl.agente.PathImg}}" /></div>
+                    <div class="photo"><img src="{{webserviceCtrl.agente.pathImg}}" /></div>
                     <div class="text">
-                        <div class="name">{{webserviceCtrl.agente.Nombre}}</div>
+                        <div class="name">{{webserviceCtrl.agente.nombre}}</div>
                         <div class="contact">
-                            Tel: {{webserviceCtrl.agente.Telefono}}<br />
-                            E-mail: <a href="mailto:{{webserviceCtrl.agente.Email}}">{{webserviceCtrl.agente.Email}}</a>
+                            Tel: {{webserviceCtrl.agente.telefono}}<br />
+                            E-mail: <a href="mailto:{{webserviceCtrl.agente.email}}">{{webserviceCtrl.agente.email}}</a>
                         </div>
                         <div class="info">
-                            Fecha de acreditación: {{webserviceCtrl.agente.FechaAcreditacion}}<br />
-                            Sucursal: {{webserviceCtrl.agente.Sucursal}}
+                            Fecha de acreditación: {{webserviceCtrl.agente.fechaInicioAcreditacion}}<br />
+                            Sucursal: {{webserviceCtrl.agente.sucursal}}
                         </div>
                     </div>
-                    <div class="button blue call"><a href="tel:{{webserviceCtrl.agente.Telefono}}" class="clink">Llamar</a></div>
+                    <div class="button blue call"><a href="tel:{{webserviceCtrl.agente.telefono}}" class="clink">Llamar</a></div>
                     <div id="clear"></div>
                 </div>
             </div>
