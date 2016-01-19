@@ -3,6 +3,8 @@
     interface IWebserviceViewModel {
         agente: app.domain.IAgente;
         getAgente(input: app.domain.IAgenteInput): void;
+        getFondosMutuos(input: app.domain.IFondoMutuoInput): void;
+        getFondosMutuosTotal(): void;
         categoria: app.domain.ICategoria;
         getCategoria(input: app.domain.ICategoriaInput): void;
         producto: app.domain.IProducto;
@@ -18,6 +20,11 @@
 
         agente: app.domain.IAgente;
         agenteInput: app.domain.IAgenteInput;
+        fondosMutuosRF: app.domain.IFondoMutuo[];
+        fondosMutuosRV: app.domain.IFondoMutuo[];
+        fondosMutuosInput: app.domain.IFondoMutuoInput;
+        fondosMutuosRFTotal: number;
+        fondosMutuosRVTotal: number;
         categoria: app.domain.ICategoria;
         categoriaInput: app.domain.ICategoriaInput;
         producto: app.domain.IProducto;
@@ -31,9 +38,15 @@
         constructor(private constantService: app.common.services.ConstantService,
             private dataService: app.common.services.DataService) {
 
+            
+
             //Test de Agente
             this.agenteInput = new app.domain.AgenteInput("8411855-9", 31);
             this.getAgente(this.agenteInput);
+
+            //Test fondos mutuos
+            this.fondosMutuosInput = new app.domain.FondoMutuoInput(7094569);
+            this.getFondosMutuos(this.fondosMutuosInput);
 
             //Test de Categoría
             this.categoriaInput = new app.domain.CategoriaInput(1);
@@ -52,14 +65,38 @@
             //Test de Categoría de Cliente
             this.categoriaClienteInput = new app.domain.CategoriaClienteInput(10862228);
             this.getCategoriaCliente(this.categoriaClienteInput);
-
         }
 
         getAgente(input: app.domain.IAgenteInput): void {
             this.dataService.postWebService(this.constantService.apiAgenteURI + 'getSingle', input)
                 .then((result: app.domain.IAgente) => {
+                    console.log(result);
                     this.agente = result;
                 });
+        }
+
+        getFondosMutuos(input: app.domain.IFondoMutuoInput): void {
+            this.dataService.postWebService(this.constantService.apiFondosMutuosURI + 'post', input)
+                .then((result: app.domain.IFondoMutuo[]) => {
+                    console.log(result);
+                    this.fondosMutuosRF = result["fondosMutuosRF"];
+                    this.fondosMutuosRV = result["fondosMutuosRV"];
+                    this.getFondosMutuosTotal();                    
+                });
+        }
+
+        getFondosMutuosTotal(): void {
+            this.fondosMutuosRFTotal = 0;
+            this.fondosMutuosRVTotal = 0;
+
+            for (var i = 0; i < this.fondosMutuosRF.length; i++) {
+                this.fondosMutuosRFTotal += this.fondosMutuosRF[i].pesos;
+            }
+
+            for (var i = 0; i < this.fondosMutuosRV.length; i++) {
+                this.fondosMutuosRVTotal += this.fondosMutuosRV[i].pesos;
+            }
+
         }
 
         getCategoria(input: app.domain.ICategoriaInput): void {
