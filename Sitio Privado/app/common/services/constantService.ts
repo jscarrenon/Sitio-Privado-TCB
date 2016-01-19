@@ -1,17 +1,29 @@
 ﻿module app.common.services {
 
     interface IConstant {
-        apiPostURI: string;
+        mvcHomeURI: string;
+        templateFooterURI: string;
+        apiAgenteURI: string;
+        apiCategoriaURI: string;
+        apiProductoURI: string;
     }
 
     export class ConstantService implements IConstant {
-        apiPostURI: string;
+        mvcHomeURI: string;
+        templateFooterURI: string;
+        apiAgenteURI: string;
+        apiCategoriaURI: string;
+        apiProductoURI: string;
 
         constructor() {
-            this.apiPostURI = '/api/posts/';
+            this.mvcHomeURI = '/Home/';
+            this.templateFooterURI = 'app/common/templates/footer.html';
+            this.apiAgenteURI = '/api/agente/';
+            this.apiCategoriaURI = '/api/categoria/';
+            this.apiProductoURI = '/api/producto/';
         }
     }
 
-    angular.module('chsakellBlogApp')
+    angular.module('tannerPrivadoApp')
         .service('constantService', ConstantService);
 }

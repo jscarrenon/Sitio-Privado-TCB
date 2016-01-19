@@ -2,7 +2,7 @@
   "name": "SitioPrivado",
   "private": true,
   "dependencies": {
-    "angular": "^1.4.7",    
+    "angular": "^1.4.7",
     "angular-route": "~1.4.8"
   }
 }

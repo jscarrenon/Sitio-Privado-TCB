@@ -6,6 +6,7 @@
         add(resource: string, entity: app.domain.IEntity): ng.IPromise<app.domain.EntityBase>;
         update(resource: string, entity: app.domain.IEntity): ng.IPromise<app.domain.EntityBase>;
         remove(resource: string): ng.IPromise<any>;
+        postWebService(resource: string, input: app.domain.InputBase): ng.IPromise<app.domain.EntityBase>; //Recibe input para llamado webservice
     }
 
     export class DataService implements IDataService {
@@ -89,8 +90,22 @@
 
             return deferred.promise;
         }
+
+        postWebService(resource: string, input: app.domain.InputBase): ng.IPromise<app.domain.EntityBase> {
+            var self = this;
+            var deferred = self.qService.defer();
+
+            self.httpService.post(resource, input)
+                .then(function (result) {
+                    deferred.resolve(result.data);
+                }, function (error) {
+                    deferred.reject(error);
+                });
+
+            return deferred.promise;
+        }
     }
 
-    angular.module('chsakellBlogApp')
+    angular.module('tannerPrivadoApp')
         .service('dataService', DataService);
 } 

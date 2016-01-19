@@ -1,0 +1,30 @@
+﻿<div id="container">
+    <div id="header">
+        <div class="in">
+            <div class="head">
+                <div class="title">Estado de Documentos</div>
+                <div class="subtitle"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="content" ng-controller="MisInversionesDocumentosCtrl as documentosCtrl">
+        <div class="in">
+
+            <div class="areas">
+                <div class="one-area"><a href="" class="clink" ng-class="{'active':documentosCtrl.seccionId == 0}" ng-click="documentosCtrl.seleccionarSeccion(0)">Pendiente de Firma</a></div>
+                <div class="one-area"><a href="" class="clink" ng-class="{'active':documentosCtrl.seccionId == 1}" ng-click="documentosCtrl.seleccionarSeccion(1)">Firmados Electrónicamente</a></div>
+            </div>
+
+            <ng-include src="documentosCtrl.seccionURI"></ng-include>
+
+            <div id="clear"></div>
+
+            <ng-include src="ctrl.constantService.templateFooterURI"></ng-include>
+
+        </div><!--end in-->
+    </div><!--end content-->
+
+</div><!--end container-->
+
+<div id="clear"></div>
