@@ -306,11 +306,11 @@
     <Content Include="app\mis-inversiones\circularizacion_anterior.html" />
     <Content Include="app\mis-inversiones\circularizacion_anual-2015.html" />
     <Content Include="app\mis-inversiones\circularizacion_aprobar.html" />
+    <Content Include="app\mis-inversiones\circularizacion_pendiente.html" />
     <Content Include="app\mis-inversiones\estado-documentos.html" />
     <Content Include="app\mis-inversiones\estado-documentos_firmados.html" />
     <Content Include="app\mis-inversiones\estado-documentos_pendientes.html" />
     <Content Include="app\mis-inversiones\fondos-mutuos.html" />
-    <Content Include="app\mis-inversiones\fondos-privados.html" />
     <Content Include="app\mis-inversiones\index.html" />
     <Content Include="app\mis-inversiones\nacionales.html" />
     <Content Include="favicon.ico" />
@@ -541,6 +541,7 @@
     <TypeScriptCompile Include="app\domain\Usuario.ts" />
     <TypeScriptCompile Include="app\home\homeCtrl.ts" />
     <TypeScriptCompile Include="app\inversiones\inversionesCtrl.ts" />
+    <TypeScriptCompile Include="app\mis-inversiones\misInversionesCircularizacionCtrl.ts" />
     <TypeScriptCompile Include="app\mis-inversiones\misInversionesDocumentosCtrl.ts" />
     <TypeScriptCompile Include="app\mis-inversiones\misInversionesCtrl.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-animate.d.ts" />
