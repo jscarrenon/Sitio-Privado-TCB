@@ -29,6 +29,7 @@
                     label: 'Mis Inversiones', //important: active section name
                     prependTo: '#sidemenu'
                 });
+
             }, 800); */
         }
 
