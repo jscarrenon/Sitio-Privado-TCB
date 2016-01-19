@@ -11,7 +11,8 @@
 
         agente: app.domain.IAgente;
         agenteInput: app.domain.IAgenteInput;
-        fondosMutuos: app.domain.IDiccionarioFondo[];
+        fondosMutuosRF: app.domain.IFondoMutuo[];
+        fondosMutuosRV: app.domain.IFondoMutuo[];
         fondosMutuosInput: app.domain.IFondoMutuoInput;
         fondosMutuosRFTotal: number;
         fondosMutuosRVTotal: number;
@@ -36,12 +37,11 @@
 
         getFondosMutuos(input: app.domain.IFondoMutuoInput): void {
             this.dataService.postWebService(this.constantService.apiFondosMutuosURI, input)
-                .then((result: app.domain.IDiccionarioFondo[]) => {
+                .then((result: app.domain.IFondoMutuo[]) => {
                     console.log(result);
-                    this.fondosMutuos = result;
-                    if (this.fondosMutuos != null) {
-                        this.getFondosMutuosTotal();
-                    }
+                    this.fondosMutuosRF = result["fondosMutuosRF"];
+                    this.fondosMutuosRV = result["fondosMutuosRV"];
+                    this.getFondosMutuosTotal();                    
                 });
         }
 
@@ -49,14 +49,13 @@
             this.fondosMutuosRFTotal = 0;
             this.fondosMutuosRVTotal = 0;
 
-            for (var fondoMutuoRF in this.fondosMutuos[0].saldos) {
-                this.fondosMutuosRFTotal += fondoMutuoRF.pesos;
+            for (var i = 0; i < this.fondosMutuosRF.length; i++) {
+                this.fondosMutuosRFTotal += this.fondosMutuosRF[i].pesos;
             }
 
-            for (var fondoMutuoRV in this.fondosMutuos[1].saldos) {
-                this.fondosMutuosRVTotal += fondoMutuoRV.pesos;
+            for (var i = 0; i < this.fondosMutuosRV.length; i++) {
+                this.fondosMutuosRFTotal += this.fondosMutuosRV[i].pesos;
             }
-
         }
     }
 
