@@ -70,15 +70,13 @@
         getAgente(input: app.domain.IAgenteInput): void {
             this.dataService.postWebService(this.constantService.apiAgenteURI + 'getSingle', input)
                 .then((result: app.domain.IAgente) => {
-                    console.log(result);
                     this.agente = result;
                 });
         }
 
         getFondosMutuos(input: app.domain.IFondoMutuoInput): void {
-            this.dataService.postWebService(this.constantService.apiFondosMutuosURI + 'post', input)
+            this.dataService.postWebService(this.constantService.apiFondosMutuosURI + 'getList', input)
                 .then((result: app.domain.IFondoMutuo[]) => {
-                    console.log(result);
                     this.fondosMutuosRF = result["fondosMutuosRF"];
                     this.fondosMutuosRV = result["fondosMutuosRV"];
                     this.getFondosMutuosTotal();                    
@@ -90,11 +88,11 @@
             this.fondosMutuosRVTotal = 0;
 
             for (var i = 0; i < this.fondosMutuosRF.length; i++) {
-                this.fondosMutuosRFTotal += this.fondosMutuosRF[i].pesos;
+                this.fondosMutuosRFTotal += this.fondosMutuosRF[i].Pesos;
             }
 
             for (var i = 0; i < this.fondosMutuosRV.length; i++) {
-                this.fondosMutuosRVTotal += this.fondosMutuosRV[i].pesos;
+                this.fondosMutuosRVTotal += this.fondosMutuosRV[i].Pesos;
             }
 
         }

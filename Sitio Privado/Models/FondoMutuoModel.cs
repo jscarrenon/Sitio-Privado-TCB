@@ -13,34 +13,34 @@ namespace Sitio_Privado.Models
 
     public class FondoMutuo
     {
-        public string descripcion { get; set; } //Descriptor del Fondo Mutuo
+        public string Descripcion { get; set; } //Descriptor del Fondo Mutuo
 
-        public string tipo { get; set; } //Tipo de Fondo
+        public string Tipo { get; set; } //Tipo de Fondo
 
-        public string ctaPisys { get; set; } //N° Cuenta del Fondo
+        public string CtaPisys { get; set; } //N° Cuenta del Fondo
 
-        public decimal valor_cuota { get; set; } //Valor cuota actual
+        public decimal ValorCuota { get; set; } //Valor cuota actual
 
-        public decimal saldo_cuota { get; set; } //Saldo en cuotas
+        public decimal SaldoCuota { get; set; } //Saldo en cuotas
 
-        public string csbis { get; set; } //Indicador Tributario
+        public string Csbis { get; set; } //Indicador Tributario
 
-        public string renta { get; set; } //Tipo de Renta
+        public string Renta { get; set; } //Tipo de Renta
 
-        public decimal pesos { get; set; } //Saldo Pesos
+        public decimal Pesos { get; set; } //Saldo Pesos
 
         public FondoMutuo() { }
 
         public FondoMutuo(saldo_ffmm saldo)
         {
-            descripcion = saldo.descripcion;
-            tipo = saldo.tipo;
-            ctaPisys = saldo.cta_pisys;
-            valor_cuota = saldo.valor_cuota;
-            saldo_cuota = saldo.saldo_cuota;
-            csbis = saldo.csbis; //Indicador Tributario
-            renta = saldo.renta;
-            pesos = saldo.pesos;
+            Descripcion = saldo.descripcion;
+            Tipo = saldo.tipo;
+            CtaPisys = saldo.cta_pisys.Trim();
+            ValorCuota = saldo.valor_cuota;
+            SaldoCuota = saldo.saldo_cuota;
+            Csbis = saldo.csbis; //Indicador Tributario
+            Renta = saldo.renta;
+            Pesos = saldo.pesos;
         }
               
     }
