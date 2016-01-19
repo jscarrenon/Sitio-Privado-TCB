@@ -34,9 +34,9 @@ namespace Sitio_Privado
 
             // WebAPI when dealing with JSON & JavaScript!
             // Setup json serialization to serialize classes to camel (std. Json format)
-            var formatter = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
+            /*var formatter = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
             formatter.SerializerSettings.ContractResolver =
-                new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver();
+                new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver();*/
 
         }
     }

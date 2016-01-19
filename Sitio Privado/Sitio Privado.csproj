@@ -277,6 +277,7 @@
     <Compile Include="Controllers\CategoriaController.cs" />
     <Compile Include="Controllers\AgenteController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\FondoMutuoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SyncApiController.cs" />
     <Compile Include="Helpers\GraphApiClientHelper.cs" />
@@ -288,6 +289,7 @@
     <Compile Include="Models\Container.cs" />
     <Compile Include="Helpers\GraphApiResponseInfo.cs" />
     <Compile Include="Models\AgenteModel.cs" />
+    <Compile Include="Models\FondoMutuoModel.cs" />
     <Compile Include="Models\GraphUserModel.cs" />
     <Compile Include="Models\CategoriaInversionista\ProductoModel.cs" />
     <Compile Include="Models\CategoriaInversionista\CategoriaModel.cs" />
@@ -520,6 +522,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\App\" />
+    <Folder Include="Views\FondoMutuo\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -576,6 +579,8 @@
     <TypeScriptCompile Include="app\domain\ProductoInput.ts" />
     <TypeScriptCompile Include="app\domain\CategoriaInput.ts" />
     <TypeScriptCompile Include="app\domain\AgenteInput.ts" />
+    <TypeScriptCompile Include="app\domain\FondoMutuo.ts" />
+    <TypeScriptCompile Include="app\domain\FondoMutuoInput.ts" />
     <TypeScriptCompile Include="app\domain\IInput.ts" />
     <TypeScriptCompile Include="app\domain\IEntity.ts" />
     <TypeScriptCompile Include="app\domain\Agente.ts" />

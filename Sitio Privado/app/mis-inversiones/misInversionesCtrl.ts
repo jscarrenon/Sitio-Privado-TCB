@@ -28,7 +28,7 @@
                     label: 'Mis Inversiones', //important: active section name
                     prependTo: '#sidemenu'
                 });
-            }, 800); 
+            }, 800);
         }
 
         seleccionarSeccion(id: number): void {

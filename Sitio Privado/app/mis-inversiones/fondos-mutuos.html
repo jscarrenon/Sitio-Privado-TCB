@@ -11,9 +11,8 @@
     <div id="content">
         <div class="in">
 
-            <div class="one-col">
+            <div class="one-col" ng-controller="WebserviceCtrl as webserviceCtrl">
                 <div class="section-title">Saldos Fondos Mutuos de Renta Fija</div>
-
                 <div id="cont-table">
                     <table class="balance">
                         <tr>
@@ -25,36 +24,18 @@
                             <th class="number">Saldo en Cuotas</th>
                             <th class="number">Saldo en Pesos</th>
                         </tr>
-                        <tr>
-                            <td>Fondo A</td>
-                            <td>Nombre del Tipo de Fondo</td>
-                            <td>Cuenta</td>
-                            <td>Condición</td>
-                            <td class="number">$3.550.030</td>
-                            <td class="number">123</td>
-                            <td class="number">$15.000.000</td>
-                        </tr>
-                        <tr>
-                            <td>Fondo A</td>
-                            <td>Nombre del Tipo de Fondo</td>
-                            <td>Cuenta</td>
-                            <td>Condición</td>
-                            <td class="number">$3.550.030</td>
-                            <td class="number">123</td>
-                            <td class="number">$15.000.000</td>
-                        </tr>
-                        <tr>
-                            <td>Fondo A</td>
-                            <td>Nombre del Tipo de Fondo</td>
-                            <td>Cuenta</td>
-                            <td>Condición</td>
-                            <td class="number">$3.550.030</td>
-                            <td class="number">123</td>
-                            <td class="number">$15.000.000</td>
+                        <tr ng-repeat="fondoMutuo in webserviceCtrl.fondosMutuosRF">
+                            <td>{{fondoMutuo.descripcion}}</td>
+                            <td>{{fondoMutuo.tipo}}</td>
+                            <td>{{fondoMutuo.cta_pisys}}</td>
+                            <td>{{fondoMutuo.csbis}}</td>
+                            <td class="number">${{fondoMutuo.valor_cuota}}</td>
+                            <td class="number">${{fondoMutuo.saldo_cuota}}</td>
+                            <td class="number">${{fondoMutuo.pesos}}</td>
                         </tr>
                         <tr class="total">
                             <td colspan="6">Total Fondos Mutuos Renta Fija</td>
-                            <td class="number">130.000.000</td>
+                            <td class="number">${{webserviceCtrl.fondosMutuosRFTotal}}</td>
                         </tr>
                     </table>
                 </div>
@@ -74,36 +55,18 @@
                             <th class="number">Saldo en Cuotas</th>
                             <th class="number">Saldo en Pesos</th>
                         </tr>
-                        <tr>
-                            <td>Fondo A</td>
-                            <td>Nombre del Tipo de Fondo</td>
-                            <td>Cuenta</td>
-                            <td>Condición</td>
-                            <td class="number">$3.550.030</td>
-                            <td class="number">123</td>
-                            <td class="number">$15.000.000</td>
-                        </tr>
-                        <tr>
-                            <td>Fondo A</td>
-                            <td>Nombre del Tipo de Fondo</td>
-                            <td>Cuenta</td>
-                            <td>Condición</td>
-                            <td class="number">$3.550.030</td>
-                            <td class="number">123</td>
-                            <td class="number">$15.000.000</td>
-                        </tr>
-                        <tr>
-                            <td>Fondo A</td>
-                            <td>Nombre del Tipo de Fondo</td>
-                            <td>Cuenta</td>
-                            <td>Condición</td>
-                            <td class="number">$3.550.030</td>
-                            <td class="number">123</td>
-                            <td class="number">$15.000.000</td>
+                        <tr ng-repeat="fondoMutuo in webserviceCtrl.fondosMutuosRV">
+                            <td>{{fondoMutuo.descripcion}}</td>
+                            <td>{{fondoMutuo.tipo}}</td>
+                            <td>{{fondoMutuo.cta_pisys}}</td>
+                            <td>{{fondoMutuo.csbis}}</td>
+                            <td class="number">${{fondoMutuo.valor_cuota}}</td>
+                            <td class="number">${{fondoMutuo.saldo_cuota}}</td>
+                            <td class="number">${{fondoMutuo.pesos}}</td>
                         </tr>
                         <tr class="total">
                             <td colspan="6">Total Fondos Mutuos Renta Variable</td>
-                            <td class="number">130.000.000</td>
+                            <td class="number">${{webserviceCtrl.fondosMutuosRVTotal}}</td>
                         </tr>
                     </table>
                 </div>
