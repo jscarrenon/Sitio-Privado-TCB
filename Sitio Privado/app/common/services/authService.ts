@@ -16,7 +16,6 @@
         }
 
         getUsuarioActual(): void {
-            console.log("getUsuarioActual");
             this.dataService.getSingle(this.constantService.mvcHomeURI + 'GetUsuarioActual').then((result: app.domain.IUsuario) => {
                 this.usuario = result;
                 if (this.usuario.Autenticado) {
