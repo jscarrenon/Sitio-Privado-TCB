@@ -22,16 +22,16 @@ namespace Sitio_Privado.Controllers
         private static string NameParam = "names";
         private static string SurnameParam = "surnames";
         private static string RutParam = "rut";
-        private static string WorkAddressParam = "workAddress";
-        private static string HomeAddressParam = "homeAddress";
+        private static string WorkAddressParam = "work_address";
+        private static string HomeAddressParam = "home_address";
         private static string CountryParam = "country";
         private static string CityParam = "city";
-        private static string WorkPhoneParam = "workPhone";
-        private static string HomePhoneParam = "homePhone";
+        private static string WorkPhoneParam = "work_phone";
+        private static string HomePhoneParam = "home_phone";
         private static string EmailParam = "email";
-        private static string CheckingAccountParam = "checkingAccount";
+        private static string CheckingAccountParam = "checking_account";
         private static string BankParam = "bank";
-        private static string TemporalPasswordParam = "temporalPassword";
+        private static string TemporalPasswordParam = "temporal_password";
         #endregion
 
         private GraphApiClientHelper syncApiHelper = new GraphApiClientHelper();
