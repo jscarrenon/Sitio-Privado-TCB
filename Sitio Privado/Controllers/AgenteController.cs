@@ -10,8 +10,8 @@ namespace Sitio_Privado.Controllers
 {
     public class AgenteController : ApiController
     {
-        // POST api/agente
-        public IHttpActionResult Post([FromBody]AgenteInput input)
+        [HttpPost]
+        public IHttpActionResult GetSingle([FromBody]AgenteInput input)
         {
             try
             {

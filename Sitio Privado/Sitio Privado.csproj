@@ -244,6 +244,8 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ProductoController.cs" />
+    <Compile Include="Controllers\CategoriaController.cs" />
     <Compile Include="Controllers\AgenteController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\FondoMutuoController.cs" />
@@ -254,8 +256,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\GraphApiResponseInfo.cs" />
     <Compile Include="Models\AgenteModel.cs" />
     <Compile Include="Models\FondoMutuoModel.cs" />
+    <Compile Include="Models\GraphUserModel.cs" />
+    <Compile Include="Models\CategoriaInversionista\ProductoModel.cs" />
+    <Compile Include="Models\CategoriaInversionista\CategoriaModel.cs" />
     <Compile Include="Models\UsuarioModels.cs" />
     <Compile Include="PolicyAuthHelpers\HttpDocumentRetriever.cs" />
     <Compile Include="PolicyAuthHelpers\PolicyAuthorize.cs" />
@@ -412,10 +418,10 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Content Include="Web References\CategoriaInversionista\Reference.map">
+    <None Include="Web References\CategoriaInversionista\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
-    </Content>
+    </None>
     <None Include="Web References\CategoriaInversionista\tann_catsvc.disco" />
     <None Include="Web References\ConsultaSaldosFondosMutuos\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
@@ -430,16 +436,11 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <None Include="Web References\ConsultaSaldosFondosPrivados\tann_fondo_invpriv.disco" />
-    <Content Include="Web References\IndicesLiquidezSolvencia\Reference.map">
+    <None Include="Web References\IndicesLiquidezSolvencia\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
-    </Content>
+    </None>
     <None Include="Web References\IndicesLiquidezSolvencia\tann_indicadores.disco" />
-    <Content Include="Web References\InformacionClienteAgente\Reference.map">
-      <Generator>MSDiscoCodeGenerator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </Content>
-    <None Include="Web References\InformacionClienteAgente\tann_info_cliente.disco" />
     <None Include="Web References\CategoriaInversionista\tann_catsvc.wsdl" />
     <Content Include="Web References\CategoriaInversionista\_categoria.datasource">
       <DependentUpon>Reference.map</DependentUpon>
@@ -456,10 +457,14 @@
     <Content Include="Web References\IndicesLiquidezSolvencia\_indicadores.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
-    <None Include="Web References\InformacionClienteAgente\tann_info_cliente.wsdl" />
-    <Content Include="Web References\InformacionClienteAgente\_agente1.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
+    <Content Include="Web References\InformacionClienteAgente\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
     </Content>
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Web References\InformacionClienteAgente\tann_info_cliente.disco" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -474,6 +479,10 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <None Include="Web References\InformacionClienteAgente\tann_info_cliente.wsdl" />
+    <Content Include="Web References\InformacionClienteAgente\_agente.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -528,12 +537,17 @@
     <TypeScriptCompile Include="app\common\services\constantService.ts" />
     <TypeScriptCompile Include="app\common\services\dataService.ts" />
     <TypeScriptCompile Include="app\common\typings\slicknav.ts" />
+    <TypeScriptCompile Include="app\domain\Categoria.ts" />
+    <TypeScriptCompile Include="app\domain\CategoriaClienteInput.ts" />
+    <TypeScriptCompile Include="app\domain\ProductoInput.ts" />
+    <TypeScriptCompile Include="app\domain\CategoriaInput.ts" />
     <TypeScriptCompile Include="app\domain\AgenteInput.ts" />
     <TypeScriptCompile Include="app\domain\FondoMutuo.ts" />
     <TypeScriptCompile Include="app\domain\FondoMutuoInput.ts" />
     <TypeScriptCompile Include="app\domain\IInput.ts" />
     <TypeScriptCompile Include="app\domain\IEntity.ts" />
     <TypeScriptCompile Include="app\domain\Agente.ts" />
+    <TypeScriptCompile Include="app\domain\Producto.ts" />
     <TypeScriptCompile Include="app\domain\Usuario.ts" />
     <TypeScriptCompile Include="app\home\homeCtrl.ts" />
     <TypeScriptCompile Include="app\inversiones\inversionesCtrl.ts" />

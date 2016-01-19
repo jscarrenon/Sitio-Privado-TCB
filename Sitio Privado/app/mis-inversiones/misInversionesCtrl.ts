@@ -21,14 +21,14 @@
             this.setTemplates();
             this.seccionId = 0;
             this.seleccionarSeccion(this.seccionId);
-            
+
             //Timeout por error de script slicknav (a.mobileNav.on)
             setTimeout(function () {
                 (<any>$('#menu2')).slicknav({
                     label: 'Mis Inversiones', //important: active section name
                     prependTo: '#sidemenu'
                 });
-            }, 800);            
+            }, 800);
         }
 
         seleccionarSeccion(id: number): void {

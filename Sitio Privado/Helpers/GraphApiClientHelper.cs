@@ -10,6 +10,8 @@ using System.Net.Http.Headers;
 using System.Text;
 using Newtonsoft.Json;
 using System.Net;
+using Sitio_Privado.Models;
+using Newtonsoft.Json.Linq;
 
 namespace Sitio_Privado.Helpers
 {
@@ -64,25 +66,95 @@ namespace Sitio_Privado.Helpers
             this.credential = new ClientCredential(ClientId, ClientSecret);
         }
 
-        public async Task<HttpResponseMessage> UpdateUser(string id, string json)
+        public async Task<GraphApiResponseInfo> UpdateUser(string id, string json)
         {
-            return await SendGraphPatchRequest(UsersApiPath + "/" + id, json);
+            string path = UsersApiPath + "/" + id;
+            HttpResponseMessage graphResponse = await SendGraphPatchRequest(path, json);
+            GraphApiResponseInfo response = new GraphApiResponseInfo();
+            response.StatusCode = graphResponse.StatusCode;
+
+            if (!graphResponse.IsSuccessStatusCode)
+            {
+                response.Message = "Could not find any object matching that Rut";
+            }
+
+            return response;
         }
 
-        public async Task<HttpResponseMessage> CreateUser(string json)
+        public async Task<GraphApiResponseInfo> CreateUser(GraphUserModel graphUser)
         {
-            return await SendGraphPostRequest(UsersApiPath, json);
+            string json = GetCreateUserRequestBody(graphUser);
+            HttpResponseMessage graphResponse = await SendGraphPostRequest(UsersApiPath, json);
+
+            GraphApiResponseInfo response = new GraphApiResponseInfo();
+
+            response.StatusCode = graphResponse.StatusCode;
+            JObject bodyResponse = (JObject)await graphResponse.Content.ReadAsAsync(typeof(JObject));
+            if (graphResponse.IsSuccessStatusCode)
+            {
+                response.User = GetUserResponse(bodyResponse);
+            }
+            else
+            {
+                response.Message = bodyResponse.GetValue("odata.error").Value<JToken>("message").Value<string>("value");
+            }
+            return response;
         }
 
-        public async Task<HttpResponseMessage> GetUserByRut(string rut)
+        public async Task<GraphApiResponseInfo> GetUserByRut(string rut)
         {
-            string query = "$filter=" + RutParamKey + " eq '" + rut + "'";
-            return await SendGraphGetRequest(UsersApiPath, query);
+            string query = "$filter=" + RutParamKey + " eq '" + rut + "'";//TODO: user parameters
+            HttpResponseMessage graphResponse = await SendGraphGetRequest(UsersApiPath, query);
+
+            //Set response
+            GraphApiResponseInfo response = new GraphApiResponseInfo();
+            response.StatusCode = graphResponse.StatusCode;
+            JObject bodyResponse = (JObject)await graphResponse.Content.ReadAsAsync(typeof(JObject));
+
+            //TODO: update codes
+            if (graphResponse.IsSuccessStatusCode)
+            {
+                JArray graphApiResponseUsers = (JArray)bodyResponse.GetValue("value");
+                if (graphApiResponseUsers.Count > 0)
+                {
+                    GraphUserModel user = GetUserResponse((JObject)graphApiResponseUsers.First);
+                    response.User = user;
+                }
+                else
+                {
+                    response.StatusCode = HttpStatusCode.NotFound;
+                    response.Message = "Could not find any object matching that Rut";
+                }
+            }
+            else
+            {
+                response.Message = bodyResponse.GetValue("odata.error").Value<JToken>("message").Value<string>("value");
+            }
+
+            return response;
         }
 
-        public async Task<HttpResponseMessage> GetUserByObjectId(string id)
+        public async Task<GraphApiResponseInfo> GetUserByObjectId(string id)
         {
-            return await SendGraphGetRequest(UsersApiPath + "/" + id, null);
+            HttpResponseMessage graphResponse = await SendGraphGetRequest(UsersApiPath + "/" + id, null);
+            
+            //Set response
+            GraphApiResponseInfo response = new GraphApiResponseInfo();
+            response.StatusCode = graphResponse.StatusCode;
+            JObject bodyResponse = (JObject)await graphResponse.Content.ReadAsAsync(typeof(JObject));
+
+            //TODO: update codes
+            if (graphResponse.IsSuccessStatusCode)
+            {
+                GraphUserModel user = GetUserResponse(bodyResponse);
+                response.User = user;
+            }
+            else
+            {
+                response.Message = bodyResponse.GetValue("odata.error").Value<JToken>("message").Value<string>("value");
+            }
+
+            return response;
         }
 
         private async Task<HttpResponseMessage> SendGraphPostRequest(string api, string json)
@@ -95,16 +167,8 @@ namespace Sitio_Privado.Helpers
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, url);
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", result.AccessToken);
             request.Content = new StringContent(json, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = await http.SendAsync(request);
-
-            if (!response.IsSuccessStatusCode)
-            {
-                string error = await response.Content.ReadAsStringAsync();
-                object formatted = JsonConvert.DeserializeObject(error);
-                throw new WebException("Error Calling the Graph API: \n" + JsonConvert.SerializeObject(formatted, Formatting.Indented));
-            }
-        
-            return response;
+            HttpResponseMessage graphApiResponse = await http.SendAsync(request);
+            return graphApiResponse;
         }
 
         private async Task<HttpResponseMessage> SendGraphGetRequest(string api, string query)
@@ -124,16 +188,9 @@ namespace Sitio_Privado.Helpers
             // Append the access token for the Graph API to the Authorization header of the request, using the Bearer scheme.
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, url);
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", result.AccessToken);
-            HttpResponseMessage response = await http.SendAsync(request);
+            HttpResponseMessage graphApiResponse = await http.SendAsync(request);
 
-            if (!response.IsSuccessStatusCode)
-            {
-                string error = await response.Content.ReadAsStringAsync();
-                object formatted = JsonConvert.DeserializeObject(error);
-                throw new WebException("Error Calling the Graph API: \n" + JsonConvert.SerializeObject(formatted, Formatting.Indented));
-            }
-
-            return response;
+            return graphApiResponse;
         }
 
         private async Task<HttpResponseMessage> SendGraphPatchRequest(string api, string json)
@@ -148,14 +205,65 @@ namespace Sitio_Privado.Helpers
             request.Content = new StringContent(json, Encoding.UTF8, "application/json");
             HttpResponseMessage response = await http.SendAsync(request);
 
-            if (!response.IsSuccessStatusCode)
-            {
-                string error = await response.Content.ReadAsStringAsync();
-                object formatted = JsonConvert.DeserializeObject(error);
-                throw new WebException("Error Calling the Graph API: \n" + JsonConvert.SerializeObject(formatted, Formatting.Indented));
-            }
-
             return response;
+        }
+
+        private string GetCreateUserRequestBody(GraphUserModel graphUser)
+        {
+            JObject json = new JObject();
+            //Fixed parameters
+            json.Add(AccountEnabledParamKey, true);
+            json.Add(CreationTypeParamKey, "NameCoexistence");
+            json.Add(PasswordPoliciesParamKey, "DisablePasswordExpiration");
+
+            //General information
+            json.Add(GivenNameParamKey, graphUser.Name);
+            json.Add(SurnameParamKey, graphUser.Surname);
+            json.Add(RutParamKey, graphUser.Rut);
+            json.Add(WorkAddressParamKey, graphUser.WorkAddress);
+            json.Add(HomeAddressParamKey, graphUser.HomeAddress);
+            json.Add(CountryParamKey, graphUser.Country);
+            json.Add(CityParamKey, graphUser.City);
+            json.Add(WorkPhoneParamKey, graphUser.WorkPhone);
+            json.Add(HomePhoneParamKey, graphUser.HomePhone);
+            json.Add(EmailParamKey, graphUser.Email);
+            json.Add(CheckingAccountParamKey, graphUser.CheckingAccount);
+            json.Add(BankParamKey, graphUser.Bank);
+            json.Add(DisplayNameParamKey, graphUser.DisplayName);
+
+            //Temporal password
+            JObject passwordProfile = new JObject();
+            passwordProfile.Add(PasswordParamKey, graphUser.TemporalPassword);
+            passwordProfile.Add(ForcePasswordChangeParamKey, true);
+            json.Add(PasswordProfileParamKey, passwordProfile);
+
+            //Rut as login identifier
+            JObject signInAlternative = new JObject();
+            signInAlternative.Add(SignInTypeParamKey, "userName");
+            signInAlternative.Add(SignInValueParamKey, graphUser.Rut);
+            JArray signInAlternativesArray = new JArray(signInAlternative);
+            json.Add(SignInAlternativesParamKey, signInAlternativesArray);
+
+            return json.ToString();
+        }
+
+        private GraphUserModel GetUserResponse(JObject body)
+        {
+            GraphUserModel user = new GraphUserModel();
+            user.Name = body.GetValue(GivenNameParamKey).ToString();
+            user.Surname = body.GetValue(SurnameParamKey).ToString();
+            user.Rut = body.GetValue(RutParamKey).ToString();
+            user.Email = body.GetValue(EmailParamKey).ToString();
+            user.Country = body.GetValue(CountryParamKey).ToString();
+            user.City = body.GetValue(CityParamKey).ToString();
+            user.Bank = body.GetValue(BankParamKey).ToString();
+            user.CheckingAccount = body.GetValue(CheckingAccountParamKey).ToString();
+            user.HomeAddress = body.GetValue(HomeAddressParamKey).ToString();
+            user.HomePhone = body.GetValue(HomePhoneParamKey).ToString();
+            user.WorkAddress = body.GetValue(WorkAddressParamKey).ToString();
+            user.WorkPhone = body.GetValue(WorkPhoneParamKey).ToString();
+            user.ObjectId = body.GetValue("objectId").ToString();
+            return user;
         }
     }
 }

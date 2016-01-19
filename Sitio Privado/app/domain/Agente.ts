@@ -5,8 +5,10 @@
         sucursal: string;
         pathImg: string;
         email: string;
-        telefono?: string;
-        fechaAcreditacion?: string;
+        telefono: string;
+        fechaInicioAcreditacion: string;
+        fechaExpiracionAcreditacion: string;
+        descriptor: string;
     }
 
     export class Agente extends app.domain.EntityBase implements IAgente {
@@ -16,7 +18,9 @@
             public pathImg: string,
             public email: string,
             public telefono: string,
-            public fechaAcreditacion: string) {
+            public fechaInicioAcreditacion: string,
+            public fechaExpiracionAcreditacion: string,
+            public descriptor: string) {
 
             super();
 
@@ -26,7 +30,9 @@
             this.pathImg = pathImg;
             this.email = email;
             this.telefono = telefono;
-            this.fechaAcreditacion = fechaAcreditacion;
+            this.fechaInicioAcreditacion = fechaInicioAcreditacion;
+            this.fechaExpiracionAcreditacion = fechaExpiracionAcreditacion;
+            this.descriptor = descriptor;
         }
     }
 }

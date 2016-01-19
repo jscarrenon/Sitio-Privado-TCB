@@ -15,18 +15,14 @@ namespace Sitio_Privado.Models
     public class Agente
     {
         public int codigo { get; set; }
-
         public string nombre { get; set; }
-
         public string sucursal { get; set; }
-
         public string email { get; set; }
-
         public string pathImg { get; set; }
-
         public string telefono { get; set; }
-
-        public string fechaAcreditacion { get; set; }
+        public string fechaInicioAcreditacion { get; set; }
+        public string fechaExpiracionAcreditacion { get; set; }
+        public string descriptor { get; set; }
 
         public Agente() { }
 
@@ -39,6 +35,10 @@ namespace Sitio_Privado.Models
             sucursal = agente._sucursal;
             email = agente._email;
             pathImg = agente._pathimg;
+            telefono = agente._fono;
+            fechaInicioAcreditacion = agente._fechacert;
+            fechaExpiracionAcreditacion = agente._fechavcto;
+            descriptor = agente._glosacert;
         }
     }
 }

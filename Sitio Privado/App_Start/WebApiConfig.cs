@@ -16,15 +16,20 @@ namespace Sitio_Privado
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
-                name: "SyncApi",
+                name: "DefaultApi",
                 routeTemplate: "api/{controller}/{action}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
 
             config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                name: "SyncApi",
+                routeTemplate: "SyncApi/Users/{action}/{id}",
+                defaults: new
+                {
+                    controller = "SyncApi",
+                    action = "All",
+                    id = RouteParameter.Optional
+                }
             );
 
             // WebAPI when dealing with JSON & JavaScript!

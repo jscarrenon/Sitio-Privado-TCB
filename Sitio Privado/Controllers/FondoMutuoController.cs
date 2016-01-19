@@ -24,7 +24,13 @@ namespace Sitio_Privado.Controllers
                 Dictionary<string, saldo_ffmm[]> fondosMutuosDictionary = new Dictionary<string, saldo_ffmm[]>();
                 fondosMutuosDictionary.Add("fondosMutuosRF", fondosMutuosRF);
                 fondosMutuosDictionary.Add("fondosMutuosRV", fondosMutuosRV);
-
+                foreach(saldo_ffmm[] fondosMutuosArray in fondosMutuosDictionary.Values)
+                {
+                    foreach(saldo_ffmm fondoMutuo in fondosMutuosArray)
+                    {
+                        fondoMutuo.cta_pisys = fondoMutuo.cta_pisys.Trim();
+                    }
+                }
                 return Ok(fondosMutuosDictionary);
             }
             catch (Exception e)
