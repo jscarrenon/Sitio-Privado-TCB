@@ -255,7 +255,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\GraphApiResponseInfo.cs" />
     <Compile Include="Models\AgenteModel.cs" />
+    <Compile Include="Models\GraphUserModel.cs" />
     <Compile Include="Models\CategoriaInversionista\ProductoModel.cs" />
     <Compile Include="Models\CategoriaInversionista\CategoriaModel.cs" />
     <Compile Include="Models\UsuarioModels.cs" />
@@ -456,6 +458,9 @@
     <Content Include="Web References\InformacionClienteAgente\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
+    </Content>
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
     </Content>
     <None Include="Web References\InformacionClienteAgente\tann_info_cliente.disco" />
     <Content Include="Web.config" />
