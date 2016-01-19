@@ -255,7 +255,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\GraphApiResponseInfo.cs" />
     <Compile Include="Models\AgenteModel.cs" />
+    <Compile Include="Models\GraphUserModel.cs" />
     <Compile Include="Models\CategoriaInversionista\ProductoModel.cs" />
     <Compile Include="Models\CategoriaInversionista\CategoriaModel.cs" />
     <Compile Include="Models\UsuarioModels.cs" />
