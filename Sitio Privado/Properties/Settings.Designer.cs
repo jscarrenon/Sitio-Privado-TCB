@@ -62,15 +62,13 @@ namespace Sitio_Privado.Properties {
                 return ((string)(this["Sitio_Privado_IndicesLiquidezSolvencia_tann_indicadores"]));
             }
         }
-
+        
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
         [global::System.Configuration.DefaultSettingValueAttribute("http://172.17.1.12:8088/tann_info_cliente.asmx")]
-        public string Sitio_Privado_InformacionClienteAgente_tann_info_cliente
-        {
-            get
-            {
+        public string Sitio_Privado_InformacionClienteAgente_tann_info_cliente {
+            get {
                 return ((string)(this["Sitio_Privado_InformacionClienteAgente_tann_info_cliente"]));
             }
         }

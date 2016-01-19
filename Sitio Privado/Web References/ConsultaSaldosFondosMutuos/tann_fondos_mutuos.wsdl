@@ -29,6 +29,7 @@
           <s:element minOccurs="1" maxOccurs="1" name="valor_cuota" type="s:decimal" />
           <s:element minOccurs="1" maxOccurs="1" name="saldo_cuota" type="s:decimal" />
           <s:element minOccurs="0" maxOccurs="1" name="renta" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="csbis" type="s:string" />
           <s:element minOccurs="1" maxOccurs="1" name="pesos" type="s:decimal" />
         </s:sequence>
       </s:complexType>
