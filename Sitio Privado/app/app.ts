@@ -18,6 +18,10 @@
                     templateUrl: "/app/home/mis-datos.html",
                     controller: "HomeCtrl as ctrl"
                 })
+                .when("/informacion-financiera", {
+                    templateUrl: "/app/informacion-financiera/index.html",
+                    controller: "InformacionFinancieraCtrl as ctrl"
+                })
                 .otherwise({ redirectTo: '/' });
         }
     }

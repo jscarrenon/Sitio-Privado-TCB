@@ -336,6 +336,7 @@
     <Content Include="app\common\templates\footer.html" />
     <Content Include="app\home\index.html" />
     <Content Include="app\home\mis-datos.html" />
+    <Content Include="app\informacion-financiera\index.html" />
     <Content Include="app\inversiones\index.html" />
     <Content Include="app\mis-inversiones\circularizacion.html" />
     <Content Include="app\mis-inversiones\circularizacion_anterior.html" />
@@ -354,7 +355,6 @@
     <Content Include="package.json" />
     <Content Include=".bowerrc" />
     <Content Include="bower.json" />
-    <Content Include="Styles\site.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -587,6 +587,7 @@
     <TypeScriptCompile Include="app\domain\Producto.ts" />
     <TypeScriptCompile Include="app\domain\Usuario.ts" />
     <TypeScriptCompile Include="app\home\homeCtrl.ts" />
+    <TypeScriptCompile Include="app\informacion-financiera\informacionFinancieraCtrl.ts" />
     <TypeScriptCompile Include="app\inversiones\inversionesCtrl.ts" />
     <TypeScriptCompile Include="app\mis-inversiones\misInversionesDocumentosCtrl.ts" />
     <TypeScriptCompile Include="app\mis-inversiones\misInversionesCtrl.ts" />
