@@ -26,48 +26,49 @@
     <!-- endinject -->
 </head>
 <body ng-controller="BodyCtrl as bodyCtrl">
+    <div>
 
-    @Html.Partial("_LoginPartial")
-    
-    <div id="bar">
-        <div class="in">
-            <div class="logo"><a href="#/" class="clink" ng-click="bodyCtrl.seleccionarSeccion(0)"></a></div>
-            <div class="menubar">
-                <div class="menuitem"><a href="#/mis-inversiones" class="clink" ng-click="bodyCtrl.seleccionarSeccion(1)">Mis Inversiones</a></div>
-                <div class="menuitem"><a href="productos.html" class="clink" ng-click="bodyCtrl.seleccionarSeccion(2)">Productos y Servicios</a></div>
-                <div class="menuitem"><a href="info_estatutos.html" class="clink" ng-click="bodyCtrl.seleccionarSeccion(3)">Información Financiera</a></div>
-                <div class="menuitem"><a href="#/inversiones" class="clink" ng-click="bodyCtrl.seleccionarSeccion(4)">Inversión a su Medida</a></div>
+        @Html.Partial("_LoginPartial")
+
+        <div id="bar">
+            <div class="in">
+                <div class="logo"><a href="#/" class="clink" ng-click="bodyCtrl.seleccionarSeccion(0)"></a></div>
+                <div class="menubar">
+                    <div class="menuitem"><a href="#/mis-inversiones" class="clink" ng-click="bodyCtrl.seleccionarSeccion(1)">Mis Inversiones</a></div>
+                    <div class="menuitem"><a href="productos.html" class="clink" ng-click="bodyCtrl.seleccionarSeccion(2)">Productos y Servicios</a></div>
+                    <div class="menuitem"><a href="info_estatutos.html" class="clink" ng-click="bodyCtrl.seleccionarSeccion(3)">Información Financiera</a></div>
+                    <div class="menuitem"><a href="#/inversiones" class="clink" ng-click="bodyCtrl.seleccionarSeccion(4)">Inversión a su Medida</a></div>
+                </div>
             </div>
         </div>
+
+        <div id="bar_mobile">
+            <div class="in">
+                <div class="logo"></div>
+                <div class="user"><a href="#/mis-datos" class="clink" ng-click="bodyCtrl.seleccionarSeccion(-1)"></a></div>
+                <div class="logout">@Html.ActionLink("-", "SignOut", "Account", new { @class = "clink" })</div>
+            </div>
+        </div>
+
+        <div id="tabbar">
+            <div class="tab home" ng-class="{'active':bodyCtrl.seccionId == 0}">
+                <a href="#/" class="clink" ng-click="bodyCtrl.seleccionarSeccion(0)"></a>
+            </div>
+            <div class="tab mis-inversiones" ng-class="{'active':bodyCtrl.seccionId == 1}">
+                <a href="#/mis-inversiones" class="clink" ng-click="bodyCtrl.seleccionarSeccion(1)"></a>
+            </div>
+            <div class="tab productos" ng-class="{'active':bodyCtrl.seccionId == 2}">
+                <a href="productos.html" class="clink" ng-click="bodyCtrl.seleccionarSeccion(2)"></a>
+            </div>
+            <div class="tab info" ng-class="{'active':bodyCtrl.seccionId == 3}">
+                <a href="info_estatutos.html" class="clink" ng-click="bodyCtrl.seleccionarSeccion(3)"></a>
+            </div>
+            <div class="tab inversiones" ng-class="{'active':bodyCtrl.seccionId == 4}">
+                <a href="#/inversiones" class="clink" ng-click="bodyCtrl.seleccionarSeccion(4)"></a>
+            </div>
+        </div>
+
+        <ng-view></ng-view>
     </div>
-
-    <div id="bar_mobile">
-        <div class="in">
-            <div class="logo"></div>
-            <div class="user"><a href="#/mis-datos" class="clink" ng-click="bodyCtrl.seleccionarSeccion(-1)"></a></div>
-            <div class="logout">@Html.ActionLink("-", "SignOut", "Account", new { @class = "clink" })</div>
-        </div>
-    </div>
-
-    <div id="tabbar">
-        <div class="tab home" ng-class="{'active':bodyCtrl.seccionId == 0}">
-            <a href="#/" class="clink" ng-click="bodyCtrl.seleccionarSeccion(0)"></a>
-        </div>
-        <div class="tab mis-inversiones" ng-class="{'active':bodyCtrl.seccionId == 1}">
-            <a href="#/mis-inversiones" class="clink" ng-click="bodyCtrl.seleccionarSeccion(1)"></a>
-        </div>
-        <div class="tab productos" ng-class="{'active':bodyCtrl.seccionId == 2}">
-            <a href="productos.html" class="clink" ng-click="bodyCtrl.seleccionarSeccion(2)"></a>
-        </div>
-        <div class="tab info" ng-class="{'active':bodyCtrl.seccionId == 3}">
-            <a href="info_estatutos.html" class="clink" ng-click="bodyCtrl.seleccionarSeccion(3)"></a>
-        </div>
-        <div class="tab inversiones" ng-class="{'active':bodyCtrl.seccionId == 4}">
-            <a href="#/inversiones" class="clink" ng-click="bodyCtrl.seleccionarSeccion(4)"></a>
-        </div>
-    </div>
-
-    <ng-view></ng-view>
-
 </body>
 </html>
