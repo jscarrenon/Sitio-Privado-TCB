@@ -34,6 +34,12 @@ namespace Sitio_Privado.Controllers
             }
             return View(containers);
         }
+
+        public ActionResult GetContainer(string name)
+        {
+            return null;
+        }
+
         #endregion
     }
 }

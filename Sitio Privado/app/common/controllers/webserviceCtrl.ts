@@ -41,7 +41,7 @@
             
 
             //Test de Agente
-            this.agenteInput = new app.domain.AgenteInput("8411855-9", 31);
+            /*this.agenteInput = new app.domain.AgenteInput("8411855-9", 31);
             this.getAgente(this.agenteInput);
 
             //Test fondos mutuos
@@ -64,7 +64,7 @@
 
             //Test de Categoría de Cliente
             this.categoriaClienteInput = new app.domain.CategoriaClienteInput(10862228);
-            this.getCategoriaCliente(this.categoriaClienteInput);
+            this.getCategoriaCliente(this.categoriaClienteInput);*/
         }
 
         getAgente(input: app.domain.IAgenteInput): void {

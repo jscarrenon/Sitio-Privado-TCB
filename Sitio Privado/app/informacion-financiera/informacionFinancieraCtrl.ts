@@ -6,6 +6,7 @@
         seccionId: number;
         seleccionarSeccion(id: number): void;
         setTemplates(): void;
+        getFolders(): app.domain.AzureContainer[];
     }
 
     export class InformacionFinancieraCtrl implements IInformacionFinancieraViewModel {
@@ -34,6 +35,15 @@
         seleccionarSeccion(id: number): void {
             this.seccionId = id;
             this.seccionURI = 'app/informacion-financiera/' + this.templates[this.seccionId];
+        }
+
+        getFolders(): app.domain.AzureContainer[] {
+        //TODO: call service
+            var container = [];
+            container[0] = new app.domain.AzureContainer("Hola");
+            container[1] = new app.domain.AzureContainer("Chao");
+            
+            return container;
         }
 
         setTemplates(): void {

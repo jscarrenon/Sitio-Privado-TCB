@@ -11,14 +11,11 @@
     <div id="content">
         <div class="in">
 
-            <div class="one-col">
-                <div class="section-title">Prueba</div>
-                    Contenido
-
-                <div class="legal">
-                    La información sobre los saldos presentados más arriba corresponde exclusivamente a aquellos clientes titulares directos, en Principal Administradores General de Fondos S.A., de cuotas de fondos mutuos administrados por esta, y no aquellas que son custodiadas en Tanner Corredores de Bolsa. Para consultar los saldos respecto estas últimas, le solicitamos por favor acceder a Inversiones Nacionales.
+            <div class="one-col" ng-controller="InformacionFinancieraCtrl as financialInfoCtrl">
+                <div class="section-title" ng-repeat="folder in financialInfoCtrl.getFolders()">
+                    {{folder.Name}}
+                    <div>Hola</div>
                 </div>
-
             </div><!--end one-col -->
             <div id="clear"></div>
 

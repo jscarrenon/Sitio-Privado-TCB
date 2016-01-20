@@ -576,6 +576,7 @@
     <TypeScriptCompile Include="app\common\services\constantService.ts" />
     <TypeScriptCompile Include="app\common\services\dataService.ts" />
     <TypeScriptCompile Include="app\common\typings\slicknav.ts" />
+    <TypeScriptCompile Include="app\domain\AzureContainer.ts" />
     <TypeScriptCompile Include="app\domain\Categoria.ts" />
     <TypeScriptCompile Include="app\domain\CategoriaClienteInput.ts" />
     <TypeScriptCompile Include="app\domain\ProductoInput.ts" />
