@@ -40,8 +40,12 @@
         getFolders(): app.domain.AzureContainer[] {
         //TODO: call service
             var container = [];
-            container[0] = new app.domain.AzureContainer("Hola");
-            container[1] = new app.domain.AzureContainer("Chao");
+            var blobs = [];
+            blobs[0] = new app.domain.AzureBlob("nuevo archivo de prueba con nombre largo", null);
+            blobs[1] = new app.domain.AzureBlob("otro archivo", null);
+            blobs[2] = new app.domain.AzureBlob("tercero", null);
+            container[0] = new app.domain.AzureContainer("Hola", blobs);
+            container[1] = new app.domain.AzureContainer("Chao", null);
             
             return container;
         }

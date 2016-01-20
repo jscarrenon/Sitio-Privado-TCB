@@ -14,7 +14,14 @@
             <div class="one-col" ng-controller="InformacionFinancieraCtrl as financialInfoCtrl">
                 <div class="section-title" ng-repeat="folder in financialInfoCtrl.getFolders()">
                     {{folder.Name}}
-                    <div>Hola</div>
+                    <div class="wrap-docs">
+                        <div class="one-doc" ng-repeat="blob in folder.Blobs">
+                            <div class="name">{{blob.Name}}</div>
+                            <div class="download">
+                                <a href="#" class="clink"></a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div><!--end one-col -->
             <div id="clear"></div>
