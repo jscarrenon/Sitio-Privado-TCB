@@ -10,29 +10,29 @@ namespace Sitio_Privado.Models.CategoriaInversionista
 
     public class Producto
     {
-        public int identificador { get; set; }
-        public string descriptor { get; set; }
-        public List<Categoria> categorias { get; set; }
+        public int Identificador { get; set; }
+        public string Descriptor { get; set; }
+        public List<Categoria> Categorias { get; set; }
 
         public Producto() { }
 
         public Producto(_producto producto)
         {
-            identificador = producto.identificador;
-            descriptor = producto.descriptor;
+            Identificador = producto.identificador;
+            Descriptor = producto.descriptor;
         }
 
         public Producto(ProductoInput input)
         {
             tann_catsvc webService = new tann_catsvc();
             _producto producto = webService.tann_cns_prod(input.ident_prd);
-            identificador = producto.identificador;
-            descriptor = producto.descriptor;
-            categorias = new List<Categoria>();
+            Identificador = producto.identificador;
+            Descriptor = producto.descriptor;
+            Categorias = new List<Categoria>();
 
             foreach (_categoria categoria in producto.Categorias)
             {
-                categorias.Add(new Categoria(categoria));
+                Categorias.Add(new Categoria(categoria));
             }
         }
     }

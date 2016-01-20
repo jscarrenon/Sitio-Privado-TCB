@@ -1,5 +1,6 @@
 ﻿module app.domain {
     export interface IUsuario {
+        Autenticado: boolean;
         Nombres: string;
         Apellidos: string;
         Rut: string;
@@ -17,7 +18,8 @@
     }
 
     export class Usuario extends app.domain.EntityBase implements IUsuario {
-        constructor(public Nombres: string,
+        constructor(public Autenticado: boolean,
+            public Nombres: string,
             public Apellidos: string,
             public Rut: string,
             public DireccionComercial: string,
@@ -34,6 +36,7 @@
 
             super();
 
+            this.Autenticado = Autenticado;
             this.Nombres = Nombres;
             this.Apellidos = Apellidos;
             this.Rut = Rut;

@@ -1,21 +1,21 @@
 ﻿module app.domain {
 
     export interface IProducto {
-        identificador: number;
-        descriptor: string;
-        categorias: Categoria[];
+        Identificador: number;
+        Descriptor: string;
+        Categorias: Categoria[];
     }
 
     export class Producto extends app.domain.EntityBase implements IProducto {
-        constructor(public identificador: number,
-            public descriptor: string,
-            public categorias: Categoria[]) {
+        constructor(public Identificador: number,
+            public Descriptor: string,
+            public Categorias: Categoria[]) {
 
             super();
 
-            this.identificador = identificador;
-            this.descriptor = descriptor;
-            this.categorias = categorias;
+            this.Identificador = Identificador;
+            this.Descriptor = Descriptor;
+            this.Categorias = Categorias;
         }
     }
 }

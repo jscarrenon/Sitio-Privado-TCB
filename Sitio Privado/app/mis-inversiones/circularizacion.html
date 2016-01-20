@@ -8,33 +8,16 @@
         </div>
     </div>
 
-    <div id="content">
+    <div id="content" ng-controller="MisInversionesCircularizacionCtrl as circularizacionCtrl">
         <div class="in">
 
             <div class="areas">
-                <div class="one-area"><a href="#" class="clink active">Pendiente</a></div>
-                <div class="one-area"><a href="mis-inversiones_circularizacion_anterior.html" class="clink">Anterior</a></div>
+                <div class="one-area"><a href="" class="clink" ng-class="{'active':circularizacionCtrl.seccionId == 0 || circularizacionCtrl.seccionId == 2 || circularizacionCtrl.seccionId == 3 }" ng-click="circularizacionCtrl.seleccionarSeccion(0)">Pendiente</a></div>
+                <div class="one-area"><a href="" class="clink" ng-class="{'active':circularizacionCtrl.seccionId == 1}" ng-click="circularizacionCtrl.seleccionarSeccion(1)">Anterior</a></div>
             </div>
 
-            <div class="one-col">
-
-                <div class="one-pending">
-                    <div class="title">
-                        Usted tiene una circularización pendiente de aprobación.<br />
-                        <strong>Circularización Anual de Custodia 2015</strong>
-                    </div>
-                    <div class="button green"><a href="mis-inversiones_circularizacion_anual-2015.html">Revisar</a></div>
-                </div>
-
-                <div class="none-pending" style="display:none">
-                    <div class="none">No hay ninguna circularización pendiente.</div>
-                </div>
-
-                <div class="legal">
-                    La información sobre los saldos presentados más arriba corresponde exclusivamente a aquellos clientes titulares directos, en Principal Administradores General de Fondos S.A. La información sobre los saldos presentados más arriba corresponde exclusivamente a aquellos clientes titulares directos, en Principal Administradores General de Fondos S.A. La información sobre los saldos presentados más arriba corresponde exclusivamente a aquellos clientes titulares directos, en Principal Administradores General de Fondos S.A.
-                </div>
-
-            </div><!--end one-col -->
+            <ng-include src="circularizacionCtrl.seccionURI"></ng-include>
+            
             <div id="clear"></div>
 
             <ng-include src="ctrl.constantService.templateFooterURI"></ng-include>

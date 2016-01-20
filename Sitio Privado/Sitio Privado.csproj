@@ -343,11 +343,11 @@
     <Content Include="app\mis-inversiones\circularizacion_anterior.html" />
     <Content Include="app\mis-inversiones\circularizacion_anual-2015.html" />
     <Content Include="app\mis-inversiones\circularizacion_aprobar.html" />
+    <Content Include="app\mis-inversiones\circularizacion_pendiente.html" />
     <Content Include="app\mis-inversiones\estado-documentos.html" />
     <Content Include="app\mis-inversiones\estado-documentos_firmados.html" />
     <Content Include="app\mis-inversiones\estado-documentos_pendientes.html" />
     <Content Include="app\mis-inversiones\fondos-mutuos.html" />
-    <Content Include="app\mis-inversiones\fondos-privados.html" />
     <Content Include="app\mis-inversiones\index.html" />
     <Content Include="app\mis-inversiones\nacionales.html" />
     <Content Include="favicon.ico" />
@@ -572,6 +572,7 @@
     <TypeScriptCompile Include="app\app.ts" />
     <TypeScriptCompile Include="app\common\controllers\webserviceCtrl.ts" />
     <TypeScriptCompile Include="app\common\controllers\bodyCtrl.ts" />
+    <TypeScriptCompile Include="app\common\services\authService.ts" />
     <TypeScriptCompile Include="app\common\services\constantService.ts" />
     <TypeScriptCompile Include="app\common\services\dataService.ts" />
     <TypeScriptCompile Include="app\common\typings\slicknav.ts" />
@@ -590,6 +591,7 @@
     <TypeScriptCompile Include="app\home\homeCtrl.ts" />
     <TypeScriptCompile Include="app\informacion-financiera\informacionFinancieraCtrl.ts" />
     <TypeScriptCompile Include="app\inversiones\inversionesCtrl.ts" />
+    <TypeScriptCompile Include="app\mis-inversiones\misInversionesCircularizacionCtrl.ts" />
     <TypeScriptCompile Include="app\mis-inversiones\misInversionesDocumentosCtrl.ts" />
     <TypeScriptCompile Include="app\mis-inversiones\misInversionesCtrl.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-animate.d.ts" />

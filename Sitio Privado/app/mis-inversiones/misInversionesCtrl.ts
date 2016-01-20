@@ -22,13 +22,15 @@
             this.seccionId = 0;
             this.seleccionarSeccion(this.seccionId);
 
+            //Solucionar problema de script slickav (a.mobileNav.on) porque afecta el resto del controlador KUNDER
             //Timeout por error de script slicknav (a.mobileNav.on)
-            setTimeout(function () {
+            /*setTimeout(function () {
                 (<any>$('#menu2')).slicknav({
                     label: 'Mis Inversiones', //important: active section name
                     prependTo: '#sidemenu'
                 });
-            }, 800);
+
+            }, 800); */
         }
 
         seleccionarSeccion(id: number): void {
@@ -39,7 +41,7 @@
         setTemplates(): void {
             this.templates = [];
             this.templates[0] = "nacionales.html";
-            this.templates[1] = "fondos-privados.html";
+            //this.templates[1] = "fondos-privados.html"; NO APLICA (Link externo)
             this.templates[2] = "fondos-mutuos.html";
             this.templates[3] = "estado-documentos.html";
             this.templates[4] = "circularizacion.html";
