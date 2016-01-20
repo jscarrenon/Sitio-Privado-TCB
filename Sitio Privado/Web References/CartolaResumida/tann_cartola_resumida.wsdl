@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://servicios.tanner.cl/cartolaresumida" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://servicios.tanner.cl/cartolaresumida" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://servicios.tanner.cl/cartolaresumida">
+      <s:element name="cns_total_general">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="_rut" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="_secuencia" type="s:short" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="cns_total_generalResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="cns_total_generalResult" type="tns:_cartola" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="_cartola">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="_rut" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="_periodo" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="_saldocaja" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="_totalrentafija" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="_instrf" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="_ffmmrf" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="_totalrentavari" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="_accnacion" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="_ffmmrv" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="_fwdcompra" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="_fwdventa" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="_totsimul" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="_totinversiones" type="s:double" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="cns_consulta_cuentaspisys">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="_rut" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="cns_consulta_cuentaspisysResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="cns_consulta_cuentaspisysResult" type="tns:_cuentaspisys" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="_cuentaspisys">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="rut" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="numcuenta" type="tns:ArrayOfString" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="cns_total_generalSoapIn">
+    <wsdl:part name="parameters" element="tns:cns_total_general" />
+  </wsdl:message>
+  <wsdl:message name="cns_total_generalSoapOut">
+    <wsdl:part name="parameters" element="tns:cns_total_generalResponse" />
+  </wsdl:message>
+  <wsdl:message name="cns_consulta_cuentaspisysSoapIn">
+    <wsdl:part name="parameters" element="tns:cns_consulta_cuentaspisys" />
+  </wsdl:message>
+  <wsdl:message name="cns_consulta_cuentaspisysSoapOut">
+    <wsdl:part name="parameters" element="tns:cns_consulta_cuentaspisysResponse" />
+  </wsdl:message>
+  <wsdl:portType name="tann_cartola_resumidaSoap">
+    <wsdl:operation name="cns_total_general">
+      <wsdl:input message="tns:cns_total_generalSoapIn" />
+      <wsdl:output message="tns:cns_total_generalSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="cns_consulta_cuentaspisys">
+      <wsdl:input message="tns:cns_consulta_cuentaspisysSoapIn" />
+      <wsdl:output message="tns:cns_consulta_cuentaspisysSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="tann_cartola_resumidaSoap" type="tns:tann_cartola_resumidaSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="cns_total_general">
+      <soap:operation soapAction="http://servicios.tanner.cl/cartolaresumida/cns_total_general" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cns_consulta_cuentaspisys">
+      <soap:operation soapAction="http://servicios.tanner.cl/cartolaresumida/cns_consulta_cuentaspisys" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="tann_cartola_resumidaSoap12" type="tns:tann_cartola_resumidaSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="cns_total_general">
+      <soap12:operation soapAction="http://servicios.tanner.cl/cartolaresumida/cns_total_general" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cns_consulta_cuentaspisys">
+      <soap12:operation soapAction="http://servicios.tanner.cl/cartolaresumida/cns_consulta_cuentaspisys" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="tann_cartola_resumida">
+    <wsdl:port name="tann_cartola_resumidaSoap" binding="tns:tann_cartola_resumidaSoap">
+      <soap:address location="http://172.17.1.12:8088/tann_cartola_resumida.asmx" />
+    </wsdl:port>
+    <wsdl:port name="tann_cartola_resumidaSoap12" binding="tns:tann_cartola_resumidaSoap12">
+      <soap12:address location="http://172.17.1.12:8088/tann_cartola_resumida.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
