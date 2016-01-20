@@ -12,6 +12,8 @@
         setTemplates(): void;
         balance: app.domain.IBalance;
         getBalance(input: app.domain.IBalanceInput): void;
+        cartola: app.domain.ICartola;
+        getCartola(input: app.domain.ICartolaInput): void;        
     }
 
     export class MisInversionesCtrl implements IMisInversionesViewModel {
@@ -21,6 +23,8 @@
         seccionId: number;
         balance: app.domain.IBalance;
         balanceInput: app.domain.IBalanceInput;
+        cartola: app.domain.ICartola;
+        cartolaInput: app.domain.ICartolaInput;
 
         static $inject = ['constantService', 'dataService', 'authService', '$routeParams'];
         constructor(private constantService: app.common.services.ConstantService,
@@ -41,6 +45,9 @@
 
             this.balanceInput = new app.domain.BalanceInput(this.authService.usuario.Rut);
             this.getBalance(this.balanceInput);
+
+            this.cartolaInput = new app.domain.CartolaInput(this.authService.usuario.Rut, 0);
+            this.getCartola(this.cartolaInput);
 
             //Solucionar problema de script slickav (a.mobileNav.on) porque afecta el resto del controlador KUNDER
             //Timeout por error de script slicknav (a.mobileNav.on)
@@ -71,6 +78,13 @@
             this.dataService.postWebService(this.constantService.apiBalanceURI + 'getSingle', input)
                 .then((result: app.domain.IBalance) => {
                     this.balance = result;
+                });
+        }
+
+        getCartola(input: app.domain.ICartolaInput): void {
+            this.dataService.postWebService(this.constantService.apiCartolaURI + 'getSingle', input)
+                .then((result: app.domain.ICartola) => {
+                    this.cartola = result;
                 });
         }
     }
