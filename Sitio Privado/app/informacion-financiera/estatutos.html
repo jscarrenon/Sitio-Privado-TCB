@@ -2,7 +2,7 @@
     <div id="header">
         <div class="in">
             <div class="head">
-                <div class="title">Fondos Mutuos y APV</div>
+                <div class="title">Estatutos</div>
                 <div class="subtitle"></div>
             </div>
         </div>
@@ -11,65 +11,9 @@
     <div id="content">
         <div class="in">
 
-            <div class="one-col" ng-controller="WebserviceCtrl as webserviceCtrl">
-                <div class="section-title">Saldos Fondos Mutuos de Renta Fija</div>
-                <div id="cont-table">
-                    <table class="balance">
-                        <tr>
-                            <th>Fondo</th>
-                            <th>Tipo Fondo</th>
-                            <th>Cuenta</th>
-                            <th>Condición Tributaria</th>
-                            <th class="number">Valor Cuotas</th>
-                            <th class="number">Saldo en Cuotas</th>
-                            <th class="number">Saldo en Pesos</th>
-                        </tr>
-                        <tr ng-repeat="fondoMutuo in webserviceCtrl.fondosMutuosRF">
-                            <td>{{fondoMutuo.descripcion}}</td>
-                            <td>{{fondoMutuo.tipo}}</td>
-                            <td>{{fondoMutuo.cta_pisys}}</td>
-                            <td>{{fondoMutuo.csbis}}</td>
-                            <td class="number">${{fondoMutuo.valor_cuota}}</td>
-                            <td class="number">${{fondoMutuo.saldo_cuota}}</td>
-                            <td class="number">${{fondoMutuo.pesos}}</td>
-                        </tr>
-                        <tr class="total">
-                            <td colspan="6">Total Fondos Mutuos Renta Fija</td>
-                            <td class="number">${{webserviceCtrl.fondosMutuosRFTotal}}</td>
-                        </tr>
-                    </table>
-                </div>
-
-                <div class="sep-table"></div>
-
-                <div class="section-title">Saldos Fondos Mutuos de Renta Variable</div>
-
-                <div id="cont-table">
-                    <table class="balance">
-                        <tr>
-                            <th>Fondo</th>
-                            <th>Tipo Fondo</th>
-                            <th>Cuenta</th>
-                            <th>Condición Tributaria</th>
-                            <th class="number">Valor Cuotas</th>
-                            <th class="number">Saldo en Cuotas</th>
-                            <th class="number">Saldo en Pesos</th>
-                        </tr>
-                        <tr ng-repeat="fondoMutuo in webserviceCtrl.fondosMutuosRV">
-                            <td>{{fondoMutuo.descripcion}}</td>
-                            <td>{{fondoMutuo.tipo}}</td>
-                            <td>{{fondoMutuo.cta_pisys}}</td>
-                            <td>{{fondoMutuo.csbis}}</td>
-                            <td class="number">${{fondoMutuo.valor_cuota}}</td>
-                            <td class="number">${{fondoMutuo.saldo_cuota}}</td>
-                            <td class="number">${{fondoMutuo.pesos}}</td>
-                        </tr>
-                        <tr class="total">
-                            <td colspan="6">Total Fondos Mutuos Renta Variable</td>
-                            <td class="number">${{webserviceCtrl.fondosMutuosRVTotal}}</td>
-                        </tr>
-                    </table>
-                </div>
+            <div class="one-col">
+                <div class="section-title">Prueba</div>
+                    Contenido
 
                 <div class="legal">
                     La información sobre los saldos presentados más arriba corresponde exclusivamente a aquellos clientes titulares directos, en Principal Administradores General de Fondos S.A., de cuotas de fondos mutuos administrados por esta, y no aquellas que son custodiadas en Tanner Corredores de Bolsa. Para consultar los saldos respecto estas últimas, le solicitamos por favor acceder a Inversiones Nacionales.
