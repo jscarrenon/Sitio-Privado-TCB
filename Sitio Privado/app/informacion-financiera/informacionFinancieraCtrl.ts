@@ -23,12 +23,12 @@
             this.seleccionarSeccion(this.seccionId);
 
             //Timeout por error de script slicknav (a.mobileNav.on)
-            setTimeout(function () {
+            /*setTimeout(function () {
                 (<any>$('#menu2')).slicknav({
-                    label: 'Informacion Financiera', //important: active section name
+                    label: 'Información Financiera', //important: active section name
                     prependTo: '#sidemenu'
                 });
-            }, 800);
+            }, 800);*/
         }
 
         seleccionarSeccion(id: number): void {
@@ -38,12 +38,12 @@
 
         setTemplates(): void {
             this.templates = [];
-            this.templates[0] = "nacionales.html";
-            this.templates[1] = "fondos-privados.html";
-            this.templates[2] = "fondos-mutuos.html";
-            this.templates[3] = "estado-documentos.html";
-            this.templates[4] = "circularizacion.html";
-            this.templates[5] = "circularizacion.html";
+            this.templates[0] = "estatutos.html";
+            this.templates[1] = "estatutos.html";
+            this.templates[2] = "estatutos.html";
+            this.templates[3] = "estatutos.html";
+            this.templates[4] = "estatutos.html";
+            this.templates[5] = "estatutos.html";
         }
     }
     angular.module('tannerPrivadoApp')

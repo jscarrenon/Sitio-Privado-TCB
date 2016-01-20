@@ -8,23 +8,23 @@
                     Estatutos
                 </a>
             </li>
-            <li class="normativos">
-                <a href="http://www.google.cl" target="_blank" class="clink">
+            <li class="normativos" ng-class="{'active':ctrl.seccionId == 1}">
+                <a href="" class="clink" ng-click="ctrl.seleccionarSeccion(1)">
                     Documentos Normativos
                 </a>
             </li>
-            <li class="custodia" ng-class="{'active':ctrl.seccionId == 1}">
-                <a href="" class="clink" ng-click="ctrl.seleccionarSeccion(1)">
+            <li class="custodia" ng-class="{'active':ctrl.seccionId == 2}">
+                <a href="" class="clink" ng-click="ctrl.seleccionarSeccion(2)">
                     Servicios de Custodia
                 </a>
-            </li>
-            <li class="indices" ng-class="{'active':ctrl.seccionId == 2}">
-                <a href="" class="clink" ng-click="ctrl.seleccionarSeccion(2)">
+            </li>   
+            <li class="indices" ng-class="{'active':ctrl.seccionId == 3}">
+                <a href="" class="clink" ng-click="ctrl.seleccionarSeccion(3)">
                     Índices de Liquidez
                 </a>
             </li>
-            <li class="hechos-esenciales" ng-class="{'active':ctrl.seccionId == 3}">
-                <a href="" class="clink" ng-click="ctrl.seleccionarSeccion(3)">
+            <li class="hechos-esenciales">
+                <a href="http://www.google.cl" target="_blank">
                     Hechos Esenciales
                     <img src="../.build/img/icon_external-link.png" class="external-link" />
                 </a>
@@ -34,8 +34,8 @@
                     Comité de Regulación
                 </a>
             </li>
-            <li class="otros-docs" ng-class="{'active':ctrl.seccionId == 4}">
-                <a href="" class="clink" ng-click="ctrl.seleccionarSeccion(4)">
+            <li class="otros-docs" ng-class="{'active':ctrl.seccionId == 5}">
+                <a href="" class="clink" ng-click="ctrl.seleccionarSeccion(5)">
                     Otros Documentos
                 </a>
             </li>
