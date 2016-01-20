@@ -1,38 +1,38 @@
 ﻿module app.domain {
     export interface IAgente {
-        codigo: number;
-        nombre: string;
-        sucursal: string;
-        pathImg: string;
-        email: string;
-        telefono: string;
-        fechaInicioAcreditacion: string;
-        fechaExpiracionAcreditacion: string;
-        descriptor: string;
+        Codigo: number;
+        Nombre: string;
+        Sucursal: string;
+        PathImg: string;
+        Email: string;
+        Telefono: string;
+        FechaInicioAcreditacion: string;
+        FechaExpiracionAcreditacion: string;
+        Descriptor: string;
     }
 
     export class Agente extends app.domain.EntityBase implements IAgente {
-        constructor(public codigo: number,
-            public nombre: string,
-            public sucursal: string,
-            public pathImg: string,
-            public email: string,
-            public telefono: string,
-            public fechaInicioAcreditacion: string,
-            public fechaExpiracionAcreditacion: string,
-            public descriptor: string) {
+        constructor(public Codigo: number,
+            public Nombre: string,
+            public Sucursal: string,
+            public PathImg: string,
+            public Email: string,
+            public Telefono: string,
+            public FechaInicioAcreditacion: string,
+            public FechaExpiracionAcreditacion: string,
+            public Descriptor: string) {
 
             super();
 
-            this.codigo = codigo;
-            this.nombre = nombre;
-            this.sucursal = sucursal;
-            this.pathImg = pathImg;
-            this.email = email;
-            this.telefono = telefono;
-            this.fechaInicioAcreditacion = fechaInicioAcreditacion;
-            this.fechaExpiracionAcreditacion = fechaExpiracionAcreditacion;
-            this.descriptor = descriptor;
+            this.Codigo = Codigo;
+            this.Nombre = Nombre;
+            this.Sucursal = Sucursal;
+            this.PathImg = PathImg;
+            this.Email = Email;
+            this.Telefono = Telefono;
+            this.FechaInicioAcreditacion = FechaInicioAcreditacion;
+            this.FechaExpiracionAcreditacion = FechaExpiracionAcreditacion;
+            this.Descriptor = Descriptor;
         }
     }
 }

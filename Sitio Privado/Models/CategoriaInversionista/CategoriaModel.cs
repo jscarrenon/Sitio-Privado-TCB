@@ -15,35 +15,35 @@ namespace Sitio_Privado.Models.CategoriaInversionista
 
     public class Categoria
     {
-        public int identificador { get; set; }
+        public int Identificador { get; set; }
 
-        public string descriptor { get; set; }
+        public string Descriptor { get; set; }
 
-        public string comentario { get; set; }
+        public string Comentario { get; set; }
 
-        public List<Producto> productos { get; set; }
+        public List<Producto> Productos { get; set; }
 
         public Categoria() { }
 
         public Categoria(_categoria categoria)
         {
-            identificador = categoria.identificador;
-            descriptor = categoria.descriptor;
-            comentario = categoria.comentario;
+            Identificador = categoria.identificador;
+            Descriptor = categoria.descriptor;
+            Comentario = categoria.comentario;
         }
 
         public Categoria(CategoriaInput input)
         {
             tann_catsvc webService = new tann_catsvc();
             _categoria categoria = webService.tann_cns_cat(input.ident_cat);
-            identificador = categoria.identificador;
-            descriptor = categoria.descriptor;
-            comentario = categoria.comentario;
-            productos = new List<Producto>();
+            Identificador = categoria.identificador;
+            Descriptor = categoria.descriptor;
+            Comentario = categoria.comentario;
+            Productos = new List<Producto>();
 
             foreach (_producto producto in categoria.Productos)
             {                
-                productos.Add(new Producto(producto));
+                Productos.Add(new Producto(producto));
             }            
         }
 
@@ -51,14 +51,14 @@ namespace Sitio_Privado.Models.CategoriaInversionista
         {
             tann_catsvc webService = new tann_catsvc();
             _categoria categoria = webService.tann_cns_cat_cli(input.rut_cli);
-            identificador = categoria.identificador;
-            descriptor = categoria.descriptor;
-            comentario = categoria.comentario;
-            productos = new List<Producto>();
+            Identificador = categoria.identificador;
+            Descriptor = categoria.descriptor;
+            Comentario = categoria.comentario;
+            Productos = new List<Producto>();
 
             foreach (_producto producto in categoria.Productos)
             {
-                productos.Add(new Producto(producto));
+                Productos.Add(new Producto(producto));
             }
         }
     }
