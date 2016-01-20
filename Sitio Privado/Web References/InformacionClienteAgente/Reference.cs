@@ -31,6 +31,8 @@ namespace Sitio_Privado.InformacionClienteAgente {
         
         private System.Threading.SendOrPostCallback cli_info_agenteOperationCompleted;
         
+        private System.Threading.SendOrPostCallback cli_itokenOperationCompleted;
+        
         private bool useDefaultCredentialsSetExplicitly;
         
         /// <remarks/>
@@ -73,6 +75,9 @@ namespace Sitio_Privado.InformacionClienteAgente {
         public event cli_info_agenteCompletedEventHandler cli_info_agenteCompleted;
         
         /// <remarks/>
+        public event cli_itokenCompletedEventHandler cli_itokenCompleted;
+        
+        /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://servicios.tanner/infocliente/cli_info_agente", RequestNamespace="http://servicios.tanner/infocliente/", ResponseNamespace="http://servicios.tanner/infocliente/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         public _agente cli_info_agente(string _rut, short _sec) {
             object[] results = this.Invoke("cli_info_agente", new object[] {
@@ -100,6 +105,35 @@ namespace Sitio_Privado.InformacionClienteAgente {
             if ((this.cli_info_agenteCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.cli_info_agenteCompleted(this, new cli_info_agenteCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://servicios.tanner/infocliente/cli_itoken", RequestNamespace="http://servicios.tanner/infocliente/", ResponseNamespace="http://servicios.tanner/infocliente/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public string cli_itoken(string rut) {
+            object[] results = this.Invoke("cli_itoken", new object[] {
+                        rut});
+            return ((string)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void cli_itokenAsync(string rut) {
+            this.cli_itokenAsync(rut, null);
+        }
+        
+        /// <remarks/>
+        public void cli_itokenAsync(string rut, object userState) {
+            if ((this.cli_itokenOperationCompleted == null)) {
+                this.cli_itokenOperationCompleted = new System.Threading.SendOrPostCallback(this.Oncli_itokenOperationCompleted);
+            }
+            this.InvokeAsync("cli_itoken", new object[] {
+                        rut}, this.cli_itokenOperationCompleted, userState);
+        }
+        
+        private void Oncli_itokenOperationCompleted(object arg) {
+            if ((this.cli_itokenCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.cli_itokenCompleted(this, new cli_itokenCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -261,6 +295,32 @@ namespace Sitio_Privado.InformacionClienteAgente {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((_agente)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    public delegate void cli_itokenCompletedEventHandler(object sender, cli_itokenCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class cli_itokenCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal cli_itokenCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public string Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
             }
         }
     }
