@@ -14,6 +14,8 @@
         getProductos(): void;
         categoriaCliente: app.domain.ICategoria;
         getCategoriaCliente(input: app.domain.ICategoriaClienteInput): void;
+        balance: app.domain.IBalance;
+        getBalance(input: app.domain.IBalanceInput): void;
     }
 
     export class WebserviceCtrl implements IWebserviceViewModel {
@@ -33,13 +35,14 @@
         productos: app.domain.IProducto[];
         categoriaCliente: app.domain.ICategoria;
         categoriaClienteInput: app.domain.ICategoriaClienteInput;
+        balance: app.domain.IBalance;
 
         static $inject = ['constantService', 'dataService'];
         constructor(private constantService: app.common.services.ConstantService,
             private dataService: app.common.services.DataService) {
 
             
-
+            /*
             //Test de Agente
             this.agenteInput = new app.domain.AgenteInput("8411855-9", 31);
             this.getAgente(this.agenteInput);
@@ -64,7 +67,9 @@
 
             //Test de Categoría de Cliente
             this.categoriaClienteInput = new app.domain.CategoriaClienteInput(10862228);
-            this.getCategoriaCliente(this.categoriaClienteInput);
+            this.getCategoriaCliente(this.categoriaClienteInput);*/
+
+
         }
 
         getAgente(input: app.domain.IAgenteInput): void {
@@ -129,6 +134,13 @@
             this.dataService.postWebService(this.constantService.apiCategoriaURI + 'getSingleCliente', input)
                 .then((result: app.domain.ICategoria) => {
                     this.categoriaCliente = result;
+                });
+        }
+
+        getBalance(input: app.domain.IBalanceInput): void {
+            this.dataService.postWebService(this.constantService.apiBalanceURI + 'getSingle', input)
+                .then((result: app.domain.IBalance) => {
+                    this.balance = result;
                 });
         }
     }

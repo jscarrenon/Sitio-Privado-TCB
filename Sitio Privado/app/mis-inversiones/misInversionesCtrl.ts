@@ -10,6 +10,8 @@
         seccionId: number;
         seleccionarSeccion(id: number): void;
         setTemplates(): void;
+        balance: app.domain.IBalance;
+        getBalance(input: app.domain.IBalanceInput): void;
     }
 
     export class MisInversionesCtrl implements IMisInversionesViewModel {
@@ -17,10 +19,13 @@
         templates: string[];
         seccionURI: string;
         seccionId: number;
+        balance: app.domain.IBalance;
+        balanceInput: app.domain.IBalanceInput;
 
-        static $inject = ['constantService', 'dataService', '$routeParams'];
+        static $inject = ['constantService', 'dataService', 'authService', '$routeParams'];
         constructor(private constantService: app.common.services.ConstantService,
             private dataService: app.common.services.DataService,
+            private authService: app.common.services.AuthService,
             private $routeParams: IMisInversionesRouteParams) {
 
             this.setTemplates();
@@ -33,6 +38,9 @@
             }            
 
             this.seleccionarSeccion(this.seccionId);
+
+            this.balanceInput = new app.domain.BalanceInput(this.authService.usuario.Rut);
+            this.getBalance(this.balanceInput);
 
             //Solucionar problema de script slickav (a.mobileNav.on) porque afecta el resto del controlador KUNDER
             //Timeout por error de script slicknav (a.mobileNav.on)
@@ -57,6 +65,13 @@
             this.templates[2] = "fondos-mutuos.html";
             this.templates[3] = "estado-documentos.html";
             this.templates[4] = "circularizacion.html";
+        }
+
+        getBalance(input: app.domain.IBalanceInput): void {
+            this.dataService.postWebService(this.constantService.apiBalanceURI + 'getSingle', input)
+                .then((result: app.domain.IBalance) => {
+                    this.balance = result;
+                });
         }
     }
     angular.module('tannerPrivadoApp')

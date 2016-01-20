@@ -2,12 +2,13 @@
 
     class MisInversionesDocumentosCtrl extends MisInversionesCtrl {
 
-        static $inject = ['constantService', 'dataService', '$routeParams'];
+        static $inject = ['constantService', 'dataService', 'authService', '$routeParams'];
         constructor(constantService: app.common.services.ConstantService,
             dataService: app.common.services.DataService,
+            authService: app.common.services.AuthService,
             $routeParams: app.misInversiones.IMisInversionesRouteParams) {
 
-            super(constantService, dataService, $routeParams);
+            super(constantService, dataService, authService, $routeParams);
 
             this.setTemplates();
             this.seccionId = 0;
