@@ -1,5 +1,9 @@
 ﻿module app.misInversiones {
 
+    export interface IMisInversionesRouteParams extends ng.route.IRouteParamsService {
+        seccion?: string;
+    }
+
     interface IMisInversionesViewModel {
         templates: string[];
         seccionURI: string;
@@ -14,12 +18,20 @@
         seccionURI: string;
         seccionId: number;
 
-        static $inject = ['constantService', 'dataService'];
+        static $inject = ['constantService', 'dataService', '$routeParams'];
         constructor(private constantService: app.common.services.ConstantService,
-            private dataService: app.common.services.DataService) {
+            private dataService: app.common.services.DataService,
+            private $routeParams: IMisInversionesRouteParams) {
 
             this.setTemplates();
             this.seccionId = 0;
+
+            if (this.$routeParams.seccion) {
+                if (this.$routeParams.seccion == 'estado-documentos') {
+                    this.seccionId = 3;
+                }
+            }            
+
             this.seleccionarSeccion(this.seccionId);
 
             //Solucionar problema de script slickav (a.mobileNav.on) porque afecta el resto del controlador KUNDER

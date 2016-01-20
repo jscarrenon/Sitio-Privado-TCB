@@ -6,7 +6,7 @@
                     templateUrl: "/app/home/index.html",
                     controller: "HomeCtrl as ctrl"
                 })
-                .when("/mis-inversiones", {
+                .when("/mis-inversiones/:seccion?", {
                     templateUrl: "/app/mis-inversiones/index.html",
                     controller: "MisInversionesCtrl as ctrl"
                 })
