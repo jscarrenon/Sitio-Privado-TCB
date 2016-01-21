@@ -1,11 +1,11 @@
 ﻿<div class="filter date">
     <div class="date-field">
-        Desde: <input type="date" step="1" min="2015-01-01" max="2013-12-31" value="2015-01-01">
+        Desde: <input type="date" step="1" ng-model="documentosCtrl.fechaFirmadosInicio" required>
     </div>
     <div class="date-field">
-        Hasta: <input type="date" step="2" min="2016-01-01" max="2016-12-31" value="2016-01-01">
+        Hasta: <input type="date" step="2" ng-model="documentosCtrl.fechaFirmadosFin" required>
     </div>
-    <div class="apply-filter pag-button"><a href="#" class="clink"></a></div>
+    <div class="apply-filter pag-button"><a href="" class="clink" ng-click="documentosCtrl.actualizarDocumentosFirmados"></a></div>
 </div>
 
 <div class="one-col">
@@ -22,32 +22,14 @@
                 <th>Fecha de Firma</th>
                 <th>Documento</th>
             </tr>
-            <tr>
-                <td>Simultánea</td>
-                <td>Operación</td>
-                <td>123456</td>
-                <td>21 Ago 2015</td>
-                <td>Web</td>
-                <td>14 Nov 2015</td>
-                <td><a href="#doc">Ver Documento</a></td>
-            </tr>
-            <tr>
-                <td>Simultánea</td>
-                <td>Operación</td>
-                <td>123456</td>
-                <td>21 Ago 2015</td>
-                <td>Web</td>
-                <td>14 Nov 2015</td>
-                <td><a href="#doc">Ver Documento</a></td>
-            </tr>
-            <tr>
-                <td>Simultánea</td>
-                <td>Operación</td>
-                <td>123456</td>
-                <td>21 Ago 2015</td>
-                <td>Web</td>
-                <td>14 Nov 2015</td>
-                <td><a href="#doc">Ver Documento</a></td>
+            <tr ng-repeat="documento in documentosCtrl.documentosFirmados">
+                <td>{{documento.Producto}}</td>
+                <td>{{documento.Tipo}}</td>
+                <td>{{documento.Folio}}</td>
+                <td>{{documento.FechaCreacion}}</td>
+                <td>{{documento.Firmado}}</td>
+                <td>14 Nov 2015</td><!-- valor ? KUNDER -->
+                <td><a href="" ng-click="documentosCtrl.verDocumento(documento)">Ver Documento</a></td>
             </tr>
         </table>
     </div>
