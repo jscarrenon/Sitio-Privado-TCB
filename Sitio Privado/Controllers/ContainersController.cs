@@ -2,6 +2,7 @@
 using Sitio_Privado.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -46,11 +47,13 @@ namespace Sitio_Privado.Controllers
 
             foreach (var item in blobs)
             {
+                string folderName = item.Parent.Prefix.Replace("/", "");
                 AzureFolder folder = null;
-                IEnumerable<AzureFolder> auxFolders = folders.Where(f => f.Name == item.Parent.Prefix.Substring(0, item.Parent.Prefix.Length - 1));
+                IEnumerable<AzureFolder> auxFolders = folders.Where(f => f.Name == folderName);
                 if (auxFolders.Count() <= 0)
                 {
-                    folder = new AzureFolder(item.Parent.Prefix.Substring(0, item.Parent.Prefix.Length-1));
+                    
+                    folder = new AzureFolder(folderName);
                     folders.Add(folder);
                 }
                 else
@@ -66,7 +69,7 @@ namespace Sitio_Privado.Controllers
                     fileName = blockBlob.Name
                 });
 
-                Blob blob = new Blob { Name = blockBlob.Name.Substring(item.Parent.Prefix.Length, blockBlob.Name.Length - item.Parent.Prefix.Length), Url = url };
+                Blob blob = new Blob { Name = Path.GetFileNameWithoutExtension(blockBlob.Name), Url = url };
                 folder.Blobs.Add(blob);
             }
 
