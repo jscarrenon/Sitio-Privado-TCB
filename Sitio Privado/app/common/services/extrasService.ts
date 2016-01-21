@@ -1,12 +1,14 @@
 ﻿module app.common.services {
 
     interface IExtras {
-        getRutParteEntera(rut :string): string;
+        getRutParteEntera(rut: string): string;
+        abrirRuta(ruta: string): void;
     }
 
     export class ExtrasService implements IExtras {
-                
-        constructor() {
+    
+        static $inject = ['$window'];
+        constructor(private $window: ng.IWindowService) {
         }
 
         getRutParteEntera(rut: string) {
@@ -18,6 +20,10 @@
                 }
             }
             return "";
+        }
+
+        abrirRuta(ruta: string): void {
+            this.$window.open(ruta);
         }
     }
 

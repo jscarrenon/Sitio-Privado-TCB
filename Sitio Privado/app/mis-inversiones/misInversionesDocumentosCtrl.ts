@@ -5,8 +5,10 @@
         getDocumentosPendientes(input: app.domain.IDocumentosPendientesInput): void;
         documentosFirmados: app.domain.IDocumento[];
         getDocumentosFirmados(input: app.domain.IDocumentosFirmadosInput): void;
-        documentoLeidoResultado: app.domain.IDocumentoLeidoResultado;
-        setLeido(input: app.domain.IDocumentoLeidoInput): void;
+        fechaFirmadosInicio: Date;
+        fechaFirmadosFin: Date;
+        verDocumento(documento: app.domain.IDocumento): void;
+        fechaHoy: Date;
     }
 
     class MisInversionesDocumentosCtrl extends MisInversionesCtrl implements IMisInversionesDocumentosViewModel {
@@ -15,7 +17,9 @@
         documentosPendientesInput: app.domain.IDocumentosPendientesInput;
         documentosFirmados: app.domain.IDocumento[];
         documentosFirmadosInput: app.domain.IDocumentosFirmadosInput;
-        documentoLeidoResultado: app.domain.IDocumentoLeidoResultado;
+        fechaFirmadosInicio: Date;
+        fechaFirmadosFin: Date;
+        fechaHoy: Date;
 
         static $inject = ['constantService', 'dataService', 'authService', 'extrasService', '$routeParams'];
         constructor(constantService: app.common.services.ConstantService,
@@ -29,6 +33,17 @@
             this.setTemplates();
             this.seccionId = 0;
             this.seleccionarSeccion(this.seccionId);
+
+            this.fechaHoy = new Date();
+
+            this.documentosPendientesInput = new app.domain.DocumentosPendientesInput(this.extrasService.getRutParteEntera(this.authService.usuario.Rut));
+            this.getDocumentosPendientes(this.documentosPendientesInput);
+
+            this.fechaFirmadosInicio = new Date();
+            this.fechaFirmadosFin = new Date();
+
+            this.documentosFirmadosInput = new app.domain.DocumentosFirmadosInput(this.extrasService.getRutParteEntera(this.authService.usuario.Rut), this.fechaFirmadosInicio.toString(), this.fechaFirmadosFin.toString());
+            this.getDocumentosFirmados(this.documentosFirmadosInput);
         }
 
         setTemplates(): void {
@@ -51,10 +66,18 @@
                 });
         }
 
-        setLeido(input: app.domain.IDocumentoLeidoInput): void {
-            this.dataService.postWebService(this.constantService.apiDocumentoURI + 'setLeido', input)
+        verDocumento(documento: app.domain.IDocumento): void {
+            var documentoLeidoInput: app.domain.IDocumentoLeidoInput = new app.domain.DocumentoLeidoInput(this.extrasService.getRutParteEntera(this.authService.usuario.Rut), "mercado", documento.Codigo, documento.Folio);
+
+            //Abrir documento
+            this.extrasService.abrirRuta(documento.Ruta);
+
+            this.dataService.postWebService(this.constantService.apiDocumentoURI + 'setLeido', documentoLeidoInput)
                 .then((result: app.domain.IDocumentoLeidoResultado) => {
-                    this.documentoLeidoResultado = result;
+                    var documentoLeidoResultado: app.domain.IDocumentoLeidoResultado = result;
+                    if (result.Resultado == true) {
+                        documento.Leido = "Leido"; // valor? -KUNDER
+                    }
                 });
         }
     }

@@ -6,7 +6,7 @@
         Folio: string;
         FechaCreacion: string;
         Leido: string;
-        Firmada: string;
+        Firmado: string;
         Ruta: string;
         Resultados: string;
     }
@@ -18,7 +18,7 @@
             public Folio: string,
             public FechaCreacion: string,
             public Leido: string,
-            public Firmada: string,
+            public Firmado: string,
             public Ruta: string,
             public Resultados: string) {
 
@@ -30,7 +30,7 @@
             this.Folio = Folio;
             this.FechaCreacion = FechaCreacion;
             this.Leido = Leido;
-            this.Firmada = Firmada;
+            this.Firmado = Firmado;
             this.Ruta = Ruta;
             this.Resultados = Resultados;
         }
