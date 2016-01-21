@@ -46,16 +46,6 @@ namespace Sitio_Privado.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://172.17.1.12:8088/tann_fondo_invpriv.asmx")]
-        public string Sitio_Privado_ConsultaSaldosFondosPrivados_tann_fondo_invpriv {
-            get {
-                return ((string)(this["Sitio_Privado_ConsultaSaldosFondosPrivados_tann_fondo_invpriv"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
         [global::System.Configuration.DefaultSettingValueAttribute("http://172.17.1.12:8088/tann_indicadores.asmx")]
         public string Sitio_Privado_IndicesLiquidezSolvencia_tann_indicadores {
             get {
@@ -70,6 +60,26 @@ namespace Sitio_Privado.Properties {
         public string Sitio_Privado_InformacionClienteAgente_tann_info_cliente {
             get {
                 return ((string)(this["Sitio_Privado_InformacionClienteAgente_tann_info_cliente"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://172.17.1.12:8088/tann_documentos.asmx")]
+        public string Sitio_Privado_DocumentosPendientesFirma_tann_documentos {
+            get {
+                return ((string)(this["Sitio_Privado_DocumentosPendientesFirma_tann_documentos"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://172.17.1.12:8088/tann_cartola_resumida.asmx")]
+        public string Sitio_Privado_CartolaResumida_tann_cartola_resumida {
+            get {
+                return ((string)(this["Sitio_Privado_CartolaResumida_tann_cartola_resumida"]));
             }
         }
     }
