@@ -64,20 +64,20 @@
             </div><!--end two-col-->
 
             <div class="three-col home">
-                <div class="executive white-box" ng-controller="WebserviceCtrl as webserviceCtrl">
-                    <div class="photo"><img src="{{webserviceCtrl.agente.PathImg}}" /></div>
+                <div class="executive white-box">
+                    <div class="photo"><img src="{{bodyCtrl.agente.PathImg}}" /></div>
                     <div class="text">
-                        <div class="name">{{webserviceCtrl.agente.Nombre}}</div>
+                        <div class="name">{{bodyCtrl.agente.Nombre}}</div>
                         <div class="contact">
-                            Tel: {{webserviceCtrl.agente.Telefono}}<br />
-                            E-mail: <a href="mailto:{{webserviceCtrl.agente.Email}}">{{webserviceCtrl.agente.Email}}</a>
+                            Tel: {{bodyCtrl.agente.Telefono}}<br />
+                            E-mail: <a href="mailto:{{bodyCtrl.agente.Email}}">{{bodyCtrl.agente.Email}}</a>
                         </div>
                         <div class="info">
-                            Fecha de acreditación: {{webserviceCtrl.agente.FechaInicioAcreditacion}}<br />
-                            Sucursal: {{webserviceCtrl.agente.Sucursal}}
+                            Fecha de acreditación: {{bodyCtrl.agente.FechaInicioAcreditacion}}<br />
+                            Sucursal: {{bodyCtrl.agente.Sucursal}}
                         </div>
                     </div>
-                    <div class="button blue call"><a href="tel:{{webserviceCtrl.agente.Telefono}}" class="clink">Llamar</a></div>
+                    <div class="button blue call"><a href="tel:{{bodyCtrl.agente.Telefono}}" class="clink">Llamar</a></div>
                     <div id="clear"></div>
                 </div>
             </div>
