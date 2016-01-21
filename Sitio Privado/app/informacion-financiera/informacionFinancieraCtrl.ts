@@ -52,6 +52,9 @@
             if (this.seccionId == 0) {
                 this.getContainer('estatutos');
             }
+            else if (this.seccionId == 2) {
+                this.getContainer('custodia');
+            }
             else if (this.seccionId == 5) {
                 this.getContainer('otros');
             }
@@ -67,7 +70,7 @@
             this.templates = [];
             this.templates[0] = "estatutos.html";
             this.templates[1] = "estatutos.html";
-            this.templates[2] = "estatutos.html";
+            this.templates[2] = "custodia.html";
             this.templates[3] = "estatutos.html";
             this.templates[4] = "estatutos.html";
             this.templates[5] = "otros-documentos.html";

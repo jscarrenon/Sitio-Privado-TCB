@@ -40,6 +40,7 @@ namespace Sitio_Privado.Controllers
         [HttpGet]
         public IHttpActionResult GetContainer(string name)
         {
+            //TODO: Check container not found
             List<AzureFolder> folders = new List<AzureFolder>();
 
             CloudBlobContainer container = azureStorageHelper.GetContanerReferenceByName(name);
