@@ -93,7 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sitio Privado\Sitio Privado.csproj">
-      <Project>{8FC36CB2-2352-4594-9014-00167F50B662}</Project>
+      <Project>{8fc36cb2-2352-4594-9014-00167f50b662}</Project>
       <Name>Sitio Privado</Name>
     </ProjectReference>
   </ItemGroup>

@@ -7,6 +7,7 @@
         apiFondosMutuosURI: string;
         apiCategoriaURI: string;
         apiProductoURI: string;
+        apiBlobsURI: string;
         apiBalanceURI: string;
         apiCartolaURI: string;
     }
@@ -18,6 +19,7 @@
         apiFondosMutuosURI: string;
         apiCategoriaURI: string;
         apiProductoURI: string;
+        apiBlobsURI: string;
         apiBalanceURI: string;
         apiCartolaURI: string;
 
@@ -28,6 +30,7 @@
             this.apiFondosMutuosURI = '/api/fondoMutuo/';
             this.apiCategoriaURI = '/api/categoria/';
             this.apiProductoURI = '/api/producto/';
+            this.apiBlobsURI = '/api/containers/'
             this.apiBalanceURI = '/api/balance/';
             this.apiCartolaURI = '/api/cartola/';
         }
