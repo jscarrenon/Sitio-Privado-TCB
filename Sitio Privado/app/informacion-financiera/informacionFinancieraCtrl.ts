@@ -45,20 +45,22 @@
         }
 
         seleccionarSeccion(id: number): void {
+            this.container = [];
             this.seccionId = id;
             this.seccionURI = 'app/informacion-financiera/' + this.templates[this.seccionId];
             //Change dictionary
             if (this.seccionId == 0) {
                 this.getContainer('estatutos');
             }
-            else {
-                this.container = [];
+            else if (this.seccionId == 5) {
+                this.getContainer('otros');
             }
+
         }
 
         getContainer(input: string): void {
             this.dataService.get(this.constantService.apiBlobsURI + 'getContainer?name=' + input)
-                .then((result: app.domain.AzureFolder[]) => { this.container = result; });
+                .then((result: app.domain.AzureFolder[]) => { this.container = result;});
         }
 
         setTemplates(): void {
@@ -68,7 +70,7 @@
             this.templates[2] = "estatutos.html";
             this.templates[3] = "estatutos.html";
             this.templates[4] = "estatutos.html";
-            this.templates[5] = "estatutos.html";
+            this.templates[5] = "otros-documentos.html";
         }
     }
     angular.module('tannerPrivadoApp')
