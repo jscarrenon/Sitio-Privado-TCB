@@ -64,20 +64,20 @@
             </div><!--end two-col-->
 
             <div class="three-col home">
-                <div class="executive white-box">
-                    <div class="photo"><img src="{{bodyCtrl.agente.PathImg}}" /></div>
+                <div class="executive white-box" ng-controller="AgenteCtrl as agenteCtrl">
+                    <div class="photo"><img src="{{agenteCtrl.agente.PathImg}}" /></div>
                     <div class="text">
-                        <div class="name">{{bodyCtrl.agente.Nombre}}</div>
+                        <div class="name">{{agenteCtrl.agente.Nombre}}</div>
                         <div class="contact">
-                            Tel: {{bodyCtrl.agente.Telefono}}<br />
-                            E-mail: <a href="mailto:{{bodyCtrl.agente.Email}}">{{bodyCtrl.agente.Email}}</a>
+                            Tel: {{agenteCtrl.agente.Telefono}}<br />
+                            E-mail: <a href="mailto:{{agenteCtrl.agente.Email}}">{{agenteCtrl.agente.Email}}</a>
                         </div>
                         <div class="info">
-                            Fecha de acreditación: {{bodyCtrl.agente.FechaInicioAcreditacion}}<br />
-                            Sucursal: {{bodyCtrl.agente.Sucursal}}
+                            Fecha de acreditación: {{agenteCtrl.agente.FechaInicioAcreditacion}}<br />
+                            Sucursal: {{agenteCtrl.agente.Sucursal}}
                         </div>
                     </div>
-                    <div class="button blue call"><a href="tel:{{bodyCtrl.agente.Telefono}}" class="clink">Llamar</a></div>
+                    <div class="button blue call"><a href="tel:{{agenteCtrl.agente.Telefono}}" class="clink">Llamar</a></div>
                     <div id="clear"></div>
                 </div>
             </div>
