@@ -6,7 +6,7 @@
         seccionId: number;
         seleccionarSeccion(id: number): void;
         setTemplates(): void;
-        getFolders(): app.domain.AzureContainer[];
+        getContainer(input: string): void;
     }
 
     export class InformacionFinancieraCtrl implements IInformacionFinancieraViewModel {
@@ -15,7 +15,7 @@
         seccionURI: string;
         seccionId: number;
 
-        container: app.domain.AzureContainer[];
+        container: app.domain.AzureFolder[];
 
         static $inject = ['constantService', 'dataService'];
         constructor(private constantService: app.common.services.ConstantService,
@@ -25,13 +25,15 @@
             this.seccionId = 0;
             this.seleccionarSeccion(this.seccionId);
 
-            var blobs = [];
+            this.container = [];
+
+            /*var blobs = [];
             blobs.push(new app.domain.AzureBlob("nuevo archivo de prueba con nombre largo", ""));
             blobs.push(new app.domain.AzureBlob("otro archivo", ""));
             blobs.push(new app.domain.AzureBlob("tercero", ""));
-            this.container = [];
+            
             this.container.push(new app.domain.AzureContainer("Hola", blobs));
-            this.container.push(new app.domain.AzureContainer("Chao", null));
+            this.container.push(new app.domain.AzureContainer("Chao", null));*/
 
             //Timeout por error de script slicknav (a.mobileNav.on)
             /*setTimeout(function () {
@@ -45,13 +47,18 @@
         seleccionarSeccion(id: number): void {
             this.seccionId = id;
             this.seccionURI = 'app/informacion-financiera/' + this.templates[this.seccionId];
+            //Change dictionary
+            if (this.seccionId == 0) {
+                this.getContainer('estatutos');
+            }
+            else {
+                this.container = [];
+            }
         }
 
-        getFolders(): app.domain.AzureContainer[] {
-        //TODO: call service
-
-            
-            return this.container;
+        getContainer(input: string): void {
+            this.dataService.get(this.constantService.apiBlobsURI + 'getContainer?name=' + input)
+                .then((result: app.domain.AzureFolder[]) => { this.container = result; });
         }
 
         setTemplates(): void {

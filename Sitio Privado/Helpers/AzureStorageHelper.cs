@@ -37,6 +37,10 @@ namespace Sitio_Privado
             return clientConnection.ListContainers();
         }
 
+        public CloudBlobContainer GetContanerReferenceByName(string name) {
+            return clientConnection.GetContainerReference(name);
+        }
+
         /// <summary>
         /// Gets a list of blobs from a particular container
         /// </summary>

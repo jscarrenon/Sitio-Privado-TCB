@@ -2,16 +2,16 @@
 
     export interface IAzureBlob {
         Name: string;
-        Link: string;
+        Url: string;
     }
 
     export class AzureBlob extends app.domain.EntityBase implements IAzureBlob {
-        constructor(public Name: string, public Link: string) {
+        constructor(public Name: string, public Url: string) {
 
             super();
 
             this.Name = Name;
-            this.Link = Link;
+            this.Url = Url;
         }
     }
 }

@@ -5,11 +5,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
-using System.Web.Mvc;
+using System.Web.Http;
 
 namespace Sitio_Privado.Controllers
 {
-    public class BlobsController : Controller
+    public class BlobsController : ApiController
     {
         #region Constants
         private const string GetBlobAction = "GetBlob";
@@ -21,7 +21,7 @@ namespace Sitio_Privado.Controllers
 
         #region Actions
         // GET: Blobs
-        public ActionResult Index(string container)
+       /* public ActionResult Index(string container)
         {
             List<Blob> blobs = new List<Blob>();
 
@@ -39,9 +39,9 @@ namespace Sitio_Privado.Controllers
             }
 
             return View(blobs);
-        }
+        }*/
 
-        public ActionResult GetBlob(string container, string fileName) {
+        public IHttpActionResult GetBlob(string container, string fileName) {
             var blob = azureStorageHelper.GetBlob(container, fileName);
 
             //Set the expiry time and permissions for the blob.

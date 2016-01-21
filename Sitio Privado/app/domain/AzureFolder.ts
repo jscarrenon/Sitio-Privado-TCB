@@ -1,11 +1,11 @@
 ﻿module app.domain {
 
-    export interface IAzureContainer {
+    export interface IAzureFolder {
         Name: string;
         Blobs: app.domain.AzureBlob[];
     }
 
-    export class AzureContainer extends app.domain.EntityBase implements IAzureContainer {
+    export class AzureFolder extends app.domain.EntityBase implements IAzureFolder {
         constructor(public Name: string, public Blobs: app.domain.AzureBlob[]) {
 
             super();
