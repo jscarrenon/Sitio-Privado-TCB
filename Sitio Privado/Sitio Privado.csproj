@@ -246,6 +246,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CartolaController.cs" />
     <Compile Include="Controllers\BalanceController.cs" />
+    <Compile Include="Controllers\DocumentoController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\CategoriaController.cs" />
     <Compile Include="Controllers\AgenteController.cs" />
@@ -259,6 +260,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\GraphApiResponseInfo.cs" />
+    <Compile Include="Models\DocumentoModel.cs" />
     <Compile Include="Models\CartolaModel.cs" />
     <Compile Include="Models\BalanceModel.cs" />
     <Compile Include="Models\AgenteModel.cs" />
@@ -560,6 +562,9 @@
     <TypeScriptCompile Include="app\common\services\constantService.ts" />
     <TypeScriptCompile Include="app\common\services\dataService.ts" />
     <TypeScriptCompile Include="app\common\typings\slicknav.ts" />
+    <TypeScriptCompile Include="app\domain\DocumentoLeidoResultado.ts" />
+    <TypeScriptCompile Include="app\domain\Documento.ts" />
+    <TypeScriptCompile Include="app\domain\DocumentosInput.ts" />
     <TypeScriptCompile Include="app\domain\Cartola.ts" />
     <TypeScriptCompile Include="app\domain\CartolaInput.ts" />
     <TypeScriptCompile Include="app\domain\Balance.ts" />
@@ -679,7 +684,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>63495</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
