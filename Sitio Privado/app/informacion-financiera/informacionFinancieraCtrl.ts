@@ -15,6 +15,8 @@
         seccionURI: string;
         seccionId: number;
 
+        container: app.domain.AzureContainer[];
+
         static $inject = ['constantService', 'dataService'];
         constructor(private constantService: app.common.services.ConstantService,
             private dataService: app.common.services.DataService) {
@@ -22,6 +24,14 @@
             this.setTemplates();
             this.seccionId = 0;
             this.seleccionarSeccion(this.seccionId);
+
+            var blobs = [];
+            blobs.push(new app.domain.AzureBlob("nuevo archivo de prueba con nombre largo", ""));
+            blobs.push(new app.domain.AzureBlob("otro archivo", ""));
+            blobs.push(new app.domain.AzureBlob("tercero", ""));
+            this.container = [];
+            this.container.push(new app.domain.AzureContainer("Hola", blobs));
+            this.container.push(new app.domain.AzureContainer("Chao", null));
 
             //Timeout por error de script slicknav (a.mobileNav.on)
             /*setTimeout(function () {
@@ -39,15 +49,9 @@
 
         getFolders(): app.domain.AzureContainer[] {
         //TODO: call service
-            var container = [];
-            var blobs = [];
-            blobs[0] = new app.domain.AzureBlob("nuevo archivo de prueba con nombre largo", null);
-            blobs[1] = new app.domain.AzureBlob("otro archivo", null);
-            blobs[2] = new app.domain.AzureBlob("tercero", null);
-            container[0] = new app.domain.AzureContainer("Hola", blobs);
-            container[1] = new app.domain.AzureContainer("Chao", null);
+
             
-            return container;
+            return this.container;
         }
 
         setTemplates(): void {
