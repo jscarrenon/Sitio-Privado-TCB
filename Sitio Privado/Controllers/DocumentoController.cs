@@ -39,7 +39,7 @@ namespace Sitio_Privado.Controllers
             try
             {
                 tann_documentos webService = new tann_documentos();
-                _operacion[] documentos = webService.cns_operacion_firmada(input.rut, input.fechaIni, input.fechaFin)
+                _operacion[] documentos = webService.cns_operacion_firmada(input.rut, input.fechaIni, input.fechaFin);
 
                 List<Documento> lista = new List<Documento>();
                 foreach (_operacion documento in documentos)
