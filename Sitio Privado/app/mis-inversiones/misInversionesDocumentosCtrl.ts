@@ -9,6 +9,7 @@
         fechaFirmadosFin: Date;
         verDocumento(documento: app.domain.IDocumento): void;
         fechaHoy: Date;
+        actualizarDocumentosFirmados(): void;
     }
 
     class MisInversionesDocumentosCtrl extends MisInversionesCtrl implements IMisInversionesDocumentosViewModel {
@@ -39,11 +40,11 @@
             this.documentosPendientesInput = new app.domain.DocumentosPendientesInput(this.extrasService.getRutParteEntera(this.authService.usuario.Rut));
             this.getDocumentosPendientes(this.documentosPendientesInput);
 
-            this.fechaFirmadosInicio = new Date();
             this.fechaFirmadosFin = new Date();
+            this.fechaFirmadosInicio = new Date();
+            this.fechaFirmadosInicio.setDate(this.fechaFirmadosFin.getDate() - 1);
 
-            this.documentosFirmadosInput = new app.domain.DocumentosFirmadosInput(this.extrasService.getRutParteEntera(this.authService.usuario.Rut), this.fechaFirmadosInicio.toString(), this.fechaFirmadosFin.toString());
-            this.getDocumentosFirmados(this.documentosFirmadosInput);
+            this.actualizarDocumentosFirmados();
         }
 
         setTemplates(): void {
@@ -79,6 +80,19 @@
                         documento.Leido = "Leido"; // valor? -KUNDER
                     }
                 });
+        }
+
+        actualizarDocumentosFirmados(): void {
+            this.documentosFirmadosInput = new app.domain.DocumentosFirmadosInput(this.extrasService.getRutParteEntera(this.authService.usuario.Rut), this.getFechaFormato(this.fechaFirmadosInicio), this.getFechaFormato(this.fechaFirmadosFin));
+            this.getDocumentosFirmados(this.documentosFirmadosInput);
+        }
+
+        //Aquí debería usarse filtro de angular - KUNDER
+        getFechaFormato(fecha: Date): string {
+            var yyyy = fecha.getFullYear().toString();
+            var mm = (fecha.getMonth() + 1).toString(); // getMonth() is zero-based
+            var dd = fecha.getDate().toString();
+            return yyyy + "-" + (mm[1] ? mm : "0" + mm[0]) + "-" + (dd[1] ? dd : "0" + dd[0]); // padding
         }
     }
     angular.module('tannerPrivadoApp')

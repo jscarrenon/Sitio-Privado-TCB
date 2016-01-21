@@ -1,11 +1,11 @@
 ﻿<div class="filter date">
     <div class="date-field">
-        Desde: <input type="date" step="1" min="2015-01-01" max="2013-12-31" ng-model="documentosCtrl.fechaFirmadosInicio" required>
+        Desde: <input type="date" step="1" ng-model="documentosCtrl.fechaFirmadosInicio" required>
     </div>
     <div class="date-field">
-        Hasta: <input type="date" step="2" min="2016-01-01" max="2016-12-31" ng-model="documentosCtrl.fechaFirmadosFin" required>
+        Hasta: <input type="date" step="2" ng-model="documentosCtrl.fechaFirmadosFin" required>
     </div>
-    <div class="apply-filter pag-button"><a href="#" class="clink"></a></div>
+    <div class="apply-filter pag-button"><a href="" class="clink" ng-click="documentosCtrl.actualizarDocumentosFirmados"></a></div>
 </div>
 
 <div class="one-col">

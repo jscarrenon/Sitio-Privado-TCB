@@ -7,8 +7,9 @@
 
     export class ExtrasService implements IExtras {
     
-        static $inject = ['$window'];
-        constructor(private $window: ng.IWindowService) {
+        static $inject = ['$window','$filter'];
+        constructor(private $window: ng.IWindowService,
+            private $filter: ng.IFilterDate) {
         }
 
         getRutParteEntera(rut: string) {
