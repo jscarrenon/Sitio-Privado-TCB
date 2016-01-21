@@ -275,6 +275,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CartolaController.cs" />
     <Compile Include="Controllers\BalanceController.cs" />
+    <Compile Include="Controllers\DocumentoController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\CategoriaController.cs" />
     <Compile Include="Controllers\AgenteController.cs" />
@@ -291,6 +292,7 @@
     <Compile Include="Models\Blob.cs" />
     <Compile Include="Models\Container.cs" />
     <Compile Include="Helpers\GraphApiResponseInfo.cs" />
+    <Compile Include="Models\DocumentoModel.cs" />
     <Compile Include="Models\CartolaModel.cs" />
     <Compile Include="Models\BalanceModel.cs" />
     <Compile Include="Models\AgenteModel.cs" />
@@ -600,6 +602,9 @@
     <TypeScriptCompile Include="app\common\services\constantService.ts" />
     <TypeScriptCompile Include="app\common\services\dataService.ts" />
     <TypeScriptCompile Include="app\common\typings\slicknav.ts" />
+    <TypeScriptCompile Include="app\domain\DocumentoLeidoResultado.ts" />
+    <TypeScriptCompile Include="app\domain\Documento.ts" />
+    <TypeScriptCompile Include="app\domain\DocumentosInput.ts" />
     <TypeScriptCompile Include="app\domain\AzureBlob.ts" />
     <TypeScriptCompile Include="app\domain\AzureFolder.ts" />
     <TypeScriptCompile Include="app\domain\Cartola.ts" />
@@ -622,6 +627,7 @@
     <TypeScriptCompile Include="app\informacion-financiera\informacionFinancieraCtrl.ts" />
     <TypeScriptCompile Include="app\inversiones\inversionesCtrl.ts" />
     <TypeScriptCompile Include="app\mis-inversiones\misInversionesCircularizacionCtrl.ts" />
+    <TypeScriptCompile Include="app\mis-inversiones\misInversionesNacionales.ts" />
     <TypeScriptCompile Include="app\mis-inversiones\misInversionesDocumentosCtrl.ts" />
     <TypeScriptCompile Include="app\mis-inversiones\misInversionesCtrl.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-animate.d.ts" />
@@ -722,7 +728,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>63495</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
