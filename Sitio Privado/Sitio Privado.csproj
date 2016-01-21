@@ -273,6 +273,8 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CartolaController.cs" />
+    <Compile Include="Controllers\BalanceController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\CategoriaController.cs" />
     <Compile Include="Controllers\AgenteController.cs" />
@@ -289,6 +291,8 @@
     <Compile Include="Models\Blob.cs" />
     <Compile Include="Models\Container.cs" />
     <Compile Include="Helpers\GraphApiResponseInfo.cs" />
+    <Compile Include="Models\CartolaModel.cs" />
+    <Compile Include="Models\BalanceModel.cs" />
     <Compile Include="Models\AgenteModel.cs" />
     <Compile Include="Models\FondoMutuoModel.cs" />
     <Compile Include="Models\GraphUserModel.cs" />
@@ -590,12 +594,17 @@
     <TypeScriptCompile Include="app\app.ts" />
     <TypeScriptCompile Include="app\common\controllers\webserviceCtrl.ts" />
     <TypeScriptCompile Include="app\common\controllers\bodyCtrl.ts" />
+    <TypeScriptCompile Include="app\common\services\extrasService.ts" />
     <TypeScriptCompile Include="app\common\services\authService.ts" />
     <TypeScriptCompile Include="app\common\services\constantService.ts" />
     <TypeScriptCompile Include="app\common\services\dataService.ts" />
     <TypeScriptCompile Include="app\common\typings\slicknav.ts" />
     <TypeScriptCompile Include="app\domain\AzureBlob.ts" />
     <TypeScriptCompile Include="app\domain\AzureFolder.ts" />
+    <TypeScriptCompile Include="app\domain\Cartola.ts" />
+    <TypeScriptCompile Include="app\domain\CartolaInput.ts" />
+    <TypeScriptCompile Include="app\domain\Balance.ts" />
+    <TypeScriptCompile Include="app\domain\BalanceInput.ts" />
     <TypeScriptCompile Include="app\domain\Categoria.ts" />
     <TypeScriptCompile Include="app\domain\CategoriaClienteInput.ts" />
     <TypeScriptCompile Include="app\domain\ProductoInput.ts" />

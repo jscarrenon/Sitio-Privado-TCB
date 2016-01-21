@@ -14,6 +14,10 @@
         getProductos(): void;
         categoriaCliente: app.domain.ICategoria;
         getCategoriaCliente(input: app.domain.ICategoriaClienteInput): void;
+        balance: app.domain.IBalance;
+        getBalance(input: app.domain.IBalanceInput): void;
+        cartola: app.domain.ICartola;
+        getCartola(input: app.domain.ICartolaInput): void;
     }
 
     export class WebserviceCtrl implements IWebserviceViewModel {
@@ -33,13 +37,17 @@
         productos: app.domain.IProducto[];
         categoriaCliente: app.domain.ICategoria;
         categoriaClienteInput: app.domain.ICategoriaClienteInput;
+        balance: app.domain.IBalance;
+        balanceInput: app.domain.IBalanceInput;
+        cartola: app.domain.ICartola;
+        cartolaInput: app.domain.ICartolaInput;
 
         static $inject = ['constantService', 'dataService'];
         constructor(private constantService: app.common.services.ConstantService,
             private dataService: app.common.services.DataService) {
 
-            
 
+            /*
             //Test de Agente
             /*this.agenteInput = new app.domain.AgenteInput("8411855-9", 31);
             this.getAgente(this.agenteInput);
@@ -79,7 +87,7 @@
                 .then((result: app.domain.IFondoMutuo[]) => {
                     this.fondosMutuosRF = result["fondosMutuosRF"];
                     this.fondosMutuosRV = result["fondosMutuosRV"];
-                    this.getFondosMutuosTotal();                    
+                    this.getFondosMutuosTotal();
                 });
         }
 
@@ -129,6 +137,20 @@
             this.dataService.postWebService(this.constantService.apiCategoriaURI + 'getSingleCliente', input)
                 .then((result: app.domain.ICategoria) => {
                     this.categoriaCliente = result;
+                });
+        }
+
+        getBalance(input: app.domain.IBalanceInput): void {
+            this.dataService.postWebService(this.constantService.apiBalanceURI + 'getSingle', input)
+                .then((result: app.domain.IBalance) => {
+                    this.balance = result;
+                });
+        }
+
+        getCartola(input: app.domain.ICartolaInput): void {
+            this.dataService.postWebService(this.constantService.apiCartolaURI + 'getSingle', input)
+                .then((result: app.domain.ICartola) => {
+                    this.cartola = result;
                 });
         }
     }

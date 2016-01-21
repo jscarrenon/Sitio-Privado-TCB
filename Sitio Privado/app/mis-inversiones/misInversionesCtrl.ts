@@ -10,6 +10,10 @@
         seccionId: number;
         seleccionarSeccion(id: number): void;
         setTemplates(): void;
+        balance: app.domain.IBalance;
+        getBalance(input: app.domain.IBalanceInput): void;
+        cartola: app.domain.ICartola;
+        getCartola(input: app.domain.ICartolaInput): void;        
     }
 
     export class MisInversionesCtrl implements IMisInversionesViewModel {
@@ -17,10 +21,16 @@
         templates: string[];
         seccionURI: string;
         seccionId: number;
+        balance: app.domain.IBalance;
+        balanceInput: app.domain.IBalanceInput;
+        cartola: app.domain.ICartola;
+        cartolaInput: app.domain.ICartolaInput;
 
-        static $inject = ['constantService', 'dataService', '$routeParams'];
+        static $inject = ['constantService', 'dataService', 'authService', 'extrasService', '$routeParams'];
         constructor(private constantService: app.common.services.ConstantService,
             private dataService: app.common.services.DataService,
+            private authService: app.common.services.AuthService,
+            private extrasService: app.common.services.ExtrasService,
             private $routeParams: IMisInversionesRouteParams) {
 
             this.setTemplates();
@@ -33,6 +43,12 @@
             }            
 
             this.seleccionarSeccion(this.seccionId);
+
+            this.balanceInput = new app.domain.BalanceInput(this.authService.usuario.Rut);
+            this.getBalance(this.balanceInput);
+
+            this.cartolaInput = new app.domain.CartolaInput(this.extrasService.getRutParteEntera(this.authService.usuario.Rut), 0);
+            this.getCartola(this.cartolaInput);
 
             //Solucionar problema de script slickav (a.mobileNav.on) porque afecta el resto del controlador KUNDER
             //Timeout por error de script slicknav (a.mobileNav.on)
@@ -57,6 +73,20 @@
             this.templates[2] = "fondos-mutuos.html";
             this.templates[3] = "estado-documentos.html";
             this.templates[4] = "circularizacion.html";
+        }
+
+        getBalance(input: app.domain.IBalanceInput): void {
+            this.dataService.postWebService(this.constantService.apiBalanceURI + 'getSingle', input)
+                .then((result: app.domain.IBalance) => {
+                    this.balance = result;
+                });
+        }
+
+        getCartola(input: app.domain.ICartolaInput): void {
+            this.dataService.postWebService(this.constantService.apiCartolaURI + 'getSingle', input)
+                .then((result: app.domain.ICartola) => {
+                    this.cartola = result;
+                });
         }
     }
     angular.module('tannerPrivadoApp')
