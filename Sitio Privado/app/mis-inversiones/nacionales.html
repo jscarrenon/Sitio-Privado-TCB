@@ -8,16 +8,16 @@
         </div>
     </div>
 
-    <div id="content">
+    <div id="content" ng-controller="MisInversionesNacionalesCtrl as nacionalesCtrl">
         <div class="in">
 
             <div class="areas">
                 <div class="one-area"><a href="" class="clink active">Cartola Resumen</a></div>
-                <div class="one-area"><a href="{{ctrl.balance.Enlace}}" target="_blank" class="clink">Balance<img src="../.build/img/icon_external-link.png" class="external-link" /></a></div>
+                <div class="one-area"><a href="{{nacionalesCtrl.balance.Enlace}}" target="_blank" class="clink">Balance<img src="../.build/img/icon_external-link.png" class="external-link" /></a></div>
             </div>
 
             <div class="one-col">
-                <div class="section-title">Mi Cuenta de Inversiones (al {{ctrl.cartola.Periodo}})</div>
+                <div class="section-title">Mi Cuenta de Inversiones (al {{nacionalesCtrl.cartola.Periodo}})</div>
 
                 <div id="cont-table">
                     <table class="balance">
@@ -28,53 +28,53 @@
                         </tr>
                         <tr>
                             <td>Saldo en Caja</td>
-                            <td class="number">${{ctrl.cartola.SaldoCaja}}</td>
-                            <td class="number">{{ctrl.cartola.SaldoCajaPorcentaje}}%</td>
+                            <td class="number">${{nacionalesCtrl.cartola.SaldoCaja}}</td>
+                            <td class="number">{{nacionalesCtrl.cartola.SaldoCajaPorcentaje}}%</td>
                         </tr>
                         <tr>
                             <td>Total Renta Fija</td>
-                            <td class="number">${{ctrl.cartola.TotalRentaFija}}</td>
-                            <td class="number">{{ctrl.cartola.TotalRentaFijaPorcentaje}}%</td>
+                            <td class="number">${{nacionalesCtrl.cartola.TotalRentaFija}}</td>
+                            <td class="number">{{nacionalesCtrl.cartola.TotalRentaFijaPorcentaje}}%</td>
                         </tr>
                         <tr class="sub-item">
                             <td>Instrumentos Renta Fija</td>
-                            <td class="number">${{ctrl.cartola.InstrumentosRentaFija}}</td>
-                            <td class="number">{{ctrl.cartola.InstrumentosRentaFijaPorcentaje}}%</td>
+                            <td class="number">${{nacionalesCtrl.cartola.InstrumentosRentaFija}}</td>
+                            <td class="number">{{nacionalesCtrl.cartola.InstrumentosRentaFijaPorcentaje}}%</td>
                         </tr>
                         <tr class="sub-item">
                             <td>Fondos Mutuos Renta Fija</td>
-                            <td class="number">${{ctrl.cartola.FondosMutuosRentaFija}}</td>
-                            <td class="number">{{ctrl.cartola.FondosMutuosRentaFijaPorcentaje}}%</td>
+                            <td class="number">${{nacionalesCtrl.cartola.FondosMutuosRentaFija}}</td>
+                            <td class="number">{{nacionalesCtrl.cartola.FondosMutuosRentaFijaPorcentaje}}%</td>
                         </tr>
                         <tr>
                             <td>Total Renta Variable</td>
-                            <td class="number">${{ctrl.cartola.TotalRentaVariable}}</td>
-                            <td class="number">{{ctrl.cartola.TotalRentaVariablePorcentaje}}%</td>
+                            <td class="number">${{nacionalesCtrl.cartola.TotalRentaVariable}}</td>
+                            <td class="number">{{nacionalesCtrl.cartola.TotalRentaVariablePorcentaje}}%</td>
                         </tr>
                         <tr class="sub-item">
                             <td>Acciones Nacionales</td>
-                            <td class="number">${{ctrl.cartola.AccionesNacionales}}</td>
-                            <td class="number">{{ctrl.cartola.AccionesNacionalesPorcentaje}}%</td>
+                            <td class="number">${{nacionalesCtrl.cartola.AccionesNacionales}}</td>
+                            <td class="number">{{nacionalesCtrl.cartola.AccionesNacionalesPorcentaje}}%</td>
                         </tr>
                         <tr class="sub-item">
                             <td>Fondos Mutuos Renta Variable</td>
-                            <td class="number">${{ctrl.cartola.FondosMutuosRentaVariable}}</td>
-                            <td class="number">{{ctrl.cartola.FondosMutuosRentaVariablePorcentaje}}%</td>
+                            <td class="number">${{nacionalesCtrl.cartola.FondosMutuosRentaVariable}}</td>
+                            <td class="number">{{nacionalesCtrl.cartola.FondosMutuosRentaVariablePorcentaje}}%</td>
                         </tr>
                         <tr class="sub-item">
                             <td>Forward Compra</td>
-                            <td class="number">${{ctrl.cartola.ForwardCompra}}</td>
-                            <td class="number">{{ctrl.cartola.ForwardCompraPorcentaje}}%</td>
+                            <td class="number">${{nacionalesCtrl.cartola.ForwardCompra}}</td>
+                            <td class="number">{{nacionalesCtrl.cartola.ForwardCompraPorcentaje}}%</td>
                         </tr>
                         <tr class="sub-item">
                             <td>Forward Venta</td>
-                            <td class="number">${{ctrl.cartola.ForwardVenta}}</td>
-                            <td class="number">{{ctrl.cartola.ForwardVentaPorcentaje}}%</td>
+                            <td class="number">${{nacionalesCtrl.cartola.ForwardVenta}}</td>
+                            <td class="number">{{nacionalesCtrl.cartola.ForwardVentaPorcentaje}}%</td>
                         </tr>
                         <tr>
                             <td>Total Inversiones</td>
-                            <td class="number">${{ctrl.cartola.TotalInversiones}}</td>
-                            <td class="number">{{ctrl.cartola.TotalInversionesPorcentaje}}%</td>
+                            <td class="number">${{nacionalesCtrl.cartola.TotalInversiones}}</td>
+                            <td class="number">{{nacionalesCtrl.cartola.TotalInversionesPorcentaje}}%</td>
                         </tr>
                     </table>
                 </div>

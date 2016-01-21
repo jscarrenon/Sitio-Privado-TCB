@@ -584,6 +584,7 @@
     <TypeScriptCompile Include="app\home\homeCtrl.ts" />
     <TypeScriptCompile Include="app\inversiones\inversionesCtrl.ts" />
     <TypeScriptCompile Include="app\mis-inversiones\misInversionesCircularizacionCtrl.ts" />
+    <TypeScriptCompile Include="app\mis-inversiones\misInversionesNacionales.ts" />
     <TypeScriptCompile Include="app\mis-inversiones\misInversionesDocumentosCtrl.ts" />
     <TypeScriptCompile Include="app\mis-inversiones\misInversionesCtrl.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-animate.d.ts" />
