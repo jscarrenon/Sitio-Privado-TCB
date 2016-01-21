@@ -18,6 +18,14 @@ namespace Sitio_Privado.Models
         public string fechaFin { get; set; }
     }
 
+    public class DocumentoLeidoInput
+    {
+        public string rut { get; set; }
+        public string mercado { get; set; }
+        public string codigo { get; set; }
+        public string folio { get; set; }
+    }
+
     public class Documento
     {
         public string Codigo { get; set; }
@@ -43,6 +51,18 @@ namespace Sitio_Privado.Models
             Firmado = documento._firmado;
             Ruta = documento._ruta;
             Resultados = documento._results;
+        }
+    }
+
+    public class DocumentoLeidoResultado
+    {
+        public bool Resultado { get; set; }
+
+        public DocumentoLeidoResultado(DocumentoLeidoInput input)
+        {
+            tann_documentos webService = new tann_documentos();
+            bool resultado = webService.cns_documento_leido(input.rut, input.mercado, input.codigo, input.folio);
+            Resultado = resultado;
         }
     }
 }

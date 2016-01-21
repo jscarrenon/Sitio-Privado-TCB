@@ -54,5 +54,20 @@ namespace Sitio_Privado.Controllers
                 return NotFound();
             }
         }
+
+        [HttpPost]
+        public IHttpActionResult SetLeido([FromBody]DocumentoLeidoInput input)
+        {
+            try
+            {
+                DocumentoLeidoResultado resultado = new DocumentoLeidoResultado(input);
+
+                return Ok(resultado);
+            }
+            catch (Exception e)
+            {
+                return NotFound();
+            }
+        }
     }
 }
