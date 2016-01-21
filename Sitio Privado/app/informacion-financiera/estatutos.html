@@ -11,9 +11,11 @@
     <div id="content">
         <div class="in">
 
-            <div class="one-col documents" ng-controller="InformacionFinancieraCtrl as financialInfoCtrl">
-                <div class="section-title" ng-repeat="folder in financialInfoCtrl.container">
-                    {{folder.Name}}
+            <div ng-controller="InformacionFinancieraCtrl as financialInfoCtrl">
+                <div class="one-col documents" ng-repeat="folder in financialInfoCtrl.container">
+                    <div class="section-title">
+                        {{folder.Name}}
+                    </div>
                     <div class="wrap-docs">
                         <div class="one-doc" ng-repeat="blob in folder.Blobs">
                             <div class="name">{{blob.Name}}</div>
@@ -22,8 +24,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div><!--end one-col -->
+                </div><!--end one-col -->
+            </div>
             <div id="clear"></div>
 
             <ng-include src="ctrl.constantService.templateFooterURI"></ng-include>
