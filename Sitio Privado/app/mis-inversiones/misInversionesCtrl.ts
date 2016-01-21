@@ -26,10 +26,11 @@
         cartola: app.domain.ICartola;
         cartolaInput: app.domain.ICartolaInput;
 
-        static $inject = ['constantService', 'dataService', 'authService', '$routeParams'];
+        static $inject = ['constantService', 'dataService', 'authService', 'extrasService', '$routeParams'];
         constructor(private constantService: app.common.services.ConstantService,
             private dataService: app.common.services.DataService,
             private authService: app.common.services.AuthService,
+            private extrasService: app.common.services.ExtrasService,
             private $routeParams: IMisInversionesRouteParams) {
 
             this.setTemplates();
@@ -46,7 +47,7 @@
             this.balanceInput = new app.domain.BalanceInput(this.authService.usuario.Rut);
             this.getBalance(this.balanceInput);
 
-            this.cartolaInput = new app.domain.CartolaInput(this.authService.usuario.Rut, 0);
+            this.cartolaInput = new app.domain.CartolaInput(this.extrasService.getRutParteEntera(this.authService.usuario.Rut), 0);
             this.getCartola(this.cartolaInput);
 
             //Solucionar problema de script slickav (a.mobileNav.on) porque afecta el resto del controlador KUNDER
