@@ -18,7 +18,7 @@ namespace Sitio_Privado.Controllers
             {
                 tann_fondos_mutuos webService = new tann_fondos_mutuos();
                 saldo_ffmm[] SaldosRF = webService.cn_saldo_ffmm_rf(input.rut_cli);
-                saldo_ffmm[] SaldosRV = webService.cn_saldo_ffmm_rv(6190555);
+                saldo_ffmm[] SaldosRV = webService.cn_saldo_ffmm_rv(input.rut_cli);
 
                 List<FondoMutuo> fondosMutuosRF = new List<FondoMutuo>();
                 List<FondoMutuo> fondosMutuosRV = new List<FondoMutuo>();
