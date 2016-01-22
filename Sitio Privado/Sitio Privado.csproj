@@ -371,6 +371,8 @@
     <Content Include="package.json" />
     <Content Include=".bowerrc" />
     <Content Include="bower.json" />
+    <TypeScriptCompile Include="Tests\webserviceControllerSpec.ts" />
+    <TypeScriptCompile Include="Tests\jasmineWorks.ts" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -479,8 +481,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Content Include="Tests\jasmineWorks.js" />
-    <Content Include="Scripts\chutzpah.json" />
+    <Content Include="Tests\chutzpah.json" />
     <None Include="Tests\_references.js" />
     <Content Include="Web References\CartolaResumida\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
