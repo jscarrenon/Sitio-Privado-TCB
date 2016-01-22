@@ -246,6 +246,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CartolaController.cs" />
     <Compile Include="Controllers\BalanceController.cs" />
+    <Compile Include="Controllers\JasmineController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\CategoriaController.cs" />
     <Compile Include="Controllers\AgenteController.cs" />
@@ -326,6 +327,8 @@
     <Content Include="app\mis-inversiones\fondos-mutuos.html" />
     <Content Include="app\mis-inversiones\index.html" />
     <Content Include="app\mis-inversiones\nacionales.html" />
+    <Content Include="Content\jasmine\jasmine.css" />
+    <Content Include="Content\jasmine\jasmine_favicon.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="gulpfile.js" />
@@ -420,17 +423,33 @@
     <Content Include="Resources\img\prod_renta-variable-internacional.jpg" />
     <Content Include="Resources\img\prod_renta-variable-nacional.jpg" />
     <Content Include="Scripts\extras\index.js" />
+    <Content Include="Scripts\extras\jquery-1.12.0.js" />
     <Content Include="Scripts\extras\jquery.sticky.js" />
     <Content Include="Scripts\extras\uglipop.min.js" />
+    <Content Include="Scripts\jasmine-samples\Player.js" />
+    <Content Include="Scripts\jasmine-samples\PlayerSpec.js" />
+    <Content Include="Scripts\jasmine-samples\Song.js" />
+    <Content Include="Scripts\jasmine-samples\SpecHelper.js" />
+    <Content Include="Scripts\jasmine\boot.js" />
+    <Content Include="Scripts\jasmine\console.js" />
+    <Content Include="Scripts\jasmine\jasmine-html.js" />
+    <Content Include="Scripts\jasmine\jasmine.js" />
     <Content Include="Styles\slicknav.css" />
+    <Content Include="app\chutzpah.json" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <TypeScriptCompile Include="Tests\homeControllerSpec.ts" />
+    <Content Include="Tests\jasmineWorks.js" />
+    <Content Include="Scripts\chutzpah.json" />
+    <None Include="Tests\_references.js" />
+    <TypeScriptCompile Include="Tests\webserviceControllerSpec.ts" />
     <Content Include="Web References\CartolaResumida\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\Jasmine\SpecRunner.cshtml" />
     <None Include="Web References\CartolaResumida\tann_cartola_resumida.wsdl" />
     <Content Include="Web References\CartolaResumida\_cartola.datasource">
       <DependentUpon>Reference.map</DependentUpon>
@@ -588,10 +607,12 @@
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-route.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-sanitize.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\jasmine\jasmine.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
     <WebReferences Include="Web References\" />
