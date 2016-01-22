@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Routing;
@@ -81,7 +82,10 @@ namespace Sitio_Privado.Controllers
                 fileName = blockBlob.Name
             });
 
-            AzureBlob blob = new AzureBlob { Name = Path.GetFileNameWithoutExtension(blockBlob.Name), Url = url };
+            string blobName = Regex.Replace(Path.GetFileNameWithoutExtension(blockBlob.Name), "[^a-zA-Z0-9\u00C0-\u017F-]", " ", RegexOptions.Compiled);
+            blobName = blobName.Substring(0, 1).ToUpper() + blobName.Substring(1).ToLower();
+
+            AzureBlob blob = new AzureBlob { Name = blobName, Url = url };
 
             return blob;
         }
