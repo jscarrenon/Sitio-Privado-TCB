@@ -45,7 +45,7 @@
         }
 
         seleccionarSeccion(id: number): void {
-            this.container = [];
+            //this.container = [];
             this.seccionId = id;
             this.seccionURI = 'app/informacion-financiera/' + this.templates[this.seccionId];
             //Change dictionary
@@ -54,6 +54,9 @@
             }
             else if (this.seccionId == 2) {
                 this.getContainer('custodia');
+            }
+            else if (this.seccionId == 4) {
+                this.getContainer('regulacion');
             }
             else if (this.seccionId == 5) {
                 this.getContainer('otros');
@@ -72,7 +75,7 @@
             this.templates[1] = "estatutos.html";
             this.templates[2] = "custodia.html";
             this.templates[3] = "estatutos.html";
-            this.templates[4] = "estatutos.html";
+            this.templates[4] = "comite-regulacion.html";
             this.templates[5] = "otros-documentos.html";
         }
     }
