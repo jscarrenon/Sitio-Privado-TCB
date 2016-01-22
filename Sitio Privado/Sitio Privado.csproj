@@ -350,6 +350,7 @@
     <Content Include="app\home\mis-datos.html" />
     <Content Include="app\informacion-financiera\comite-regulacion.html" />
     <Content Include="app\informacion-financiera\custodia.html" />
+    <Content Include="app\informacion-financiera\documentos-normativos.html" />
     <Content Include="app\informacion-financiera\estatutos.html" />
     <Content Include="app\informacion-financiera\index.html" />
     <Content Include="app\informacion-financiera\otros-documentos.html" />

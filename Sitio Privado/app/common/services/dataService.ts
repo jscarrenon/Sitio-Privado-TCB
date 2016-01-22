@@ -21,7 +21,6 @@
         }
 
         get(resource: string): ng.IPromise<app.domain.EntityBase[]> {
-            console.log(resource);
             var self = this;
 
             var deferred = self.qService.defer();
