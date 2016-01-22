@@ -23,41 +23,47 @@ namespace Sitio_Privado.Controllers
         [HttpGet]
         public IHttpActionResult GetContainer(string name)
         {
-            //TODO: Check container not found
-            List<AzureFolder> folders = new List<AzureFolder>();
-
             CloudBlobContainer container = azureStorageHelper.GetContanerReferenceByName(name);
-            IEnumerable<IListBlobItem> blobs = container.ListBlobs(null, true, BlobListingDetails.All);
-
-            foreach (var item in blobs)
+            if (container.Exists())
             {
-                string folderName = item.Parent.Prefix.Replace("/", "");
-                AzureFolder folder = null;
-                IEnumerable<AzureFolder> auxFolders = folders.Where(f => f.Name == folderName);
-                if (auxFolders.Count() <= 0)
+                List<AzureFolder> folders = new List<AzureFolder>();
+                IEnumerable<IListBlobItem> blobs = container.ListBlobs(null, true, BlobListingDetails.All);
+
+                foreach (var item in blobs)
                 {
-                    
-                    folder = new AzureFolder(folderName);
-                    folders.Add(folder);
+                    string folderName = item.Parent.Prefix.Replace("/", "");
+                    AzureFolder folder = null;
+                    IEnumerable<AzureFolder> auxFolders = folders.Where(f => f.Name == folderName);
+                    if (auxFolders.Count() <= 0)
+                    {
+
+                        folder = new AzureFolder(folderName);
+                        folders.Add(folder);
+                    }
+                    else
+                    {
+                        folder = auxFolders.First();
+                    }
+
+                    //Get the blob.
+                    CloudBlockBlob blockBlob = new CloudBlockBlob(new Uri(item.Uri.AbsoluteUri));
+
+                    var url = this.Url.Link("DefaultApi", new
+                    {
+                        Controller = BlobsControllerName,
+                        Action = GetBlobAction,
+                        container = item.Container.Name,
+                        fileName = blockBlob.Name
+                    });
+
+                    AzureBlob blob = new AzureBlob { Name = Path.GetFileNameWithoutExtension(blockBlob.Name), Url = url };
+                    folder.Blobs.Add(blob);
                 }
-                else
-                {
-                    folder = auxFolders.First();
-                }
 
-                //Get the blob.
-                CloudBlockBlob blockBlob = new CloudBlockBlob(new Uri(item.Uri.AbsoluteUri));
-
-                var url = this.Url.Link("DefaultApi", new { Controller = BlobsControllerName, Action = GetBlobAction,
-                    container = item.Container.Name,
-                    fileName = blockBlob.Name
-                });
-
-                AzureBlob blob = new AzureBlob { Name = Path.GetFileNameWithoutExtension(blockBlob.Name), Url = url };
-                folder.Blobs.Add(blob);
+                return Ok(folders);
             }
 
-            return Ok(folders);
+            return NotFound();
         }
 
         #endregion
