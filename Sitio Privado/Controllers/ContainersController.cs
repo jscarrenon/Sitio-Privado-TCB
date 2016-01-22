@@ -32,36 +32,41 @@ namespace Sitio_Privado.Controllers
                 foreach (var item in blobs)
                 {
                     string[] foldersNameFromPath = item.Parent.Prefix.Split(new char[]{ '/' }, StringSplitOptions.RemoveEmptyEntries);
-                    string rootName = foldersNameFromPath[0];
-                    AzureFolder folder = null;
-                    IEnumerable<AzureFolder> auxFolders = folders.Where(f => f.Name == rootName);
-                    if (auxFolders.Count() <= 0)
-                    {
 
-                        folder = new AzureFolder(rootName);
-                        folders.Add(folder);
-                    }
-                    else
-                    {
-                        folder = auxFolders.First();
-                    }
-
-                    AzureFolder parent = folder;
-
-                    for (int i = 1; i < foldersNameFromPath.Length; i++) {
-                        AzureFolder child = new AzureFolder(foldersNameFromPath[i]);
-                        parent.Folders.Add(child);
-                        parent = child;
-                    }
+                    AzureFolder leaf = GetFolderStructure(folders, foldersNameFromPath);
 
                     AzureBlob blob = GetBlobFromUri(item.Uri.AbsoluteUri);
-                    parent.Blobs.Add(blob);
+                    leaf.Blobs.Add(blob);
                 }
 
                 return Ok(folders);
             }
 
             return NotFound();
+        }
+
+        private AzureFolder GetFolderStructure(List<AzureFolder> folders, string[] foldersPath)
+        {
+            List<AzureFolder> parentFolders = folders;
+            AzureFolder parent = null;
+            foreach (var folderName in foldersPath)
+            {
+                AzureFolder folder = null;
+                IEnumerable<AzureFolder> tempFolders = parentFolders.Where(f => f.Name == folderName);
+                if (tempFolders.Count() <= 0)
+                {
+                    folder = new AzureFolder(folderName);
+                    parentFolders.Add(folder);
+                }
+                else
+                {
+                    folder = tempFolders.First();
+                }
+                parentFolders = folder.Folders;
+                parent = folder;
+            }
+
+            return parent;
         }
 
         private AzureBlob GetBlobFromUri(string absoluteUri) {

@@ -18,6 +18,8 @@
         containerNames: { [id: number]: string };
 
         container: app.domain.AzureFolder[];
+        selectedYear: app.domain.AzureFolder[];
+        selectedYearIndex: number;
 
         static $inject = ['constantService', 'dataService'];
         constructor(private constantService: app.common.services.ConstantService,
@@ -38,15 +40,33 @@
         }
 
         seleccionarSeccion(id: number): void {
-            //this.container = [];
+            this.container = [];
             this.seccionId = id;
+            this.selectedYearIndex = 0;
+            this.selectedYear = [];
             this.seccionURI = 'app/informacion-financiera/' + this.templates[this.seccionId];
             this.getContainer(this.containerNames[id]);
         }
 
+        selectYear(index: number): void {
+            this.selectedYearIndex = index;
+            this.selectedYear = this.container[index].Folders;
+        }
+
         getContainer(input: string): void {
             this.dataService.get(this.constantService.apiBlobsURI + 'getContainer?name=' + input)
-                .then((result: app.domain.AzureFolder[]) => { this.container = result; console.log(result);});
+                .then((result: app.domain.AzureFolder[]) => {
+                    if (input == 'documentos-normativos') {
+                        result.sort((a, b) => this.sortYears(a,b));
+                        this.selectedYear = result[0].Folders;
+                    }
+                    this.container = result;
+                });
+        }
+
+        sortYears(a: app.domain.AzureFolder, b: app.domain.AzureFolder): number {
+            var re = /\D/g;
+            return -(parseInt(a.Name.replace(re, ""), 10) - parseInt(b.Name.replace(re, ""), 10));
         }
 
         setTemplates(): void {

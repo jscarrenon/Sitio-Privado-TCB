@@ -1,10 +1,45 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-	<meta charset="utf-8" />
-</head>
-<body>
+﻿<div id="container">
+    <div id="header">
+        <div class="in">
+            <div class="head">
+                <div class="title">Documentos Normativos</div>
+                <div class="subtitle"></div>
+            </div>
+        </div>
+    </div>
 
-</body>
-</html>
+    <div id="content">
+        <div class="in">
+            <div class="areas">
+                <div ng-repeat="folder in ctrl.container">
+                    <div class="one-area year">
+                        <a href="" class="clink" ng-click="ctrl.selectYear($index)" ng-class="{'active':ctrl.selectedYearIndex == $index}" >
+                            {{folder.Name}}
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="one-col documents" ng-repeat="folder in ctrl.selectedYear">
+                <div class="section-title">
+                    {{folder.Name}}
+                </div>
+                <div class="wrap-docs">
+                    <div class="one-doc" ng-repeat="blob in folder.Blobs">
+                        <div class="name">{{blob.Name}}</div>
+                        <div class="download">
+                            <a ng-href="{{blob.Url}}" class="clink" target="_blank"></a>
+                        </div>
+                    </div>
+                </div>
+            </div><!--end one-col -->
+            <div id="clear"></div>
+
+            <ng-include src="ctrl.constantService.templateFooterURI"></ng-include>
+
+        </div><!--end in-->
+    </div><!--end content-->
+
+</div><!--end container-->
+
+<div id="clear"></div>
+

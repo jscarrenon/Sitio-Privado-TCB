@@ -578,8 +578,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Project_Readme.html" />
-    <Content Include="Views\Containers\Index.cshtml" />
-    <Content Include="Views\Blobs\Index.cshtml" />
     <Content Include="Styles\style.less" />
     <Content Include="Resources\fonts\Gotham-Medium.eot" />
     <Content Include="Resources\fonts\Gotham-Medium.ttf" />
