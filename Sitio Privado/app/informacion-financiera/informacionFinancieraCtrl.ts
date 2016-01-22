@@ -46,7 +46,7 @@
 
         getContainer(input: string): void {
             this.dataService.get(this.constantService.apiBlobsURI + 'getContainer?name=' + input)
-                .then((result: app.domain.AzureFolder[]) => { this.container = result;});
+                .then((result: app.domain.AzureFolder[]) => { this.container = result; console.log(result);});
         }
 
         setTemplates(): void {
