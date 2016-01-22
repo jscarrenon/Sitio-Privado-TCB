@@ -64,20 +64,20 @@
             </div><!--end two-col-->
 
             <div class="three-col home">
-                <div class="executive white-box" ng-controller="WebserviceCtrl as webserviceCtrl">
-                    <div class="photo"><img src="{{webserviceCtrl.agente.PathImg}}" /></div>
+                <div class="executive white-box" ng-controller="AgenteCtrl as agenteCtrl">
+                    <div class="photo"><img src="{{agenteCtrl.agente.PathImg}}" /></div>
                     <div class="text">
-                        <div class="name">{{webserviceCtrl.agente.Nombre}}</div>
+                        <div class="name">{{agenteCtrl.agente.Nombre}}</div>
                         <div class="contact">
-                            Tel: {{webserviceCtrl.agente.Telefono}}<br />
-                            E-mail: <a href="mailto:{{webserviceCtrl.agente.Email}}">{{webserviceCtrl.agente.Email}}</a>
+                            Tel: {{agenteCtrl.agente.Telefono}}<br />
+                            E-mail: <a href="mailto:{{agenteCtrl.agente.Email}}">{{agenteCtrl.agente.Email}}</a>
                         </div>
                         <div class="info">
-                            Fecha de acreditación: {{webserviceCtrl.agente.FechaInicioAcreditacion}}<br />
-                            Sucursal: {{webserviceCtrl.agente.Sucursal}}
+                            Fecha de acreditación: {{agenteCtrl.agente.FechaInicioAcreditacion}}<br />
+                            Sucursal: {{agenteCtrl.agente.Sucursal}}
                         </div>
                     </div>
-                    <div class="button blue call"><a href="tel:{{webserviceCtrl.agente.Telefono}}" class="clink">Llamar</a></div>
+                    <div class="button blue call"><a href="tel:{{agenteCtrl.agente.Telefono}}" class="clink">Llamar</a></div>
                     <div id="clear"></div>
                 </div>
             </div>

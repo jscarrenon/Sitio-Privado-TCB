@@ -11,7 +11,7 @@
     <div id="content">
         <div class="in">
 
-            <div class="one-col" ng-controller="WebserviceCtrl as webserviceCtrl">
+            <div class="one-col" ng-controller="MisInversionesFondosMutuosCtrl as fondosMutuosCtrl">
                 <div class="section-title">Saldos Fondos Mutuos de Renta Fija</div>
                 <div id="cont-table">
                     <table class="balance">
@@ -24,7 +24,7 @@
                             <th class="number">Saldo en Cuotas</th>
                             <th class="number">Saldo en Pesos</th>
                         </tr>
-                        <tr ng-repeat="fondoMutuo in webserviceCtrl.fondosMutuosRF">
+                        <tr ng-repeat="fondoMutuo in fondosMutuosCtrl.fondosMutuosRF">
                             <td>{{fondoMutuo.Descripcion}}</td>
                             <td>{{fondoMutuo.Tipo}}</td>
                             <td>{{fondoMutuo.CtaPisys}}</td>
@@ -35,7 +35,7 @@
                         </tr>
                         <tr class="total">
                             <td colspan="6">Total Fondos Mutuos Renta Fija</td>
-                            <td class="number">${{webserviceCtrl.fondosMutuosRFTotal}}</td>
+                            <td class="number">${{fondosMutuosCtrl.fondosMutuosRFTotal}}</td>
                         </tr>
                     </table>
                 </div>
@@ -55,7 +55,7 @@
                             <th class="number">Saldo en Cuotas</th>
                             <th class="number">Saldo en Pesos</th>
                         </tr>
-                        <tr ng-repeat="fondoMutuo in webserviceCtrl.fondosMutuosRV">
+                        <tr ng-repeat="fondoMutuo in fondosMutuosCtrl.fondosMutuosRV">
                             <td>{{fondoMutuo.Descripcion}}</td>
                             <td>{{fondoMutuo.Tipo}}</td>
                             <td>{{fondoMutuo.CtaPisys}}</td>
@@ -66,7 +66,7 @@
                         </tr>
                         <tr class="total">
                             <td colspan="6">Total Fondos Mutuos Renta Variable</td>
-                            <td class="number">${{webserviceCtrl.fondosMutuosRVTotal}}</td>
+                            <td class="number">${{fondosMutuosCtrl.fondosMutuosRVTotal}}</td>
                         </tr>
                     </table>
                 </div>
