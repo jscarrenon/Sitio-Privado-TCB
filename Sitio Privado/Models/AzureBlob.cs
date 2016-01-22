@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Sitio_Privado.Models
 {
-    public class Blob
+    public class AzureBlob
     {
         public string Name { get; set; }
         public string Url { get; set; }
