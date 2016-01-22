@@ -4,12 +4,7 @@
         seccion?: string;
     }
 
-    interface IMisInversionesViewModel {
-        templates: string[];
-        seccionURI: string;
-        seccionId: number;
-        seleccionarSeccion(id: number): void;
-        setTemplates(): void;    
+    interface IMisInversionesViewModel extends app.common.interfaces.ISeccion {
     }
 
     export class MisInversionesCtrl implements IMisInversionesViewModel {
@@ -19,32 +14,40 @@
         seccionId: number;
 
         static $inject = ['constantService', 'dataService', 'authService', 'extrasService', '$routeParams'];
-        constructor(protected constantService: app.common.services.ConstantService,
-            protected dataService: app.common.services.DataService,
-            protected authService: app.common.services.AuthService,
-            protected extrasService: app.common.services.ExtrasService,
-            protected $routeParams: IMisInversionesRouteParams) {
+        constructor(private constantService: app.common.services.ConstantService,
+            private dataService: app.common.services.DataService,
+            private authService: app.common.services.AuthService,
+            private extrasService: app.common.services.ExtrasService,
+            private $routeParams: IMisInversionesRouteParams) {
 
             this.setTemplates();
             this.seccionId = 0;
 
             if (this.$routeParams.seccion) {
-                if (this.$routeParams.seccion == 'estado-documentos') {
+                if (this.$routeParams.seccion == 'nacionales') {
+                    this.seccionId = 0;
+                }
+                else if (this.$routeParams.seccion == 'fondos-mutuos') {
+                    this.seccionId = 2;
+                }
+                else if (this.$routeParams.seccion == 'estado-documentos') {
                     this.seccionId = 3;
+                }
+                else if (this.$routeParams.seccion == 'circularizacion') {
+                    this.seccionId = 4;
                 }
             }            
 
             this.seleccionarSeccion(this.seccionId);
 
-            //Solucionar problema de script slickav (a.mobileNav.on) porque afecta el resto del controlador KUNDER
-            //Timeout por error de script slicknav (a.mobileNav.on)
-            /*setTimeout(function () {
+            //Timeout por error de script slicknav
+            setTimeout(function () {
                 (<any>$('#menu2')).slicknav({
-                    label: 'Mis Inversiones', //important: active section name
+                    label: 'Mis Inversiones',
                     prependTo: '#sidemenu'
                 });
 
-            }, 800); */
+            }, 100);
         }
 
         seleccionarSeccion(id: number): void {
