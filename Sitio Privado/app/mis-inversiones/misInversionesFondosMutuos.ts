@@ -10,7 +10,7 @@
         getFondosMutuosTotal(): void;
     }
 
-    class MisInversionesFondosMutuosCtrl extends MisInversionesCtrl implements IMisInversionesFondosMutuosViewModel {
+    class MisInversionesFondosMutuosCtrl implements IMisInversionesFondosMutuosViewModel {
 
         fondosMutuosRF: app.domain.IFondoMutuo[];
         fondosMutuosRV: app.domain.IFondoMutuo[];
@@ -19,13 +19,11 @@
         fondosMutuosRVTotal: number;
 
         static $inject = ['constantService', 'dataService', 'authService', 'extrasService', '$routeParams'];
-        constructor(constantService: app.common.services.ConstantService,
-            dataService: app.common.services.DataService,
-            authService: app.common.services.AuthService,
-            extrasService: app.common.services.ExtrasService,
-            $routeParams: app.misInversiones.IMisInversionesRouteParams) {
-
-            super(constantService, dataService, authService, extrasService, $routeParams);
+        constructor(private constantService: app.common.services.ConstantService,
+            private dataService: app.common.services.DataService,
+            private authService: app.common.services.AuthService,
+            private extrasService: app.common.services.ExtrasService,
+            private $routeParams: app.misInversiones.IMisInversionesRouteParams) {
 
             this.fondosMutuosInput = new app.domain.FondoMutuoInput(parseInt(this.extrasService.getRutParteEntera(this.authService.usuario.Rut)));
             this.getFondosMutuos(this.fondosMutuosInput);

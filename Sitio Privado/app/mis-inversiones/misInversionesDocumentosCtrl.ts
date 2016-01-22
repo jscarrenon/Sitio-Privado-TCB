@@ -1,6 +1,6 @@
 ﻿module app.misInversiones {
 
-    interface IMisInversionesDocumentosViewModel {
+    interface IMisInversionesDocumentosViewModel extends app.common.interfaces.ISeccion {
         documentosPendientes: app.domain.IDocumento[];
         getDocumentosPendientes(input: app.domain.IDocumentosPendientesInput): void;
         documentosFirmados: app.domain.IDocumento[];
@@ -12,7 +12,11 @@
         actualizarDocumentosFirmados(): void;
     }
 
-    class MisInversionesDocumentosCtrl extends MisInversionesCtrl implements IMisInversionesDocumentosViewModel {
+    class MisInversionesDocumentosCtrl implements IMisInversionesDocumentosViewModel {
+
+        templates: string[];
+        seccionURI: string;
+        seccionId: number;
 
         documentosPendientes: app.domain.IDocumento[];
         documentosPendientesInput: app.domain.IDocumentosPendientesInput;
@@ -22,14 +26,11 @@
         fechaFirmadosFin: Date;
         fechaHoy: Date;
 
-        static $inject = ['constantService', 'dataService', 'authService', 'extrasService', '$routeParams'];
-        constructor(constantService: app.common.services.ConstantService,
-            dataService: app.common.services.DataService,
-            authService: app.common.services.AuthService,
-            extrasService: app.common.services.ExtrasService,
-            $routeParams: app.misInversiones.IMisInversionesRouteParams) {
-
-            super(constantService, dataService, authService, extrasService, $routeParams);
+        static $inject = ['constantService', 'dataService', 'authService', 'extrasService'];
+        constructor(private constantService: app.common.services.ConstantService,
+            private dataService: app.common.services.DataService,
+            private authService: app.common.services.AuthService,
+            private extrasService: app.common.services.ExtrasService) {
 
             this.setTemplates();
             this.seccionId = 0;
@@ -45,6 +46,11 @@
             this.fechaFirmadosInicio.setDate(this.fechaFirmadosFin.getDate() - 1);
 
             this.actualizarDocumentosFirmados();
+        }
+
+        seleccionarSeccion(id: number): void {
+            this.seccionId = id;
+            this.seccionURI = 'app/mis-inversiones/' + this.templates[this.seccionId];
         }
 
         setTemplates(): void {

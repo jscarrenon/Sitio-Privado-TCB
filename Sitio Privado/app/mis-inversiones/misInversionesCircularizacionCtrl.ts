@@ -1,6 +1,25 @@
 ﻿module app.misInversiones {
 
-    class MisInversionesCircularizacionCtrl extends MisInversionesCtrl {
+    interface IMisInversionesCircularizacionViewModel extends app.common.interfaces.ISeccion {
+    }
+
+    class MisInversionesCircularizacionCtrl implements IMisInversionesCircularizacionViewModel {
+
+        templates: string[];
+        seccionURI: string;
+        seccionId: number;
+
+        constructor() {
+
+            this.setTemplates();
+            this.seccionId = 0;
+            this.seleccionarSeccion(this.seccionId);
+        }
+
+        seleccionarSeccion(id: number): void {
+            this.seccionId = id;
+            this.seccionURI = 'app/mis-inversiones/' + this.templates[this.seccionId];
+        }  
 
         setTemplates(): void {
             this.templates = [];

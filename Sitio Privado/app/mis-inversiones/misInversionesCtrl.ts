@@ -4,12 +4,7 @@
         seccion?: string;
     }
 
-    interface IMisInversionesViewModel {
-        templates: string[];
-        seccionURI: string;
-        seccionId: number;
-        seleccionarSeccion(id: number): void;
-        setTemplates(): void;    
+    interface IMisInversionesViewModel extends app.common.interfaces.ISeccion {
     }
 
     export class MisInversionesCtrl implements IMisInversionesViewModel {
@@ -19,11 +14,11 @@
         seccionId: number;
 
         static $inject = ['constantService', 'dataService', 'authService', 'extrasService', '$routeParams'];
-        constructor(protected constantService: app.common.services.ConstantService,
-            protected dataService: app.common.services.DataService,
-            protected authService: app.common.services.AuthService,
-            protected extrasService: app.common.services.ExtrasService,
-            protected $routeParams: IMisInversionesRouteParams) {
+        constructor(private constantService: app.common.services.ConstantService,
+            private dataService: app.common.services.DataService,
+            private authService: app.common.services.AuthService,
+            private extrasService: app.common.services.ExtrasService,
+            private $routeParams: IMisInversionesRouteParams) {
 
             this.setTemplates();
             this.seccionId = 0;

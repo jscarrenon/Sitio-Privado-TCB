@@ -597,6 +597,7 @@
     <TypeScriptCompile Include="app\common\controllers\agenteCtrl.ts" />
     <TypeScriptCompile Include="app\common\controllers\webserviceCtrl.ts" />
     <TypeScriptCompile Include="app\common\controllers\bodyCtrl.ts" />
+    <TypeScriptCompile Include="app\common\interfaces\ISeccion.ts" />
     <TypeScriptCompile Include="app\common\services\extrasService.ts" />
     <TypeScriptCompile Include="app\common\services\authService.ts" />
     <TypeScriptCompile Include="app\common\services\constantService.ts" />
