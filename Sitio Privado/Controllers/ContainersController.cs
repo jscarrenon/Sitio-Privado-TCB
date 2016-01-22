@@ -82,7 +82,7 @@ namespace Sitio_Privado.Controllers
                 fileName = blockBlob.Name
             });
 
-            string blobName = Regex.Replace(Path.GetFileNameWithoutExtension(blockBlob.Name), "[^a-zA-Z0-9\u00C0-\u017F-]", " ", RegexOptions.Compiled);
+            string blobName = Regex.Replace(Path.GetFileNameWithoutExtension(blockBlob.Name), "[^a-zA-Z0-9\u00C0-\u017F]", " ", RegexOptions.Compiled);
             blobName = blobName.Substring(0, 1).ToUpper() + blobName.Substring(1).ToLower();
 
             AzureBlob blob = new AzureBlob { Name = blobName, Url = url };
