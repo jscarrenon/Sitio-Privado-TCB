@@ -53,7 +53,7 @@ namespace Sitio_Privado.Controllers
                     fileName = blockBlob.Name
                 });
 
-                Blob blob = new Blob { Name = Path.GetFileNameWithoutExtension(blockBlob.Name), Url = url };
+                AzureBlob blob = new AzureBlob { Name = Path.GetFileNameWithoutExtension(blockBlob.Name), Url = url };
                 folder.Blobs.Add(blob);
             }
 
