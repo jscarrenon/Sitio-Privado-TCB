@@ -2,7 +2,7 @@
     <div id="header">
         <div class="in">
             <div class="head">
-                <div class="title">Estatutos</div>
+                <div class="title">Comité de Regulación Bolsa de Comercio de Santiago</div>
                 <div class="subtitle"></div>
             </div>
         </div>
@@ -16,9 +16,9 @@
                     {{folder.Name}}
                 </div>
                 <div class="wrap-docs">
-                    <div class="one-doc" ng-repeat="blob in folder.Blobs">
+                    <div class="one-doc link" ng-repeat="blob in folder.Blobs">
                         <div class="name">{{blob.Name}}</div>
-                        <div class="download">
+                        <div class="download link">
                             <a ng-href="{{blob.Url}}" class="clink" target="_blank"></a>
                         </div>
                     </div>

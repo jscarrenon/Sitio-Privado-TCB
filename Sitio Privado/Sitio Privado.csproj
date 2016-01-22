@@ -289,8 +289,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AzureFolder.cs" />
-    <Compile Include="Models\Blob.cs" />
-    <Compile Include="Models\Container.cs" />
+    <Compile Include="Models\AzureBlob.cs" />
     <Compile Include="Helpers\GraphApiResponseInfo.cs" />
     <Compile Include="Models\DocumentoModel.cs" />
     <Compile Include="Models\CartolaModel.cs" />
@@ -348,8 +347,12 @@
     <Content Include="app\common\templates\footer.html" />
     <Content Include="app\home\index.html" />
     <Content Include="app\home\mis-datos.html" />
+    <Content Include="app\informacion-financiera\comite-regulacion.html" />
+    <Content Include="app\informacion-financiera\servicios-custodia.html" />
+    <Content Include="app\informacion-financiera\documentos-normativos.html" />
     <Content Include="app\informacion-financiera\estatutos.html" />
     <Content Include="app\informacion-financiera\index.html" />
+    <Content Include="app\informacion-financiera\otros-documentos.html" />
     <Content Include="app\inversiones\index.html" />
     <Content Include="app\mis-inversiones\circularizacion.html" />
     <Content Include="app\mis-inversiones\circularizacion_anterior.html" />
@@ -575,8 +578,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Project_Readme.html" />
-    <Content Include="Views\Containers\Index.cshtml" />
-    <Content Include="Views\Blobs\Index.cshtml" />
     <Content Include="Styles\style.less" />
     <Content Include="Resources\fonts\Gotham-Medium.eot" />
     <Content Include="Resources\fonts\Gotham-Medium.ttf" />
