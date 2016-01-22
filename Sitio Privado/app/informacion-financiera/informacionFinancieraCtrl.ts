@@ -6,6 +6,7 @@
         seccionId: number;
         seleccionarSeccion(id: number): void;
         setTemplates(): void;
+        setContainerNames(): void;
         getContainer(input: string): void;
     }
 
@@ -14,6 +15,7 @@
         templates: string[];
         seccionURI: string;
         seccionId: number;
+        containerNames: { [id: number]: string };
 
         container: app.domain.AzureFolder[];
 
@@ -22,18 +24,9 @@
             private dataService: app.common.services.DataService) {
 
             this.setTemplates();
+            this.setContainerNames();
             this.seccionId = 0;
             this.seleccionarSeccion(this.seccionId);
-
-            this.container = [];
-
-            /*var blobs = [];
-            blobs.push(new app.domain.AzureBlob("nuevo archivo de prueba con nombre largo", ""));
-            blobs.push(new app.domain.AzureBlob("otro archivo", ""));
-            blobs.push(new app.domain.AzureBlob("tercero", ""));
-            
-            this.container.push(new app.domain.AzureContainer("Hola", blobs));
-            this.container.push(new app.domain.AzureContainer("Chao", null));*/
 
             //Timeout por error de script slicknav (a.mobileNav.on)
             /*setTimeout(function () {
@@ -48,20 +41,7 @@
             //this.container = [];
             this.seccionId = id;
             this.seccionURI = 'app/informacion-financiera/' + this.templates[this.seccionId];
-            //Change dictionary
-            if (this.seccionId == 0) {
-                this.getContainer('estatutos');
-            }
-            else if (this.seccionId == 2) {
-                this.getContainer('custodia');
-            }
-            else if (this.seccionId == 4) {
-                this.getContainer('regulacion');
-            }
-            else if (this.seccionId == 5) {
-                this.getContainer('otros');
-            }
-
+            this.getContainer(this.containerNames[id]);
         }
 
         getContainer(input: string): void {
@@ -77,6 +57,15 @@
             this.templates[3] = "estatutos.html";
             this.templates[4] = "comite-regulacion.html";
             this.templates[5] = "otros-documentos.html";
+        }
+
+        setContainerNames(): void {
+            this.containerNames = {};
+            this.containerNames[0] = 'estatutos';
+            this.containerNames[1] = 'documentos-normativos';
+            this.containerNames[2] = 'servicios-custodia';
+            this.containerNames[4] = 'comite-regulacion';
+            this.containerNames[5] = 'otros-documentos';
         }
     }
     angular.module('tannerPrivadoApp')
