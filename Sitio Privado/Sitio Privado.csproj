@@ -241,6 +241,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Extras\Converters.cs" />
     <Compile Include="Helpers\AzureStorageHelper.cs" />
     <Compile Include="Controllers\BlobsController.cs" />
     <Compile Include="Controllers\ContainersController.cs" />
