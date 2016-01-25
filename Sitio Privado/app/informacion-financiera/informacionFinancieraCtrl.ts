@@ -97,7 +97,7 @@
             this.templates[0] = "estatutos.html";
             this.templates[1] = "documentos-normativos.html";
             this.templates[2] = "servicios-custodia.html";
-            this.templates[3] = "estatutos.html";
+            this.templates[3] = "indices-liquidez.html";
             this.templates[4] = "comite-regulacion.html";
             this.templates[5] = "otros-documentos.html";
         }
