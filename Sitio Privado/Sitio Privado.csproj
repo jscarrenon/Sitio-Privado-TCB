@@ -322,6 +322,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.map</DependentUpon>
     </Compile>
+    <Compile Include="Web References\CircularizacionCustodia\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
     <Compile Include="Web References\ConsultaSaldosFondosMutuos\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -372,6 +377,14 @@
     <Content Include="package.json" />
     <Content Include=".bowerrc" />
     <Content Include="bower.json" />
+    <Content Include="Web References\CircularizacionCustodia\archivocli.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <Content Include="Web References\CircularizacionCustodia\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </Content>
+    <None Include="Web References\CircularizacionCustodia\tann_circularizacion.disco" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -470,10 +483,10 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Content Include="Web References\CartolaResumida\Reference.map">
+    <None Include="Web References\CartolaResumida\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
-    </Content>
+    </None>
     <None Include="Web References\CartolaResumida\tann_cartola_resumida.wsdl" />
     <Content Include="Web References\CartolaResumida\_cartola.datasource">
       <DependentUpon>Reference.map</DependentUpon>
@@ -486,6 +499,7 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <None Include="Web References\CategoriaInversionista\tann_catsvc.disco" />
+    <None Include="Web References\CircularizacionCustodia\tann_circularizacion.wsdl" />
     <None Include="Web References\ConsultaSaldosFondosMutuos\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -495,10 +509,10 @@
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
     <None Include="Web References\ConsultaSaldosFondosMutuos\tann_fondos_mutuos.disco" />
-    <Content Include="Web References\DocumentosPendientesFirma\Reference.map">
+    <None Include="Web References\DocumentosPendientesFirma\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
-    </Content>
+    </None>
     <None Include="Web References\DocumentosPendientesFirma\tann_documentos.wsdl" />
     <Content Include="Web References\DocumentosPendientesFirma\_operacion.datasource">
       <DependentUpon>Reference.map</DependentUpon>
@@ -670,6 +684,17 @@
       </CachedDynamicPropName>
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
       <CachedSettingsPropName>Sitio_Privado_CategoriaInversionista_tann_catsvc</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://172.17.1.12:8088/tann_circularizacion.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\CircularizacionCustodia\</RelPath>
+      <UpdateFromURL>http://172.17.1.12:8088/tann_circularizacion.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Sitio_Privado_CircularizacionCustodia_tann_circularizacion</CachedSettingsPropName>
     </WebReferenceUrl>
     <WebReferenceUrl Include="http://172.17.1.12:8088/tann_documentos.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
