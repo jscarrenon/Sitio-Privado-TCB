@@ -21,9 +21,7 @@ namespace Sitio_Privado.Models
     public class DocumentoLeidoInput
     {
         public string rut { get; set; }
-        public string mercado { get; set; }
         public string codigo { get; set; }
-        public string folio { get; set; }
     }
 
     public class Documento
@@ -61,7 +59,7 @@ namespace Sitio_Privado.Models
         public DocumentoLeidoResultado(DocumentoLeidoInput input)
         {
             tann_documentos webService = new tann_documentos();
-            bool resultado = webService.cns_documento_leido(input.rut, input.mercado, input.codigo, input.folio);
+            bool resultado = webService.cns_documento_leido(input.rut, input.codigo);
             Resultado = resultado;
         }
     }

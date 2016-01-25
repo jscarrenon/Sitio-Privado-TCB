@@ -74,7 +74,7 @@
         }
 
         verDocumento(documento: app.domain.IDocumento): void {
-            var documentoLeidoInput: app.domain.IDocumentoLeidoInput = new app.domain.DocumentoLeidoInput(this.extrasService.getRutParteEntera(this.authService.usuario.Rut), "mercado", documento.Codigo, documento.Folio);
+            var documentoLeidoInput: app.domain.IDocumentoLeidoInput = new app.domain.DocumentoLeidoInput(this.extrasService.getRutParteEntera(this.authService.usuario.Rut), documento.Codigo);
 
             //Abrir documento
             this.extrasService.abrirRuta(documento.Ruta);
