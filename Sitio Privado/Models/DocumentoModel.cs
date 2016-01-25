@@ -14,8 +14,8 @@ namespace Sitio_Privado.Models
     public class DocumentosFirmadosInput
     {
         public string rut { get; set; }
-        public string fechaIni { get; set; }
-        public string fechaFin { get; set; }
+        public string fechaIni { get; set; } //dd-mm-YYYY
+        public string fechaFin { get; set; } //dd-mm-YYYY
     }
 
     public class DocumentoLeidoInput

@@ -1,8 +1,10 @@
 ﻿module app.misInversiones {
 
     interface IMisInversionesDocumentosViewModel extends app.common.interfaces.ISeccion {
+        operacionesPendientes: app.domain.IDocumento[];
         documentosPendientes: app.domain.IDocumento[];
         getDocumentosPendientes(input: app.domain.IDocumentosPendientesInput): void;
+        operacionesFirmadas: app.domain.IDocumento[];
         documentosFirmados: app.domain.IDocumento[];
         getDocumentosFirmados(input: app.domain.IDocumentosFirmadosInput): void;
         fechaFirmadosInicio: Date;
@@ -18,8 +20,10 @@
         seccionURI: string;
         seccionId: number;
 
+        operacionesPendientes: app.domain.IDocumento[];
         documentosPendientes: app.domain.IDocumento[];
         documentosPendientesInput: app.domain.IDocumentosPendientesInput;
+        operacionesFirmadas: app.domain.IDocumento[];
         documentosFirmados: app.domain.IDocumento[];
         documentosFirmadosInput: app.domain.IDocumentosFirmadosInput;
         fechaFirmadosInicio: Date;
@@ -62,14 +66,16 @@
         getDocumentosPendientes(input: app.domain.IDocumentosPendientesInput): void {
             this.dataService.postWebService(this.constantService.apiDocumentoURI + 'getListPendientes', input)
                 .then((result: app.domain.IDocumento[]) => {
-                    this.documentosPendientes = result;
+                    this.operacionesPendientes = result["operaciones"];
+                    this.documentosPendientes = result["documentos"];
                 });
         }
 
         getDocumentosFirmados(input: app.domain.IDocumentosFirmadosInput): void {
             this.dataService.postWebService(this.constantService.apiDocumentoURI + 'getListFirmados', input)
                 .then((result: app.domain.IDocumento[]) => {
-                    this.documentosFirmados = result;
+                    this.operacionesFirmadas = result["operaciones"];
+                    this.documentosFirmados = result["documentos"];
                 });
         }
 

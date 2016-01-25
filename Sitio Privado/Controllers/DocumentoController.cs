@@ -17,15 +17,24 @@ namespace Sitio_Privado.Controllers
             try
             {
                 tann_documentos webService = new tann_documentos();
-                _operacion[] documentos = webService.cns_operacion_pendiente(input.rut);
+                _operacion[] operaciones = webService.cns_operacion_pendiente(input.rut);
 
-                List<Documento> lista = new List<Documento>();
-                foreach (_operacion documento in documentos)
+                List<Documento> listaOperaciones = new List<Documento>();
+                foreach (_operacion operacion in operaciones.Where(x => x._tipo == "Operacion"))
                 {
-                    lista.Add(new Documento(documento));
+                    listaOperaciones.Add(new Documento(operacion));
                 }
 
-                return Ok(lista);
+                List<Documento> listaDocumentos = new List<Documento>();
+                foreach (_operacion operacion in operaciones.Where(x => x._tipo == "Documento"))
+                {
+                    listaDocumentos.Add(new Documento(operacion));
+                }
+
+                Dictionary<string, List<Documento>> documentosDictionary = new Dictionary<string, List<Documento>>();
+                documentosDictionary.Add("operaciones", listaOperaciones);
+                documentosDictionary.Add("documentos", listaDocumentos);
+                return Ok(documentosDictionary);
             }
             catch (Exception e)
             {
@@ -39,15 +48,24 @@ namespace Sitio_Privado.Controllers
             try
             {
                 tann_documentos webService = new tann_documentos();
-                _operacion[] documentos = webService.cns_operacion_firmada(input.rut, input.fechaIni, input.fechaFin);
+                _operacion[] operaciones = webService.cns_operacion_firmada(input.rut, input.fechaIni, input.fechaFin);
 
-                List<Documento> lista = new List<Documento>();
-                foreach (_operacion documento in documentos)
+                List<Documento> listaOperaciones = new List<Documento>();
+                foreach (_operacion operacion in operaciones.Where(x => x._tipo == "Operacion"))
                 {
-                    lista.Add(new Documento(documento));
+                    listaOperaciones.Add(new Documento(operacion));
                 }
 
-                return Ok(lista);
+                List<Documento> listaDocumentos = new List<Documento>();
+                foreach (_operacion operacion in operaciones.Where(x => x._tipo == "Documento"))
+                {
+                    listaDocumentos.Add(new Documento(operacion));
+                }
+
+                Dictionary<string, List<Documento>> documentosDictionary = new Dictionary<string, List<Documento>>();
+                documentosDictionary.Add("operaciones", listaOperaciones);
+                documentosDictionary.Add("documentos", listaDocumentos);
+                return Ok(documentosDictionary);
             }
             catch (Exception e)
             {

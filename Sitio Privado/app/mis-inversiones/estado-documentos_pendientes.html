@@ -19,7 +19,7 @@
             </tr>
             <tr ng-repeat="documento in documentosCtrl.documentosPendientes">
                 <td><input type="checkbox" name="sign" ng-checked="todos"></td>
-                <td><input type="checkbox" name="read" ng-checked="documento.Leido" disabled></td>
+                <td><input type="checkbox" name="read" ng-checked="documento.Leido == 'S'" disabled></td>
                 <td>{{documento.Producto}}</td>
                 <td>{{documento.Tipo}}</td>
                 <td>{{documento.Folio}}</td>
