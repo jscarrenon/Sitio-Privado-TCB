@@ -95,16 +95,8 @@
         }
 
         actualizarDocumentosFirmados(): void {
-            this.documentosFirmadosInput = new app.domain.DocumentosFirmadosInput(this.extrasService.getRutParteEntera(this.authService.usuario.Rut), this.getFechaFormato(this.fechaFirmadosInicio), this.getFechaFormato(this.fechaFirmadosFin));
+            this.documentosFirmadosInput = new app.domain.DocumentosFirmadosInput(this.extrasService.getRutParteEntera(this.authService.usuario.Rut), this.extrasService.getFechaFormato(this.fechaFirmadosInicio), this.extrasService.getFechaFormato(this.fechaFirmadosFin));
             this.getDocumentosFirmados(this.documentosFirmadosInput);
-        }
-
-        //Aquí debería usarse filtro de angular - KUNDER
-        getFechaFormato(fecha: Date): string {
-            var yyyy = fecha.getFullYear().toString();
-            var mm = (fecha.getMonth() + 1).toString(); // getMonth() is zero-based
-            var dd = fecha.getDate().toString();
-            return yyyy + "-" + (mm[1] ? mm : "0" + mm[0]) + "-" + (dd[1] ? dd : "0" + dd[0]); // padding
         }
     }
     angular.module('tannerPrivadoApp')
