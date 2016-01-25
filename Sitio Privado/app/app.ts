@@ -18,7 +18,7 @@
                     templateUrl: "/app/home/mis-datos.html",
                     controller: "HomeCtrl as ctrl"
                 })
-                .when("/informacion-financiera", {
+                .when("/informacion-financiera/:seccion?", {
                     templateUrl: "/app/informacion-financiera/index.html",
                     controller: "InformacionFinancieraCtrl as ctrl"
                 })

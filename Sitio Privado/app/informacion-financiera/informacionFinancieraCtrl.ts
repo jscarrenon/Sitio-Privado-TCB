@@ -1,11 +1,10 @@
 ﻿module app.informacionFinanciera {
 
-    interface IInformacionFinancieraViewModel {
-        templates: string[];
-        seccionURI: string;
-        seccionId: number;
-        seleccionarSeccion(id: number): void;
-        setTemplates(): void;
+    export interface IInformacionFinancieraRouteParams extends ng.route.IRouteParamsService {
+        seccion?: string;
+    }
+
+    interface IInformacionFinancieraViewModel extends app.common.interfaces.ISeccion {
         setContainerNames(): void;
         getContainer(input: string): void;
     }
@@ -21,22 +20,46 @@
         selectedYear: app.domain.AzureFolder[];
         selectedYearIndex: number;
 
-        static $inject = ['constantService', 'dataService'];
+        static $inject = ['constantService', 'dataService', '$routeParams'];
         constructor(private constantService: app.common.services.ConstantService,
-            private dataService: app.common.services.DataService) {
+            private dataService: app.common.services.DataService,
+            private $routeParams: IInformacionFinancieraRouteParams) {
 
             this.setTemplates();
             this.setContainerNames();
             this.seccionId = 0;
+
+            if (this.$routeParams.seccion) {
+                if (this.$routeParams.seccion == 'estatutos') {
+                    this.seccionId = 0;
+                }
+                else if (this.$routeParams.seccion == 'documentos-normativos') {
+                    this.seccionId = 1;
+                }
+                else if (this.$routeParams.seccion == 'servicios-custodia') {
+                    this.seccionId = 2;
+                }
+                else if (this.$routeParams.seccion == 'indices-liquidez') {
+                    this.seccionId = 3;
+                }
+                else if (this.$routeParams.seccion == 'comite-regulacion') {
+                    this.seccionId = 4;
+                }
+                else if (this.$routeParams.seccion == 'otros-documentos') {
+                    this.seccionId = 5;
+                }
+            }  
+
             this.seleccionarSeccion(this.seccionId);
 
-            //Timeout por error de script slicknav (a.mobileNav.on)
-            /*setTimeout(function () {
+            //Timeout por error de script slicknav
+            setTimeout(function () {
                 (<any>$('#menu2')).slicknav({
-                    label: 'Información Financiera', //important: active section name
+                    label: 'Información Financiera',
                     prependTo: '#sidemenu'
                 });
-            }, 800);*/
+
+            }, 100);
         }
 
         seleccionarSeccion(id: number): void {
