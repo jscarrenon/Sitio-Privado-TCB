@@ -4,7 +4,7 @@
 </div>
 
 <div class="one-col">
-    <div class="section-title">Documentos Pendientes (al {{documentosCtrl.fechaHoy|date:'dd/MM/yyyy'}})</div>
+    <div class="section-title">Operaciones Pendientes (al {{documentosCtrl.fechaHoy|date:'dd/MM/yyyy'}})</div>
 
     <div id="cont-table">
         <table class="balance">
@@ -12,16 +12,14 @@
                 <th class="small-box">Firmar</th>
                 <th class="small-box">Leído</th>
                 <th>Producto</th>
-                <th>Tipo de Documento</th>
                 <th>Nº Folio</th>
                 <th>Fecha de Operación</th>
                 <th>Documento</th>
             </tr>
-            <tr ng-repeat="documento in documentosCtrl.documentosPendientes">
-                <td><input type="checkbox" name="sign" ng-checked="todos"></td>
+            <tr ng-repeat="documento in documentosCtrl.operacionesPendientes">
+                <td><input type="checkbox" name="sign" ng-checked="todosOperaciones"></td>
                 <td><input type="checkbox" name="read" ng-checked="documento.Leido == 'S'" disabled></td>
                 <td>{{documento.Producto}}</td>
-                <td>{{documento.Tipo}}</td>
                 <td>{{documento.Folio}}</td>
                 <td>{{documento.FechaCreacion}}</td>
                 <td><a href="" ng-click="documentosCtrl.verDocumento(documento)">Ver Documento</a></td>
@@ -31,7 +29,45 @@
 
     <div class="table-tools">
         <div class="select-all">
-            <input type="checkbox" name="select" value="value" ng-model="todos"><label>Seleccionar todos</label>
+            <input type="checkbox" name="select" value="value" ng-model="todosOperaciones"><label>Seleccionar todos</label>
+        </div>
+        <div class="pagination">
+            <div class="pag-button prev2"><a href="#" class="clink"></a></div>
+            <div class="pag-button prev"><a href="#" class="clink"></a></div>
+            <div class="nums">1 de 14</div>
+            <div class="pag-button next"><a href="#" class="clink"></a></div>
+            <div class="pag-button next2"><a href="#" class="clink"></a></div>
+        </div>
+    </div>
+
+    <div class="sep-table"></div>
+
+    <div class="section-title">Documentos Pendientes (al {{documentosCtrl.fechaHoy|date:'dd/MM/yyyy'}})</div>
+
+    <div id="cont-table">
+        <table class="balance">
+            <tr>
+                <th class="small-box">Firmar</th>
+                <th class="small-box">Leído</th>
+                <th>Producto</th>
+                <th>Nº Folio</th>
+                <th>Fecha de Operación</th>
+                <th>Documento</th>
+            </tr>
+            <tr ng-repeat="documento in documentosCtrl.documentosPendientes">
+                <td><input type="checkbox" name="sign" ng-checked="todosDocumentos"></td>
+                <td><input type="checkbox" name="read" ng-checked="documento.Leido == 'S'" disabled></td>
+                <td>{{documento.Producto}}</td>
+                <td>{{documento.Folio}}</td>
+                <td>{{documento.FechaCreacion}}</td>
+                <td><a href="" ng-click="documentosCtrl.verDocumento(documento)">Ver Documento</a></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="table-tools">
+        <div class="select-all">
+            <input type="checkbox" name="select" value="value" ng-model="todosDocumentos"><label>Seleccionar todos</label>
         </div>
         <div class="pagination">
             <div class="pag-button prev2"><a href="#" class="clink"></a></div>

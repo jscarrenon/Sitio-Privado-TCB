@@ -9,6 +9,43 @@
 </div>
 
 <div class="one-col">
+
+    <div class="section-title">Operaciones Firmadas</div>
+
+    <div id="cont-table">
+        <table class="balance">
+            <tr>
+                <th>Producto</th>
+                <th>Nº Folio</th>
+                <th>Fecha de Operación</th>
+                <th>Tipo de Firma</th>
+                <th>Fecha de Firma</th>
+                <th>Documento</th>
+            </tr>
+            <tr ng-repeat="documento in documentosCtrl.operacionesFirmadas">
+                <td>{{documento.Producto}}</td>
+                <td>{{documento.Folio}}</td>
+                <td>{{documento.FechaCreacion}}</td>
+                <td>{{documento.Firmado}}</td>
+                <td>14 Nov 2015</td><!-- valor ? KUNDER -->
+                <td><a href="" ng-click="documentosCtrl.verDocumento(documento)">Ver Documento</a></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="table-tools">
+        <div class="pagination">
+            <div class="pag-button prev2"><a href="#" class="clink"></a></div>
+            <div class="pag-button prev"><a href="#" class="clink"></a></div>
+            <div class="nums">1 de 14</div>
+            <div class="pag-button next"><a href="#" class="clink"></a></div>
+            <div class="pag-button next2"><a href="#" class="clink"></a></div>
+        </div>
+    </div>
+
+
+    <div class="sep-table"></div>
+
     <div class="section-title">Documentos Firmados</div>
 
     <div id="cont-table">
@@ -35,9 +72,6 @@
     </div>
 
     <div class="table-tools">
-        <div class="select-all">
-            <input type="checkbox" name="select" value="value"><label>Seleccionar todos</label>
-        </div>
         <div class="pagination">
             <div class="pag-button prev2"><a href="#" class="clink"></a></div>
             <div class="pag-button prev"><a href="#" class="clink"></a></div>
