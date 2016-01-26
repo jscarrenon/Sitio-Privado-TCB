@@ -7,18 +7,18 @@ angular.module("tannerPrivadoApp", ['ngRoute']);
 
 namespace Tests{
     describe("Tests unitarios controlador", () => {
-        var app = angular.module('tannerPrivadoApp');
+
         var $http: angular.IHttpService;
         var $httpBackend: angular.IHttpBackendService;
-        var controller: App.Common.Controllers.WebserviceCtrl;
-        var constantService: App.Common.Services.ConstantService;
-        var dataService: App.Common.Services.DataService;
+        var controller: app.common.controllers.WebserviceCtrl;
+        var constantService: app.common.services.ConstantService;
+        var dataService: app.common.services.DataService;
 
         beforeEach(() => {
             angular.mock.inject((_$http_: angular.IHttpService, _$httpBackend_: angular.IHttpBackendService) => {
                 $http = _$http_;
                 $httpBackend = _$httpBackend_;
-                controller = new App.Common.Controllers.WebserviceCtrl(constantService, dataService);
+                controller = new app.common.controllers.WebserviceCtrl(constantService, dataService);
             });
         });
 

@@ -1,4 +1,4 @@
-﻿module App.MisInversiones {
+﻿module app.misInversiones {
 
     interface IMisInversionesCircularizacionViewModel extends app.common.interfaces.ISeccion {
     }

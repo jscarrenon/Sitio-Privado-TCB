@@ -1,4 +1,4 @@
-﻿module App.Domain {
+﻿module app.domain {
     export interface ICartola {
         Rut: string;
         Periodo: string;
@@ -24,7 +24,7 @@
         TotalInversionesPorcentaje: number;
     }
 
-    export class Cartola extends App.Domain.EntityBase implements ICartola {
+    export class Cartola extends app.domain.EntityBase implements ICartola {
         constructor(public Rut: string,
             public Periodo: string,
             public SaldoCaja: number,

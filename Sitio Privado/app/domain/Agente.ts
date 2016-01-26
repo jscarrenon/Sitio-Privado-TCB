@@ -1,4 +1,4 @@
-﻿module App.Domain {
+﻿module app.domain {
     export interface IAgente {
         Codigo: number;
         Nombre: string;
@@ -11,7 +11,7 @@
         Descriptor: string;
     }
 
-    export class Agente extends App.Domain.EntityBase implements IAgente {
+    export class Agente extends app.domain.EntityBase implements IAgente {
         constructor(public Codigo: number,
             public Nombre: string,
             public Sucursal: string,

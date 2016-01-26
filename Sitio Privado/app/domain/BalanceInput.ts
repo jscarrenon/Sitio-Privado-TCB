@@ -1,9 +1,9 @@
-﻿module App.Domain {
+﻿module app.domain {
     export interface IBalanceInput {
         rut: string;
     }
 
-    export class BalanceInput extends App.Domain.InputBase implements IBalanceInput {
+    export class BalanceInput extends app.domain.InputBase implements IBalanceInput {
         constructor(public rut: string) {
 
             super();

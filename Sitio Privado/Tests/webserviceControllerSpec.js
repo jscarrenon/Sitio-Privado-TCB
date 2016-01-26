@@ -7,7 +7,6 @@ angular.module("tannerPrivadoApp", ['ngRoute']);
 var Tests;
 (function (Tests) {
     describe("Tests unitarios controlador", function () {
-        var app = angular.module('tannerPrivadoApp');
         var $http;
         var $httpBackend;
         var controller;
@@ -17,7 +16,7 @@ var Tests;
             angular.mock.inject(function (_$http_, _$httpBackend_) {
                 $http = _$http_;
                 $httpBackend = _$httpBackend_;
-                controller = new App.Common.Controllers.WebserviceCtrl(constantService, dataService);
+                controller = new app.common.controllers.WebserviceCtrl(constantService, dataService);
             });
         });
         it("should runs tests", function () {

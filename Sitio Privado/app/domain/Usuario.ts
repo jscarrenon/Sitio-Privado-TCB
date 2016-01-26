@@ -1,4 +1,4 @@
-﻿module App.Domain {
+﻿module app.domain {
     export interface IUsuario {
         Autenticado: boolean;
         Nombres: string;
@@ -17,7 +17,7 @@
         CiudadPais: string;
     }
 
-    export class Usuario extends App.Domain.EntityBase implements IUsuario {
+    export class Usuario extends app.domain.EntityBase implements IUsuario {
         constructor(public Autenticado: boolean,
             public Nombres: string,
             public Apellidos: string,

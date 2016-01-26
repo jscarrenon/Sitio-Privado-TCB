@@ -1,67 +1,67 @@
-﻿module App.Common.Controllers {
+﻿module app.common.controllers {
 
     export interface IWebserviceViewModel {
-        agente: App.Domain.IAgente;
-        getAgente(input: App.Domain.IAgenteInput): void;
-        getFondosMutuos(input: App.Domain.IFondoMutuoInput): void;
+        agente: app.domain.IAgente;
+        getAgente(input: app.domain.IAgenteInput): void;
+        getFondosMutuos(input: app.domain.IFondoMutuoInput): void;
         getFondosMutuosTotal(): void;
-        categoria: App.Domain.ICategoria;
-        getCategoria(input: App.Domain.ICategoriaInput): void;
-        producto: App.Domain.IProducto;
-        getProducto(input: App.Domain.IProductoInput): void;
-        categorias: App.Domain.ICategoria[];
+        categoria: app.domain.ICategoria;
+        getCategoria(input: app.domain.ICategoriaInput): void;
+        producto: app.domain.IProducto;
+        getProducto(input: app.domain.IProductoInput): void;
+        categorias: app.domain.ICategoria[];
         getCategorias(): void;
         getProductos(): void;
-        categoriaCliente: App.Domain.ICategoria;
-        getCategoriaCliente(input: App.Domain.ICategoriaClienteInput): void;
-        balance: App.Domain.IBalance;
-        getBalance(input: App.Domain.IBalanceInput): void;
-        cartola: App.Domain.ICartola;
-        getCartola(input: App.Domain.ICartolaInput): void;
+        categoriaCliente: app.domain.ICategoria;
+        getCategoriaCliente(input: app.domain.ICategoriaClienteInput): void;
+        balance: app.domain.IBalance;
+        getBalance(input: app.domain.IBalanceInput): void;
+        cartola: app.domain.ICartola;
+        getCartola(input: app.domain.ICartolaInput): void;
     }
 
     export class WebserviceCtrl implements IWebserviceViewModel {
 
-        agente: App.Domain.IAgente;
-        agenteInput: App.Domain.IAgenteInput;
-        fondosMutuosRF: App.Domain.IFondoMutuo[];
-        fondosMutuosRV: App.Domain.IFondoMutuo[];
-        fondosMutuosInput: App.Domain.IFondoMutuoInput;
+        agente: app.domain.IAgente;
+        agenteInput: app.domain.IAgenteInput;
+        fondosMutuosRF: app.domain.IFondoMutuo[];
+        fondosMutuosRV: app.domain.IFondoMutuo[];
+        fondosMutuosInput: app.domain.IFondoMutuoInput;
         fondosMutuosRFTotal: number;
         fondosMutuosRVTotal: number;
-        categoria: App.Domain.ICategoria;
-        categoriaInput: App.Domain.ICategoriaInput;
-        producto: App.Domain.IProducto;
-        productoInput: App.Domain.IProductoInput;
-        categorias: App.Domain.ICategoria[];
-        productos: App.Domain.IProducto[];
-        categoriaCliente: App.Domain.ICategoria;
-        categoriaClienteInput: App.Domain.ICategoriaClienteInput;
-        balance: App.Domain.IBalance;
-        balanceInput: App.Domain.IBalanceInput;
-        cartola: App.Domain.ICartola;
-        cartolaInput: App.Domain.ICartolaInput;
+        categoria: app.domain.ICategoria;
+        categoriaInput: app.domain.ICategoriaInput;
+        producto: app.domain.IProducto;
+        productoInput: app.domain.IProductoInput;
+        categorias: app.domain.ICategoria[];
+        productos: app.domain.IProducto[];
+        categoriaCliente: app.domain.ICategoria;
+        categoriaClienteInput: app.domain.ICategoriaClienteInput;
+        balance: app.domain.IBalance;
+        balanceInput: app.domain.IBalanceInput;
+        cartola: app.domain.ICartola;
+        cartolaInput: app.domain.ICartolaInput;
 
         static $inject = ['constantService', 'dataService'];
-        constructor(private constantService: App.Common.Services.ConstantService,
-            private dataService: App.Common.Services.DataService) {
+        constructor(private constantService: app.common.services.ConstantService,
+            private dataService: app.common.services.DataService) {
 
 
             /*
             //Test de Agente
-            /*this.agenteInput = new App.Domain.AgenteInput("8411855-9", 31);
+            /*this.agenteInput = new app.domain.AgenteInput("8411855-9", 31);
             this.getAgente(this.agenteInput);
 
             //Test fondos mutuos
-            this.fondosMutuosInput = new App.Domain.FondoMutuoInput(7094569);
+            this.fondosMutuosInput = new app.domain.FondoMutuoInput(7094569);
             this.getFondosMutuos(this.fondosMutuosInput);
 
             //Test de Categoría
-            this.categoriaInput = new App.Domain.CategoriaInput(1);
+            this.categoriaInput = new app.domain.CategoriaInput(1);
             this.getCategoria(this.categoriaInput);
 
             //Test de Producto
-            this.productoInput = new App.Domain.ProductoInput(1);
+            this.productoInput = new app.domain.ProductoInput(1);
             this.getProducto(this.productoInput);
 
             //Test de Lista de Categorías
@@ -71,20 +71,20 @@
             this.getProductos();
 
             //Test de Categoría de Cliente
-            this.categoriaClienteInput = new App.Domain.CategoriaClienteInput(10862228);
+            this.categoriaClienteInput = new app.domain.CategoriaClienteInput(10862228);
             this.getCategoriaCliente(this.categoriaClienteInput);*/
         }
 
-        getAgente(input: App.Domain.IAgenteInput): void {
+        getAgente(input: app.domain.IAgenteInput): void {
             this.dataService.postWebService(this.constantService.apiAgenteURI + 'getSingle', input)
-                .then((result: App.Domain.IAgente) => {
+                .then((result: app.domain.IAgente) => {
                     this.agente = result;
                 });
         }
 
-        getFondosMutuos(input: App.Domain.IFondoMutuoInput): void {
+        getFondosMutuos(input: app.domain.IFondoMutuoInput): void {
             this.dataService.postWebService(this.constantService.apiFondosMutuosURI + 'getList', input)
-                .then((result: App.Domain.IFondoMutuo[]) => {
+                .then((result: app.domain.IFondoMutuo[]) => {
                     this.fondosMutuosRF = result["fondosMutuosRF"];
                     this.fondosMutuosRV = result["fondosMutuosRV"];
                     this.getFondosMutuosTotal();
@@ -105,63 +105,56 @@
 
         }
 
-        getCategoria(input: App.Domain.ICategoriaInput): void {
+        getCategoria(input: app.domain.ICategoriaInput): void {
             this.dataService.postWebService(this.constantService.apiCategoriaURI + 'getSingle', input)
-                .then((result: App.Domain.ICategoria) => {
+                .then((result: app.domain.ICategoria) => {
                     this.categoria = result;
                 });
         }
 
-        getProducto(input: App.Domain.IProductoInput): void {
+        getProducto(input: app.domain.IProductoInput): void {
             this.dataService.postWebService(this.constantService.apiProductoURI + 'getSingle', input)
-                .then((result: App.Domain.IProducto) => {
+                .then((result: app.domain.IProducto) => {
                     this.producto = result;
                 });
         }
 
         getCategorias(): void {
             this.dataService.get(this.constantService.apiCategoriaURI + 'getList')
-                .then((result: App.Domain.ICategoria[]) => {
+                .then((result: app.domain.ICategoria[]) => {
                     this.categorias = result;
             });
         }
 
         getProductos(): void {
             this.dataService.get(this.constantService.apiProductoURI + 'getList')
-                .then((result: App.Domain.IProducto[]) => {
+                .then((result: app.domain.IProducto[]) => {
                     this.productos = result;
                 });
         }
 
-        getCategoriaCliente(input: App.Domain.ICategoriaClienteInput): void {
+        getCategoriaCliente(input: app.domain.ICategoriaClienteInput): void {
             this.dataService.postWebService(this.constantService.apiCategoriaURI + 'getSingleCliente', input)
-                .then((result: App.Domain.ICategoria) => {
+                .then((result: app.domain.ICategoria) => {
                     this.categoriaCliente = result;
                 });
         }
 
-        getBalance(input: App.Domain.IBalanceInput): void {
+        getBalance(input: app.domain.IBalanceInput): void {
             this.dataService.postWebService(this.constantService.apiBalanceURI + 'getSingle', input)
-                .then((result: App.Domain.IBalance) => {
+                .then((result: app.domain.IBalance) => {
                     this.balance = result;
                 });
         }
 
-        getCartola(input: App.Domain.ICartolaInput): void {
+        getCartola(input: app.domain.ICartolaInput): void {
             this.dataService.postWebService(this.constantService.apiCartolaURI + 'getSingle', input)
-                .then((result: App.Domain.ICartola) => {
+                .then((result: app.domain.ICartola) => {
                     this.cartola = result;
                 });
-        }
-
-        private static _module: ng.IModule;
-        public static get module(): ng.IModule {
-            if (this._module) {
-                return this._module;
-            }
-            this._module = angular.module('webserviceCtrl', []);
-            this._module.controller('webserviceCtrl', WebserviceCtrl);
-            return this._module;
-        }
+        }                
     }
+
+    angular.module('tannerPrivadoApp')
+        .controller('WebserviceCtrl', WebserviceCtrl);
 }

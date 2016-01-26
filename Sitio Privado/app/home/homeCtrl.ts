@@ -1,4 +1,4 @@
-﻿module App.Home {
+﻿module app.home {
 
     interface IHomeViewModel {
     }
@@ -6,8 +6,8 @@
     class HomeCtrl implements IHomeViewModel {
 
         static $inject = ['constantService', 'dataService'];
-        constructor(private constantService: App.Common.Services.ConstantService,
-            private dataService: App.Common.Services.DataService) {
+        constructor(private constantService: app.common.services.ConstantService,
+            private dataService: app.common.services.DataService) {
         }
     }
     angular.module('tannerPrivadoApp')

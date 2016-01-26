@@ -1,13 +1,13 @@
-﻿module App.Common.Services {
+﻿module app.common.services {
 
     interface IAuth {
         autenticado: boolean;
-        usuario: App.Domain.IUsuario;
+        usuario: app.domain.IUsuario;
     }
 
     export class AuthService implements IAuth {
         autenticado: boolean;
-        usuario: App.Domain.IUsuario;
+        usuario: app.domain.IUsuario;
                 
         static $inject = ['constantService', 'dataService'];
         constructor(private constantService: ConstantService,
@@ -16,7 +16,7 @@
         }
 
         getUsuarioActual(): void {
-            this.dataService.getSingle(this.constantService.mvcHomeURI + 'GetUsuarioActual').then((result: App.Domain.IUsuario) => {
+            this.dataService.getSingle(this.constantService.mvcHomeURI + 'GetUsuarioActual').then((result: app.domain.IUsuario) => {
                 this.usuario = result;
                 if (this.usuario.Autenticado) {
                     this.autenticado = true;
@@ -26,15 +26,8 @@
                 }
             });
         }
-
-        private static _module: ng.IModule;
-        public static get module(): ng.IModule {
-            if (this._module) {
-                return this._module;
-            }
-            this._module = angular.module('authService', []);
-            this._module.service('authService', AuthService);
-            return this._module;
-        }
     }
+
+    angular.module('tannerPrivadoApp')
+        .service('authService', AuthService);
 }
