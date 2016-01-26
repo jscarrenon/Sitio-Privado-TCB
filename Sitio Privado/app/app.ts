@@ -1,4 +1,5 @@
-﻿module App {
+﻿//
+module App {
     export class TannerPrivadoMain {
         static createApp(angular: ng.IAngularStatic) {
             angular.module("app.tannerPrivado", [
