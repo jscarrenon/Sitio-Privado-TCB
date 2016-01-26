@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Sitio_Privado.DocumentosPendientesFirma;
+using Sitio_Privado.Extras;
 
 namespace Sitio_Privado.Models
 {
@@ -14,8 +15,8 @@ namespace Sitio_Privado.Models
     public class DocumentosFirmadosInput
     {
         public string rut { get; set; }
-        public string fechaIni { get; set; }
-        public string fechaFin { get; set; }
+        public string fechaIni { get; set; } //dd-mm-YYYY
+        public string fechaFin { get; set; } //dd-mm-YYYY
     }
 
     public class DocumentoLeidoInput
@@ -44,11 +45,11 @@ namespace Sitio_Privado.Models
             Producto = documento._producto;
             Tipo = documento._tipo;
             Folio = documento._folio;
-            FechaCreacion = documento._fechacre;
             Leido = documento._leido;
             Firmado = documento._firmado;
             Ruta = documento._ruta;
             Resultados = documento._results;
+            FechaCreacion = Converters.getFecha(documento._fechacre).ToString("dd MMM yyyy");
         }
     }
 
