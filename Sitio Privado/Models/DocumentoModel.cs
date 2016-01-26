@@ -45,8 +45,8 @@ namespace Sitio_Privado.Models
             Producto = documento._producto;
             Tipo = documento._tipo;
             Folio = documento._folio;
-            Leido = documento._leido;
-            Firmado = documento._firmado;
+            Leido = documento._leido.Trim();
+            Firmado = documento._firmado.Trim();
             Ruta = documento._ruta;
             Resultados = documento._results;
             FechaCreacion = Converters.getFecha(documento._fechacre).ToString("dd MMM yyyy");
