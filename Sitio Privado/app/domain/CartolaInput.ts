@@ -1,10 +1,10 @@
-﻿module app.domain {
+﻿module App.Domain {
     export interface ICartolaInput {
         _rut: string;
         _secuencia: number;
     }
 
-    export class CartolaInput extends app.domain.InputBase implements ICartolaInput {
+    export class CartolaInput extends App.Domain.InputBase implements ICartolaInput {
         constructor(public _rut: string,
             public _secuencia: number) {
 

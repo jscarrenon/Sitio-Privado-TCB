@@ -1,4 +1,4 @@
-﻿module app.common.services {
+﻿module App.Common.Services {
 
     interface IConstant {
         mvcHomeURI: string;
@@ -37,8 +37,15 @@
             this.apiCartolaURI = '/api/cartola/';
             this.apiDocumentoURI = '/api/documento/';
         }
-    }
 
-    angular.module('tannerPrivadoApp')
-        .service('constantService', ConstantService);
+        private static _module: ng.IModule;
+        public static get module(): ng.IModule {
+            if (this._module) {
+                return this._module;
+            }
+            this._module = angular.module('constantService', []);
+            this._module.service('constantService', ConstantService);
+            return this._module;
+        }
+    }
 }

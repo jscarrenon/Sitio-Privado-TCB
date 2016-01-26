@@ -1,9 +1,9 @@
-﻿module app.domain {
+﻿module App.Domain {
     export interface ICategoriaInput {
         ident_cat: number;
     }
 
-    export class CategoriaInput extends app.domain.InputBase implements ICategoriaInput {
+    export class CategoriaInput extends App.Domain.InputBase implements ICategoriaInput {
         constructor(public ident_cat: number) {
 
             super();

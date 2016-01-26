@@ -1,13 +1,30 @@
 ﻿{
-"Compile": {
+  "Compile": {
     "Mode": "External",
-    "Extensions": [".ts"],
-    "ExtensionsWithNoOutput": [".d.ts"]
-   },
+    "Extensions": [ ".ts" ],
+    "ExtensionsWithNoOutput": [ ".d.ts" ],
+    "UseSourceMaps": true
+  },
   "References": [
-    {"Includes": ["*/app/**/*.ts", "*/Scripts/**/*.ts"], "Excludes": ["*/Scripts/app/*.d.ts", "*/Scripts/**/*.ts"] }
+    { "Path": "../Scripts/extras/jquery-1.12.0.js" },
+    { "Path": "../bower_components/angular/angular.js" },
+    { "Path": "../bower_components/angular-mocks/angular-mocks.js" },
+    { "Path": "../bower_components/angular-route/angular-route.js" },
+    { "Path": "../app/", "Includes": [ "app.js" ] },
+    { "Path": "../app/", "Includes": [ "app.ts" ] },
+    { "Path": "../app/", "Includes": [ "mainCtrl.js" ] },
+    { "Path": "../app/", "Includes": [ "mainCtrl.ts" ] },
+    { "Path": "../app/", "Includes": [ "routeConfig.js" ] },
+    { "Path": "../app/", "Includes": [ "routeConfig.ts" ] },
+    { "Path": "../app/", "Includes": [ "*.ts" ] },
+    { "Path": "../app/common/controllers", "Includes": [ "*.ts" ] },
+    { "Path": "../app/common/services", "Includes": [ "*.ts" ] },
+    { "Path": "../app/common/typings", "Includes": [ "*.ts" ] },
+    { "Path": "../app/domain/", "Includes": [ "*.ts" ] },
+    { "Path": "../app/home/", "Includes": [ "*.ts" ] },
+    { "Path": "../app/informacion-financiera/", "Includes": [ "*.ts" ] },
+    { "Path": "../app/inversiones/", "Includes": [ "*.ts" ] },
+    { "Path": "../app/mis-inversiones/", "Includes": [ "*.ts" ] }
   ],
-  "Tests": [
-    { "Includes": ["*/Tests/*.ts"], "Excludes": ["*/Tests/*.d.ts"] }
-  ]
+  "Tests": [ {"Path": "." }, { "Includes": [ "*Spec.ts", "*Works.ts" ] } ]
 }

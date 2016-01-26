@@ -1,33 +1,33 @@
-﻿module app.misInversiones {
+﻿module App.MisInversiones {
 
     interface IMisInversionesDocumentosViewModel {
-        documentosPendientes: app.domain.IDocumento[];
-        getDocumentosPendientes(input: app.domain.IDocumentosPendientesInput): void;
-        documentosFirmados: app.domain.IDocumento[];
-        getDocumentosFirmados(input: app.domain.IDocumentosFirmadosInput): void;
+        documentosPendientes: App.Domain.IDocumento[];
+        getDocumentosPendientes(input: App.Domain.IDocumentosPendientesInput): void;
+        documentosFirmados: App.Domain.IDocumento[];
+        getDocumentosFirmados(input: App.Domain.IDocumentosFirmadosInput): void;
         fechaFirmadosInicio: Date;
         fechaFirmadosFin: Date;
-        verDocumento(documento: app.domain.IDocumento): void;
+        verDocumento(documento: App.Domain.IDocumento): void;
         fechaHoy: Date;
         actualizarDocumentosFirmados(): void;
     }
 
     class MisInversionesDocumentosCtrl extends MisInversionesCtrl implements IMisInversionesDocumentosViewModel {
 
-        documentosPendientes: app.domain.IDocumento[];
-        documentosPendientesInput: app.domain.IDocumentosPendientesInput;
-        documentosFirmados: app.domain.IDocumento[];
-        documentosFirmadosInput: app.domain.IDocumentosFirmadosInput;
+        documentosPendientes: App.Domain.IDocumento[];
+        documentosPendientesInput: App.Domain.IDocumentosPendientesInput;
+        documentosFirmados: App.Domain.IDocumento[];
+        documentosFirmadosInput: App.Domain.IDocumentosFirmadosInput;
         fechaFirmadosInicio: Date;
         fechaFirmadosFin: Date;
         fechaHoy: Date;
 
         static $inject = ['constantService', 'dataService', 'authService', 'extrasService', '$routeParams'];
-        constructor(constantService: app.common.services.ConstantService,
-            dataService: app.common.services.DataService,
-            authService: app.common.services.AuthService,
-            extrasService: app.common.services.ExtrasService,
-            $routeParams: app.misInversiones.IMisInversionesRouteParams) {
+        constructor(constantService: App.Common.Services.ConstantService,
+            dataService: App.Common.Services.DataService,
+            authService: App.Common.Services.AuthService,
+            extrasService: App.Common.Services.ExtrasService,
+            $routeParams: App.MisInversiones.IMisInversionesRouteParams) {
 
             super(constantService, dataService, authService, extrasService, $routeParams);
 
@@ -37,7 +37,7 @@
 
             this.fechaHoy = new Date();
 
-            this.documentosPendientesInput = new app.domain.DocumentosPendientesInput(this.extrasService.getRutParteEntera(this.authService.usuario.Rut));
+            this.documentosPendientesInput = new App.Domain.DocumentosPendientesInput(this.extrasService.getRutParteEntera(this.authService.usuario.Rut));
             this.getDocumentosPendientes(this.documentosPendientesInput);
 
             this.fechaFirmadosFin = new Date();
@@ -53,29 +53,29 @@
             this.templates[1] = "estado-documentos_firmados.html";
         }
 
-        getDocumentosPendientes(input: app.domain.IDocumentosPendientesInput): void {
+        getDocumentosPendientes(input: App.Domain.IDocumentosPendientesInput): void {
             this.dataService.postWebService(this.constantService.apiDocumentoURI + 'getListPendientes', input)
-                .then((result: app.domain.IDocumento[]) => {
+                .then((result: App.Domain.IDocumento[]) => {
                     this.documentosPendientes = result;
                 });
         }
 
-        getDocumentosFirmados(input: app.domain.IDocumentosFirmadosInput): void {
+        getDocumentosFirmados(input: App.Domain.IDocumentosFirmadosInput): void {
             this.dataService.postWebService(this.constantService.apiDocumentoURI + 'getListFirmados', input)
-                .then((result: app.domain.IDocumento[]) => {
+                .then((result: App.Domain.IDocumento[]) => {
                     this.documentosFirmados = result;
                 });
         }
 
-        verDocumento(documento: app.domain.IDocumento): void {
-            var documentoLeidoInput: app.domain.IDocumentoLeidoInput = new app.domain.DocumentoLeidoInput(this.extrasService.getRutParteEntera(this.authService.usuario.Rut), "mercado", documento.Codigo, documento.Folio);
+        verDocumento(documento: App.Domain.IDocumento): void {
+            var documentoLeidoInput: App.Domain.IDocumentoLeidoInput = new App.Domain.DocumentoLeidoInput(this.extrasService.getRutParteEntera(this.authService.usuario.Rut), "mercado", documento.Codigo, documento.Folio);
 
             //Abrir documento
             this.extrasService.abrirRuta(documento.Ruta);
 
             this.dataService.postWebService(this.constantService.apiDocumentoURI + 'setLeido', documentoLeidoInput)
-                .then((result: app.domain.IDocumentoLeidoResultado) => {
-                    var documentoLeidoResultado: app.domain.IDocumentoLeidoResultado = result;
+                .then((result: App.Domain.IDocumentoLeidoResultado) => {
+                    var documentoLeidoResultado: App.Domain.IDocumentoLeidoResultado = result;
                     if (result.Resultado == true) {
                         documento.Leido = "Leido"; // valor? -KUNDER
                     }
@@ -83,7 +83,7 @@
         }
 
         actualizarDocumentosFirmados(): void {
-            this.documentosFirmadosInput = new app.domain.DocumentosFirmadosInput(this.extrasService.getRutParteEntera(this.authService.usuario.Rut), this.getFechaFormato(this.fechaFirmadosInicio), this.getFechaFormato(this.fechaFirmadosFin));
+            this.documentosFirmadosInput = new App.Domain.DocumentosFirmadosInput(this.extrasService.getRutParteEntera(this.authService.usuario.Rut), this.getFechaFormato(this.fechaFirmadosInicio), this.getFechaFormato(this.fechaFirmadosFin));
             this.getDocumentosFirmados(this.documentosFirmadosInput);
         }
 

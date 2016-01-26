@@ -1,4 +1,4 @@
-﻿module app.misInversiones {
+﻿module App.MisInversiones {
 
     class MisInversionesCircularizacionCtrl extends MisInversionesCtrl {
 

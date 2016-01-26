@@ -1,4 +1,4 @@
-﻿module app.domain {
+﻿module App.Domain {
 
     export interface IProducto {
         Identificador: number;
@@ -6,7 +6,7 @@
         Categorias: Categoria[];
     }
 
-    export class Producto extends app.domain.EntityBase implements IProducto {
+    export class Producto extends App.Domain.EntityBase implements IProducto {
         constructor(public Identificador: number,
             public Descriptor: string,
             public Categorias: Categoria[]) {

@@ -1,61 +1,30 @@
-﻿/// <chutzpah_reference path="../Scripts/extras/jquery/jquery-1.12.0.js" >
-/// <chutzpah_reference path="../bower_components/angular/angular.js" >
-/// <chutzpah_reference path="../bower_components/angular-route/angular-route.js" >
-/// <chutzpah_reference path="../node_modules/angular-mocks/angular-mock.js" >
-
-/// <reference path="../Scripts/typings/jquery/jquery.d.ts" />
+﻿/// <reference path="../Scripts/typings/jquery/jquery.d.ts" />
 /// <reference path="../Scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../Scripts/typings/angularjs/angular-route.d.ts" />
 /// <reference path="../Scripts/typings/angularjs/angular-mocks.d.ts" />
-/// <reference path="../app/common/controllers/webserviceCtrl.ts" />
-/// <reference path="../app/app.ts" />
-/// <reference path="../app/domain/FondoMutuoInput.ts" />
-/// <reference path="../app/domain/FondoMutuo.ts" />
+/// <reference path="../Scripts/typings/jasmine/jasmine.d.ts" />
+angular.module("tannerPrivadoApp", ['ngRoute']);
 
-describe('When using webserviceController ', function () {
+namespace Tests{
+    describe("Tests unitarios controlador", () => {
+        var app = angular.module('tannerPrivadoApp');
+        var $http: angular.IHttpService;
+        var $httpBackend: angular.IHttpBackendService;
+        var controller: App.Common.Controllers.WebserviceCtrl;
+        var constantService: App.Common.Services.ConstantService;
+        var dataService: App.Common.Services.DataService;
 
-    //initialize Angular
-    beforeEach(angular.mock.module('tannerPrivadoApp'));
+        beforeEach(() => {
+            angular.mock.inject((_$http_: angular.IHttpService, _$httpBackend_: angular.IHttpBackendService) => {
+                $http = _$http_;
+                $httpBackend = _$httpBackend_;
+                controller = new App.Common.Controllers.WebserviceCtrl(constantService, dataService);
+            });
+        });
 
-    var fondoMutuoInput = { rut_cli: 123456789 };
-
-    var FondosMutuoArray = [
-        {
-            Descripcion: "Fondo A1",
-            Tipo: "Tipo fondo A clase 1",
-            CtaPisys: "235567",
-            ValorCuota: 101000,
-            SaldoCuota: 5004999,
-            Csbis: "S",
-            Renta: "RF",
-            Pesos: 123945
-        },
-        {
-            Descripcion: "Fondo F4",
-            Tipo: "Tipo fondo F clase 4",
-            CtaPisys: "235567",
-            ValorCuota: 456788,
-            SaldoCuota: 2346,
-            Csbis: "S",
-            Renta: "RV",
-            Pesos: 785233
-        },
-        {
-            Descripcion: "Fondo C5",
-            Tipo: "Tipo fondo C clase 5",
-            CtaPisys: "235567",
-            ValorCuota: 12345,
-            SaldoCuota: 3468,
-            Csbis: "N",
-            Renta: "RF",
-            Pesos: 34567
-        }
-    ];
-    
-    //parse out the scope for use in our unit tests.
-    var scope;
-    beforeEach(inject(['constantService', 'dataService']));
-
-    it('initial value is 5', function () {
-        expect(0).toBe(0);
+        it("should runs tests", () => {
+            expect(0).toBe(0);
+        });
     });
-});
+}
+    

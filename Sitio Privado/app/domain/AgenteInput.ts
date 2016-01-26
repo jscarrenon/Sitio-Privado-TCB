@@ -1,10 +1,10 @@
-﻿module app.domain {
+﻿module App.Domain {
     export interface IAgenteInput {
         _rut: string;
         _sec: number;
     }
 
-    export class AgenteInput extends app.domain.InputBase implements IAgenteInput {
+    export class AgenteInput extends App.Domain.InputBase implements IAgenteInput {
         constructor(public _rut: string,
             public _sec: number) {
 

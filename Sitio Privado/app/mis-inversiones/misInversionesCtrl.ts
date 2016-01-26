@@ -1,4 +1,4 @@
-﻿module app.misInversiones {
+﻿module App.MisInversiones {
 
     export interface IMisInversionesRouteParams extends ng.route.IRouteParamsService {
         seccion?: string;
@@ -19,10 +19,10 @@
         seccionId: number;
 
         static $inject = ['constantService', 'dataService', 'authService', 'extrasService', '$routeParams'];
-        constructor(protected constantService: app.common.services.ConstantService,
-            protected dataService: app.common.services.DataService,
-            protected authService: app.common.services.AuthService,
-            protected extrasService: app.common.services.ExtrasService,
+        constructor(protected constantService: App.Common.Services.ConstantService,
+            protected dataService: App.Common.Services.DataService,
+            protected authService: App.Common.Services.AuthService,
+            protected extrasService: App.Common.Services.ExtrasService,
             protected $routeParams: IMisInversionesRouteParams) {
 
             this.setTemplates();

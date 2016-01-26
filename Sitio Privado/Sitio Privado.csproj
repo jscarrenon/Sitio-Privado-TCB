@@ -275,7 +275,6 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CartolaController.cs" />
     <Compile Include="Controllers\BalanceController.cs" />
-    <Compile Include="Controllers\JasmineController.cs" />
     <Compile Include="Controllers\DocumentoController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\CategoriaController.cs" />
@@ -363,14 +362,26 @@
     <Content Include="app\mis-inversiones\fondos-mutuos.html" />
     <Content Include="app\mis-inversiones\index.html" />
     <Content Include="app\mis-inversiones\nacionales.html" />
-    <Content Include="Content\jasmine\jasmine.css" />
-    <Content Include="Content\jasmine\jasmine_favicon.png" />
+    <Content Include="bower_components\angular-mocks\angular-mocks.js" />
+    <Content Include="bower_components\angular-mocks\ngAnimateMock.js" />
+    <Content Include="bower_components\angular-mocks\ngMock.js" />
+    <Content Include="bower_components\angular-mocks\ngMockE2E.js" />
+    <Content Include="bower_components\angular-route\angular-route.js" />
+    <Content Include="bower_components\angular-route\angular-route.min.js" />
+    <Content Include="bower_components\angular-route\index.js" />
+    <Content Include="bower_components\angular\angular-csp.css" />
+    <Content Include="bower_components\angular\angular.js" />
+    <Content Include="bower_components\angular\angular.min.js" />
+    <Content Include="bower_components\angular\index.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="gulpfile.js" />
     <Content Include="package.json" />
     <Content Include=".bowerrc" />
     <Content Include="bower.json" />
+    <TypeScriptCompile Include="app\mainCtrl.ts" />
+    <TypeScriptCompile Include="app\routeConfig.ts" />
+    <TypeScriptCompile Include="Tests\test.ts" />
     <TypeScriptCompile Include="Tests\webserviceControllerSpec.ts" />
     <TypeScriptCompile Include="Tests\jasmineWorks.ts" />
     <Content Include="Web.config">
@@ -463,20 +474,25 @@
     <Content Include="Resources\img\prod_renta-fija-inter.jpg" />
     <Content Include="Resources\img\prod_renta-variable-internacional.jpg" />
     <Content Include="Resources\img\prod_renta-variable-nacional.jpg" />
-    <Content Include="Scripts\extras\index.js" />
     <Content Include="Scripts\extras\jquery-1.12.0.js" />
     <Content Include="Scripts\extras\jquery.sticky.js" />
     <Content Include="Scripts\extras\uglipop.min.js" />
-    <Content Include="Scripts\jasmine-samples\Player.js" />
-    <Content Include="Scripts\jasmine-samples\PlayerSpec.js" />
-    <Content Include="Scripts\jasmine-samples\Song.js" />
-    <Content Include="Scripts\jasmine-samples\SpecHelper.js" />
-    <Content Include="Scripts\jasmine\boot.js" />
-    <Content Include="Scripts\jasmine\console.js" />
-    <Content Include="Scripts\jasmine\jasmine-html.js" />
-    <Content Include="Scripts\jasmine\jasmine.js" />
     <Content Include="Styles\slicknav.css" />
-    <Content Include="app\chutzpah.json" />
+    <Content Include="bower_components\angular-mocks\.bower.json" />
+    <Content Include="bower_components\angular-mocks\bower.json" />
+    <Content Include="bower_components\angular-mocks\package.json" />
+    <Content Include="bower_components\angular-mocks\README.md" />
+    <Content Include="bower_components\angular-route\.bower.json" />
+    <Content Include="bower_components\angular-route\angular-route.min.js.map" />
+    <Content Include="bower_components\angular-route\bower.json" />
+    <Content Include="bower_components\angular-route\package.json" />
+    <Content Include="bower_components\angular-route\README.md" />
+    <Content Include="bower_components\angular\.bower.json" />
+    <Content Include="bower_components\angular\angular.min.js.gzip" />
+    <Content Include="bower_components\angular\angular.min.js.map" />
+    <Content Include="bower_components\angular\bower.json" />
+    <Content Include="bower_components\angular\package.json" />
+    <Content Include="bower_components\angular\README.md" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -487,7 +503,6 @@
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\Jasmine\SpecRunner.cshtml" />
     <None Include="Web References\CartolaResumida\tann_cartola_resumida.wsdl" />
     <Content Include="Web References\CartolaResumida\_cartola.datasource">
       <DependentUpon>Reference.map</DependentUpon>

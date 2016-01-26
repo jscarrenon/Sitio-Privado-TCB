@@ -1,4 +1,4 @@
-﻿module app.domain {
+﻿module App.Domain {
     export interface IEntity { }
 
     export class EntityBase implements IEntity {

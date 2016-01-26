@@ -1,4 +1,4 @@
-﻿module app.common.services {
+﻿module App.Common.Services {
 
     interface IExtras {
         getRutParteEntera(rut: string): string;
@@ -6,8 +6,8 @@
     }
 
     export class ExtrasService implements IExtras {
-    
-        static $inject = ['$window','$filter'];
+
+        static $inject = ['$window', '$filter'];
         constructor(private $window: ng.IWindowService,
             private $filter: ng.IFilterDate) {
         }
@@ -26,8 +26,15 @@
         abrirRuta(ruta: string): void {
             this.$window.open(ruta);
         }
-    }
 
-    angular.module('tannerPrivadoApp')
-        .service('extrasService', ExtrasService);
+        private static _module: ng.IModule;
+        public static get module(): ng.IModule {
+            if (this._module) {
+                return this._module;
+            }
+            this._module = angular.module('extrasService', []);
+            this._module.service('extrasService', ExtrasService);
+            return this._module;
+        }
+    }
 }

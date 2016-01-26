@@ -1,4 +1,4 @@
-﻿module app.domain {
+﻿module App.Domain {
     export interface IFondoMutuo {
         Descripcion: string;
         Tipo: string;
@@ -10,7 +10,7 @@
         Pesos: number;
     }
     
-    export class FondoMutuo extends app.domain.EntityBase implements IFondoMutuo {
+    export class FondoMutuo extends App.Domain.EntityBase implements IFondoMutuo {
         constructor(public Descripcion: string,
             public Tipo: string,
             public CtaPisys: string,

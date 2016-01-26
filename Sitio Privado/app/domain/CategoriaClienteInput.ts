@@ -1,9 +1,9 @@
-﻿module app.domain {
+﻿module App.Domain {
     export interface ICategoriaClienteInput {
         rut_cli: number;
     }
 
-    export class CategoriaClienteInput extends app.domain.InputBase implements ICategoriaClienteInput {
+    export class CategoriaClienteInput extends App.Domain.InputBase implements ICategoriaClienteInput {
         constructor(public rut_cli: number) {
 
             super();

@@ -1,4 +1,4 @@
-﻿module app.informacionFinanciera {
+﻿module App.informacionFinanciera {
 
     interface IInformacionFinancieraViewModel {
         templates: string[];
@@ -15,11 +15,11 @@
         seccionURI: string;
         seccionId: number;
 
-        container: app.domain.AzureFolder[];
+        container: App.Domain.AzureFolder[];
 
         static $inject = ['constantService', 'dataService'];
-        constructor(private constantService: app.common.services.ConstantService,
-            private dataService: app.common.services.DataService) {
+        constructor(private constantService: App.Common.Services.ConstantService,
+            private dataService: App.Common.Services.DataService) {
 
             this.setTemplates();
             this.seccionId = 0;
@@ -28,12 +28,12 @@
             this.container = [];
 
             /*var blobs = [];
-            blobs.push(new app.domain.AzureBlob("nuevo archivo de prueba con nombre largo", ""));
-            blobs.push(new app.domain.AzureBlob("otro archivo", ""));
-            blobs.push(new app.domain.AzureBlob("tercero", ""));
+            blobs.push(new App.Domain.AzureBlob("nuevo archivo de prueba con nombre largo", ""));
+            blobs.push(new App.Domain.AzureBlob("otro archivo", ""));
+            blobs.push(new App.Domain.AzureBlob("tercero", ""));
             
-            this.container.push(new app.domain.AzureContainer("Hola", blobs));
-            this.container.push(new app.domain.AzureContainer("Chao", null));*/
+            this.container.push(new App.Domain.AzureContainer("Hola", blobs));
+            this.container.push(new App.Domain.AzureContainer("Chao", null));*/
 
             //Timeout por error de script slicknav (a.mobileNav.on)
             /*setTimeout(function () {
@@ -58,7 +58,7 @@
 
         getContainer(input: string): void {
             this.dataService.get(this.constantService.apiBlobsURI + 'getContainer?name=' + input)
-                .then((result: app.domain.AzureFolder[]) => { this.container = result; });
+                .then((result: App.Domain.AzureFolder[]) => { this.container = result; });
         }
 
         setTemplates(): void {

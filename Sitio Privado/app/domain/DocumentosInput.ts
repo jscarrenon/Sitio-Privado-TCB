@@ -1,9 +1,9 @@
-﻿module app.domain {
+﻿module App.Domain {
     export interface IDocumentosPendientesInput {
         rut: string;
     }
 
-    export class DocumentosPendientesInput extends app.domain.InputBase implements IDocumentosPendientesInput {
+    export class DocumentosPendientesInput extends App.Domain.InputBase implements IDocumentosPendientesInput {
         constructor(public rut: string) {
 
             super();
@@ -18,7 +18,7 @@
         fechaFin: string;
     }
 
-    export class DocumentosFirmadosInput extends app.domain.InputBase implements IDocumentosFirmadosInput {
+    export class DocumentosFirmadosInput extends App.Domain.InputBase implements IDocumentosFirmadosInput {
         constructor(public rut: string,
             public fechaIni: string,
             public fechaFin: string) {
@@ -38,7 +38,7 @@
         folio: string;
     }
 
-    export class DocumentoLeidoInput extends app.domain.InputBase implements IDocumentoLeidoInput {
+    export class DocumentoLeidoInput extends App.Domain.InputBase implements IDocumentoLeidoInput {
         constructor(public rut: string,
             public mercado: string,
             public codigo: string,

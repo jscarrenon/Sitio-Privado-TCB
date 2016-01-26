@@ -1,9 +1,9 @@
-﻿module app.domain {
+﻿module App.Domain {
     export interface IProductoInput {
         ident_prd: number;
     }
 
-    export class ProductoInput extends app.domain.InputBase implements IProductoInput {
+    export class ProductoInput extends App.Domain.InputBase implements IProductoInput {
         constructor(public ident_prd: number) {
 
             super();

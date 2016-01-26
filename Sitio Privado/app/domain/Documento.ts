@@ -1,4 +1,4 @@
-﻿module app.domain {
+﻿module App.Domain {
     export interface IDocumento {
         Codigo: string;
         Producto: string;
@@ -11,7 +11,7 @@
         Resultados: string;
     }
 
-    export class Documento extends app.domain.EntityBase implements IDocumento {
+    export class Documento extends App.Domain.EntityBase implements IDocumento {
         constructor(public Codigo: string,
             public Producto: string,
             public Tipo: string,

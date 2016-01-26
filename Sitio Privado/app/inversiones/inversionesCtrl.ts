@@ -1,9 +1,9 @@
-﻿module app.inversiones {
+﻿module App.inversiones {
 
     class InversionesCtrl {
         static $inject = ['constantService', 'dataService'];
-        constructor(private constantService: app.common.services.ConstantService,
-            private dataService: app.common.services.DataService) {
+        constructor(private constantService: App.Common.Services.ConstantService,
+            private dataService: App.Common.Services.DataService) {
         }
     }
     angular.module('tannerPrivadoApp')
