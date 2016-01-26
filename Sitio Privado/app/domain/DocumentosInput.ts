@@ -33,23 +33,17 @@
 
     export interface IDocumentoLeidoInput {
         rut: string;
-        mercado: string;
         codigo: string;
-        folio: string;
     }
 
     export class DocumentoLeidoInput extends App.Domain.InputBase implements IDocumentoLeidoInput {
         constructor(public rut: string,
-            public mercado: string,
-            public codigo: string,
-            public folio: string) {
+            public codigo: string) {
 
             super();
 
             this.rut = rut;
-            this.mercado = mercado;
             this.codigo = codigo;
-            this.folio = folio;
         }
     }
 }

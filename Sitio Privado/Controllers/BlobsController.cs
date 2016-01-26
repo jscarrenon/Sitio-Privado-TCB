@@ -20,27 +20,6 @@ namespace Sitio_Privado.Controllers
         private AzureStorageHelper azureStorageHelper = new AzureStorageHelper();
 
         #region Actions
-        // GET: Blobs
-       /* public ActionResult Index(string container)
-        {
-            List<Blob> blobs = new List<Blob>();
-
-            foreach (var item in azureStorageHelper.GetBlobsFromContainer(container)) {
-                //Get the blob.
-                CloudBlockBlob blockBlob = new CloudBlockBlob(new Uri(item.Uri.AbsoluteUri));
-
-                //Construct the URI for accessing the blob through the controller.
-                var uriString = Url.Action(GetBlobAction, BlobsControllerName,
-                        routeValues: new { container = item.Container.Name, fileName = blockBlob.Name },
-                        protocol: Request.Url.Scheme);
-
-                Blob blob = new Blob { Name = blockBlob.Name, Url = uriString };
-                blobs.Add(blob);
-            }
-
-            return View(blobs);
-        }*/
-
         public IHttpActionResult GetBlob(string container, string fileName) {
             var blob = azureStorageHelper.GetBlob(container, fileName);
 

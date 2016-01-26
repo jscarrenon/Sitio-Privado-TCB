@@ -82,5 +82,15 @@ namespace Sitio_Privado.Properties {
                 return ((string)(this["Sitio_Privado_CartolaResumida_tann_cartola_resumida"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://172.17.1.12:8088/tann_circularizacion.asmx")]
+        public string Sitio_Privado_CircularizacionCustodia_tann_circularizacion {
+            get {
+                return ((string)(this["Sitio_Privado_CircularizacionCustodia_tann_circularizacion"]));
+            }
+        }
     }
 }

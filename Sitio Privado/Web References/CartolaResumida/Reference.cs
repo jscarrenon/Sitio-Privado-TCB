@@ -31,8 +31,6 @@ namespace Sitio_Privado.CartolaResumida {
         
         private System.Threading.SendOrPostCallback cns_total_generalOperationCompleted;
         
-        private System.Threading.SendOrPostCallback cns_consulta_cuentaspisysOperationCompleted;
-        
         private bool useDefaultCredentialsSetExplicitly;
         
         /// <remarks/>
@@ -75,9 +73,6 @@ namespace Sitio_Privado.CartolaResumida {
         public event cns_total_generalCompletedEventHandler cns_total_generalCompleted;
         
         /// <remarks/>
-        public event cns_consulta_cuentaspisysCompletedEventHandler cns_consulta_cuentaspisysCompleted;
-        
-        /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://servicios.tanner.cl/cartolaresumida/cns_total_general", RequestNamespace="http://servicios.tanner.cl/cartolaresumida", ResponseNamespace="http://servicios.tanner.cl/cartolaresumida", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         public _cartola cns_total_general(string _rut, short _secuencia) {
             object[] results = this.Invoke("cns_total_general", new object[] {
@@ -105,35 +100,6 @@ namespace Sitio_Privado.CartolaResumida {
             if ((this.cns_total_generalCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.cns_total_generalCompleted(this, new cns_total_generalCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://servicios.tanner.cl/cartolaresumida/cns_consulta_cuentaspisys", RequestNamespace="http://servicios.tanner.cl/cartolaresumida", ResponseNamespace="http://servicios.tanner.cl/cartolaresumida", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public _cuentaspisys cns_consulta_cuentaspisys(string _rut) {
-            object[] results = this.Invoke("cns_consulta_cuentaspisys", new object[] {
-                        _rut});
-            return ((_cuentaspisys)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void cns_consulta_cuentaspisysAsync(string _rut) {
-            this.cns_consulta_cuentaspisysAsync(_rut, null);
-        }
-        
-        /// <remarks/>
-        public void cns_consulta_cuentaspisysAsync(string _rut, object userState) {
-            if ((this.cns_consulta_cuentaspisysOperationCompleted == null)) {
-                this.cns_consulta_cuentaspisysOperationCompleted = new System.Threading.SendOrPostCallback(this.Oncns_consulta_cuentaspisysOperationCompleted);
-            }
-            this.InvokeAsync("cns_consulta_cuentaspisys", new object[] {
-                        _rut}, this.cns_consulta_cuentaspisysOperationCompleted, userState);
-        }
-        
-        private void Oncns_consulta_cuentaspisysOperationCompleted(object arg) {
-            if ((this.cns_consulta_cuentaspisysCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.cns_consulta_cuentaspisysCompleted(this, new cns_consulta_cuentaspisysCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -322,39 +288,6 @@ namespace Sitio_Privado.CartolaResumida {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://servicios.tanner.cl/cartolaresumida")]
-    public partial class _cuentaspisys {
-        
-        private string rutField;
-        
-        private string[] numcuentaField;
-        
-        /// <remarks/>
-        public string rut {
-            get {
-                return this.rutField;
-            }
-            set {
-                this.rutField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string[] numcuenta {
-            get {
-                return this.numcuentaField;
-            }
-            set {
-                this.numcuentaField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
     public delegate void cns_total_generalCompletedEventHandler(object sender, cns_total_generalCompletedEventArgs e);
     
@@ -376,32 +309,6 @@ namespace Sitio_Privado.CartolaResumida {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((_cartola)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
-    public delegate void cns_consulta_cuentaspisysCompletedEventHandler(object sender, cns_consulta_cuentaspisysCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class cns_consulta_cuentaspisysCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal cns_consulta_cuentaspisysCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public _cuentaspisys Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((_cuentaspisys)(this.results[0]));
             }
         }
     }

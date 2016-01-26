@@ -1,12 +1,12 @@
-﻿module App.Common.Services {
+﻿module app.common.services {
 
     interface IDataService {
-        get(resource: string): ng.IPromise<App.Domain.EntityBase[]>;
-        getSingle(resource: string): ng.IPromise<App.Domain.EntityBase>;
-        add(resource: string, entity: App.Domain.IEntity): ng.IPromise<App.Domain.EntityBase>;
-        update(resource: string, entity: App.Domain.IEntity): ng.IPromise<App.Domain.EntityBase>;
+        get(resource: string): ng.IPromise<app.domain.EntityBase[]>;
+        getSingle(resource: string): ng.IPromise<app.domain.EntityBase>;
+        add(resource: string, entity: app.domain.IEntity): ng.IPromise<app.domain.EntityBase>;
+        update(resource: string, entity: app.domain.IEntity): ng.IPromise<app.domain.EntityBase>;
         remove(resource: string): ng.IPromise<any>;
-        postWebService(resource: string, input: App.Domain.InputBase): ng.IPromise<App.Domain.EntityBase>; //Recibe input para llamado webservice
+        postWebService(resource: string, input: app.domain.InputBase): ng.IPromise<app.domain.EntityBase>; //Recibe input para llamado webservice
     }
 
     export class DataService implements IDataService {
@@ -20,8 +20,7 @@
             this.qService = $q;
         }
 
-        get(resource: string): ng.IPromise<App.Domain.EntityBase[]> {
-            console.log(resource);
+        get(resource: string): ng.IPromise<app.domain.EntityBase[]> {
             var self = this;
 
             var deferred = self.qService.defer();
@@ -35,7 +34,7 @@
             return deferred.promise;
         }
 
-        getSingle(resource: string): ng.IPromise<App.Domain.EntityBase> {
+        getSingle(resource: string): ng.IPromise<app.domain.EntityBase> {
             var self = this;
 
             var deferred = self.qService.defer();
@@ -49,7 +48,7 @@
             return deferred.promise;
         }
 
-        add(resource: string, entity: App.Domain.IEntity): ng.IPromise<App.Domain.EntityBase> {
+        add(resource: string, entity: app.domain.IEntity): ng.IPromise<app.domain.EntityBase> {
             var self = this;
             var deferred = self.qService.defer();
 
@@ -63,7 +62,7 @@
             return deferred.promise;
         }
 
-        update(resource: string, entity: App.Domain.IEntity): ng.IPromise<App.Domain.EntityBase> {
+        update(resource: string, entity: app.domain.IEntity): ng.IPromise<app.domain.EntityBase> {
             var self = this;
             var deferred = self.qService.defer();
 
@@ -92,7 +91,7 @@
             return deferred.promise;
         }
 
-        postWebService(resource: string, input: App.Domain.InputBase): ng.IPromise<App.Domain.EntityBase> {
+        postWebService(resource: string, input: app.domain.InputBase): ng.IPromise<app.domain.EntityBase> {
             var self = this;
             var deferred = self.qService.defer();
 
@@ -105,15 +104,8 @@
 
             return deferred.promise;
         }
-
-        private static _module: ng.IModule;
-        public static get module(): ng.IModule {
-            if (this._module) {
-                return this._module;
-            }
-            this._module = angular.module('dataService', []);
-            this._module.service('dataService', DataService);
-            return this._module;
-        }
     }
+
+    angular.module('tannerPrivadoApp')
+        .service('dataService', DataService);
 } 

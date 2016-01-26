@@ -37,6 +37,8 @@ namespace Sitio_Privado.DocumentosPendientesFirma {
         
         private System.Threading.SendOrPostCallback cns_documento_leidoOperationCompleted;
         
+        private System.Threading.SendOrPostCallback cns_firmar_documentoOperationCompleted;
+        
         private bool useDefaultCredentialsSetExplicitly;
         
         /// <remarks/>
@@ -86,6 +88,9 @@ namespace Sitio_Privado.DocumentosPendientesFirma {
         
         /// <remarks/>
         public event cns_documento_leidoCompletedEventHandler cns_documento_leidoCompleted;
+        
+        /// <remarks/>
+        public event cns_firmar_documentoCompletedEventHandler cns_firmar_documentoCompleted;
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://servicios.tanner.cl/documentos/cns_operacion_pendiente", RequestNamespace="http://servicios.tanner.cl/documentos", ResponseNamespace="http://servicios.tanner.cl/documentos", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -180,36 +185,63 @@ namespace Sitio_Privado.DocumentosPendientesFirma {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://servicios.tanner.cl/documentos/cns_documento_leido", RequestNamespace="http://servicios.tanner.cl/documentos", ResponseNamespace="http://servicios.tanner.cl/documentos", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public bool cns_documento_leido(string rut, string mercado, string codigo, string folio) {
+        public bool cns_documento_leido(string rut, string codigo) {
             object[] results = this.Invoke("cns_documento_leido", new object[] {
                         rut,
-                        mercado,
-                        codigo,
-                        folio});
+                        codigo});
             return ((bool)(results[0]));
         }
         
         /// <remarks/>
-        public void cns_documento_leidoAsync(string rut, string mercado, string codigo, string folio) {
-            this.cns_documento_leidoAsync(rut, mercado, codigo, folio, null);
+        public void cns_documento_leidoAsync(string rut, string codigo) {
+            this.cns_documento_leidoAsync(rut, codigo, null);
         }
         
         /// <remarks/>
-        public void cns_documento_leidoAsync(string rut, string mercado, string codigo, string folio, object userState) {
+        public void cns_documento_leidoAsync(string rut, string codigo, object userState) {
             if ((this.cns_documento_leidoOperationCompleted == null)) {
                 this.cns_documento_leidoOperationCompleted = new System.Threading.SendOrPostCallback(this.Oncns_documento_leidoOperationCompleted);
             }
             this.InvokeAsync("cns_documento_leido", new object[] {
                         rut,
-                        mercado,
-                        codigo,
-                        folio}, this.cns_documento_leidoOperationCompleted, userState);
+                        codigo}, this.cns_documento_leidoOperationCompleted, userState);
         }
         
         private void Oncns_documento_leidoOperationCompleted(object arg) {
             if ((this.cns_documento_leidoCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.cns_documento_leidoCompleted(this, new cns_documento_leidoCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://servicios.tanner.cl/documentos/cns_firmar_documento", RequestNamespace="http://servicios.tanner.cl/documentos", ResponseNamespace="http://servicios.tanner.cl/documentos", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public _operacion[] cns_firmar_documento(string rut, string codigo) {
+            object[] results = this.Invoke("cns_firmar_documento", new object[] {
+                        rut,
+                        codigo});
+            return ((_operacion[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void cns_firmar_documentoAsync(string rut, string codigo) {
+            this.cns_firmar_documentoAsync(rut, codigo, null);
+        }
+        
+        /// <remarks/>
+        public void cns_firmar_documentoAsync(string rut, string codigo, object userState) {
+            if ((this.cns_firmar_documentoOperationCompleted == null)) {
+                this.cns_firmar_documentoOperationCompleted = new System.Threading.SendOrPostCallback(this.Oncns_firmar_documentoOperationCompleted);
+            }
+            this.InvokeAsync("cns_firmar_documento", new object[] {
+                        rut,
+                        codigo}, this.cns_firmar_documentoOperationCompleted, userState);
+        }
+        
+        private void Oncns_firmar_documentoOperationCompleted(object arg) {
+            if ((this.cns_firmar_documentoCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.cns_firmar_documentoCompleted(this, new cns_firmar_documentoCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -255,6 +287,8 @@ namespace Sitio_Privado.DocumentosPendientesFirma {
         private string _firmadoField;
         
         private string _rutaField;
+        
+        private string _nombrecliField;
         
         private string _resultsField;
         
@@ -335,6 +369,16 @@ namespace Sitio_Privado.DocumentosPendientesFirma {
             }
             set {
                 this._rutaField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string _nombrecli {
+            get {
+                return this._nombrecliField;
+            }
+            set {
+                this._nombrecliField = value;
             }
         }
         
@@ -449,6 +493,32 @@ namespace Sitio_Privado.DocumentosPendientesFirma {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    public delegate void cns_firmar_documentoCompletedEventHandler(object sender, cns_firmar_documentoCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class cns_firmar_documentoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal cns_firmar_documentoCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public _operacion[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((_operacion[])(this.results[0]));
             }
         }
     }

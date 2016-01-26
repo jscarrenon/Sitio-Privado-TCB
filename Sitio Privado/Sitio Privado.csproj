@@ -241,6 +241,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Extras\Converters.cs" />
     <Compile Include="Helpers\AzureStorageHelper.cs" />
     <Compile Include="Controllers\BlobsController.cs" />
     <Compile Include="Controllers\ContainersController.cs" />
@@ -289,8 +290,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AzureFolder.cs" />
-    <Compile Include="Models\Blob.cs" />
-    <Compile Include="Models\Container.cs" />
+    <Compile Include="Models\AzureBlob.cs" />
     <Compile Include="Helpers\GraphApiResponseInfo.cs" />
     <Compile Include="Models\DocumentoModel.cs" />
     <Compile Include="Models\CartolaModel.cs" />
@@ -323,6 +323,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.map</DependentUpon>
     </Compile>
+    <Compile Include="Web References\CircularizacionCustodia\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
     <Compile Include="Web References\ConsultaSaldosFondosMutuos\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -348,8 +353,13 @@
     <Content Include="app\common\templates\footer.html" />
     <Content Include="app\home\index.html" />
     <Content Include="app\home\mis-datos.html" />
+    <Content Include="app\informacion-financiera\comite-regulacion.html" />
+    <Content Include="app\informacion-financiera\indices-liquidez.html" />
+    <Content Include="app\informacion-financiera\servicios-custodia.html" />
+    <Content Include="app\informacion-financiera\documentos-normativos.html" />
     <Content Include="app\informacion-financiera\estatutos.html" />
     <Content Include="app\informacion-financiera\index.html" />
+    <Content Include="app\informacion-financiera\otros-documentos.html" />
     <Content Include="app\inversiones\index.html" />
     <Content Include="app\mis-inversiones\circularizacion.html" />
     <Content Include="app\mis-inversiones\circularizacion_anterior.html" />
@@ -379,11 +389,16 @@
     <Content Include="package.json" />
     <Content Include=".bowerrc" />
     <Content Include="bower.json" />
-    <TypeScriptCompile Include="app\mainCtrl.ts" />
-    <TypeScriptCompile Include="app\routeConfig.ts" />
-    <TypeScriptCompile Include="Tests\test.ts" />
     <TypeScriptCompile Include="Tests\webserviceControllerSpec.ts" />
     <TypeScriptCompile Include="Tests\jasmineWorks.ts" />
+    <Content Include="Web References\CircularizacionCustodia\archivocli.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <Content Include="Web References\CircularizacionCustodia\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </Content>
+    <None Include="Web References\CircularizacionCustodia\tann_circularizacion.disco" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -498,11 +513,10 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <Content Include="Tests\chutzpah.json" />
-    <None Include="Tests\_references.js" />
-    <Content Include="Web References\CartolaResumida\Reference.map">
+    <None Include="Web References\CartolaResumida\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
-    </Content>
+    </None>
     <None Include="Web References\CartolaResumida\tann_cartola_resumida.wsdl" />
     <Content Include="Web References\CartolaResumida\_cartola.datasource">
       <DependentUpon>Reference.map</DependentUpon>
@@ -515,6 +529,7 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <None Include="Web References\CategoriaInversionista\tann_catsvc.disco" />
+    <None Include="Web References\CircularizacionCustodia\tann_circularizacion.wsdl" />
     <None Include="Web References\ConsultaSaldosFondosMutuos\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -524,10 +539,10 @@
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
     <None Include="Web References\ConsultaSaldosFondosMutuos\tann_fondos_mutuos.disco" />
-    <Content Include="Web References\DocumentosPendientesFirma\Reference.map">
+    <None Include="Web References\DocumentosPendientesFirma\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
-    </Content>
+    </None>
     <None Include="Web References\DocumentosPendientesFirma\tann_documentos.wsdl" />
     <Content Include="Web References\DocumentosPendientesFirma\_operacion.datasource">
       <DependentUpon>Reference.map</DependentUpon>
@@ -580,7 +595,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\App\" />
-    <Folder Include="Views\FondoMutuo\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -608,8 +622,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Project_Readme.html" />
-    <Content Include="Views\Containers\Index.cshtml" />
-    <Content Include="Views\Blobs\Index.cshtml" />
     <Content Include="Styles\style.less" />
     <Content Include="Resources\fonts\Gotham-Medium.eot" />
     <Content Include="Resources\fonts\Gotham-Medium.ttf" />
@@ -627,8 +639,10 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app\app.ts" />
+    <TypeScriptCompile Include="app\common\controllers\agenteCtrl.ts" />
     <TypeScriptCompile Include="app\common\controllers\webserviceCtrl.ts" />
     <TypeScriptCompile Include="app\common\controllers\bodyCtrl.ts" />
+    <TypeScriptCompile Include="app\common\interfaces\ISeccion.ts" />
     <TypeScriptCompile Include="app\common\services\extrasService.ts" />
     <TypeScriptCompile Include="app\common\services\authService.ts" />
     <TypeScriptCompile Include="app\common\services\constantService.ts" />
@@ -659,6 +673,7 @@
     <TypeScriptCompile Include="app\informacion-financiera\informacionFinancieraCtrl.ts" />
     <TypeScriptCompile Include="app\inversiones\inversionesCtrl.ts" />
     <TypeScriptCompile Include="app\mis-inversiones\misInversionesCircularizacionCtrl.ts" />
+    <TypeScriptCompile Include="app\mis-inversiones\misInversionesFondosMutuos.ts" />
     <TypeScriptCompile Include="app\mis-inversiones\misInversionesNacionales.ts" />
     <TypeScriptCompile Include="app\mis-inversiones\misInversionesDocumentosCtrl.ts" />
     <TypeScriptCompile Include="app\mis-inversiones\misInversionesCtrl.ts" />
@@ -701,6 +716,17 @@
       </CachedDynamicPropName>
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
       <CachedSettingsPropName>Sitio_Privado_CategoriaInversionista_tann_catsvc</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://172.17.1.12:8088/tann_circularizacion.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\CircularizacionCustodia\</RelPath>
+      <UpdateFromURL>http://172.17.1.12:8088/tann_circularizacion.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Sitio_Privado_CircularizacionCustodia_tann_circularizacion</CachedSettingsPropName>
     </WebReferenceUrl>
     <WebReferenceUrl Include="http://172.17.1.12:8088/tann_documentos.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>

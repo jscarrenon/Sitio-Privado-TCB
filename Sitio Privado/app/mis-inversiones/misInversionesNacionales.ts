@@ -1,45 +1,42 @@
-﻿module App.MisInversiones {
+﻿module app.misInversiones {
 
     interface IMisInversionesNacionalesViewModel {
-        balance: App.Domain.IBalance;
-        getBalance(input: App.Domain.IBalanceInput): void;
-        cartola: App.Domain.ICartola;
-        getCartola(input: App.Domain.ICartolaInput): void;    
+        balance: app.domain.IBalance;
+        getBalance(input: app.domain.IBalanceInput): void;
+        cartola: app.domain.ICartola;
+        getCartola(input: app.domain.ICartolaInput): void;    
     }
 
-    class MisInversionesNacionalesCtrl extends MisInversionesCtrl implements IMisInversionesNacionalesViewModel {
+    class MisInversionesNacionalesCtrl implements IMisInversionesNacionalesViewModel {
 
-        balance: App.Domain.IBalance;
-        balanceInput: App.Domain.IBalanceInput;
-        cartola: App.Domain.ICartola;
-        cartolaInput: App.Domain.ICartolaInput;
+        balance: app.domain.IBalance;
+        balanceInput: app.domain.IBalanceInput;
+        cartola: app.domain.ICartola;
+        cartolaInput: app.domain.ICartolaInput;
 
-        static $inject = ['constantService', 'dataService', 'authService', 'extrasService', '$routeParams'];
-        constructor(constantService: App.Common.Services.ConstantService,
-            dataService: App.Common.Services.DataService,
-            authService: App.Common.Services.AuthService,
-            extrasService: App.Common.Services.ExtrasService,
-            $routeParams: App.MisInversiones.IMisInversionesRouteParams) {
+        static $inject = ['constantService', 'dataService', 'authService', 'extrasService'];
+        constructor(private constantService: app.common.services.ConstantService,
+            private dataService: app.common.services.DataService,
+            private authService: app.common.services.AuthService,
+            private extrasService: app.common.services.ExtrasService) {
 
-            super(constantService, dataService, authService, extrasService, $routeParams);
-
-            this.balanceInput = new App.Domain.BalanceInput(this.authService.usuario.Rut);
+            this.balanceInput = new app.domain.BalanceInput(this.authService.usuario.Rut);
             this.getBalance(this.balanceInput);
 
-            this.cartolaInput = new App.Domain.CartolaInput(this.extrasService.getRutParteEntera(this.authService.usuario.Rut), 0);
+            this.cartolaInput = new app.domain.CartolaInput(this.extrasService.getRutParteEntera(this.authService.usuario.Rut), 0);
             this.getCartola(this.cartolaInput);
         }
 
-        getBalance(input: App.Domain.IBalanceInput): void {
+        getBalance(input: app.domain.IBalanceInput): void {
             this.dataService.postWebService(this.constantService.apiBalanceURI + 'getSingle', input)
-                .then((result: App.Domain.IBalance) => {
+                .then((result: app.domain.IBalance) => {
                     this.balance = result;
                 });
         }
 
-        getCartola(input: App.Domain.ICartolaInput): void {
+        getCartola(input: app.domain.ICartolaInput): void {
             this.dataService.postWebService(this.constantService.apiCartolaURI + 'getSingle', input)
-                .then((result: App.Domain.ICartola) => {
+                .then((result: app.domain.ICartola) => {
                     this.cartola = result;
                 });
         }
