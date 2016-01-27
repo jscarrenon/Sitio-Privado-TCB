@@ -2,8 +2,8 @@
 
     interface IExtras {
         getRutParteEntera(rut: string): string;
-        abrirRuta(ruta: string): void;
-        getFechaFormato(fecha: Date, formato: string): string;
+        abrirRuta(ruta: string, target: string): void;
+		getFechaFormato(fecha: Date, formato: string): string;
     }
 
     export class ExtrasService implements IExtras {
@@ -24,8 +24,8 @@
             return "";
         }
 
-        abrirRuta(ruta: string): void {
-            this.$window.open(ruta);
+        abrirRuta(ruta: string, target: string = "_blank"): void {
+            this.$window.open(ruta, target);
         }
 
         //Aquí debería usarse filtro de angular - KUNDER
