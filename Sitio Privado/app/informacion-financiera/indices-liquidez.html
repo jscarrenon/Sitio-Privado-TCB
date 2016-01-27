@@ -11,10 +11,9 @@
     <div id="content" ng-controller="InformacionFinancieraIndicesCtrl as indicesCtrl">
         <div class="in">
 
-            <!-- Temporal KUNDER-->
-            <div class="filter date">
+            <div class="filter date indices">
                 <div class="date-field">
-                    Seleccione fecha: <input type="date" ng-model="indicesCtrl.fecha" required>
+                    Información al: <input type="date" step="1" ng-model="indicesCtrl.fecha" required>
                 </div>
                 <div class="apply-filter pag-button"><a href="" class="clink" ng-click="indicesCtrl.actualizarIndices()"></a></div>
             </div>
