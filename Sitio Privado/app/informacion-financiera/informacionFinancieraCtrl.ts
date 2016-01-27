@@ -68,7 +68,9 @@
             this.selectedYearIndex = 0;
             this.selectedYear = [];
             this.seccionURI = 'app/informacion-financiera/' + this.templates[this.seccionId];
-            this.getContainer(this.containerNames[id]);
+            if (id != 3) {
+                this.getContainer(this.containerNames[id]);
+            }
         }
 
         selectYear(index: number): void {
