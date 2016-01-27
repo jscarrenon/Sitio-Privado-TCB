@@ -12,6 +12,7 @@
         apiBalanceURI: string;
         apiCartolaURI: string;
         apiDocumentoURI: string;
+        apiIndicesURI: string;
     }
 
     export class ConstantService implements IConstant {
@@ -26,6 +27,7 @@
         apiBalanceURI: string;
         apiCartolaURI: string;
         apiDocumentoURI: string;
+        apiIndicesURI: string;
 
         constructor() {
             this.mvcHomeURI = '/Home/';
@@ -39,6 +41,7 @@
             this.apiBalanceURI = '/api/balance/';
             this.apiCartolaURI = '/api/cartola/';
             this.apiDocumentoURI = '/api/documento/';
+            this.apiIndicesURI = '/api/indices/';
         }
     }
 
