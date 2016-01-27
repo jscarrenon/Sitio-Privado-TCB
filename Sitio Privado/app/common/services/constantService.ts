@@ -2,6 +2,7 @@
 
     interface IConstant {
         mvcHomeURI: string;
+        mvcSignOutURI: string;
         templateFooterURI: string;
         apiAgenteURI: string;
         apiFondosMutuosURI: string;
@@ -15,6 +16,7 @@
 
     export class ConstantService implements IConstant {
         mvcHomeURI: string;
+        mvcSignOutURI: string;
         templateFooterURI: string;
         apiAgenteURI: string;
         apiFondosMutuosURI: string;
@@ -27,6 +29,7 @@
 
         constructor() {
             this.mvcHomeURI = '/Home/';
+            this.mvcSignOutURI = '/Account/SignOut';
             this.templateFooterURI = 'app/common/templates/footer.html';
             this.apiAgenteURI = '/api/agente/';
             this.apiFondosMutuosURI = '/api/fondoMutuo/';

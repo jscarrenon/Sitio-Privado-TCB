@@ -1,5 +1,5 @@
 ﻿<div id="prebar" ng-if="bodyCtrl.authService.autenticado">
     <div class="user"><a href="#/mis-datos" class="clink" ng-click="bodyCtrl.seleccionarSeccion(-1)">{{ bodyCtrl.authService.usuario.NombreCompleto }} | Mis Datos</a></div>
-    <div class="logout">@Html.ActionLink("Cerrar Sesión", "SignOut", "Account")</div>
+    <div class="logout"><a href="" ng-click="bodyCtrl.authService.cerrarSesion()">Cerrar Sesión</a></div>
 </div>
 
