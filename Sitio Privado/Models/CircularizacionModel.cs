@@ -14,7 +14,7 @@ namespace Sitio_Privado.Models
 
     public class CircularizacionArchivoInput
     {
-        public int rut { get; set; } 
+        public string rut { get; set; } //completo
         public string fecha { get; set; } //yyyy-MM
     }
 
@@ -39,8 +39,11 @@ namespace Sitio_Privado.Models
 
         public CircularizacionArchivo() { }
 
-        public CircularizacionArchivo(archivocli archivo)
+        public CircularizacionArchivo(CircularizacionArchivoInput input)
         {
+            tann_circularizacion webService = new tann_circularizacion();
+            webService.cli_archivo_circularizacion(input.rut, input.fecha);
+
             UrlCartola = archivo._cartola;
             UrlCircularizacion = archivo._cartola;
         }

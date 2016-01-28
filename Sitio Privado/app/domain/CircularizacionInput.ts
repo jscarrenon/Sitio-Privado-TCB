@@ -16,12 +16,12 @@
     }
 
     export interface ICircularizacionArchivoInput {
-        rut: number;
+        rut: string;
         fecha: string;
     }
 
     export class CircularizacionArchivoInput extends app.domain.InputBase implements ICircularizacionArchivoInput {
-        constructor(public rut: number,
+        constructor(public rut: string,
             public fecha: string) {
 
             super();
