@@ -42,7 +42,7 @@ namespace Sitio_Privado.Models
         public CircularizacionArchivo(CircularizacionArchivoInput input)
         {
             tann_circularizacion webService = new tann_circularizacion();
-            webService.cli_archivo_circularizacion(input.rut, input.fecha);
+            archivocli archivo = webService.cli_archivo_circularizacion(input.rut, input.fecha);
 
             UrlCartola = archivo._cartola;
             UrlCircularizacion = archivo._cartola;
