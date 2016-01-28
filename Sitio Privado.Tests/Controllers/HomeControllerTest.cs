@@ -12,7 +12,7 @@ namespace Sitio_Privado.Tests.Controllers
     [TestClass]
     public class HomeControllerTest
     {
-        [TestMethod]
+       // [TestMethod]
         public void Index()
         {
             // Arrange
