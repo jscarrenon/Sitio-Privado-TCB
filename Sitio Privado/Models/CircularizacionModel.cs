@@ -9,7 +9,7 @@ namespace Sitio_Privado.Models
     public class CircularizacionPendienteInput
     {
         public int rut { get; set; } 
-        public string fecha { get; set; }
+        public string fecha { get; set; } //dd-MM-yyyy
     }
 
     public class CircularizacionArchivoInput
