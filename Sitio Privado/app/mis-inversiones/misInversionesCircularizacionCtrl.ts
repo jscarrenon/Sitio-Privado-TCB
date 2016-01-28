@@ -1,6 +1,9 @@
 ﻿module app.misInversiones {
 
+    enum TipoDocumento { Cartola, Circularizacion }
+
     interface IMisInversionesCircularizacionViewModel extends app.common.interfaces.ISeccion {
+        fecha: Date;
         pendienteResultado: app.domain.ICircularizacionProcesoResultado;
         getPendiente(input: app.domain.ICircularizacionPendienteInput): void;
         archivo: app.domain.ICircularizacionArchivo;
@@ -8,7 +11,11 @@
         leidaResultado: app.domain.ICircularizacionProcesoResultado;
         setLeida(input: app.domain.ICircularizacionLeidaInput): void;
         respondidaResultado: app.domain.ICircularizacionProcesoResultado;
-        setRespondida(input: app.domain.ICircularizacionRespondidaInput): void;             
+        setRespondida(input: app.domain.ICircularizacionRespondidaInput): void;
+        verDocumento(tipoDocumento: TipoDocumento): void;
+        leida: boolean;
+        respuestaInput: app.domain.ICircularizacionRespondidaInput;
+        responder(): void;
     }
 
     class MisInversionesCircularizacionCtrl implements IMisInversionesCircularizacionViewModel {
@@ -17,10 +24,14 @@
         seccionURI: string;
         seccionId: number;
 
+        fecha: Date;
         pendienteResultado: app.domain.ICircularizacionProcesoResultado;
+        pendienteInput: app.domain.ICircularizacionPendienteInput;
         archivo: app.domain.ICircularizacionArchivo;
         leidaResultado: app.domain.ICircularizacionProcesoResultado;
         respondidaResultado: app.domain.ICircularizacionProcesoResultado;
+        leida: boolean;
+        respuestaInput: app.domain.ICircularizacionRespondidaInput;
 
         static $inject = ['constantService', 'dataService', 'authService', 'extrasService'];
         constructor(private constantService: app.common.services.ConstantService,
@@ -28,15 +39,26 @@
             private authService: app.common.services.AuthService,
             private extrasService: app.common.services.ExtrasService) {
 
-            this.pendienteResultado.Resultado = false;
-
             this.setTemplates();
             this.seccionId = 0;
             this.seleccionarSeccion(this.seccionId);
+
+            this.fecha = new Date(); //Temporal --KUNDER
+            this.leida = false;
+            this.respuestaInput = new app.domain.CircularizacionRespondidaInput(parseInt(this.extrasService.getRutParteEntera(this.authService.usuario.Rut)), this.extrasService.getFechaFormato(this.fecha), "S", null);
+
+            this.pendienteInput = new app.domain.CircularizacionPendienteInput(parseInt(this.extrasService.getRutParteEntera(this.authService.usuario.Rut)), this.extrasService.getFechaFormato(this.fecha));
+            this.getPendiente(this.pendienteInput);
         }
 
         seleccionarSeccion(id: number): void {
             this.seccionId = id;
+
+            if (this.seccionId == 1) {
+                var archivoInput: app.domain.ICircularizacionArchivoInput = new app.domain.CircularizacionArchivoInput(this.authService.usuario.Rut, this.extrasService.getFechaFormato(this.fecha));
+                this.getArchivo(archivoInput);
+            }
+
             this.seccionURI = 'app/mis-inversiones/' + this.templates[this.seccionId];
         }  
 
@@ -62,17 +84,47 @@
         }
 
         setLeida(input: app.domain.ICircularizacionLeidaInput): void {
-            this.dataService.postWebService(this.constantService.apiCircularizacionURI + 'getPendiente', input)
+            this.dataService.postWebService(this.constantService.apiCircularizacionURI + 'setLeida', input)
                 .then((result: app.domain.ICircularizacionProcesoResultado) => {
                     this.leidaResultado = result;
+                    if (this.leidaResultado.Resultado == true) {
+                        this.leida = true;
+                    }
                 });
         }
 
         setRespondida(input: app.domain.ICircularizacionRespondidaInput): void {
-            this.dataService.postWebService(this.constantService.apiCircularizacionURI + 'getPendiente', input)
+            this.dataService.postWebService(this.constantService.apiCircularizacionURI + 'setRespondida', input)
                 .then((result: app.domain.ICircularizacionProcesoResultado) => {
                     this.respondidaResultado = result;
+                    if (this.respondidaResultado.Resultado == true) {
+                        this.seleccionarSeccion(0);
+                        this.getPendiente(this.pendienteInput);
+                    }
                 });
+        }
+
+        verDocumento(tipoDocumento: TipoDocumento): void {
+            var documentoAbierto: boolean = false;
+
+            //Abrir documento
+            if (tipoDocumento == TipoDocumento.Cartola && this.archivo.UrlCartola) {
+                this.extrasService.abrirRuta(this.archivo.UrlCartola);
+                documentoAbierto = true;
+            }
+            else if (tipoDocumento == TipoDocumento.Circularizacion && this.archivo.UrlCircularizacion) {
+                this.extrasService.abrirRuta(this.archivo.UrlCircularizacion);
+                documentoAbierto = true;
+            }
+
+            if (documentoAbierto) {
+                var leidaInput: app.domain.ICircularizacionLeidaInput = new app.domain.CircularizacionLeidaInput(parseInt(this.extrasService.getRutParteEntera(this.authService.usuario.Rut)), this.extrasService.getFechaFormato(this.fecha));
+                this.setLeida(leidaInput);
+            }
+        }
+
+        responder(): void {
+            this.setRespondida(this.respuestaInput);
         }
     }
     angular.module('tannerPrivadoApp')

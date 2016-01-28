@@ -366,7 +366,7 @@
     <Content Include="app\informacion-financiera\otros-documentos.html" />
     <Content Include="app\inversiones\index.html" />
     <Content Include="app\mis-inversiones\circularizacion.html" />
-    <Content Include="app\mis-inversiones\circularizacion_anual-2015.html" />
+    <Content Include="app\mis-inversiones\circularizacion_anual.html" />
     <Content Include="app\mis-inversiones\circularizacion_aprobar.html" />
     <Content Include="app\mis-inversiones\circularizacion_pendiente.html" />
     <Content Include="app\mis-inversiones\estado-documentos.html" />

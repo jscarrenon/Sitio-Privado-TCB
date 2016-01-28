@@ -40,7 +40,7 @@ namespace Sitio_Privado.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult SetLeido([FromBody]CircularizacionLeidaInput input)
+        public IHttpActionResult SetLeida([FromBody]CircularizacionLeidaInput input)
         {
             try
             {
