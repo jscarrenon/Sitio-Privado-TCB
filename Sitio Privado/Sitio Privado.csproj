@@ -390,7 +390,6 @@
     <Content Include=".bowerrc" />
     <Content Include="bower.json" />
     <Content Include="Tests\webserviceControllerSpec.js" />
-    <TypeScriptCompile Include="Tests\jasmineWorks.ts" />
     <Content Include="Web References\CircularizacionCustodia\archivocli.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
