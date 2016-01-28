@@ -102,7 +102,6 @@
             for (var i = 0; i < this.fondosMutuosRV.length; i++) {
                 this.fondosMutuosRVTotal += this.fondosMutuosRV[i].Pesos;
             }
-
         }
 
         getCategoria(input: app.domain.ICategoriaInput): void {
