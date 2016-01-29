@@ -17,7 +17,7 @@
         FondosMutuosRentaVariable: number;
         FondosMutuosRentaVariablePorcentaje: number;
         ForwardCompra: number;
-        ForwardCompraPorcentaje;
+        ForwardCompraPorcentaje: number;
         ForwardVenta: number;
         ForwardVentaPorcentaje: number;
         TotalInversiones: number;
