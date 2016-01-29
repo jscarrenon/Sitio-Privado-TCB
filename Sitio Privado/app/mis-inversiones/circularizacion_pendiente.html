@@ -3,7 +3,7 @@
     <div class="one-pending" ng-if="circularizacionCtrl.pendienteResultado.Resultado">
         <div class="title">
             Usted tiene una circularización pendiente de aprobación.<br />
-            <strong>Circularización Anual de Custodia 2015</strong>
+            <strong>Circularización Anual de Custodia {{circularizacionCtrl.fecha|date:'y'}}</strong>
         </div>
         <div class="button green"><a href="" ng-click="circularizacionCtrl.seleccionarSeccion(1)">Revisar</a></div>
     </div>

@@ -355,6 +355,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\common\templates\footer.html" />
+    <TypeScriptCompile Include="app\common\typings\uglipop.ts" />
     <Content Include="app\home\index.html" />
     <Content Include="app\home\mis-datos.html" />
     <Content Include="app\informacion-financiera\comite-regulacion.html" />

@@ -15,13 +15,13 @@ namespace Sitio_Privado.Models
     public class CircularizacionArchivoInput
     {
         public string rut { get; set; } //completo
-        public string fecha { get; set; } //yyyy-MM
+        public string fecha { get; set; } //dd-MM-yyyy
     }
 
     public class CircularizacionLeidaInput
     {
         public int rut { get; set; } 
-        public string fecha { get; set; } 
+        public string fecha { get; set; } //dd-MM-yyyy
     }
 
     public class CircularizacionRespondidaInput
@@ -45,7 +45,7 @@ namespace Sitio_Privado.Models
             archivocli archivo = webService.cli_archivo_circularizacion(input.rut, input.fecha);
 
             UrlCartola = archivo._cartola;
-            UrlCircularizacion = archivo._cartola;
+            UrlCircularizacion = archivo._circula;
         }
     }
 
