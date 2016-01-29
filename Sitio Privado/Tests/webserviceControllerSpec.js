@@ -26,8 +26,8 @@
                 $rootScope: _$rootScope_,
                     constantService: _constantService_,
                     dataService: _dataService_
-                    });
-                }));
+            });
+        }));
 
         var agenteInput_stub = {
             _rut : "18948509-3",
