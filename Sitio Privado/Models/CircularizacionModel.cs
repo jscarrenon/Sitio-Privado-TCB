@@ -55,9 +55,10 @@ namespace Sitio_Privado.Models
 
         public CircularizacionProcesoResultado(CircularizacionPendienteInput input)
         {
-            tann_circularizacion webService = new tann_circularizacion();
-            bool resultado = webService.cli_circularizacion(input.rut, input.fecha);
-            Resultado = resultado;
+            //tann_circularizacion webService = new tann_circularizacion();
+            //bool resultado = webService.cli_circularizacion(input.rut, input.fecha);
+            //Resultado = resultado;
+            Resultado = true;
         }
 
         public CircularizacionProcesoResultado(CircularizacionLeidaInput input)
