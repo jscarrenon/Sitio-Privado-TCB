@@ -68,7 +68,7 @@
             this.selectedYearIndex = 0;
             this.selectedYear = [];
             this.seccionURI = 'app/informacion-financiera/' + this.templates[this.seccionId];
-            if (id != 3) {
+            if (id != 3 && id != 4) {
                 this.getContainer(this.containerNames[id]);
             }
         }
@@ -109,7 +109,6 @@
             this.containerNames[0] = 'estatutos';
             this.containerNames[1] = 'documentos-normativos';
             this.containerNames[2] = 'servicios-custodia';
-            this.containerNames[4] = 'comite-regulacion';
             this.containerNames[5] = 'otros-documentos';
         }
     }
