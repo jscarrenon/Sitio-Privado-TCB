@@ -241,6 +241,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CircularizacionController.cs" />
+    <Compile Include="Controllers\IndicesController.cs" />
     <Compile Include="Extras\Converters.cs" />
     <Compile Include="Helpers\AzureStorageHelper.cs" />
     <Compile Include="Controllers\BlobsController.cs" />
@@ -292,6 +294,8 @@
     <Compile Include="Models\AzureFolder.cs" />
     <Compile Include="Models\AzureBlob.cs" />
     <Compile Include="Helpers\GraphApiResponseInfo.cs" />
+    <Compile Include="Models\CircularizacionModel.cs" />
+    <Compile Include="Models\IndicesModel.cs" />
     <Compile Include="Models\DocumentoModel.cs" />
     <Compile Include="Models\CartolaModel.cs" />
     <Compile Include="Models\BalanceModel.cs" />
@@ -351,6 +355,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\common\templates\footer.html" />
+    <TypeScriptCompile Include="app\common\typings\uglipop.ts" />
     <Content Include="app\home\index.html" />
     <Content Include="app\home\mis-datos.html" />
     <Content Include="app\informacion-financiera\comite-regulacion.html" />
@@ -362,8 +367,7 @@
     <Content Include="app\informacion-financiera\otros-documentos.html" />
     <Content Include="app\inversiones\index.html" />
     <Content Include="app\mis-inversiones\circularizacion.html" />
-    <Content Include="app\mis-inversiones\circularizacion_anterior.html" />
-    <Content Include="app\mis-inversiones\circularizacion_anual-2015.html" />
+    <Content Include="app\mis-inversiones\circularizacion_anual.html" />
     <Content Include="app\mis-inversiones\circularizacion_aprobar.html" />
     <Content Include="app\mis-inversiones\circularizacion_pendiente.html" />
     <Content Include="app\mis-inversiones\estado-documentos.html" />
@@ -650,6 +654,11 @@
     <TypeScriptCompile Include="app\common\services\constantService.ts" />
     <TypeScriptCompile Include="app\common\services\dataService.ts" />
     <TypeScriptCompile Include="app\common\typings\slicknav.ts" />
+    <TypeScriptCompile Include="app\domain\CircularizacionInput.ts" />
+    <TypeScriptCompile Include="app\domain\CircularizacionArchivo.ts" />
+    <TypeScriptCompile Include="app\domain\CircularizacionProcesoResultado.ts" />
+    <TypeScriptCompile Include="app\domain\Indices.ts" />
+    <TypeScriptCompile Include="app\domain\IndicesInput.ts" />
     <TypeScriptCompile Include="app\domain\DocumentoLeidoResultado.ts" />
     <TypeScriptCompile Include="app\domain\Documento.ts" />
     <TypeScriptCompile Include="app\domain\DocumentosInput.ts" />
@@ -673,6 +682,7 @@
     <TypeScriptCompile Include="app\domain\Usuario.ts" />
     <TypeScriptCompile Include="app\home\homeCtrl.ts" />
     <TypeScriptCompile Include="app\informacion-financiera\informacionFinancieraCtrl.ts" />
+    <TypeScriptCompile Include="app\informacion-financiera\informacionFinancieraIndicesCtrl.ts" />
     <TypeScriptCompile Include="app\inversiones\inversionesCtrl.ts" />
     <TypeScriptCompile Include="app\mis-inversiones\misInversionesCircularizacionCtrl.ts" />
     <TypeScriptCompile Include="app\mis-inversiones\misInversionesFondosMutuos.ts" />

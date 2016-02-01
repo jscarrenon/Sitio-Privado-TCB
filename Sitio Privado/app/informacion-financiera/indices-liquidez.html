@@ -8,21 +8,28 @@
         </div>
     </div>
 
-    <div id="content">
+    <div id="content" ng-controller="InformacionFinancieraIndicesCtrl as indicesCtrl">
         <div class="in">
+
+            <div class="filter date indices">
+                <div class="date-field">
+                    Información al: <input type="date" step="1" ng-model="indicesCtrl.fecha" required>
+                </div>
+                <div class="apply-filter pag-button"><a href="" class="clink" ng-click="indicesCtrl.actualizarIndices()"></a></div>
+            </div>
 
             <div class="one-col">
 
                 <div class="section-title">Empresa</div>
                 <div class="col-tannersa">
                     <div class="name">Razón Social:</div>
-                    <div class="info">TANNER CORREDORES DE BOLSA S.A.</div>
+                    <div class="info">{{indicesCtrl.indices.DescriptorTCB}}</div>
                     <div class="name">R.U.T.:</div>
-                    <div class="info">80.962.600-8</div>
+                    <div class="info">{{indicesCtrl.indices.RutTCB}}</div>
                     <div class="name">Información al:</div>
-                    <div class="info">16/12/2015</div>
+                    <div class="info">{{indicesCtrl.indices.FechaConsulta}}</div>
                     <div class="name">Patrimonio depurado:</div>
-                    <div class="info">M$ 2.069.935</div>
+                    <div class="info">M$ {{indicesCtrl.indices.PatrimonioDepurado|number}}</div>
                 </div>
 
                 <div class="section-title">Índices de Liquidez y Solvencia</div>
@@ -35,13 +42,13 @@
                                 <tr>
                                     <td>Activos disponibles y realizables hasta 7 días</td>
                                     <td>=M$</td>
-                                    <td><div class="one-rate">26.572.042</div></td>
-                                    <td rowspan="2">1,06 veces</td>
+                                    <td><div class="one-rate">{{indicesCtrl.indices.ActivosSieteDias|number}}</div></td>
+                                    <td rowspan="2">{{indicesCtrl.indices.LiquidezGeneral|number:2}} veces</td>
                                 </tr>
                                 <tr>
                                     <td>Pasivos exigibles hasta 7 días</td>
                                     <td>=M$</td>
-                                    <td><div class="one-rate">25.070.491</div></td>
+                                    <td><div class="one-rate">{{indicesCtrl.indices.PasivosSieteDias|number}}</div></td>
                                 </tr>
                             </table>
                         </div>
@@ -53,13 +60,13 @@
                                 <tr>
                                     <td>Activos disponibles más deudores por intermediación</td>
                                     <td>=M$</td>
-                                    <td><div class="one-rate">6.684.840</div></td>
-                                    <td rowspan="2">1,90 veces</td>
+                                    <td><div class="one-rate">{{indicesCtrl.indices.ActivosIntermediacion|number}}</div></td>
+                                    <td rowspan="2">{{indicesCtrl.indices.LiquidezIntermediacion|number:2}} veces</td>
                                 </tr>
                                 <tr>
                                     <td>Acreedores por intermediación</td>
                                     <td>=M$</td>
-                                    <td><div class="one-rate">3.509.806</div></td>
+                                    <td><div class="one-rate">{{indicesCtrl.indices.AcreedoresIntermediacion|number}}</div></td>
                                 </tr>
                             </table>
                         </div>
@@ -74,13 +81,13 @@
                                 <tr>
                                     <td>Total pasivos exigibles</td>
                                     <td>=M$</td>
-                                    <td><div class="one-rate">22.993.738</div></td>
-                                    <td rowspan="2">9,03 veces</td>
+                                    <td><div class="one-rate">{{indicesCtrl.indices.TotalPasivosExigibles|number}}</div></td>
+                                    <td rowspan="2">{{indicesCtrl.indices.RazonEndeudamiento|number:2}} veces</td>
                                 </tr>
                                 <tr>
                                     <td>Patrimonio líquido</td>
                                     <td>=M$</td>
-                                    <td><div class="one-rate">25.070.491</div></td>
+                                    <td><div class="one-rate">{{indicesCtrl.indices.PatrimonioLiquido|number}}</div></td>
                                 </tr>
                             </table>
                         </div>
@@ -92,13 +99,13 @@
                                 <tr>
                                     <td>Monto cobertura patrimonial</td>
                                     <td>=M$</td>
-                                    <td><div class="one-rate">1.162.549</div></td>
-                                    <td rowspan="2">45,64%</td>
+                                    <td><div class="one-rate">{{indicesCtrl.indices.MontoCoberturaPatrimonial|number}}</div></td>
+                                    <td rowspan="2">{{indicesCtrl.indices.RazonCoberturaPatrimonial|number:2}}%</td>
                                 </tr>
                                 <tr>
                                     <td>Patrimonio líquido</td>
                                     <td>=M$</td>
-                                    <td><div class="one-rate">2.547.391</div></td>
+                                    <td><div class="one-rate">{{indicesCtrl.indices.PatrimonioLiquido|number}}</div></td>
                                 </tr>
                             </table>
                         </div>

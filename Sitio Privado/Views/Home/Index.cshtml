@@ -46,7 +46,7 @@
             <div class="in">
                 <div class="logo"></div>
                 <div class="user"><a href="#/mis-datos" class="clink" ng-click="bodyCtrl.seleccionarSeccion(-1)"></a></div>
-                <div class="logout">@Html.ActionLink("-", "SignOut", "Account", new { @class = "clink" })</div>
+                <div class="logout"><a href="" class="clink" ng-click="bodyCtrl.authService.cerrarSesion()"></a></div>
             </div>
         </div>
 

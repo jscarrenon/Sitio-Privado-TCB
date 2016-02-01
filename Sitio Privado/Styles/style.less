@@ -603,6 +603,7 @@ input[type=submit] {border:0px;}
     min-height:600px;
     .one-col {
         width:100%;
+        position:relative;
     }
     .two-col {
         width:66.2%;
@@ -1112,7 +1113,6 @@ div.one-col.home {
     color:@gris_medio;
     .none {
         width:100%;
-        margin-top:240px;
         background: url('../img/icon_ready.png') no-repeat left center;
         height:24px;
         padding-left:40px;
@@ -1176,7 +1176,7 @@ div.one-col.home {
 }
 
 .col-tannersa {
-    min-height: 60px;
+    min-height: 80px;
     margin-bottom:20px;
     .name {
         float:left;
@@ -1185,6 +1185,7 @@ div.one-col.home {
         color:@gris_medio;
         font-size:12.8px;
         height:30px;
+        clear:left;
     }
     .info {
         font-size:12.5px;
@@ -1200,7 +1201,7 @@ div.one-col.home {
     width:49%;
     float:left;
     &:nth-child(odd) {
-        margin-left:2%;
+        margin-right:2%;
     }
     .rate {
         width:96%;
@@ -1208,6 +1209,7 @@ div.one-col.home {
         padding:2% 1.5% 1% 1.5%;
         margin-bottom:20px;
         min-height: 140px;
+        overflow-x: hidden;
         .title {
             font-size:13.5px;
             .fmedium();
@@ -1869,6 +1871,8 @@ label {
     width:470px;
     float:right;
     height:30px;
+    z-index:5;
+    position:relative;
     .date-field {
         font-size:11.5px;
         color:@gris_medio;
@@ -1876,6 +1880,13 @@ label {
         line-height:28px;
         margin-left:15px;
     }
+}
+
+.filter.date.indices {
+    width:auto !important;
+    position:absolute;
+    top:0px;
+    right:0px;
 }
 
 input[type="date"] {
@@ -1933,6 +1944,12 @@ input[type="date"] {
 @media only screen and (max-width: 560px) {
     .filter.date {
         display:none;
+    }
+    .filter.date.indices {
+        display:block;
+        position:relative;
+        margin-top:15px;
+        margin-bottom:10px;
     }
 }
 
