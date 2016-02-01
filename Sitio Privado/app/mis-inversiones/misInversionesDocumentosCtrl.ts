@@ -12,6 +12,15 @@
         verDocumento(documento: app.domain.IDocumento): void;
         fechaHoy: Date;
         actualizarDocumentosFirmados(): void;
+        operacionesPendientesPaginaActual: number;
+        operacionesPendientesPorPagina: number;
+        documentosPendientesPaginaActual: number;
+        documentosPendientesPorPagina: number;
+        operacionesFirmadasPaginaActual: number;
+        operacionesFirmadasPorPagina: number;
+        documentosFirmadosPaginaActual: number;
+        documentosFirmadosPorPagina: number;
+        configurarPaginacion(): void;
     }
 
     class MisInversionesDocumentosCtrl implements IMisInversionesDocumentosViewModel {
@@ -29,6 +38,14 @@
         fechaFirmadosInicio: Date;
         fechaFirmadosFin: Date;
         fechaHoy: Date;
+        operacionesPendientesPaginaActual: number;
+        operacionesPendientesPorPagina: number;
+        documentosPendientesPaginaActual: number;
+        documentosPendientesPorPagina: number;
+        operacionesFirmadasPaginaActual: number;
+        operacionesFirmadasPorPagina: number;
+        documentosFirmadosPaginaActual: number;
+        documentosFirmadosPorPagina: number;
 
         static $inject = ['constantService', 'dataService', 'authService', 'extrasService'];
         constructor(private constantService: app.common.services.ConstantService,
@@ -39,6 +56,7 @@
             this.setTemplates();
             this.seccionId = 0;
             this.seleccionarSeccion(this.seccionId);
+            this.configurarPaginacion();
 
             this.fechaHoy = new Date();
 
@@ -61,6 +79,17 @@
             this.templates = [];
             this.templates[0] = "estado-documentos_pendientes.html";
             this.templates[1] = "estado-documentos_firmados.html";
+        }
+
+        configurarPaginacion(): void {
+            this.operacionesPendientesPaginaActual = 1;
+            this.operacionesPendientesPorPagina = 10;
+            this.documentosPendientesPaginaActual = 1;
+            this.documentosPendientesPorPagina = 10;
+            this.operacionesFirmadasPaginaActual = 1;
+            this.operacionesFirmadasPorPagina = 10;
+            this.documentosFirmadosPaginaActual = 1;
+            this.documentosFirmadosPorPagina = 10;
         }
 
         getDocumentosPendientes(input: app.domain.IDocumentosPendientesInput): void {
