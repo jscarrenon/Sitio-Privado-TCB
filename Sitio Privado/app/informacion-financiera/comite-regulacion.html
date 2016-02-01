@@ -12,14 +12,32 @@
         <div class="in">
 
             <div class="one-col documents" ng-repeat="folder in ctrl.container">
-                <div class="section-title">
-                    {{folder.Name}}
-                </div>
+                <div class="section-title">Información Comité de Regulación de la Bolsa de Comercio de Santiago</div>
                 <div class="wrap-docs">
-                    <div class="one-doc link" ng-repeat="blob in folder.Blobs">
-                        <div class="name">{{blob.Name}}</div>
+                    <div class="one-doc link">
+                        <div class="name">Objetivos</div>
                         <div class="download link">
-                            <a ng-href="{{blob.Url}}" class="clink" target="_blank"></a>
+                            <a href="http://www.bolsadesantiago.com/Biblioteca%20de%20Archivos/Extension/Documentos/Objetivos%20del%20Comit%C3%A9%20de%20Buenas%20Pr%C3%A1cticas.pdf" 
+                               class="clink" target="_blank"></a>
+                        </div>
+                    </div>
+                    <div class="one-doc link">
+                        <div class="name">Miembros y Resoluciones</div>
+                        <div class="download link">
+                            <a href="http://www.bolsadesantiago.com/regulacion/Paginas/ComiteBuenasPracticas.aspx" class="clink" target="_blank"></a>
+                        </div>
+                    </div>
+                    <div class="one-doc link">
+                        <div class="name">Normativas</div>
+                        <div class="download link">
+                            <a href="http://www.bolsadesantiago.com/regulacion/Paginas/NormativaBCS.aspx" class="clink" target="_blank"></a>
+                        </div>
+                    </div>
+                    <div class="one-doc link">
+                        <div class="name">Instructivos y Reclamos</div>
+                        <div class="download link">
+                            <a href="http://www.bolsadesantiago.com/Biblioteca%20de%20Archivos/Extension/Documentos/Instructivo%20de%20Reclamo.pdf" class="clink" 
+                               target="_blank"></a>
                         </div>
                     </div>
                 </div>
