@@ -32,6 +32,7 @@ namespace Sitio_Privado.Controllers
         private static string CheckingAccountParam = "checking_account";
         private static string BankParam = "bank";
         private static string TemporalPasswordParam = "temporal_password";
+        private static string UpdatedAtParam = "updated_at";
         #endregion
 
         private GraphApiClientHelper syncApiHelper = new GraphApiClientHelper();
@@ -152,6 +153,7 @@ namespace Sitio_Privado.Controllers
             response.Add(EmailParam, user.Email);
             response.Add(CheckingAccountParam, user.CheckingAccount);
             response.Add(BankParam, user.Bank);
+            response.Add(UpdatedAtParam, user.UpdatedAt);
             return response.ToString();
         }
 
@@ -208,6 +210,7 @@ namespace Sitio_Privado.Controllers
             user.CheckingAccount = content.GetValue(CheckingAccountParam).ToString();
             user.Bank = content.GetValue(BankParam).ToString();
             user.TemporalPassword = content.GetValue(TemporalPasswordParam).ToString();
+            user.UpdatedAt = DateTime.Now.ToString();
             return user;
         }
 
