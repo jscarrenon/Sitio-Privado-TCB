@@ -67,9 +67,10 @@ namespace Sitio_Privado.Helpers
             this.credential = new ClientCredential(ClientId, ClientSecret);
         }
 
-        public async Task<GraphApiResponseInfo> UpdateUser(string id, string json)
+        public async Task<GraphApiResponseInfo> UpdateUser(string id, GraphUserModel user)
         {
             string path = UsersApiPath + "/" + id;
+            string json = GetUpdateUserRequestBody(user);
             HttpResponseMessage graphResponse = await SendGraphPatchRequest(path, json);
             GraphApiResponseInfo response = new GraphApiResponseInfo();
             response.StatusCode = graphResponse.StatusCode;
@@ -245,6 +246,42 @@ namespace Sitio_Privado.Helpers
             signInAlternative.Add(SignInValueParamKey, graphUser.Rut);
             JArray signInAlternativesArray = new JArray(signInAlternative);
             json.Add(SignInAlternativesParamKey, signInAlternativesArray);
+
+            return json.ToString();
+        }
+
+        private string GetUpdateUserRequestBody(GraphUserModel graphUser)
+        {
+            JObject json = new JObject();
+
+            if (graphUser.WorkAddress != null)
+                json.Add(WorkAddressParamKey, graphUser.WorkAddress);
+
+            if (graphUser.HomeAddress != null)
+                json.Add(HomeAddressParamKey, graphUser.HomeAddress);
+
+            if (graphUser.Country != null)
+                json.Add(CountryParamKey, graphUser.Country);
+
+            if (graphUser.City != null)
+                json.Add(CityParamKey, graphUser.City);
+
+            if (graphUser.WorkPhone != null)
+                json.Add(WorkPhoneParamKey, graphUser.WorkPhone);
+
+            if (graphUser.HomePhone != null)
+                json.Add(HomePhoneParamKey, graphUser.HomePhone);
+
+            if (graphUser.Email != null)
+                json.Add(EmailParamKey, graphUser.Email);
+
+            if (graphUser.CheckingAccount != null)
+                json.Add(CheckingAccountParamKey, graphUser.CheckingAccount);
+
+            if (graphUser.Bank != null)
+                json.Add(BankParamKey, graphUser.Bank);
+
+            json.Add(UpdatedAtParamKey, graphUser.UpdatedAt);
 
             return json.ToString();
         }
