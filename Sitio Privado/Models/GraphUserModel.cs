@@ -22,5 +22,6 @@ namespace Sitio_Privado.Models
         public string DisplayName { get { return Name + " " + Surname; } }
         public string ObjectId { get; set; }
         public string TemporalPassword { get; set; }
+        public string UpdatedAt { get; set; }
     }
 }
