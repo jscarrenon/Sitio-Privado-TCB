@@ -4,6 +4,7 @@
         mvcHomeURI: string;
         mvcSignOutURI: string;
         templateFooterURI: string;
+        templatePaginationURI: string;
         apiAgenteURI: string;
         apiFondosMutuosURI: string;
         apiCategoriaURI: string;
@@ -20,6 +21,7 @@
         mvcHomeURI: string;
         mvcSignOutURI: string;
         templateFooterURI: string;
+        templatePaginationURI: string;
         apiAgenteURI: string;
         apiFondosMutuosURI: string;
         apiCategoriaURI: string;
@@ -35,6 +37,7 @@
             this.mvcHomeURI = '/Home/';
             this.mvcSignOutURI = '/Account/SignOut';
             this.templateFooterURI = 'app/common/templates/footer.html';
+            this.templatePaginationURI = 'app/common/templates/pagination.html';
             this.apiAgenteURI = '/api/agente/';
             this.apiFondosMutuosURI = '/api/fondoMutuo/';
             this.apiCategoriaURI = '/api/categoria/';

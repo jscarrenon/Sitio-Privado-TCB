@@ -356,6 +356,7 @@
   <ItemGroup>
     <Content Include="app\common\templates\footer.html" />
     <TypeScriptCompile Include="app\common\typings\uglipop.ts" />
+    <Content Include="app\common\templates\pagination.html" />
     <Content Include="app\home\index.html" />
     <Content Include="app\home\mis-datos.html" />
     <Content Include="app\informacion-financiera\comite-regulacion.html" />
@@ -658,6 +659,7 @@
     <TypeScriptCompile Include="app\mis-inversiones\misInversionesNacionales.ts" />
     <TypeScriptCompile Include="app\mis-inversiones\misInversionesDocumentosCtrl.ts" />
     <TypeScriptCompile Include="app\mis-inversiones\misInversionesCtrl.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angular-ui-bootstrap\angular-ui-bootstrap.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-animate.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-cookies.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-mocks.d.ts" />

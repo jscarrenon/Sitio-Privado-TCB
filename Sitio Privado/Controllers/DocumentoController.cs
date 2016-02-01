@@ -24,7 +24,7 @@ namespace Sitio_Privado.Controllers
                 {
                     listaOperaciones.Add(new Documento(operacion));
                 }
-
+                
                 List<Documento> listaDocumentos = new List<Documento>();
                 foreach (_operacion operacion in operaciones.Where(x => x._tipo == "Documento"))
                 {
