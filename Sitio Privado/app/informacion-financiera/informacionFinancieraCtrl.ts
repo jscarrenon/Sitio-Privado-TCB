@@ -91,7 +91,7 @@
 
         sortYears(a: app.domain.AzureFolder, b: app.domain.AzureFolder): number {
             var re = /\D/g;
-            return -(parseInt(a.Name.replace(re, ""), 10) - parseInt(b.Name.replace(re, ""), 10));
+            return (parseInt(b.Name.replace(re, ""), 10) - parseInt(a.Name.replace(re, ""), 10));
         }
 
         setTemplates(): void {
