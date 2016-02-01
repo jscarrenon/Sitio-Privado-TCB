@@ -42,6 +42,7 @@ namespace Sitio_Privado.Helpers
         public static string SignInTypeParamKey = "type";
         public static string SignInValueParamKey = "value";
         public static string SignInAlternativesParamKey = "alternativeSignInNamesInfo";
+        public static string UpdatedAtParamKey = ExtensionsPrefixe + "UpdatedAt";
         #endregion
 
         private const string AadGraphResourceId = "https://graph.windows.net/";
@@ -230,6 +231,7 @@ namespace Sitio_Privado.Helpers
             json.Add(CheckingAccountParamKey, graphUser.CheckingAccount);
             json.Add(BankParamKey, graphUser.Bank);
             json.Add(DisplayNameParamKey, graphUser.DisplayName);
+            json.Add(UpdatedAtParamKey, graphUser.UpdatedAt);
 
             //Temporal password
             JObject passwordProfile = new JObject();
@@ -263,6 +265,8 @@ namespace Sitio_Privado.Helpers
             user.WorkAddress = body.GetValue(WorkAddressParamKey).ToString();
             user.WorkPhone = body.GetValue(WorkPhoneParamKey).ToString();
             user.ObjectId = body.GetValue("objectId").ToString();
+            if(body.GetValue(UpdatedAtParamKey) != null)
+                user.UpdatedAt = body.GetValue(UpdatedAtParamKey).ToString();
             return user;
         }
     }
