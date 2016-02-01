@@ -82,8 +82,8 @@ namespace Sitio_Privado.Controllers
 
             //Read request's parameters
             JObject requestContent = (JObject)await request.Content.ReadAsAsync(typeof(JObject));
-            string requestJsonBody = GetUpdateUserGraphApiRequestBody(requestContent);
-            if (requestJsonBody == null) {
+            GraphUserModel requestUser = GetUpdateUserGraphApiRequestBody(requestContent);
+            if (requestUser == null) {
                 response.StatusCode = HttpStatusCode.BadRequest;
                 return response;
             }
@@ -102,7 +102,7 @@ namespace Sitio_Privado.Controllers
             }
 
             string userGraphId = getGraphResponse.User.ObjectId;
-            GraphApiResponseInfo graphResponse = await syncApiHelper.UpdateUser(userGraphId, requestJsonBody);
+            GraphApiResponseInfo graphResponse = await syncApiHelper.UpdateUser(userGraphId, requestUser);
             response.StatusCode = graphResponse.StatusCode;
 
             if (graphResponse.StatusCode != HttpStatusCode.NoContent)
@@ -157,41 +157,43 @@ namespace Sitio_Privado.Controllers
             return response.ToString();
         }
 
-        private string GetUpdateUserGraphApiRequestBody(JObject content)
+        private GraphUserModel GetUpdateUserGraphApiRequestBody(JObject content)
         {
             if (content == null)
                 return null;
 
-            JObject json = new JObject();
+            GraphUserModel user = new GraphUserModel();
 
             if (content.GetValue(WorkAddressParam) != null)
-                json.Add(GraphApiClientHelper.WorkAddressParamKey, content.GetValue(WorkAddressParam));
-            
+                user.WorkAddress = content.GetValue(WorkAddressParam).ToString();
+
             if (content.GetValue(HomeAddressParam) != null)
-                json.Add(GraphApiClientHelper.HomeAddressParamKey, content.GetValue(HomeAddressParam));
-            
+                user.HomeAddress = content.GetValue(HomeAddressParam).ToString();
+
             if (content.GetValue(CountryParam) != null)
-                json.Add(GraphApiClientHelper.CountryParamKey, content.GetValue(CountryParam));
-            
+                user.Country = content.GetValue(CountryParam).ToString();
+
             if (content.GetValue(CityParam) != null)
-                json.Add(GraphApiClientHelper.CityParamKey, content.GetValue(CityParam));
-            
+                user.City = content.GetValue(CityParam).ToString();
+
             if (content.GetValue(WorkPhoneParam) != null)
-                json.Add(GraphApiClientHelper.WorkPhoneParamKey, content.GetValue(WorkPhoneParam));
+                user.WorkPhone = content.GetValue(WorkPhoneParam).ToString();
 
             if (content.GetValue(HomePhoneParam) != null)
-                json.Add(GraphApiClientHelper.HomePhoneParamKey, content.GetValue(HomePhoneParam));
-            
+                user.HomePhone = content.GetValue(HomePhoneParam).ToString();
+
             if (content.GetValue(EmailParam) != null)
-                json.Add(GraphApiClientHelper.EmailParamKey, content.GetValue(EmailParam));
+                user.Email = content.GetValue(EmailParam).ToString();
 
             if (content.GetValue(CheckingAccountParam) != null)
-                json.Add(GraphApiClientHelper.CheckingAccountParamKey, content.GetValue(CheckingAccountParam));
-            
-            if (content.GetValue(BankParam) != null)
-                json.Add(GraphApiClientHelper.BankParamKey, content.GetValue(BankParam));
+                user.CheckingAccount = content.GetValue(CheckingAccountParam).ToString();
 
-            return json.ToString();
+            if (content.GetValue(BankParam) != null)
+                user.Bank = content.GetValue(BankParam).ToString();
+
+            user.UpdatedAt = DateTime.Now.ToString();
+
+            return user;
         }
 
         private GraphUserModel GetGraphUserCreateRequest(JObject content)
