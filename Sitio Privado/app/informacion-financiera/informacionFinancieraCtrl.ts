@@ -82,8 +82,10 @@
             this.dataService.get(this.constantService.apiBlobsURI + 'getContainer?name=' + input)
                 .then((result: app.domain.AzureFolder[]) => {
                     if (input == 'documentos-normativos') {
-                        result.sort((a, b) => this.sortYears(a,b));
-                        this.selectedYear = result[0].Folders;
+                        result.sort((a, b) => this.sortYears(a, b));
+                        if (result[0] != undefined) {
+                            this.selectedYear = result[0].Folders;
+                        }
                     }
                     this.container = result;
                 });
