@@ -68,7 +68,7 @@
             this.selectedYearIndex = 0;
             this.selectedYear = [];
             this.seccionURI = 'app/informacion-financiera/' + this.templates[this.seccionId];
-            if (id != 3) {
+            if (id != 3 && id != 4) {
                 this.getContainer(this.containerNames[id]);
             }
         }
@@ -82,8 +82,10 @@
             this.dataService.get(this.constantService.apiBlobsURI + 'getContainer?name=' + input)
                 .then((result: app.domain.AzureFolder[]) => {
                     if (input == 'documentos-normativos') {
-                        result.sort((a, b) => this.sortYears(a,b));
-                        this.selectedYear = result[0].Folders;
+                        result.sort((a, b) => this.sortYears(a, b));
+                        if (result[0] != undefined) {
+                            this.selectedYear = result[0].Folders;
+                        }
                     }
                     this.container = result;
                 });
@@ -109,7 +111,6 @@
             this.containerNames[0] = 'estatutos';
             this.containerNames[1] = 'documentos-normativos';
             this.containerNames[2] = 'servicios-custodia';
-            this.containerNames[4] = 'comite-regulacion';
             this.containerNames[5] = 'otros-documentos';
         }
     }
