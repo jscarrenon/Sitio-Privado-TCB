@@ -105,7 +105,7 @@ namespace Sitio_Privado.Helpers
 
         public async Task<GraphApiResponseInfo> GetUserByRut(string rut)
         {
-            string query = "$filter=" + RutParamKey + " eq '" + rut + "'";//TODO: user parameters
+            string query = "$filter=" + RutParamKey + " eq '" + rut + "'";
             HttpResponseMessage graphResponse = await SendGraphGetRequest(UsersApiPath, query);
 
             //Set response
