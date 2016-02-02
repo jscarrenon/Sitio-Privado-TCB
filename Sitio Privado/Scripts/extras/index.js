@@ -23,7 +23,7 @@ var modal3 = function () {
     uglipop({
         class: 'modal-style modal3',
         source: 'html',
-        content: '<div class="title">Confirmar Firma Electrónica</div><div class="text">¿Desea confirmar y firmar electrónicamente la(s) operacion(es) y/o contrato(s) seleccionados?</div><button class="pop" onclick="modal4();">Confirmar</button><button class="modal-close" onclick="rem();"></button>'
+        content: '<div class="title">Confirmar Firma Electrónica</div><div class="text">¿Desea confirmar y firmar electrónicamente la(s) operacion(es) y/o contrato(s) seleccionados?</div><button class="pop" ng-click="documentosCtrl.firmarDocumentos()">Confirmar</button><button class="modal-close" onclick="rem();"></button>'
     });
 }
 

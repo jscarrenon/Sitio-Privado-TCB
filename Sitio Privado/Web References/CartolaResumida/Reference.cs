@@ -74,26 +74,24 @@ namespace Sitio_Privado.CartolaResumida {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://servicios.tanner.cl/cartolaresumida/cns_total_general", RequestNamespace="http://servicios.tanner.cl/cartolaresumida", ResponseNamespace="http://servicios.tanner.cl/cartolaresumida", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public _cartola cns_total_general(string _rut, short _secuencia) {
+        public _cartola_alt cns_total_general(string _rut) {
             object[] results = this.Invoke("cns_total_general", new object[] {
-                        _rut,
-                        _secuencia});
-            return ((_cartola)(results[0]));
+                        _rut});
+            return ((_cartola_alt)(results[0]));
         }
         
         /// <remarks/>
-        public void cns_total_generalAsync(string _rut, short _secuencia) {
-            this.cns_total_generalAsync(_rut, _secuencia, null);
+        public void cns_total_generalAsync(string _rut) {
+            this.cns_total_generalAsync(_rut, null);
         }
         
         /// <remarks/>
-        public void cns_total_generalAsync(string _rut, short _secuencia, object userState) {
+        public void cns_total_generalAsync(string _rut, object userState) {
             if ((this.cns_total_generalOperationCompleted == null)) {
                 this.cns_total_generalOperationCompleted = new System.Threading.SendOrPostCallback(this.Oncns_total_generalOperationCompleted);
             }
             this.InvokeAsync("cns_total_general", new object[] {
-                        _rut,
-                        _secuencia}, this.cns_total_generalOperationCompleted, userState);
+                        _rut}, this.cns_total_generalOperationCompleted, userState);
         }
         
         private void Oncns_total_generalOperationCompleted(object arg) {
@@ -128,45 +126,37 @@ namespace Sitio_Privado.CartolaResumida {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://servicios.tanner.cl/cartolaresumida")]
-    public partial class _cartola {
+    public partial class _cartola_alt {
         
-        private string _rutField;
+        private _itemcartola[] conceptosField;
+        
+        private string _rutcliField;
         
         private string _periodoField;
         
-        private double _saldocajaField;
-        
-        private double _totalrentafijaField;
-        
-        private double _instrfField;
-        
-        private double _ffmmrfField;
-        
-        private double _totalrentavariField;
-        
-        private double _accnacionField;
-        
-        private double _ffmmrvField;
-        
-        private double _fwdcompraField;
-        
-        private double _fwdventaField;
-        
-        private double _totsimulField;
-        
-        private double _totinversionesField;
-        
         /// <remarks/>
-        public string _rut {
+        public _itemcartola[] conceptos {
             get {
-                return this._rutField;
+                return this.conceptosField;
             }
             set {
-                this._rutField = value;
+                this.conceptosField = value;
             }
         }
         
         /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string _rutcli {
+            get {
+                return this._rutcliField;
+            }
+            set {
+                this._rutcliField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
         public string _periodo {
             get {
                 return this._periodoField;
@@ -175,114 +165,49 @@ namespace Sitio_Privado.CartolaResumida {
                 this._periodoField = value;
             }
         }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://servicios.tanner.cl/cartolaresumida")]
+    public partial class _itemcartola {
+        
+        private string conceptoField;
+        
+        private double _valorField;
+        
+        private double _porcentajeField;
         
         /// <remarks/>
-        public double _saldocaja {
+        public string concepto {
             get {
-                return this._saldocajaField;
+                return this.conceptoField;
             }
             set {
-                this._saldocajaField = value;
+                this.conceptoField = value;
             }
         }
         
         /// <remarks/>
-        public double _totalrentafija {
+        public double _valor {
             get {
-                return this._totalrentafijaField;
+                return this._valorField;
             }
             set {
-                this._totalrentafijaField = value;
+                this._valorField = value;
             }
         }
         
         /// <remarks/>
-        public double _instrf {
+        public double _porcentaje {
             get {
-                return this._instrfField;
+                return this._porcentajeField;
             }
             set {
-                this._instrfField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public double _ffmmrf {
-            get {
-                return this._ffmmrfField;
-            }
-            set {
-                this._ffmmrfField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public double _totalrentavari {
-            get {
-                return this._totalrentavariField;
-            }
-            set {
-                this._totalrentavariField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public double _accnacion {
-            get {
-                return this._accnacionField;
-            }
-            set {
-                this._accnacionField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public double _ffmmrv {
-            get {
-                return this._ffmmrvField;
-            }
-            set {
-                this._ffmmrvField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public double _fwdcompra {
-            get {
-                return this._fwdcompraField;
-            }
-            set {
-                this._fwdcompraField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public double _fwdventa {
-            get {
-                return this._fwdventaField;
-            }
-            set {
-                this._fwdventaField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public double _totsimul {
-            get {
-                return this._totsimulField;
-            }
-            set {
-                this._totsimulField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public double _totinversiones {
-            get {
-                return this._totinversionesField;
-            }
-            set {
-                this._totinversionesField = value;
+                this._porcentajeField = value;
             }
         }
     }
@@ -305,10 +230,10 @@ namespace Sitio_Privado.CartolaResumida {
         }
         
         /// <remarks/>
-        public _cartola Result {
+        public _cartola_alt Result {
             get {
                 this.RaiseExceptionIfNecessary();
-                return ((_cartola)(this.results[0]));
+                return ((_cartola_alt)(this.results[0]));
             }
         }
     }

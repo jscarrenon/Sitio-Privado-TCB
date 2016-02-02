@@ -87,5 +87,37 @@ namespace Sitio_Privado.Controllers
                 return NotFound();
             }
         }
+
+        [HttpPost]
+        public IHttpActionResult SetFirmarDocumento([FromBody]DocumentoFirmarInput input)
+        {
+            try
+            {
+                DocumentoFirmarResultado resultado = new DocumentoFirmarResultado(input);
+
+                return Ok(resultado);
+            }
+            catch (Exception e)
+            {
+                return NotFound();
+            }
+        }
+
+
+        [HttpPost]
+        public IHttpActionResult SetFirmarOperacion([FromBody]OperacionFirmarInput input)
+        {
+            try
+            {
+                DocumentoFirmarResultado resultado = new DocumentoFirmarResultado(input);
+
+                return Ok(resultado);
+            }
+            catch (Exception e)
+            {
+                return NotFound();
+            }
+        }
     }
 }
+

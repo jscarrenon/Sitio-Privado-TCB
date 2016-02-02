@@ -46,4 +46,36 @@
             this.codigo = codigo;
         }
     }
+
+    export interface IDocumentoFirmarInput {
+        rut: string;
+        codigo: string;
+    }
+
+    export class DocumentoFirmarInput extends app.domain.InputBase implements IDocumentoFirmarInput {
+        constructor(public rut: string,
+            public codigo: string) {
+
+            super();
+
+            this.rut = rut;
+            this.codigo = codigo;
+        }
+    }
+
+    export interface IOperacionFirmarInput {
+        rut: string;
+        codigo: string;
+    }
+
+    export class OperacionFirmarInput extends app.domain.InputBase implements IOperacionFirmarInput {
+        constructor(public rut: string,
+            public codigo: string) {
+
+            super();
+
+            this.rut = rut;
+            this.codigo = codigo;
+        }
+    }
 }

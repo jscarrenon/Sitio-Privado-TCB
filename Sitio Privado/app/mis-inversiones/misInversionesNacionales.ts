@@ -23,7 +23,7 @@
             this.balanceInput = new app.domain.BalanceInput(this.authService.usuario.Rut);
             this.getBalance(this.balanceInput);
 
-            this.cartolaInput = new app.domain.CartolaInput(this.extrasService.getRutParteEntera(this.authService.usuario.Rut), 0);
+            this.cartolaInput = new app.domain.CartolaInput(this.extrasService.getRutParteEntera(this.authService.usuario.Rut));
             this.getCartola(this.cartolaInput);
         }
 
