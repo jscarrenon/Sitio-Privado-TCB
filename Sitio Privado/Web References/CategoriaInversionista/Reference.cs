@@ -321,6 +321,10 @@ namespace Sitio_Privado.CategoriaInversionista {
         
         private string descriptorField;
         
+        private string comentarioField;
+        
+        private string riesgoField;
+        
         private _categoria[] categoriasField;
         
         /// <remarks/>
@@ -340,6 +344,26 @@ namespace Sitio_Privado.CategoriaInversionista {
             }
             set {
                 this.descriptorField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string comentario {
+            get {
+                return this.comentarioField;
+            }
+            set {
+                this.comentarioField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string riesgo {
+            get {
+                return this.riesgoField;
+            }
+            set {
+                this.riesgoField = value;
             }
         }
         

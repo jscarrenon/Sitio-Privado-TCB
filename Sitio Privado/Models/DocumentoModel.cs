@@ -25,6 +25,18 @@ namespace Sitio_Privado.Models
         public string codigo { get; set; }
     }
 
+    public class DocumentoFirmarInput
+    {
+        public string rut { get; set; }
+        public string codigo { get; set; }
+    }
+
+    public class OperacionFirmarInput
+    {
+        public string rut { get; set; }
+        public string codigo { get; set; }
+    }
+
     public class Documento
     {
         public string Codigo { get; set; }
@@ -35,7 +47,9 @@ namespace Sitio_Privado.Models
         public string Leido { get; set; }
         public string Firmado { get; set; }
         public string Ruta { get; set; }
-        public string Resultados { get; set; }
+        public string NombreCliente { get; set; }
+        public string RutaFirmado { get; set; }
+        public bool Seleccionado { get; set; }
 
         public Documento() { }
 
@@ -48,8 +62,10 @@ namespace Sitio_Privado.Models
             Leido = documento._leido.Trim();
             Firmado = documento._firmado.Trim();
             Ruta = documento._ruta;
-            Resultados = documento._results;
+            NombreCliente = documento._nombrecli;
+            RutaFirmado = documento._results;
             FechaCreacion = Converters.getFecha(documento._fechacre).ToString("dd MMM yyyy");
+            Seleccionado = false;
         }
     }
 
@@ -63,5 +79,36 @@ namespace Sitio_Privado.Models
             bool resultado = webService.cns_documento_leido(input.rut, input.codigo);
             Resultado = resultado;
         }
+    }
+
+    public class DocumentoFirmarResultado
+    {
+        public List<Documento> Documentos { get; set; }
+
+        public DocumentoFirmarResultado(DocumentoFirmarInput input)
+        {
+            tann_documentos webService = new tann_documentos();
+            _operacion[] documentos = webService.cns_firmar_documento(input.rut, input.codigo);
+            Documentos = new List<Documento>();
+
+            foreach(_operacion documento in documentos)
+            {
+                Documentos.Add(new Documento(documento));
+            }
+        }
+
+        public DocumentoFirmarResultado(OperacionFirmarInput input)
+        {
+            tann_documentos webService = new tann_documentos();
+            _operacion[] documentos = webService.cns_firmar_contrato(input.rut, input.codigo);
+            Documentos = new List<Documento>();
+
+            foreach (_operacion documento in documentos)
+            {
+                Documentos.Add(new Documento(documento));
+            }
+        }
+
+
     }
 }

@@ -39,6 +39,7 @@ namespace Sitio_Privado.Controllers
         private GraphApiClientHelper syncApiHelper = new GraphApiClientHelper();
         private ITraceWriter tracer = GlobalConfiguration.Configuration.Services.GetTraceWriter();
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<HttpResponseMessage> CreateUser(HttpRequestMessage request)
         {
@@ -79,6 +80,7 @@ namespace Sitio_Privado.Controllers
             return response;
         }
 
+        [AllowAnonymous]
         [HttpPatch]
         public async Task<HttpResponseMessage> UpdateUser(string id, HttpRequestMessage request)
         {
@@ -119,6 +121,7 @@ namespace Sitio_Privado.Controllers
             return response;
         }
     
+        [AllowAnonymous]
         [HttpGet]
         public async Task<HttpResponseMessage> GetUser(string id)
         {

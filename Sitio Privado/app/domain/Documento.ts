@@ -8,7 +8,9 @@
         Leido: string;
         Firmado: string;
         Ruta: string;
-        Resultados: string;
+        NombreCliente: string;
+        RutaFirmado: string;
+        Seleccionado: boolean;
     }
 
     export class Documento extends app.domain.EntityBase implements IDocumento {
@@ -20,7 +22,9 @@
             public Leido: string,
             public Firmado: string,
             public Ruta: string,
-            public Resultados: string) {
+            public NombreCliente: string,
+            public RutaFirmado: string,
+            public Seleccionado: boolean) {
 
             super();
 
@@ -32,7 +36,9 @@
             this.Leido = Leido;
             this.Firmado = Firmado;
             this.Ruta = Ruta;
-            this.Resultados = Resultados;
+            this.NombreCliente = NombreCliente;
+            this.RutaFirmado = RutaFirmado;
+            this.Seleccionado = Seleccionado;
         }
     }
 }

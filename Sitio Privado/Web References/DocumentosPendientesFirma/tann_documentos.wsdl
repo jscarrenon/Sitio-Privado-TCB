@@ -95,6 +95,21 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="cns_firmar_contrato">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="rut" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="codigo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="cns_firmar_contratoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="cns_firmar_contratoResult" type="tns:ArrayOf_operacion" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
     </s:schema>
   </wsdl:types>
   <wsdl:message name="cns_operacion_pendienteSoapIn">
@@ -127,6 +142,12 @@
   <wsdl:message name="cns_firmar_documentoSoapOut">
     <wsdl:part name="parameters" element="tns:cns_firmar_documentoResponse" />
   </wsdl:message>
+  <wsdl:message name="cns_firmar_contratoSoapIn">
+    <wsdl:part name="parameters" element="tns:cns_firmar_contrato" />
+  </wsdl:message>
+  <wsdl:message name="cns_firmar_contratoSoapOut">
+    <wsdl:part name="parameters" element="tns:cns_firmar_contratoResponse" />
+  </wsdl:message>
   <wsdl:portType name="tann_documentosSoap">
     <wsdl:operation name="cns_operacion_pendiente">
       <wsdl:input message="tns:cns_operacion_pendienteSoapIn" />
@@ -147,6 +168,10 @@
     <wsdl:operation name="cns_firmar_documento">
       <wsdl:input message="tns:cns_firmar_documentoSoapIn" />
       <wsdl:output message="tns:cns_firmar_documentoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="cns_firmar_contrato">
+      <wsdl:input message="tns:cns_firmar_contratoSoapIn" />
+      <wsdl:output message="tns:cns_firmar_contratoSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="tann_documentosSoap" type="tns:tann_documentosSoap">
@@ -196,6 +221,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="cns_firmar_contrato">
+      <soap:operation soapAction="http://servicios.tanner.cl/documentos/cns_firmar_contrato" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="tann_documentosSoap12" type="tns:tann_documentosSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -237,6 +271,15 @@
     </wsdl:operation>
     <wsdl:operation name="cns_firmar_documento">
       <soap12:operation soapAction="http://servicios.tanner.cl/documentos/cns_firmar_documento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cns_firmar_contrato">
+      <soap12:operation soapAction="http://servicios.tanner.cl/documentos/cns_firmar_contrato" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
