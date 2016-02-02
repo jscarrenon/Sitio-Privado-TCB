@@ -11,6 +11,7 @@ using System.Net.Http.Formatting;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Tracing;
 
 namespace Sitio_Privado.Controllers
 {
@@ -36,6 +37,7 @@ namespace Sitio_Privado.Controllers
         #endregion
 
         private GraphApiClientHelper syncApiHelper = new GraphApiClientHelper();
+        private ITraceWriter tracer = GlobalConfiguration.Configuration.Services.GetTraceWriter();
 
         [HttpPost]
         public async Task<HttpResponseMessage> CreateUser(HttpRequestMessage request)
@@ -45,6 +47,8 @@ namespace Sitio_Privado.Controllers
 
             //Read request's parameters
             JObject requestBody = JObject.Parse(await request.Content.ReadAsStringAsync());
+            tracer.Info(Request, this.ControllerContext.ControllerDescriptor.ControllerType.FullName, 
+                "Content:\n{0}", new string[] { requestBody.ToString() });
             if (!CheckNeededAttributesForCreatingUser(requestBody))
             {
                 response.StatusCode = HttpStatusCode.BadRequest;
@@ -118,6 +122,8 @@ namespace Sitio_Privado.Controllers
         [HttpGet]
         public async Task<HttpResponseMessage> GetUser(string id)
         {
+            tracer.Info(Request, this.ControllerContext.ControllerDescriptor.ControllerType.FullName, "Requested Rut: " + id);
+
             HttpResponseMessage response = new HttpResponseMessage();
 
             GraphApiResponseInfo graphApiResponse = await syncApiHelper.GetUserByRut(id);
@@ -126,6 +132,9 @@ namespace Sitio_Privado.Controllers
             {
                 string responseBody = GetUserResponseBody(graphApiResponse.User);
                 response.Content = new StringContent(responseBody, Encoding.UTF8, "application/json");
+
+                tracer.Info(Request, this.ControllerContext.ControllerDescriptor.ControllerType.FullName, 
+                    "Completed with {0}, Content:\n {1}", new string[] { response.StatusCode.ToString(), responseBody});
             }
             else
             {
@@ -133,6 +142,9 @@ namespace Sitio_Privado.Controllers
                 //TODO: filter error messages
                 errorMessage.Add("message", graphApiResponse.Message);
                 response.Content = new StringContent(errorMessage.ToString(), Encoding.UTF8, "application/json");
+
+                tracer.Info(Request, this.ControllerContext.ControllerDescriptor.ControllerType.FullName,
+                    "Completed with {0}, Content:\n {1}", new string[] { response.StatusCode.ToString(), errorMessage.ToString() });
             }
             
             return response;
