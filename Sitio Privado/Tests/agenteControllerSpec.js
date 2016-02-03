@@ -26,24 +26,6 @@
                 $rootScope: _$rootScope_
             });
         }));
-        //it('should return some agent?', function () {
-        //    var rut = { _rut: 123456789 };
-        //    var agente={
-        //        Codigo: 123,
-        //        Nombre: "Juanin Juan Jarri",
-        //        Sucursal: "Providencia",
-        //        PathImg: "/some/path/somewhere",
-        //        Email: "asd@asd.cl",
-        //        Telefono: "123123123",
-        //        FechaInicioAcreditacion: "23/12/2015",
-        //        FechaExpiracionAcreditacion: "23/12/2030",
-        //        Descriptor: "asdasdasdasdasdasd",
-        //    };
-        //    spyOn(agenteCtrl, 'getAgente');
-        //});
 
     });
-    //describe('another thing', function () {
-
-    //});
 });

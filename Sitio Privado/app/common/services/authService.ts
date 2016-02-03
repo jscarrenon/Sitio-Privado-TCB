@@ -21,20 +21,22 @@
             private extrasService: ExtrasService) {
             this.circularizacionPendiente = false;
             this.getUsuarioActual();
+            console.log("authService constructor");
         }
 
         getUsuarioActual(): void {
-            this.dataService.getSingle(this.constantService.mvcHomeURI + 'GetUsuarioActual').then((result: app.domain.IUsuario) => {
-                this.usuario = result;
-                if (this.usuario.Autenticado) {
-                    this.autenticado = true;
-                    this.getCircularizacionPendiente();
-                }
-                else {
-                    this.autenticado = false;
-                    this.circularizacionPendiente = false;
-                }
-            });
+            this.dataService.getSingle(this.constantService.mvcHomeURI + 'GetUsuarioActual')
+                .then((result: app.domain.IUsuario) => {
+                    this.usuario = result;
+                        if (this.usuario.Autenticado) {
+                            this.autenticado = true;
+                            this.getCircularizacionPendiente();
+                        }
+                        else {
+                            this.autenticado = false;
+                            this.circularizacionPendiente = false;
+                        }
+                });
         }
 
         cerrarSesion(): void {

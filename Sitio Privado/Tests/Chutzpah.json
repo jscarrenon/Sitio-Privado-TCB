@@ -5,14 +5,14 @@
     { "Path": "../bower_components/angular/angular.js" },
     { "Path": "../bower_components/angular-mocks/angular-mocks.js" },
     { "Path": "../bower_components/angular-route/angular-route.js" },
+    { "Path": "../.build/spa/domain.js" },
+    { "Path": "../.build/spa/app.js" },
     { "Path": "../app/app.js" },
-    { "Path": "../app/", "Includes": [ "mainCtrl.js" ] },
-    { "Path": "../app/", "Includes": [ "routeConfig.js" ] },
     { "Path": "../app/common/controllers", "Includes": [ "*.js" ] },
     { "Path": "../app/common/services", "Includes": [ "*.js" ] },
     { "Path": "../app/home/", "Includes": [ "*.js" ] },
     { "Path": "../app/informacion-financiera/", "Includes": [ "*.js" ] },
-    { "Path": "../app/inversiones/", "Includes": [ "*.ts" ] },
+    { "Path": "../app/inversiones/", "Includes": [ "*.js" ] },
     { "Path": "../app/mis-inversiones/", "Includes": [ "*.js" ] }
   ],
   "Tests": [ {"Path": "." }, { "Includes": [ "*Spec.js" ] } ]

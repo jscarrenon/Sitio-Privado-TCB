@@ -14,14 +14,13 @@
 
             get_deferred = $q.defer;
 
-            spyOn(constantService, 'apiBlobsURI').and.returnValue('');
-            
+            spyOn(constantService, 'apiBlobsURI').and.returnValue('');            
 
             informacionFinancieraController = _$controller_("InformacionFinancieraCtrl", {
                 $rootScope: _$rootScope_,
                 constantService: _constantService_,
                 dataService: _dataService_,
-                $routeParams: $routeParams
+                $routeParams: _$routeParams_
             });
         }));
 

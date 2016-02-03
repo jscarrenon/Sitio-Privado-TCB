@@ -394,8 +394,13 @@
     <Content Include=".bowerrc" />
     <Content Include="bower.json" />
     <Content Include="Tests\agenteControllerSpec.js" />
+    <Content Include="Tests\authServiceSpec.js" />
     <Content Include="Tests\bodyControllerSpec.js" />
     <Content Include="Tests\informacionFinancieraControllerSpec.js" />
+    <Content Include="Tests\informacionFinancieraIndicesControllerSpec.js" />
+    <Content Include="Tests\misInversionesCircularizacionControllerSpec.js" />
+    <Content Include="Tests\misInversionesControllerSpec.js" />
+    <Content Include="Tests\misInversionesFondosMutuosControllerSpec.js" />
     <Content Include="Tests\webserviceControllerSpec.js" />
     <Content Include="Web References\CircularizacionCustodia\archivocli.datasource">
       <DependentUpon>Reference.map</DependentUpon>
@@ -685,8 +690,8 @@
     <TypeScriptCompile Include="app\informacion-financiera\informacionFinancieraIndicesCtrl.ts" />
     <TypeScriptCompile Include="app\inversiones\inversionesCtrl.ts" />
     <TypeScriptCompile Include="app\mis-inversiones\misInversionesCircularizacionCtrl.ts" />
-    <TypeScriptCompile Include="app\mis-inversiones\misInversionesFondosMutuos.ts" />
-    <TypeScriptCompile Include="app\mis-inversiones\misInversionesNacionales.ts" />
+    <TypeScriptCompile Include="app\mis-inversiones\misInversionesFondosMutuosCtrl.ts" />
+    <TypeScriptCompile Include="app\mis-inversiones\misInversionesNacionalesCtrl.ts" />
     <TypeScriptCompile Include="app\mis-inversiones\misInversionesDocumentosCtrl.ts" />
     <TypeScriptCompile Include="app\mis-inversiones\misInversionesCtrl.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-animate.d.ts" />

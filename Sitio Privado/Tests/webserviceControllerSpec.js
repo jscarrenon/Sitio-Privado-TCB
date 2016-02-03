@@ -49,14 +49,13 @@
         it("getAgente() - Obtención correcta de la información del agente.", function () {
 
             webserviceController.getAgente(agenteInput_stub);
-
             postWebservice_deferred.resolve(agente_stub);
             $rootScope.$digest();
 
                 //Esperamos que la información del agente sea correcta.
             expect(webserviceController.agente).toBe(agente_stub);
 
-            });
+       });
     });
 
     describe("Método/s fondos mutuos de renta fija y variable.", function() {
