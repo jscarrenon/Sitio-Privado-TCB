@@ -12,6 +12,7 @@
         verDocumento(documento: app.domain.IDocumento): void;
         firmarDocumentos(): void;
         fechaHoy: Date;
+        actualizarDocumentosPendientes(): void;
         actualizarDocumentosFirmados(): void;
         operacionesPendientesPaginaActual: number;
         operacionesPendientesPorPagina: number;
@@ -75,8 +76,7 @@
             this.todasOperaciones = false;
             this.todosDocumentos = false;
 
-            this.documentosPendientesInput = new app.domain.DocumentosPendientesInput(this.extrasService.getRutParteEntera(this.authService.usuario.Rut));
-            this.getDocumentosPendientes(this.documentosPendientesInput);
+            this.actualizarDocumentosPendientes();
 
             this.fechaFirmadosFin = new Date();
             this.fechaFirmadosInicio = new Date();
@@ -133,7 +133,7 @@
                 .then((result: app.domain.IDocumentoLeidoResultado) => {
                     var documentoLeidoResultado: app.domain.IDocumentoLeidoResultado = result;
                     if (result.Resultado == true) {
-                        documento.Leido = "Leido"; // valor? -KUNDER
+                        documento.Leido = 'S'; // valor? -KUNDER
                     }
                 });
         }
@@ -147,7 +147,8 @@
                 this.dataService.postWebService(this.constantService.apiDocumentoURI + 'setFirmarOperacion', operacionFirmarInput)
                     .then((result: app.domain.IDocumentoFirmarResultado) => {
                         var operacionFirmarResultado: app.domain.IDocumentoFirmarResultado = result;
-                        //Debería hacerse algo con los resultados (por ej actualizar listado de operaciones firmadas) --KUNDER
+                        this.actualizarDocumentosPendientes();
+                        this.actualizarDocumentosFirmados();
                     });
 
                 var documentoCodigo: string = this.$filter('filter')(this.documentosPendientes, { Seleccionado: true }).map(function (documento) { return documento.Codigo; }).join();
@@ -156,9 +157,15 @@
                 this.dataService.postWebService(this.constantService.apiDocumentoURI + 'setFirmarDocumento', documentoFirmarInput)
                     .then((result: app.domain.IDocumentoFirmarResultado) => {
                         var documentoFirmarResultado: app.domain.IDocumentoFirmarResultado = result;
-                        //Debería hacerse algo con los resultados (por ej actualizar listado de documentos firmados) --KUNDER
+                        this.actualizarDocumentosPendientes();
+                        this.actualizarDocumentosFirmados();
                     });
             }
+        }
+
+        actualizarDocumentosPendientes(): void {
+            this.documentosPendientesInput = new app.domain.DocumentosPendientesInput(this.extrasService.getRutParteEntera(this.authService.usuario.Rut));
+            this.getDocumentosPendientes(this.documentosPendientesInput);
         }
 
         actualizarDocumentosFirmados(): void {
