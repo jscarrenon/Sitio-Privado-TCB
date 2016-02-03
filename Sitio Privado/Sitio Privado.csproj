@@ -628,6 +628,7 @@
     <TypeScriptCompile Include="app\domain\CircularizacionArchivo.ts" />
     <TypeScriptCompile Include="app\domain\CircularizacionProcesoResultado.ts" />
     <TypeScriptCompile Include="app\domain\DocumentoFirmarResultado.ts" />
+    <TypeScriptCompile Include="app\domain\DocumentosPendientesCantidadResultado.ts" />
     <TypeScriptCompile Include="app\domain\Indices.ts" />
     <TypeScriptCompile Include="app\domain\IndicesInput.ts" />
     <TypeScriptCompile Include="app\domain\DocumentoLeidoResultado.ts" />

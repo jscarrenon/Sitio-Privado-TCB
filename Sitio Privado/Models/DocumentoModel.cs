@@ -37,6 +37,11 @@ namespace Sitio_Privado.Models
         public string codigo { get; set; }
     }
 
+    public class DocumentosPendientesCantidadInput
+    {
+        public string rut { get; set; }
+    }
+
     public class Documento
     {
         public string Codigo { get; set; }
@@ -108,7 +113,17 @@ namespace Sitio_Privado.Models
                 Documentos.Add(new Documento(documento));
             }
         }
+    }
 
+    public class DocumentosPendientesCantidadResultado
+    {
+        public int Resultado { get; set; }
 
+        public DocumentosPendientesCantidadResultado(DocumentosPendientesCantidadInput input)
+        {
+            tann_documentos webService = new tann_documentos();
+            int resultado = webService.cns_operaciones_pendientes(input.rut);
+            Resultado = resultado;
+        }
     }
 }
