@@ -1,6 +1,7 @@
 ﻿describe("[FrontEnd] AuthService Unit Tests", function () {
 
     beforeEach(function () {
+        module("ui.bootstrap.pagination");
         module("tannerPrivadoApp");
     });
 

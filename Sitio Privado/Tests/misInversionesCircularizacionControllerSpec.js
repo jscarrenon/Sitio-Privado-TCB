@@ -5,7 +5,7 @@
     });
 
     var $q, $rootScope,
-        get_deferred, postWebService_deferred,
+        getSingle_deferred, postWebService_deferred,
         misInversionesCircularizacionController,
         constantService, dataService, authService, extrasService;
 
@@ -27,29 +27,38 @@
             CiudadPais: ""
     };
 
-    beforeEach(inject(function (_$q_, _$rootScope_, _constantService_, _dataService_, _authService_, _extrasService_) {
+    beforeEach(inject(function (_$q_, _$rootScope_, _constantService_, _dataService_, _extrasService_) {
+
         $q = _$q_;
         $rootScope = _$rootScope_;
         constantService = _constantService_;
         dataService = _dataService_;            
         extrasService = _extrasService_;
 
+        getSingle_deferred = $q.defer();
         postWebService_deferred = $q.defer();
 
+        spyOn(extrasService, "getRutParteEntera");
+        spyOn(extrasService, "getFechaFormato").and.returnValue("24/02/2016");
         spyOn(constantService, "mvcHomeURI").and.returnValue("/home/");
-        spyOn(dataService, "getSingle").and.returnValue(postWebService_deferred.promise);
+        spyOn(constantService, 'apiCircularizacionURI').and.returnValue('/api/circularizacion/');
+
+        spyOn(dataService, 'getSingle').and.returnValue(getSingle_deferred.promise);
+        spyOn(dataService, 'postWebService').and.returnValues(postWebService_deferred.promise, postWebService_deferred.promise, postWebService_deferred.promise);
+        
     }));
 
     beforeEach(inject(function (_authService_) {
-        postWebService_deferred.resolve(usuario);
-        $rootScope.$digest();
 
+        getSingle_deferred.resolve(usuario);
+        $rootScope.$digest();
         authService = _authService_;
+
     }));
 
     beforeEach(inject(
         function (_$controller_) {
-            
+
             misInversionesCircularizacionController = _$controller_("MisInversionesCircularizacionCtrl", {
                 $rootScope: $rootScope,
                 constantService: constantService,
@@ -57,6 +66,16 @@
                 authService: authService,
                 extrasService: extrasService
             });
+
+            postWebService_deferred.resolve({
+                UrlCartola: "/cartola/",
+                UrlCircularizacion: "/circularizacíon/"
+            });
+            $rootScope.$digest();
+
+            postWebService_deferred.resolve(false);
+            $rootScope.$digest();
+
         }
     ));
 
@@ -65,49 +84,34 @@
         misInversionesCircularizacionController.seleccionarSeccion(id);
 
         expect(misInversionesCircularizacionController.seccionId).toBe(id);
-        expect(misInversionesCircularizacionController.seccionURI).toBe('app/mis-inversiones/' + misInversionesCircularizacionController.templates[id]);
+        expect(misInversionesCircularizacionController.seccionURI).toBe("app/mis-inversiones/circularizacion_pendiente.html");
     });
 
     it("Seleccionar sección 1", function () {
-        var id = 0;
+        var id = 1;
+        var getArchivoSpy = spyOn(misInversionesCircularizacionController, "getArchivo");
         misInversionesCircularizacionController.seleccionarSeccion(id);
 
         expect(misInversionesCircularizacionController.seccionId).toBe(id);
-        expect(misInversionesCircularizacionController.seccionURI).toBe('app/mis-inversiones/' + misInversionesCircularizacionController.templates[id]);
+        expect(getArchivoSpy).toHaveBeenCalled();
+        expect(misInversionesCircularizacionController.seccionURI).toBe("app/mis-inversiones/circularizacion_anual.html");
     });
 
     it("Seleccionar sección 2", function () {
-        var id = 0;
+        var id = 2;
         misInversionesCircularizacionController.seleccionarSeccion(id);
 
         expect(misInversionesCircularizacionController.seccionId).toBe(id);
-        expect(misInversionesCircularizacionController.seccionURI).toBe('app/mis-inversiones/' + misInversionesCircularizacionController.templates[id]);
-    });
-
-    it("Seleccionar sección 3", function () {
-        var id = 0;
-        misInversionesCircularizacionController.seleccionarSeccion(id);
-
-        expect(misInversionesCircularizacionController.seccionId).toBe(id);
-        expect(misInversionesCircularizacionController.seccionURI).toBe('app/mis-inversiones/' + misInversionesCircularizacionController.templates[id]);
-    });
-
-    it("Seleccionar sección 4", function () {
-        var id = 0;
-        misInversionesCircularizacionController.seleccionarSeccion(id);
-
-        expect(misInversionesCircularizacionController.seccionId).toBe(id);
-        expect(misInversionesCircularizacionController.seccionURI).toBe('app/mis-inversiones/' + misInversionesCircularizacionController.templates[id]);
+        expect(misInversionesCircularizacionController.seccionURI).toBe("app/mis-inversiones/circularizacion_aprobar.html");
     });
     
-    it("setTemplates()", function () {
+    it("Setear las plantillas.", function () {
             
         misInversionesCircularizacionController.setTemplates();
 
         expect(misInversionesCircularizacionController.templates[0]).toBe("circularizacion_pendiente.html");
-        expect(misInversionesCircularizacionController.templates[1]).toBe("circularizacion_anterior.html");
-        expect(misInversionesCircularizacionController.templates[2]).toBe("circularizacion_anual-2015.html");
-        expect(misInversionesCircularizacionController.templates[3]).toBe("circularizacion_aprobar.html");           
+        expect(misInversionesCircularizacionController.templates[1]).toBe("circularizacion_anual.html");
+        expect(misInversionesCircularizacionController.templates[2]).toBe("circularizacion_aprobar.html");
 
     });
 });

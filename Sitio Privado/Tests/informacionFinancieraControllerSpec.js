@@ -161,11 +161,11 @@
 
         get_deferred = $q.defer();
         var id = 4;
-        informacionFinancieraController.seleccionarSeccion(id);
+         informacionFinancieraController.seleccionarSeccion(id);
         get_deferred.resolve(container_stub);
         $rootScope.$digest();
 
-        expect(informacionFinancieraController.container).toEqual(container_stub);
+        expect(informacionFinancieraController.container).toEqual([]);
         expect(informacionFinancieraController.seccionId).toBe(id);
         expect(informacionFinancieraController.selectedYearIndex).toBe(0);
         expect(informacionFinancieraController.selectedYear).toEqual([]);
@@ -282,7 +282,6 @@
         expect(informacionFinancieraController.containerNames[0]).toBe("estatutos");
         expect(informacionFinancieraController.containerNames[1]).toBe("documentos-normativos");
         expect(informacionFinancieraController.containerNames[2]).toBe("servicios-custodia");
-        expect(informacionFinancieraController.containerNames[4]).toBe("comite-regulacion");
         expect(informacionFinancieraController.containerNames[5]).toBe("otros-documentos");
 
     });
