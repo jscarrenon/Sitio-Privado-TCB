@@ -3,13 +3,18 @@
     interface IModalInstanceViewModel {
         ok(): void;
         cancelar(): void;
+        fecha: Date;
     }
 
     export class ModalInstanceCtrl implements IModalInstanceViewModel {
 
+        fecha: Date;
+
         static $inject = ['$uibModalInstance'];
         constructor(
             private $uibModalInstance: ng.ui.bootstrap.IModalServiceInstance) {
+
+            this.fecha = new Date();
         }
 
         ok(): void {

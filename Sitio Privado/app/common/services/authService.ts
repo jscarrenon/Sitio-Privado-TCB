@@ -7,7 +7,6 @@
         cerrarSesion(): void;
         circularizacionPendiente: boolean;
         getCircularizacionPendiente(): void;
-        getCircularizacionTemplate(fecha: Date): void;
         documentosPendientes: number;
         getDocumentosPendientes(): void;
         getDocumentosPendientesTemplate(): void;
@@ -19,10 +18,12 @@
         circularizacionPendiente: boolean;
         documentosPendientes: number;
                 
-        static $inject = ['constantService', 'dataService', 'extrasService'];
+        static $inject = ['constantService', 'dataService', 'extrasService', '$uibModal', '$location'];
         constructor(private constantService: ConstantService,
             private dataService: DataService,
-            private extrasService: ExtrasService) {
+            private extrasService: ExtrasService,
+            private $uibModal: ng.ui.bootstrap.IModalService,
+            private $location: ng.ILocationService) {
             this.circularizacionPendiente = false;
             this.documentosPendientes = 0;
             this.getUsuarioActual();
@@ -59,21 +60,15 @@
             this.dataService.postWebService(this.constantService.apiCircularizacionURI + 'getPendiente', input)
                 .then((result: app.domain.ICircularizacionProcesoResultado) => {
                     this.circularizacionPendiente = result.Resultado;
-                    var template: string = this.getCircularizacionTemplate(fecha);
-                    if (this.circularizacionPendiente) {
-                        setTimeout(function () {
-                            uglipop({
-                                class: 'modal-style modal1',
-                                source: 'html',
-                                content: template
-                            });
-                        }, 100);
+                    if (this.circularizacionPendiente) {                        
+                        var modalInstance: ng.ui.bootstrap.IModalServiceInstance = this.$uibModal.open({
+                            templateUrl: 'app/mis-inversiones/circularizacion_pendiente_modal.html',
+                            controller: 'ModalInstanceCtrl as modal'
+                        });
+
+                        modalInstance.result.then(_ => this.$location.path('/mis-inversiones/circularizacion'));
                     }
                 });
-        }
-
-        getCircularizacionTemplate(fecha: Date): string {
-            return '<div class="pretitle">Pendiente</div><div class="title">Circularización Anual de Custodia ' + fecha.getFullYear() + '</div><div class="text">Estimado Cliente,<br/> En conformidad a lo dispuesto en la Circular 1962 de la Superintendencia de Valores y Seguros (SVS), solicitamos a usted revisar los informes de saldos, que de acuerdo a nuestros registros se encuentran depositados a su nombre en custodia y/o garantía de Tanner Corredores de Bolsa S.A. al día ' + this.extrasService.getFechaFormato(fecha, "longDate") + '.</div><div class="button green"><a href="#/mis-inversiones/circularizacion" class="clink" onclick="rem();">Continuar</a></div><button class="modal-close" onclick="rem();"></button>';
         }
 
         getDocumentosPendientes(): void {

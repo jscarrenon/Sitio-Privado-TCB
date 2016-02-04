@@ -212,7 +212,6 @@
             modalInstance.result.then(
                 _ => this.firmarDocumentos()
                 , function () {
-                console.log('Modal dismissed at: ' + new Date());
             });
         }
     }

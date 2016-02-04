@@ -372,6 +372,7 @@
     <Content Include="app\mis-inversiones\circularizacion_anual.html" />
     <Content Include="app\mis-inversiones\circularizacion_aprobar.html" />
     <Content Include="app\mis-inversiones\circularizacion_pendiente.html" />
+    <Content Include="app\mis-inversiones\circularizacion_pendiente_modal.html" />
     <Content Include="app\mis-inversiones\estado-documentos.html" />
     <Content Include="app\mis-inversiones\estado-documentos_confirmacion.html" />
     <Content Include="app\mis-inversiones\estado-documentos_firmados.html" />
