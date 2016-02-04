@@ -41,21 +41,26 @@ namespace Sitio_Privado.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<HttpResponseMessage> CreateUser(HttpRequestMessage request)
+        public async Task<HttpResponseMessage> CreateUser()
         {
+            //Read request's parameters
+            JObject requestBody = JObject.Parse(await Request.Content.ReadAsStringAsync());
+            tracer.Info(Request, this.ControllerContext.ControllerDescriptor.ControllerType.FullName, 
+                "Content:\n{0}", new string[] { requestBody.ToString() });
+
             //Response
             HttpResponseMessage response = new HttpResponseMessage();
 
-            //Read request's parameters
-            JObject requestBody = JObject.Parse(await request.Content.ReadAsStringAsync());
-            tracer.Info(Request, this.ControllerContext.ControllerDescriptor.ControllerType.FullName, 
-                "Content:\n{0}", new string[] { requestBody.ToString() });
             if (!CheckNeededAttributesForCreatingUser(requestBody))
             {
                 response.StatusCode = HttpStatusCode.BadRequest;
-                JObject json = new JObject();
-                json.Add("message", "One or more required parameters is missing");
-                response.Content = new StringContent(json.ToString(), Encoding.UTF8, "application/json");
+                JObject content = new JObject();
+                content.Add("message", "One or more required parameters is missing");
+                response.Content = new StringContent(content.ToString(), Encoding.UTF8, "application/json");
+
+                tracer.Info(Request, this.ControllerContext.ControllerDescriptor.ControllerType.FullName,
+                    "Completed with {0}, Content:\n {1}", new string[] { response.StatusCode.ToString(), content.ToString() });
+
                 return response;
             }
 
@@ -82,12 +87,12 @@ namespace Sitio_Privado.Controllers
 
         [AllowAnonymous]
         [HttpPatch]
-        public async Task<HttpResponseMessage> UpdateUser(string id, HttpRequestMessage request)
+        public async Task<HttpResponseMessage> UpdateUser(string id)
         {
             HttpResponseMessage response = new HttpResponseMessage();
 
             //Read request's parameters
-            JObject requestContent = (JObject)await request.Content.ReadAsAsync(typeof(JObject));
+            JObject requestContent = (JObject)await Request.Content.ReadAsAsync(typeof(JObject));
             GraphUserModel requestUser = GetUpdateUserGraphApiRequestBody(requestContent);
             if (requestUser == null) {
                 response.StatusCode = HttpStatusCode.BadRequest;
