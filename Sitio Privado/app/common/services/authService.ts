@@ -21,7 +21,6 @@
             private extrasService: ExtrasService) {
             this.circularizacionPendiente = false;
             this.getUsuarioActual();
-            console.log("authService constructor");
         }
 
         getUsuarioActual(): void {

@@ -4,11 +4,10 @@
 
 describe("[FrontEnd] MisInversionesFondosMutuosCtrl Unit Tests", function () {
         
-        var $rootScope, $routeParams,
-            postWebService_deferred, getSingle_deferred,// deferred used for promises
-            constantService, dataService, authService, extrasService,// controller dependencies
-            fondosMutuosController,
-            servicesArray; // the controller
+    var $rootScope, $routeParams,
+        postWebService_deferred, getSingle_deferred,// deferred used for promises
+        constantService, dataService, authService, extrasService,// controller dependencies
+        fondosMutuosController; // the controller
 
         var usuario = {
             Autenticado: true,
@@ -73,7 +72,6 @@ describe("[FrontEnd] MisInversionesFondosMutuosCtrl Unit Tests", function () {
             $routeParams = _$routeParams_;
             $rootScope = _$rootScope_;
             extrasService = _extrasService_;
-            servicesArray = [_$rootScope_, _$q_, _constantService_, _dataService_, _extrasService_, _$routeParams_];
 
             getSingle_deferred = $q.defer();
             postWebService_deferred = $q.defer();
@@ -83,7 +81,7 @@ describe("[FrontEnd] MisInversionesFondosMutuosCtrl Unit Tests", function () {
             spyOn(constantService, 'apiCircularizacionURI').and.returnValue('/api/circularizacion/');
 
             spyOn(dataService, 'getSingle').and.returnValue(getSingle_deferred.promise);
-            spyOn(dataService, 'postWebService').and.returnValues(postWebService_deferred.promise, postWebService_deferred.promise);
+            spyOn(dataService, 'postWebService').and.returnValues(postWebService_deferred.promise, postWebService_deferred.promise, postWebService_deferred.promise);
             spyOn(extrasService, 'getRutParteEntera');
 
         }));
@@ -115,17 +113,14 @@ describe("[FrontEnd] MisInversionesFondosMutuosCtrl Unit Tests", function () {
         
         it("getFondosMutuos() - Arreglos de fondos mutuos correctamente definidos y asignados.", function () {
             
-            console.log("getFondosMutuos TEST");
-            postWebService_deferred = $q.defer();
-
+            //postWebService_deferred = $q.defer();
             var getFondosMutuosTotalSpy = spyOn(fondosMutuosController, 'getFondosMutuosTotal');
-
             fondosMutuosController.getFondosMutuos(fondoMutuoInput_stub);
 
             //se resuelva el resultado del defer de getFondosMutuos()
             postWebService_deferred.resolve(fondosMutuos_stub);
             $rootScope.$digest();
-
+            
             //Esperamos que las listas de fondos mutuos (RF y RV) estén correctas.
             expect(fondosMutuosController.fondosMutuosRF).toBe(fondosMutuos_stub["fondosMutuosRF"]);
             expect(fondosMutuosController.fondosMutuosRV).toBe(fondosMutuos_stub["fondosMutuosRV"]);

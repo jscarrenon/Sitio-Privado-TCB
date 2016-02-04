@@ -70,9 +70,9 @@ describe("[FrontEnd] informacionFinancieraIndicesCrtl Unit Tests.", function () 
         it("Indices actualizados correctamente.", function () {
             var spy = spyOn(informacionFinancieraIndicesController, 'getIndices');
             informacionFinancieraIndicesController.actualizarIndices();
-            expect(informacionFinancieraIndicesController.indicesInput).toMatch(indices_input_stub);
+            expect(informacionFinancieraIndicesController.indicesInput.xfecha).toBe(indices_input_stub.xfecha);
             expect(spy).toHaveBeenCalled();
-            //expect(spy).toHaveBeenCalledWith(indices_input_stub);
+
         });
     });
 });
