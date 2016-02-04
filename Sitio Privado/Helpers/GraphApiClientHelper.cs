@@ -96,6 +96,10 @@ namespace Sitio_Privado.Helpers
             {
                 response.User = GetUserResponse(bodyResponse);
             }
+            else if(graphResponse.StatusCode == HttpStatusCode.BadGateway)
+            {
+                response.Message = bodyResponse.GetValue("message").ToString();
+            }
             else
             {
                 response.Message = bodyResponse.GetValue("odata.error").Value<JToken>("message").Value<string>("value");
@@ -169,7 +173,19 @@ namespace Sitio_Privado.Helpers
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, url);
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", result.AccessToken);
             request.Content = new StringContent(json, Encoding.UTF8, "application/json");
-            HttpResponseMessage graphApiResponse = await http.SendAsync(request);
+            HttpResponseMessage graphApiResponse;
+            try
+            {
+                graphApiResponse = await http.SendAsync(request);
+            }
+            catch(Exception)
+            {
+                graphApiResponse = new HttpResponseMessage();
+                graphApiResponse.StatusCode = HttpStatusCode.BadGateway;
+                JObject content = new JObject();
+                content.Add("message", "There was an unexpected error when performing the operation in B2C server");
+                graphApiResponse.Content = new StringContent(content.ToString(), Encoding.UTF8, "application/json");
+            }
             return graphApiResponse;
         }
 
@@ -190,7 +206,20 @@ namespace Sitio_Privado.Helpers
             // Append the access token for the Graph API to the Authorization header of the request, using the Bearer scheme.
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, url);
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", result.AccessToken);
-            HttpResponseMessage graphApiResponse = await http.SendAsync(request);
+            HttpResponseMessage graphApiResponse;
+
+            try
+            {
+                graphApiResponse = await http.SendAsync(request);
+            }
+            catch (Exception)
+            {
+                graphApiResponse = new HttpResponseMessage();
+                graphApiResponse = new HttpResponseMessage();
+                graphApiResponse.StatusCode = HttpStatusCode.BadGateway;
+                JObject content = new JObject();
+                content.Add("message", "There was an unexpected error when performing the operation in B2C server");
+            }
 
             return graphApiResponse;
         }
@@ -205,9 +234,22 @@ namespace Sitio_Privado.Helpers
             HttpRequestMessage request = new HttpRequestMessage(new HttpMethod("PATCH"), url);
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", result.AccessToken);
             request.Content = new StringContent(json, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = await http.SendAsync(request);
+            HttpResponseMessage graphApiResponse;
 
-            return response;
+            try
+            {
+                graphApiResponse = await http.SendAsync(request);
+            }
+            catch (Exception)
+            {
+                graphApiResponse = new HttpResponseMessage();
+                graphApiResponse = new HttpResponseMessage();
+                graphApiResponse.StatusCode = HttpStatusCode.BadGateway;
+                JObject content = new JObject();
+                content.Add("message", "There was an unexpected error when performing the operation in B2C server");
+            }
+
+            return graphApiResponse;
         }
 
         private string GetCreateUserRequestBody(GraphUserModel graphUser)
