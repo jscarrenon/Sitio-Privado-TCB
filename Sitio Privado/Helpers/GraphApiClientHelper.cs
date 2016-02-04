@@ -102,7 +102,7 @@ namespace Sitio_Privado.Helpers
             }
             else
             {
-                response.Message = bodyResponse.GetValue("odata.error").Value<JToken>("message").Value<string>("value");
+                response.Message = bodyResponse.GetValue("odata.error").Value<JToken>("message").Value<string>("value").Replace("alternativeSignInNamesInfo", "rut");
             }
             return response;
         }
@@ -132,6 +132,10 @@ namespace Sitio_Privado.Helpers
                     response.Message = "Could not find any object matching that Rut";
                 }
             }
+            else if (graphResponse.StatusCode == HttpStatusCode.BadGateway)
+            {
+                response.Message = bodyResponse.GetValue("message").ToString();
+            }
             else
             {
                 response.Message = bodyResponse.GetValue("odata.error").Value<JToken>("message").Value<string>("value");
@@ -154,6 +158,10 @@ namespace Sitio_Privado.Helpers
             {
                 GraphUserModel user = GetUserResponse(bodyResponse);
                 response.User = user;
+            }
+            else if (graphResponse.StatusCode == HttpStatusCode.BadGateway)
+            {
+                response.Message = bodyResponse.GetValue("message").ToString();
             }
             else
             {

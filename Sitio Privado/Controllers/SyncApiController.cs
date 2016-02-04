@@ -74,6 +74,8 @@ namespace Sitio_Privado.Controllers
             {
                 string responseBody = GetUserResponseBody(graphApiResponse.User);
                 response.Content = new StringContent(responseBody, Encoding.UTF8, "application/json");
+                tracer.Info(Request, this.ControllerContext.ControllerDescriptor.ControllerType.FullName,
+                    "Completed with {0}, Content:\n {1}", new string[] { response.StatusCode.ToString(), responseBody });
             }
             else
             {
@@ -81,6 +83,8 @@ namespace Sitio_Privado.Controllers
                 //TODO: filter error messages
                 errorMessage.Add("message", graphApiResponse.Message);
                 response.Content = new StringContent(errorMessage.ToString(), Encoding.UTF8, "application/json");
+                tracer.Info(Request, this.ControllerContext.ControllerDescriptor.ControllerType.FullName,
+                    "Completed with {0}, Content:\n {1}", new string[] { response.StatusCode.ToString(), errorMessage.ToString() });
             }
             return response;
         }
@@ -89,13 +93,20 @@ namespace Sitio_Privado.Controllers
         [HttpPatch]
         public async Task<HttpResponseMessage> UpdateUser(string id)
         {
-            HttpResponseMessage response = new HttpResponseMessage();
-
             //Read request's parameters
             JObject requestContent = (JObject)await Request.Content.ReadAsAsync(typeof(JObject));
+            tracer.Info(Request, this.ControllerContext.ControllerDescriptor.ControllerType.FullName,
+                "Content:\n{0}", new string[] { requestContent.ToString() });
+
+            HttpResponseMessage response = new HttpResponseMessage();
             GraphUserModel requestUser = GetUpdateUserGraphApiRequestBody(requestContent);
             if (requestUser == null) {
                 response.StatusCode = HttpStatusCode.BadRequest;
+                JObject errorMessage = new JObject();
+                errorMessage.Add("message", "No content provided");
+                response.Content = new StringContent(errorMessage.ToString(), Encoding.UTF8, "application/json");
+                tracer.Info(Request, this.ControllerContext.ControllerDescriptor.ControllerType.FullName,
+                    "Completed with {0}, Content:\n {1}", new string[] { response.StatusCode.ToString(), errorMessage.ToString() });
                 return response;
             }
 
@@ -109,6 +120,8 @@ namespace Sitio_Privado.Controllers
                 //TODO: filter error messages
                 errorMessage.Add("message", getGraphResponse.Message);
                 response.Content = new StringContent(errorMessage.ToString(), Encoding.UTF8, "application/json");
+                tracer.Info(Request, this.ControllerContext.ControllerDescriptor.ControllerType.FullName,
+                    "Completed with {0}, Content:\n {1}", new string[] { response.StatusCode.ToString(), errorMessage.ToString() });
                 return response;
             }
 
@@ -116,12 +129,19 @@ namespace Sitio_Privado.Controllers
             GraphApiResponseInfo graphResponse = await syncApiHelper.UpdateUser(userGraphId, requestUser);
             response.StatusCode = graphResponse.StatusCode;
 
-            if (graphResponse.StatusCode != HttpStatusCode.NoContent)
+            if (graphResponse.StatusCode == HttpStatusCode.NoContent)
+            {
+                tracer.Info(Request, this.ControllerContext.ControllerDescriptor.ControllerType.FullName,
+                    "Completed with {0}", new string[] { response.StatusCode.ToString()});
+            }
+            else
             {
                 JObject errorMessage = new JObject();
                 //TODO: filter error messages
                 errorMessage.Add("message", graphResponse.Message);
                 response.Content = new StringContent(errorMessage.ToString(), Encoding.UTF8, "application/json");
+                tracer.Info(Request, this.ControllerContext.ControllerDescriptor.ControllerType.FullName,
+                    "Completed with {0}, Content:\n {1}", new string[] { response.StatusCode.ToString(), errorMessage.ToString() });
             }
             return response;
         }
