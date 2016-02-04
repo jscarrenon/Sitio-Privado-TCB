@@ -6,6 +6,6 @@
     "angular-route": "^1.4.9",
     "angular-i18n": "^1.4.9",
     "angular-mocks": "^1.4.9",
-    "angular-ui-bootstrap": "1.1.1"
+    "angular-bootstrap": "^1.1.2"
   }
 }

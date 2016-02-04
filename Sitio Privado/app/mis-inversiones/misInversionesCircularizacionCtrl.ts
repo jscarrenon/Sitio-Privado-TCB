@@ -38,17 +38,20 @@
             private dataService: app.common.services.DataService,
             private authService: app.common.services.AuthService,
             private extrasService: app.common.services.ExtrasService) {
-
+            console.log("a1");
             this.setTemplates();
             this.seccionId = 0;
             this.seleccionarSeccion(this.seccionId);
-
+            console.log("a2");
             this.fecha = new Date(); //Temporal --KUNDER
             this.leida = false;
+            console.log("a3");
             this.respuestaInput = new app.domain.CircularizacionRespondidaInput(parseInt(this.extrasService.getRutParteEntera(this.authService.usuario.Rut)), this.extrasService.getFechaFormato(this.fecha), "S", null);
-
+            console.log("a4");
             this.pendienteInput = new app.domain.CircularizacionPendienteInput(parseInt(this.extrasService.getRutParteEntera(this.authService.usuario.Rut)), this.extrasService.getFechaFormato(this.fecha));
+            console.log("a5");
             this.getPendiente(this.pendienteInput);
+            console.log("a6");
         }
 
         seleccionarSeccion(id: number): void {
