@@ -22,7 +22,7 @@
                 <th>Fecha de Firma</th>
                 <th>Documento</th>
             </tr>
-            <tr ng-repeat="documento in documentosCtrl.operacionesFirmadas">
+            <tr ng-repeat="documento in documentosCtrl.operacionesFirmadas.slice(((documentosCtrl.operacionesFirmadasPaginaActual-1)*documentosCtrl.operacionesFirmadasPorPagina), ((documentosCtrl.operacionesFirmadasPaginaActual)*documentosCtrl.operacionesFirmadasPorPagina))">
                 <td>{{documento.Producto}}</td>
                 <td>{{documento.Folio}}</td>
                 <td>{{documento.FechaCreacion}}</td>
@@ -34,13 +34,7 @@
     </div>
 
     <div class="table-tools">
-        <div class="pagination">
-            <div class="pag-button prev2"><a href="#" class="clink"></a></div>
-            <div class="pag-button prev"><a href="#" class="clink"></a></div>
-            <div class="nums">1 de 14</div>
-            <div class="pag-button next"><a href="#" class="clink"></a></div>
-            <div class="pag-button next2"><a href="#" class="clink"></a></div>
-        </div>
+        <uib-pagination ng-model="documentosCtrl.operacionesFirmadasPaginaActual" total-items="documentosCtrl.operacionesFirmadas.length" items-per-page="documentosCtrl.operacionesFirmadasPorPagina" boundary-links="true" template-url="app/common/templates/pagination.html"></uib-pagination>
     </div>
 
 
@@ -59,7 +53,7 @@
                 <th>Fecha de Firma</th>
                 <th>Documento</th>
             </tr>
-            <tr ng-repeat="documento in documentosCtrl.documentosFirmados">
+            <tr ng-repeat="documento in documentosCtrl.documentosFirmados.slice(((documentosCtrl.documentosFirmadosPaginaActual-1)*documentosCtrl.documentosFirmadosPorPagina), ((documentosCtrl.documentosFirmadosPaginaActual)*documentosCtrl.documentosFirmadosPorPagina))">
                 <td>{{documento.Producto}}</td>
                 <td>{{documento.Tipo}}</td>
                 <td>{{documento.Folio}}</td>
@@ -72,13 +66,7 @@
     </div>
 
     <div class="table-tools">
-        <div class="pagination">
-            <div class="pag-button prev2"><a href="#" class="clink"></a></div>
-            <div class="pag-button prev"><a href="#" class="clink"></a></div>
-            <div class="nums">1 de 14</div>
-            <div class="pag-button next"><a href="#" class="clink"></a></div>
-            <div class="pag-button next2"><a href="#" class="clink"></a></div>
-        </div>
+        <uib-pagination ng-model="documentosCtrl.documentosFirmadosPaginaActual" total-items="documentosCtrl.documentosFirmados.length" items-per-page="documentosCtrl.documentosFirmadosPorPagina" boundary-links="true" template-url="app/common/templates/pagination.html"></uib-pagination>
     </div>
 
     <div class="legal">

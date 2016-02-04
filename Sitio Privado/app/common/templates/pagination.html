@@ -1,0 +1,7 @@
+﻿<div class="pagination">
+    <div ng-if="::boundaryLinks" ng-class="{disabled: noPrevious()||ngDisabled}" class="pag-button prev2"><a href class="clink" ng-click="selectPage(1, $event)"></a></div>
+    <div ng-if="::directionLinks" ng-class="{disabled: noPrevious()||ngDisabled}" class="pag-button prev"><a href class="clink" ng-click="selectPage(page - 1, $event)"></a></div>
+    <div class="nums">{{page}} de {{totalPages}}</div>
+    <div ng-if="::directionLinks" ng-class="{disabled: noNext()||ngDisabled}" class="pag-button next"><a href class="clink" ng-click="selectPage(page + 1, $event)"></a></div>
+    <div ng-if="::boundaryLinks" ng-class="{disabled: noNext()||ngDisabled}" class="pag-button next2"><a href class="clink" ng-click="selectPage(totalPages, $event)"></a></div>
+</div>

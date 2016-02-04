@@ -100,6 +100,10 @@
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.2.3\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Quartz, Version=2.3.3.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
       <HintPath>..\packages\Quartz.2.3.3\lib\net40\Quartz.dll</HintPath>
       <Private>True</Private>
@@ -244,6 +248,7 @@
     <Compile Include="Controllers\CircularizacionController.cs" />
     <Compile Include="Controllers\IndicesController.cs" />
     <Compile Include="Extras\Converters.cs" />
+    <Compile Include="Extras\NLogger.cs" />
     <Compile Include="Helpers\AzureStorageHelper.cs" />
     <Compile Include="Controllers\BlobsController.cs" />
     <Compile Include="Controllers\ContainersController.cs" />
@@ -356,6 +361,7 @@
   <ItemGroup>
     <Content Include="app\common\templates\footer.html" />
     <TypeScriptCompile Include="app\common\typings\uglipop.ts" />
+    <Content Include="app\common\templates\pagination.html" />
     <Content Include="app\home\index.html" />
     <Content Include="app\home\mis-datos.html" />
     <Content Include="app\informacion-financiera\comite-regulacion.html" />
@@ -405,10 +411,19 @@
     <Content Include="Web References\CircularizacionCustodia\archivocli.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
-    <Content Include="Web References\CircularizacionCustodia\Reference.map">
+    <Content Include="Web References\CartolaResumida\_cartola_alt.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <None Include="Web References\CircularizacionCustodia\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Web References\CircularizacionCustodia\tann_circularizacion.disco" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -529,9 +544,6 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <None Include="Web References\CartolaResumida\tann_cartola_resumida.wsdl" />
-    <Content Include="Web References\CartolaResumida\_cartola.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </Content>
     <Content Include="Web References\CartolaResumida\_cuentaspisys.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
@@ -662,6 +674,7 @@
     <TypeScriptCompile Include="app\domain\CircularizacionInput.ts" />
     <TypeScriptCompile Include="app\domain\CircularizacionArchivo.ts" />
     <TypeScriptCompile Include="app\domain\CircularizacionProcesoResultado.ts" />
+    <TypeScriptCompile Include="app\domain\DocumentoFirmarResultado.ts" />
     <TypeScriptCompile Include="app\domain\Indices.ts" />
     <TypeScriptCompile Include="app\domain\IndicesInput.ts" />
     <TypeScriptCompile Include="app\domain\DocumentoLeidoResultado.ts" />
@@ -694,6 +707,7 @@
     <TypeScriptCompile Include="app\mis-inversiones\misInversionesNacionalesCtrl.ts" />
     <TypeScriptCompile Include="app\mis-inversiones\misInversionesDocumentosCtrl.ts" />
     <TypeScriptCompile Include="app\mis-inversiones\misInversionesCtrl.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angular-ui-bootstrap\angular-ui-bootstrap.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-animate.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-cookies.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-mocks.d.ts" />

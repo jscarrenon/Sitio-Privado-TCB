@@ -20,28 +20,29 @@ namespace Sitio_Privado.Helpers
         #region Graph API Parameters
         //Keys used by Azure GraphAPI
         private static string ExtensionsPrefixe = ConfigurationManager.AppSettings["b2c:Extensions"];
-        public static string AccountEnabledParamKey = "accountEnabled";
-        public static string CreationTypeParamKey = "creationType";
-        public static string PasswordPoliciesParamKey = "passwordPolicies";
-        public static string GivenNameParamKey = "givenName";
-        public static string SurnameParamKey = "surname";
-        public static string RutParamKey = ExtensionsPrefixe + "RUT";
-        public static string WorkAddressParamKey = ExtensionsPrefixe + "WorkAddress";
-        public static string HomeAddressParamKey = ExtensionsPrefixe + "HomeAddress";
-        public static string CountryParamKey = "country";
-        public static string CityParamKey = "city";
-        public static string WorkPhoneParamKey = ExtensionsPrefixe + "WorkPhoneNumber";
-        public static string HomePhoneParamKey = ExtensionsPrefixe + "HomePhoneNumber";
-        public static string EmailParamKey = ExtensionsPrefixe + "Email";
-        public static string CheckingAccountParamKey = ExtensionsPrefixe + "CheckingAccount";
-        public static string BankParamKey = ExtensionsPrefixe + "Bank";
-        public static string DisplayNameParamKey = "displayName";
-        public static string PasswordParamKey = "password";
-        public static string ForcePasswordChangeParamKey = "forceChangePasswordNextLogin";
-        public static string PasswordProfileParamKey = "passwordProfile";
-        public static string SignInTypeParamKey = "type";
-        public static string SignInValueParamKey = "value";
-        public static string SignInAlternativesParamKey = "alternativeSignInNamesInfo";
+        private static string AccountEnabledParamKey = "accountEnabled";
+        private static string CreationTypeParamKey = "creationType";
+        private static string PasswordPoliciesParamKey = "passwordPolicies";
+        private static string GivenNameParamKey = "givenName";
+        private static string SurnameParamKey = "surname";
+        private static string RutParamKey = ExtensionsPrefixe + "RUT";
+        private static string WorkAddressParamKey = ExtensionsPrefixe + "WorkAddress";
+        private static string HomeAddressParamKey = ExtensionsPrefixe + "HomeAddress";
+        private static string CountryParamKey = "country";
+        private static string CityParamKey = "city";
+        private static string WorkPhoneParamKey = ExtensionsPrefixe + "WorkPhoneNumber";
+        private static string HomePhoneParamKey = ExtensionsPrefixe + "HomePhoneNumber";
+        private static string EmailParamKey = ExtensionsPrefixe + "Email";
+        private static string CheckingAccountParamKey = ExtensionsPrefixe + "CheckingAccount";
+        private static string BankParamKey = ExtensionsPrefixe + "Bank";
+        private static string DisplayNameParamKey = "displayName";
+        private static string PasswordParamKey = "password";
+        private static string ForcePasswordChangeParamKey = "forceChangePasswordNextLogin";
+        private static string PasswordProfileParamKey = "passwordProfile";
+        private static string SignInTypeParamKey = "type";
+        private static string SignInValueParamKey = "value";
+        private static string SignInAlternativesParamKey = "alternativeSignInNamesInfo";
+        private static string UpdatedAtParamKey = ExtensionsPrefixe + "UpdatedAt";
         #endregion
 
         private const string AadGraphResourceId = "https://graph.windows.net/";
@@ -66,9 +67,10 @@ namespace Sitio_Privado.Helpers
             this.credential = new ClientCredential(ClientId, ClientSecret);
         }
 
-        public async Task<GraphApiResponseInfo> UpdateUser(string id, string json)
+        public async Task<GraphApiResponseInfo> UpdateUser(string id, GraphUserModel user)
         {
             string path = UsersApiPath + "/" + id;
+            string json = GetUpdateUserRequestBody(user);
             HttpResponseMessage graphResponse = await SendGraphPatchRequest(path, json);
             GraphApiResponseInfo response = new GraphApiResponseInfo();
             response.StatusCode = graphResponse.StatusCode;
@@ -94,16 +96,20 @@ namespace Sitio_Privado.Helpers
             {
                 response.User = GetUserResponse(bodyResponse);
             }
+            else if(graphResponse.StatusCode == HttpStatusCode.BadGateway)
+            {
+                response.Message = bodyResponse.GetValue("message").ToString();
+            }
             else
             {
-                response.Message = bodyResponse.GetValue("odata.error").Value<JToken>("message").Value<string>("value");
+                response.Message = bodyResponse.GetValue("odata.error").Value<JToken>("message").Value<string>("value").Replace("alternativeSignInNamesInfo", "rut");
             }
             return response;
         }
 
         public async Task<GraphApiResponseInfo> GetUserByRut(string rut)
         {
-            string query = "$filter=" + RutParamKey + " eq '" + rut + "'";//TODO: user parameters
+            string query = "$filter=" + RutParamKey + " eq '" + rut + "'";
             HttpResponseMessage graphResponse = await SendGraphGetRequest(UsersApiPath, query);
 
             //Set response
@@ -125,6 +131,10 @@ namespace Sitio_Privado.Helpers
                     response.StatusCode = HttpStatusCode.NotFound;
                     response.Message = "Could not find any object matching that Rut";
                 }
+            }
+            else if (graphResponse.StatusCode == HttpStatusCode.BadGateway)
+            {
+                response.Message = bodyResponse.GetValue("message").ToString();
             }
             else
             {
@@ -149,6 +159,10 @@ namespace Sitio_Privado.Helpers
                 GraphUserModel user = GetUserResponse(bodyResponse);
                 response.User = user;
             }
+            else if (graphResponse.StatusCode == HttpStatusCode.BadGateway)
+            {
+                response.Message = bodyResponse.GetValue("message").ToString();
+            }
             else
             {
                 response.Message = bodyResponse.GetValue("odata.error").Value<JToken>("message").Value<string>("value");
@@ -167,7 +181,19 @@ namespace Sitio_Privado.Helpers
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, url);
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", result.AccessToken);
             request.Content = new StringContent(json, Encoding.UTF8, "application/json");
-            HttpResponseMessage graphApiResponse = await http.SendAsync(request);
+            HttpResponseMessage graphApiResponse;
+            try
+            {
+                graphApiResponse = await http.SendAsync(request);
+            }
+            catch(Exception)
+            {
+                graphApiResponse = new HttpResponseMessage();
+                graphApiResponse.StatusCode = HttpStatusCode.BadGateway;
+                JObject content = new JObject();
+                content.Add("message", "There was an unexpected error when performing the operation in B2C server");
+                graphApiResponse.Content = new StringContent(content.ToString(), Encoding.UTF8, "application/json");
+            }
             return graphApiResponse;
         }
 
@@ -188,7 +214,20 @@ namespace Sitio_Privado.Helpers
             // Append the access token for the Graph API to the Authorization header of the request, using the Bearer scheme.
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, url);
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", result.AccessToken);
-            HttpResponseMessage graphApiResponse = await http.SendAsync(request);
+            HttpResponseMessage graphApiResponse;
+
+            try
+            {
+                graphApiResponse = await http.SendAsync(request);
+            }
+            catch (Exception)
+            {
+                graphApiResponse = new HttpResponseMessage();
+                graphApiResponse = new HttpResponseMessage();
+                graphApiResponse.StatusCode = HttpStatusCode.BadGateway;
+                JObject content = new JObject();
+                content.Add("message", "There was an unexpected error when performing the operation in B2C server");
+            }
 
             return graphApiResponse;
         }
@@ -203,9 +242,22 @@ namespace Sitio_Privado.Helpers
             HttpRequestMessage request = new HttpRequestMessage(new HttpMethod("PATCH"), url);
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", result.AccessToken);
             request.Content = new StringContent(json, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = await http.SendAsync(request);
+            HttpResponseMessage graphApiResponse;
 
-            return response;
+            try
+            {
+                graphApiResponse = await http.SendAsync(request);
+            }
+            catch (Exception)
+            {
+                graphApiResponse = new HttpResponseMessage();
+                graphApiResponse = new HttpResponseMessage();
+                graphApiResponse.StatusCode = HttpStatusCode.BadGateway;
+                JObject content = new JObject();
+                content.Add("message", "There was an unexpected error when performing the operation in B2C server");
+            }
+
+            return graphApiResponse;
         }
 
         private string GetCreateUserRequestBody(GraphUserModel graphUser)
@@ -230,6 +282,7 @@ namespace Sitio_Privado.Helpers
             json.Add(CheckingAccountParamKey, graphUser.CheckingAccount);
             json.Add(BankParamKey, graphUser.Bank);
             json.Add(DisplayNameParamKey, graphUser.DisplayName);
+            json.Add(UpdatedAtParamKey, graphUser.UpdatedAt);
 
             //Temporal password
             JObject passwordProfile = new JObject();
@@ -243,6 +296,42 @@ namespace Sitio_Privado.Helpers
             signInAlternative.Add(SignInValueParamKey, graphUser.Rut);
             JArray signInAlternativesArray = new JArray(signInAlternative);
             json.Add(SignInAlternativesParamKey, signInAlternativesArray);
+
+            return json.ToString();
+        }
+
+        private string GetUpdateUserRequestBody(GraphUserModel graphUser)
+        {
+            JObject json = new JObject();
+
+            if (graphUser.WorkAddress != null)
+                json.Add(WorkAddressParamKey, graphUser.WorkAddress);
+
+            if (graphUser.HomeAddress != null)
+                json.Add(HomeAddressParamKey, graphUser.HomeAddress);
+
+            if (graphUser.Country != null)
+                json.Add(CountryParamKey, graphUser.Country);
+
+            if (graphUser.City != null)
+                json.Add(CityParamKey, graphUser.City);
+
+            if (graphUser.WorkPhone != null)
+                json.Add(WorkPhoneParamKey, graphUser.WorkPhone);
+
+            if (graphUser.HomePhone != null)
+                json.Add(HomePhoneParamKey, graphUser.HomePhone);
+
+            if (graphUser.Email != null)
+                json.Add(EmailParamKey, graphUser.Email);
+
+            if (graphUser.CheckingAccount != null)
+                json.Add(CheckingAccountParamKey, graphUser.CheckingAccount);
+
+            if (graphUser.Bank != null)
+                json.Add(BankParamKey, graphUser.Bank);
+
+            json.Add(UpdatedAtParamKey, graphUser.UpdatedAt);
 
             return json.ToString();
         }
@@ -263,6 +352,8 @@ namespace Sitio_Privado.Helpers
             user.WorkAddress = body.GetValue(WorkAddressParamKey).ToString();
             user.WorkPhone = body.GetValue(WorkPhoneParamKey).ToString();
             user.ObjectId = body.GetValue("objectId").ToString();
+            if(body.GetValue(UpdatedAtParamKey) != null)
+                user.UpdatedAt = body.GetValue(UpdatedAtParamKey).ToString();
             return user;
         }
     }

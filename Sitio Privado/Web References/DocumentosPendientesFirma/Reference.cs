@@ -39,6 +39,8 @@ namespace Sitio_Privado.DocumentosPendientesFirma {
         
         private System.Threading.SendOrPostCallback cns_firmar_documentoOperationCompleted;
         
+        private System.Threading.SendOrPostCallback cns_firmar_contratoOperationCompleted;
+        
         private bool useDefaultCredentialsSetExplicitly;
         
         /// <remarks/>
@@ -91,6 +93,9 @@ namespace Sitio_Privado.DocumentosPendientesFirma {
         
         /// <remarks/>
         public event cns_firmar_documentoCompletedEventHandler cns_firmar_documentoCompleted;
+        
+        /// <remarks/>
+        public event cns_firmar_contratoCompletedEventHandler cns_firmar_contratoCompleted;
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://servicios.tanner.cl/documentos/cns_operacion_pendiente", RequestNamespace="http://servicios.tanner.cl/documentos", ResponseNamespace="http://servicios.tanner.cl/documentos", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -242,6 +247,37 @@ namespace Sitio_Privado.DocumentosPendientesFirma {
             if ((this.cns_firmar_documentoCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.cns_firmar_documentoCompleted(this, new cns_firmar_documentoCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://servicios.tanner.cl/documentos/cns_firmar_contrato", RequestNamespace="http://servicios.tanner.cl/documentos", ResponseNamespace="http://servicios.tanner.cl/documentos", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public _operacion[] cns_firmar_contrato(string rut, string codigo) {
+            object[] results = this.Invoke("cns_firmar_contrato", new object[] {
+                        rut,
+                        codigo});
+            return ((_operacion[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void cns_firmar_contratoAsync(string rut, string codigo) {
+            this.cns_firmar_contratoAsync(rut, codigo, null);
+        }
+        
+        /// <remarks/>
+        public void cns_firmar_contratoAsync(string rut, string codigo, object userState) {
+            if ((this.cns_firmar_contratoOperationCompleted == null)) {
+                this.cns_firmar_contratoOperationCompleted = new System.Threading.SendOrPostCallback(this.Oncns_firmar_contratoOperationCompleted);
+            }
+            this.InvokeAsync("cns_firmar_contrato", new object[] {
+                        rut,
+                        codigo}, this.cns_firmar_contratoOperationCompleted, userState);
+        }
+        
+        private void Oncns_firmar_contratoOperationCompleted(object arg) {
+            if ((this.cns_firmar_contratoCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.cns_firmar_contratoCompleted(this, new cns_firmar_contratoCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -510,6 +546,32 @@ namespace Sitio_Privado.DocumentosPendientesFirma {
         private object[] results;
         
         internal cns_firmar_documentoCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public _operacion[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((_operacion[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    public delegate void cns_firmar_contratoCompletedEventHandler(object sender, cns_firmar_contratoCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class cns_firmar_contratoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal cns_firmar_contratoCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }

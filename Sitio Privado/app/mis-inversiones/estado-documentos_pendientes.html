@@ -16,8 +16,8 @@
                 <th>Fecha de Operación</th>
                 <th>Documento</th>
             </tr>
-            <tr ng-repeat="documento in documentosCtrl.operacionesPendientes">
-                <td><input type="checkbox" name="sign" ng-checked="todosOperaciones"></td>
+            <tr ng-repeat="documento in documentosCtrl.operacionesPendientes.slice(((documentosCtrl.operacionesPendientesPaginaActual-1)*documentosCtrl.operacionesPendientesPorPagina), ((documentosCtrl.operacionesPendientesPaginaActual)*documentosCtrl.operacionesPendientesPorPagina))">
+                <td><input type="checkbox" name="sign" ng-model="documento.Seleccionado" ng-change="documentosCtrl.opcionOperacionToggled()"></td>
                 <td><input type="checkbox" name="read" ng-checked="documento.Leido == 'S'" disabled></td>
                 <td>{{documento.Producto}}</td>
                 <td>{{documento.Folio}}</td>
@@ -26,18 +26,12 @@
             </tr>
         </table>
     </div>
-
+    
     <div class="table-tools">
         <div class="select-all">
-            <input type="checkbox" name="select" value="value" ng-model="todosOperaciones"><label>Seleccionar todos</label>
+            <input type="checkbox" ng-model="documentosCtrl.todasOperaciones" ng-click="documentosCtrl.toggleTodasOperaciones()"><label>Seleccionar todos</label>
         </div>
-        <div class="pagination">
-            <div class="pag-button prev2"><a href="#" class="clink"></a></div>
-            <div class="pag-button prev"><a href="#" class="clink"></a></div>
-            <div class="nums">1 de 14</div>
-            <div class="pag-button next"><a href="#" class="clink"></a></div>
-            <div class="pag-button next2"><a href="#" class="clink"></a></div>
-        </div>
+        <uib-pagination ng-model="documentosCtrl.operacionesPendientesPaginaActual" total-items="documentosCtrl.operacionesPendientes.length" items-per-page="documentosCtrl.operacionesPendientesPorPagina" boundary-links="true" template-url="app/common/templates/pagination.html"></uib-pagination>
     </div>
 
     <div class="sep-table"></div>
@@ -54,8 +48,8 @@
                 <th>Fecha de Operación</th>
                 <th>Documento</th>
             </tr>
-            <tr ng-repeat="documento in documentosCtrl.documentosPendientes">
-                <td><input type="checkbox" name="sign" ng-checked="todosDocumentos"></td>
+            <tr ng-repeat="documento in documentosCtrl.documentosPendientes.slice(((documentosCtrl.documentosPendientesPaginaActual-1)*documentosCtrl.documentosPendientesPorPagina), ((documentosCtrl.documentosPendientesPaginaActual)*documentosCtrl.documentosPendientesPorPagina))">
+                <td><input type="checkbox" name="sign" ng-model="documento.Seleccionado" ng-change="documentosCtrl.opcionDocumentoToggled()"></td>
                 <td><input type="checkbox" name="read" ng-checked="documento.Leido == 'S'" disabled></td>
                 <td>{{documento.Producto}}</td>
                 <td>{{documento.Folio}}</td>
@@ -67,21 +61,15 @@
 
     <div class="table-tools">
         <div class="select-all">
-            <input type="checkbox" name="select" value="value" ng-model="todosDocumentos"><label>Seleccionar todos</label>
+            <input type="checkbox" ng-model="documentosCtrl.todosDocumentos" ng-click="documentosCtrl.toggleTodosDocumentos()"><label>Seleccionar todos</label>
         </div>
-        <div class="pagination">
-            <div class="pag-button prev2"><a href="#" class="clink"></a></div>
-            <div class="pag-button prev"><a href="#" class="clink"></a></div>
-            <div class="nums">1 de 14</div>
-            <div class="pag-button next"><a href="#" class="clink"></a></div>
-            <div class="pag-button next2"><a href="#" class="clink"></a></div>
-        </div>
+        <uib-pagination ng-model="documentosCtrl.documentosPendientesPaginaActual" total-items="documentosCtrl.documentosPendientes.length" items-per-page="documentosCtrl.documentosPendientesPorPagina" boundary-links="true" template-url="app/common/templates/pagination.html"></uib-pagination>
     </div>
 
     <div class="sign-note">
-        <input type="checkbox" name="select" value="value" ng-model="declaracion">
+        <input type="checkbox" name="select" value="value" ng-model="documentosCtrl.declaracion">
         Declaro conocer y aceptar la(s) operacion(es) y/o contrato(s) seleccionado(s), los cuales fueron instruidos por mi persona a Tanner Corredores de Bolsa S.A., y que, en cumplimiento a lo establecido en los contratos vigentes, confirmo electrónicamente mi total aceptación sobre los términos y condiciones indicados en los mismos.<br />
-        <button class="pop button green" onclick="modal3();" ng-if="declaracion">Firmar</button>
+        <button class="pop button green" onclick="modal3();" ng-if="documentosCtrl.declaracion">Firmar</button>
     </div>
 
     <div class="legal">
