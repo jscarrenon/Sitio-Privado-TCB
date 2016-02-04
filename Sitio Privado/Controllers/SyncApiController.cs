@@ -45,7 +45,7 @@ namespace Sitio_Privado.Controllers
         {
             //Read request's parameters
             JObject requestBody = JObject.Parse(await Request.Content.ReadAsStringAsync());
-            tracer.Info(Request, this.ControllerContext.ControllerDescriptor.ControllerType.FullName, 
+            tracer.Info(Request, this.ControllerContext.ControllerDescriptor.ControllerType.FullName,
                 "Content:\n{0}", new string[] { requestBody.ToString() });
 
             //Response
@@ -143,8 +143,9 @@ namespace Sitio_Privado.Controllers
             }
             return response;
         }
-    
+
         [AllowAnonymous]
+        [TokenAuthorizationFilter]
         [HttpGet]
         public async Task<HttpResponseMessage> GetUser(string id)
         {
@@ -175,7 +176,7 @@ namespace Sitio_Privado.Controllers
                 response.Content = new StringContent(errorMessage, Encoding.UTF8, "application/json");
             }
 
-            tracer.Info(Request, ControllerContext.ControllerDescriptor.ControllerType.FullName, "Completed with {0}, Content:\n{1}", 
+            tracer.Info(Request, ControllerContext.ControllerDescriptor.ControllerType.FullName, "Completed with {0}, Content:\n{1}",
                 new string[] { response.StatusCode.ToString(), await response.Content.ReadAsStringAsync() });
 
             return response;
@@ -245,16 +246,35 @@ namespace Sitio_Privado.Controllers
             user.Name = content.GetValue(NameParam).ToString();
             user.Surname = content.GetValue(SurnameParam).ToString();
             user.Rut = content.GetValue(RutParam).ToString();
-            user.WorkAddress = content.GetValue(WorkAddressParam).ToString();
-            user.HomeAddress = content.GetValue(HomeAddressParam).ToString();
-            user.Country = content.GetValue(CountryParam).ToString();
-            user.City = content.GetValue(CityParam).ToString();
-            user.WorkPhone = content.GetValue(WorkPhoneParam).ToString();
-            user.HomePhone = content.GetValue(HomePhoneParam).ToString();
-            user.Email = content.GetValue(EmailParam).ToString();
-            user.CheckingAccount = content.GetValue(CheckingAccountParam).ToString();
-            user.Bank = content.GetValue(BankParam).ToString();
             user.TemporalPassword = content.GetValue(TemporalPasswordParam).ToString();
+
+            if(content.GetValue(WorkAddressParam) != null)
+                user.WorkAddress = content.GetValue(WorkAddressParam).ToString();
+
+            if(content.GetValue(HomeAddressParam) != null)
+                user.HomeAddress = content.GetValue(HomeAddressParam).ToString();
+
+            if(content.GetValue(CountryParam) != null)
+                user.Country = content.GetValue(CountryParam).ToString();
+
+            if(content.GetValue(CityParam) != null)
+                user.City = content.GetValue(CityParam).ToString();
+
+            if(content.GetValue(WorkPhoneParam) != null)
+                user.WorkPhone = content.GetValue(WorkPhoneParam).ToString();
+
+            if(content.GetValue(HomePhoneParam) != null)
+                user.HomePhone = content.GetValue(HomePhoneParam).ToString();
+
+            if (content.GetValue(EmailParam) != null)
+                user.Email = content.GetValue(EmailParam).ToString();
+
+            if (content.GetValue(CheckingAccountParam) != null)
+                user.CheckingAccount = content.GetValue(CheckingAccountParam).ToString();
+
+            if (content.GetValue(BankParam) != null)
+                user.Bank = content.GetValue(BankParam).ToString();
+
             user.UpdatedAt = DateTime.Now.ToString();
             return user;
         }
