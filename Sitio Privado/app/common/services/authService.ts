@@ -9,7 +9,6 @@
         getCircularizacionPendiente(): void;
         documentosPendientes: number;
         getDocumentosPendientes(): void;
-        getDocumentosPendientesTemplate(): void;
     }
 
     export class AuthService implements IAuth {
@@ -77,21 +76,15 @@
             this.dataService.postWebService(this.constantService.apiDocumentoURI + 'getCantidadPendientes', input)
                 .then((result: app.domain.IDocumentosPendientesCantidadResultado) => {
                     this.documentosPendientes = result.Resultado;
-                    var template: string = this.getDocumentosPendientesTemplate();
                     if (this.documentosPendientes > 0) {
-                        setTimeout(function () {
-                            uglipop({
-                                class: 'modal-style modal2',
-                                source: 'html',
-                                content: template
+                            var modalInstance: ng.ui.bootstrap.IModalServiceInstance = this.$uibModal.open({
+                                templateUrl: 'app/mis-inversiones/estado-documentos_pendientes_modal.html',
+                                controller: 'ModalInstanceCtrl as modal'
                             });
-                        }, 100);
+
+                            modalInstance.result.then(_ => this.$location.path('/mis-inversiones/estado-documentos'));
                     }
                 });
-        }
-
-        getDocumentosPendientesTemplate(): string {
-            return '<div class="pretitle">Pendiente</div><div class="title">Documentos Pendientes de Firma</div><div class="text">Estimado Cliente,<br/> Usted tiene documentos (operaciones y/o contratos) pendientes de ser firmados electrónicamente. Por favor proceda a revisarlos.</div><div class="button green"><a href="#/mis-inversiones/estado-documentos" class="clink" onclick="rem();">Revisar</a></div><button class="modal-close" onclick="rem();"></button>';
         }
     }
 

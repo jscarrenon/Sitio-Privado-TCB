@@ -377,6 +377,7 @@
     <Content Include="app\mis-inversiones\estado-documentos_confirmacion.html" />
     <Content Include="app\mis-inversiones\estado-documentos_firmados.html" />
     <Content Include="app\mis-inversiones\estado-documentos_pendientes.html" />
+    <Content Include="app\mis-inversiones\estado-documentos_pendientes_modal.html" />
     <Content Include="app\mis-inversiones\fondos-mutuos.html" />
     <Content Include="app\mis-inversiones\index.html" />
     <Content Include="app\mis-inversiones\nacionales.html" />
