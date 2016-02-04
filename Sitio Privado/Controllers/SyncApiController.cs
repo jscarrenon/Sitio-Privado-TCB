@@ -11,6 +11,7 @@ using System.Net.Http.Formatting;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Tracing;
 
 namespace Sitio_Privado.Controllers
 {
@@ -36,29 +37,32 @@ namespace Sitio_Privado.Controllers
         #endregion
 
         private GraphApiClientHelper syncApiHelper = new GraphApiClientHelper();
+        private ITraceWriter tracer = GlobalConfiguration.Configuration.Services.GetTraceWriter();
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<HttpResponseMessage> CreateUser(HttpRequestMessage request)
+        public async Task<HttpResponseMessage> CreateUser()
         {
+            //Read request's parameters
+            JObject requestBody = JObject.Parse(await Request.Content.ReadAsStringAsync());
+            tracer.Info(Request, this.ControllerContext.ControllerDescriptor.ControllerType.FullName, 
+                "Content:\n{0}", new string[] { requestBody.ToString() });
+
             //Response
             HttpResponseMessage response = new HttpResponseMessage();
 
-            //Read request's parameters
-            JObject requestBody = JObject.Parse(await request.Content.ReadAsStringAsync());
             if (!CheckNeededAttributesForCreatingUser(requestBody))
             {
-                response.StatusCode = HttpStatusCode.BadRequest;
-                JObject json = new JObject();
-                json.Add("message", "One or more required parameters is missing");
-                response.Content = new StringContent(json.ToString(), Encoding.UTF8, "application/json");
+                string errorMessage = GenerateJsonErrorMessage("One or more required parameters is missing");
+                response.Content = new StringContent(errorMessage, Encoding.UTF8, "application/json");
+                tracer.Info(Request, ControllerContext.ControllerDescriptor.ControllerType.FullName, "Completed with {0}, Content:\n{1}",
+                    new string[] { response.StatusCode.ToString(), await response.Content.ReadAsStringAsync() });
                 return response;
             }
-
-            //Create user
+             //Create user
             GraphUserModel graphUser = GetGraphUserCreateRequest(requestBody);
             GraphApiResponseInfo graphApiResponse = await syncApiHelper.CreateUser(graphUser);
-            
+
             //Read result and set response
             response.StatusCode = graphApiResponse.StatusCode;
             if (graphApiResponse.StatusCode == HttpStatusCode.Created)
@@ -68,25 +72,43 @@ namespace Sitio_Privado.Controllers
             }
             else
             {
-                JObject errorMessage = new JObject();
-                //TODO: filter error messages
-                errorMessage.Add("message", graphApiResponse.Message);
-                response.Content = new StringContent(errorMessage.ToString(), Encoding.UTF8, "application/json");
+                string errorMessage = GenerateJsonErrorMessage(graphApiResponse.Message);
+                response.Content = new StringContent(errorMessage, Encoding.UTF8, "application/json");
             }
+
+            tracer.Info(Request, ControllerContext.ControllerDescriptor.ControllerType.FullName, "Completed with {0}, Content:\n{1}",
+                 new string[] { response.StatusCode.ToString(), await response.Content.ReadAsStringAsync() });
             return response;
         }
 
         [AllowAnonymous]
         [HttpPatch]
-        public async Task<HttpResponseMessage> UpdateUser(string id, HttpRequestMessage request)
+        public async Task<HttpResponseMessage> UpdateUser(string id)
         {
+            //Read request's parameters
+            JObject requestContent = (JObject)await Request.Content.ReadAsAsync(typeof(JObject));
+            tracer.Info(Request, this.ControllerContext.ControllerDescriptor.ControllerType.FullName,
+                "Content:\n{0}", new string[] { requestContent.ToString() });
+
             HttpResponseMessage response = new HttpResponseMessage();
 
-            //Read request's parameters
-            JObject requestContent = (JObject)await request.Content.ReadAsAsync(typeof(JObject));
+            if (id == null || id.Length <= 0)
+            {
+                response.StatusCode = HttpStatusCode.BadRequest;
+                string errorMessage = GenerateJsonErrorMessage("Rut param was not provided");
+                response.Content = new StringContent(errorMessage, Encoding.UTF8, "application/json");
+                tracer.Info(Request, ControllerContext.ControllerDescriptor.ControllerType.FullName, "Completed with {0}, Content:\n{1}",
+                    new string[] { response.StatusCode.ToString(), await response.Content.ReadAsStringAsync() });
+                return response;
+            }
+
             GraphUserModel requestUser = GetUpdateUserGraphApiRequestBody(requestContent);
             if (requestUser == null) {
                 response.StatusCode = HttpStatusCode.BadRequest;
+                string errorMessage = GenerateJsonErrorMessage("No content provided");
+                response.Content = new StringContent(errorMessage, Encoding.UTF8, "application/json");
+                tracer.Info(Request, ControllerContext.ControllerDescriptor.ControllerType.FullName, "Completed with {0}, Content:\n{1}",
+                    new string[] { response.StatusCode.ToString(), await response.Content.ReadAsStringAsync() });
                 return response;
             }
 
@@ -96,10 +118,10 @@ namespace Sitio_Privado.Controllers
             if (getGraphResponse.User == null)
             {
                 response.StatusCode = HttpStatusCode.NotFound;
-                JObject errorMessage = new JObject();
-                //TODO: filter error messages
-                errorMessage.Add("message", getGraphResponse.Message);
-                response.Content = new StringContent(errorMessage.ToString(), Encoding.UTF8, "application/json");
+                string errorMessage = GenerateJsonErrorMessage(getGraphResponse.Message);
+                response.Content = new StringContent(errorMessage, Encoding.UTF8, "application/json");
+                tracer.Info(Request, ControllerContext.ControllerDescriptor.ControllerType.FullName, "Completed with {0}, Content:\n{1}",
+                    new string[] { response.StatusCode.ToString(), await response.Content.ReadAsStringAsync() });
                 return response;
             }
 
@@ -107,12 +129,17 @@ namespace Sitio_Privado.Controllers
             GraphApiResponseInfo graphResponse = await syncApiHelper.UpdateUser(userGraphId, requestUser);
             response.StatusCode = graphResponse.StatusCode;
 
-            if (graphResponse.StatusCode != HttpStatusCode.NoContent)
+            if (graphResponse.StatusCode == HttpStatusCode.NoContent)
             {
-                JObject errorMessage = new JObject();
-                //TODO: filter error messages
-                errorMessage.Add("message", graphResponse.Message);
-                response.Content = new StringContent(errorMessage.ToString(), Encoding.UTF8, "application/json");
+                tracer.Info(Request, this.ControllerContext.ControllerDescriptor.ControllerType.FullName,
+                    "Completed with {0}", new string[] { response.StatusCode.ToString() });
+            }
+            else
+            {
+                string errorMessage = GenerateJsonErrorMessage(getGraphResponse.Message);
+                response.Content = new StringContent(errorMessage, Encoding.UTF8, "application/json");
+                tracer.Info(Request, ControllerContext.ControllerDescriptor.ControllerType.FullName, "Completed with {0}, Content:\n{1}",
+                     new string[] { response.StatusCode.ToString(), await response.Content.ReadAsStringAsync() });
             }
             return response;
         }
@@ -121,23 +148,36 @@ namespace Sitio_Privado.Controllers
         [HttpGet]
         public async Task<HttpResponseMessage> GetUser(string id)
         {
+            tracer.Info(Request, this.ControllerContext.ControllerDescriptor.ControllerType.FullName, "Requested Rut: " + id);
+
             HttpResponseMessage response = new HttpResponseMessage();
+
+            if(id == null || id.Length <= 0)
+            {
+                response.StatusCode = HttpStatusCode.BadRequest;
+                string errorMessage = GenerateJsonErrorMessage("Rut param was not provided");
+                response.Content = new StringContent(errorMessage, Encoding.UTF8, "application/json");
+                tracer.Info(Request, ControllerContext.ControllerDescriptor.ControllerType.FullName, "Completed with {0}, Content:\n{1}",
+                    new string[] { response.StatusCode.ToString(), await response.Content.ReadAsStringAsync() });
+                return response;
+            }
 
             GraphApiResponseInfo graphApiResponse = await syncApiHelper.GetUserByRut(id);
             response.StatusCode = graphApiResponse.StatusCode;
-            if(response.StatusCode == HttpStatusCode.OK)
+            if (response.StatusCode == HttpStatusCode.OK)
             {
                 string responseBody = GetUserResponseBody(graphApiResponse.User);
                 response.Content = new StringContent(responseBody, Encoding.UTF8, "application/json");
             }
             else
             {
-                JObject errorMessage = new JObject();
-                //TODO: filter error messages
-                errorMessage.Add("message", graphApiResponse.Message);
-                response.Content = new StringContent(errorMessage.ToString(), Encoding.UTF8, "application/json");
+                string errorMessage = GenerateJsonErrorMessage(graphApiResponse.Message);
+                response.Content = new StringContent(errorMessage, Encoding.UTF8, "application/json");
             }
-            
+
+            tracer.Info(Request, ControllerContext.ControllerDescriptor.ControllerType.FullName, "Completed with {0}, Content:\n{1}", 
+                new string[] { response.StatusCode.ToString(), await response.Content.ReadAsStringAsync() });
+
             return response;
         }
 
@@ -225,6 +265,13 @@ namespace Sitio_Privado.Controllers
                 requestBody.GetValue(RutParam) == null || requestBody.GetValue(TemporalPasswordParam) == null)
                 return false;
             return true;
+        }
+
+        private string GenerateJsonErrorMessage(string message)
+        {
+            JObject json = new JObject();
+            json.Add("message", message);
+            return json.ToString();
         }
     }
 }
