@@ -96,9 +96,13 @@ namespace Sitio_Privado.Helpers
             {
                 response.User = GetUserResponse(bodyResponse);
             }
+            else if(graphResponse.StatusCode == HttpStatusCode.BadGateway)
+            {
+                response.Message = bodyResponse.GetValue("message").ToString();
+            }
             else
             {
-                response.Message = bodyResponse.GetValue("odata.error").Value<JToken>("message").Value<string>("value");
+                response.Message = bodyResponse.GetValue("odata.error").Value<JToken>("message").Value<string>("value").Replace("alternativeSignInNamesInfo", "rut");
             }
             return response;
         }
@@ -128,6 +132,10 @@ namespace Sitio_Privado.Helpers
                     response.Message = "Could not find any object matching that Rut";
                 }
             }
+            else if (graphResponse.StatusCode == HttpStatusCode.BadGateway)
+            {
+                response.Message = bodyResponse.GetValue("message").ToString();
+            }
             else
             {
                 response.Message = bodyResponse.GetValue("odata.error").Value<JToken>("message").Value<string>("value");
@@ -151,6 +159,10 @@ namespace Sitio_Privado.Helpers
                 GraphUserModel user = GetUserResponse(bodyResponse);
                 response.User = user;
             }
+            else if (graphResponse.StatusCode == HttpStatusCode.BadGateway)
+            {
+                response.Message = bodyResponse.GetValue("message").ToString();
+            }
             else
             {
                 response.Message = bodyResponse.GetValue("odata.error").Value<JToken>("message").Value<string>("value");
@@ -169,7 +181,19 @@ namespace Sitio_Privado.Helpers
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, url);
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", result.AccessToken);
             request.Content = new StringContent(json, Encoding.UTF8, "application/json");
-            HttpResponseMessage graphApiResponse = await http.SendAsync(request);
+            HttpResponseMessage graphApiResponse;
+            try
+            {
+                graphApiResponse = await http.SendAsync(request);
+            }
+            catch(Exception)
+            {
+                graphApiResponse = new HttpResponseMessage();
+                graphApiResponse.StatusCode = HttpStatusCode.BadGateway;
+                JObject content = new JObject();
+                content.Add("message", "There was an unexpected error when performing the operation in B2C server");
+                graphApiResponse.Content = new StringContent(content.ToString(), Encoding.UTF8, "application/json");
+            }
             return graphApiResponse;
         }
 
@@ -190,7 +214,20 @@ namespace Sitio_Privado.Helpers
             // Append the access token for the Graph API to the Authorization header of the request, using the Bearer scheme.
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, url);
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", result.AccessToken);
-            HttpResponseMessage graphApiResponse = await http.SendAsync(request);
+            HttpResponseMessage graphApiResponse;
+
+            try
+            {
+                graphApiResponse = await http.SendAsync(request);
+            }
+            catch (Exception)
+            {
+                graphApiResponse = new HttpResponseMessage();
+                graphApiResponse = new HttpResponseMessage();
+                graphApiResponse.StatusCode = HttpStatusCode.BadGateway;
+                JObject content = new JObject();
+                content.Add("message", "There was an unexpected error when performing the operation in B2C server");
+            }
 
             return graphApiResponse;
         }
@@ -205,9 +242,22 @@ namespace Sitio_Privado.Helpers
             HttpRequestMessage request = new HttpRequestMessage(new HttpMethod("PATCH"), url);
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", result.AccessToken);
             request.Content = new StringContent(json, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = await http.SendAsync(request);
+            HttpResponseMessage graphApiResponse;
 
-            return response;
+            try
+            {
+                graphApiResponse = await http.SendAsync(request);
+            }
+            catch (Exception)
+            {
+                graphApiResponse = new HttpResponseMessage();
+                graphApiResponse = new HttpResponseMessage();
+                graphApiResponse.StatusCode = HttpStatusCode.BadGateway;
+                JObject content = new JObject();
+                content.Add("message", "There was an unexpected error when performing the operation in B2C server");
+            }
+
+            return graphApiResponse;
         }
 
         private string GetCreateUserRequestBody(GraphUserModel graphUser)
@@ -292,18 +342,39 @@ namespace Sitio_Privado.Helpers
             user.Name = body.GetValue(GivenNameParamKey).ToString();
             user.Surname = body.GetValue(SurnameParamKey).ToString();
             user.Rut = body.GetValue(RutParamKey).ToString();
-            user.Email = body.GetValue(EmailParamKey).ToString();
-            user.Country = body.GetValue(CountryParamKey).ToString();
-            user.City = body.GetValue(CityParamKey).ToString();
-            user.Bank = body.GetValue(BankParamKey).ToString();
-            user.CheckingAccount = body.GetValue(CheckingAccountParamKey).ToString();
-            user.HomeAddress = body.GetValue(HomeAddressParamKey).ToString();
-            user.HomePhone = body.GetValue(HomePhoneParamKey).ToString();
-            user.WorkAddress = body.GetValue(WorkAddressParamKey).ToString();
-            user.WorkPhone = body.GetValue(WorkPhoneParamKey).ToString();
-            user.ObjectId = body.GetValue("objectId").ToString();
-            if(body.GetValue(UpdatedAtParamKey) != null)
+
+            if (body.GetValue(EmailParamKey) != null)
+                user.Email = body.GetValue(EmailParamKey).ToString();
+
+            if(body.GetValue(CountryParamKey) != null)
+                user.Country = body.GetValue(CountryParamKey).ToString();
+
+            if(body.GetValue(CityParamKey) != null)
+                user.City = body.GetValue(CityParamKey).ToString();
+
+            if(body.GetValue(BankParamKey) != null)
+                user.Bank = body.GetValue(BankParamKey).ToString();
+
+            if(body.GetValue(CheckingAccountParamKey) != null)
+                user.CheckingAccount = body.GetValue(CheckingAccountParamKey).ToString();
+
+            if(body.GetValue(HomeAddressParamKey) != null)
+                user.HomeAddress = body.GetValue(HomeAddressParamKey).ToString();
+
+            if(body.GetValue(HomePhoneParamKey) != null)
+                user.HomePhone = body.GetValue(HomePhoneParamKey).ToString();
+
+            if(body.GetValue(WorkAddressParamKey) != null)
+                user.WorkAddress = body.GetValue(WorkAddressParamKey).ToString();
+
+            if(body.GetValue(WorkPhoneParamKey) != null)
+                user.WorkPhone = body.GetValue(WorkPhoneParamKey).ToString();
+
+            if (body.GetValue(UpdatedAtParamKey) != null)
                 user.UpdatedAt = body.GetValue(UpdatedAtParamKey).ToString();
+
+            user.ObjectId = body.GetValue("objectId").ToString();
+
             return user;
         }
     }
