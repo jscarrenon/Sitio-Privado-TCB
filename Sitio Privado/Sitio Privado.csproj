@@ -355,6 +355,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\common\templates\footer.html" />
+    <TypeScriptCompile Include="app\common\controllers\modalInstanceCtrl.ts" />
     <TypeScriptCompile Include="app\common\typings\uglipop.ts" />
     <Content Include="app\common\templates\pagination.html" />
     <Content Include="app\home\index.html" />
@@ -372,6 +373,7 @@
     <Content Include="app\mis-inversiones\circularizacion_aprobar.html" />
     <Content Include="app\mis-inversiones\circularizacion_pendiente.html" />
     <Content Include="app\mis-inversiones\estado-documentos.html" />
+    <Content Include="app\mis-inversiones\estado-documentos_confirmacion.html" />
     <Content Include="app\mis-inversiones\estado-documentos_firmados.html" />
     <Content Include="app\mis-inversiones\estado-documentos_pendientes.html" />
     <Content Include="app\mis-inversiones\fondos-mutuos.html" />
@@ -383,6 +385,7 @@
     <Content Include="package.json" />
     <Content Include=".bowerrc" />
     <Content Include="bower.json" />
+    <Content Include="Styles\bootstrap-custom.css" />
     <Content Include="Web References\CircularizacionCustodia\archivocli.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
