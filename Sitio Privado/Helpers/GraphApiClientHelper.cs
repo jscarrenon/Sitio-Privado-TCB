@@ -342,18 +342,39 @@ namespace Sitio_Privado.Helpers
             user.Name = body.GetValue(GivenNameParamKey).ToString();
             user.Surname = body.GetValue(SurnameParamKey).ToString();
             user.Rut = body.GetValue(RutParamKey).ToString();
-            user.Email = body.GetValue(EmailParamKey).ToString();
-            user.Country = body.GetValue(CountryParamKey).ToString();
-            user.City = body.GetValue(CityParamKey).ToString();
-            user.Bank = body.GetValue(BankParamKey).ToString();
-            user.CheckingAccount = body.GetValue(CheckingAccountParamKey).ToString();
-            user.HomeAddress = body.GetValue(HomeAddressParamKey).ToString();
-            user.HomePhone = body.GetValue(HomePhoneParamKey).ToString();
-            user.WorkAddress = body.GetValue(WorkAddressParamKey).ToString();
-            user.WorkPhone = body.GetValue(WorkPhoneParamKey).ToString();
-            user.ObjectId = body.GetValue("objectId").ToString();
-            if(body.GetValue(UpdatedAtParamKey) != null)
+
+            if (body.GetValue(EmailParamKey) != null)
+                user.Email = body.GetValue(EmailParamKey).ToString();
+
+            if(body.GetValue(CountryParamKey) != null)
+                user.Country = body.GetValue(CountryParamKey).ToString();
+
+            if(body.GetValue(CityParamKey) != null)
+                user.City = body.GetValue(CityParamKey).ToString();
+
+            if(body.GetValue(BankParamKey) != null)
+                user.Bank = body.GetValue(BankParamKey).ToString();
+
+            if(body.GetValue(CheckingAccountParamKey) != null)
+                user.CheckingAccount = body.GetValue(CheckingAccountParamKey).ToString();
+
+            if(body.GetValue(HomeAddressParamKey) != null)
+                user.HomeAddress = body.GetValue(HomeAddressParamKey).ToString();
+
+            if(body.GetValue(HomePhoneParamKey) != null)
+                user.HomePhone = body.GetValue(HomePhoneParamKey).ToString();
+
+            if(body.GetValue(WorkAddressParamKey) != null)
+                user.WorkAddress = body.GetValue(WorkAddressParamKey).ToString();
+
+            if(body.GetValue(WorkPhoneParamKey) != null)
+                user.WorkPhone = body.GetValue(WorkPhoneParamKey).ToString();
+
+            if (body.GetValue(UpdatedAtParamKey) != null)
                 user.UpdatedAt = body.GetValue(UpdatedAtParamKey).ToString();
+
+            user.ObjectId = body.GetValue("objectId").ToString();
+
             return user;
         }
     }
