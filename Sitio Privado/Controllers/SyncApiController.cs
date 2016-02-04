@@ -129,6 +129,20 @@ namespace Sitio_Privado.Controllers
 
             HttpResponseMessage response = new HttpResponseMessage();
 
+            if(id == null || id.Length <= 0)
+            {
+                response.StatusCode = HttpStatusCode.BadRequest;
+                string content = "RUT param was not provided";
+                JObject errorMesssage = new JObject();
+                errorMesssage.Add("message", content);
+                response.Content = new StringContent(errorMesssage.ToString(), Encoding.UTF8, "application/json");
+
+                tracer.Info(Request, this.ControllerContext.ControllerDescriptor.ControllerType.FullName,
+                    "Completed with {0}, Content:\n {1}", new string[] { response.StatusCode.ToString(), content.ToString() });
+
+                return response;
+            }
+
             GraphApiResponseInfo graphApiResponse = await syncApiHelper.GetUserByRut(id);
             response.StatusCode = graphApiResponse.StatusCode;
             if(response.StatusCode == HttpStatusCode.OK)
@@ -141,13 +155,13 @@ namespace Sitio_Privado.Controllers
             }
             else
             {
-                JObject errorMessage = new JObject();
+                JObject content = new JObject();
                 //TODO: filter error messages
-                errorMessage.Add("message", graphApiResponse.Message);
-                response.Content = new StringContent(errorMessage.ToString(), Encoding.UTF8, "application/json");
+                content.Add("message", graphApiResponse.Message);
+                response.Content = new StringContent(content.ToString(), Encoding.UTF8, "application/json");
 
                 tracer.Info(Request, this.ControllerContext.ControllerDescriptor.ControllerType.FullName,
-                    "Completed with {0}, Content:\n {1}", new string[] { response.StatusCode.ToString(), errorMessage.ToString() });
+                    "Completed with {0}, Content:\n {1}", new string[] { response.StatusCode.ToString(), content.ToString() });
             }
             
             return response;
