@@ -11,7 +11,7 @@ using System.Web;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 
-namespace Sitio_Privado.Controllers
+namespace Sitio_Privado.Filters
 {
     public class TokenAuthorizationFilterAttribute : AuthorizationFilterAttribute
     {
