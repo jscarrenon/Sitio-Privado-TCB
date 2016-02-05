@@ -22,6 +22,7 @@
 
             this.categoriaClienteInput = new app.domain.CategoriaClienteInput(parseInt(this.extrasService.getRutParteEntera(this.authService.usuario.Rut)));
             this.getCategoriaCliente(this.categoriaClienteInput);
+            this.getProductos();
         }
 
         getCategoriaCliente(input: app.domain.ICategoriaClienteInput): void {
