@@ -1,13 +1,13 @@
-﻿beforeEach(function () {
-    module("tannerPrivadoApp");
-});
-
-describe("[FrontEnd] MisInversionesFondosMutuosCtrl Unit Tests", function () {
+﻿describe("misInversionesFondosMutuosCtrl - ", function () {
         
+    beforeEach(function () {
+        module("tannerPrivadoApp");
+    });
+
     var $rootScope, $routeParams,
-        postWebService_deferred, getSingle_deferred,// deferred used for promises
-        constantService, dataService, authService, extrasService,// controller dependencies
-        fondosMutuosController; // the controller
+        postWebService_deferred, getSingle_deferred, // deferred used for promises
+        constantService, dataService, authService, extrasService, // dependencias controlador
+        fondosMutuosCtrl; // controlador
 
         var usuario = {
             Autenticado: true,
@@ -66,6 +66,7 @@ describe("[FrontEnd] MisInversionesFondosMutuosCtrl Unit Tests", function () {
         };
             
         beforeEach(inject(function (_$rootScope_, _$q_, _constantService_, _dataService_, _extrasService_, _$routeParams_) {
+
             $q = _$q_
             constantService = _constantService_;
             dataService = _dataService_;
@@ -96,7 +97,7 @@ describe("[FrontEnd] MisInversionesFondosMutuosCtrl Unit Tests", function () {
 
         beforeEach(inject(function (_$controller_) {           
             
-            fondosMutuosController = _$controller_("MisInversionesFondosMutuosCtrl", {
+            fondosMutuosCtrl = _$controller_("MisInversionesFondosMutuosCtrl", {
                 $rootScope: $rootScope,
                 constantService: constantService,
                 dataService: dataService,
@@ -111,32 +112,32 @@ describe("[FrontEnd] MisInversionesFondosMutuosCtrl Unit Tests", function () {
 
         }));     
         
-        it("getFondosMutuos() - Arreglos de fondos mutuos correctamente definidos y asignados.", function () {
+        it("Arreglos de fondos mutuos correctamente definidos y asignados.", function () {
             
             //postWebService_deferred = $q.defer();
-            var getFondosMutuosTotalSpy = spyOn(fondosMutuosController, 'getFondosMutuosTotal');
-            fondosMutuosController.getFondosMutuos(fondoMutuoInput_stub);
+            var getFondosMutuosTotalSpy = spyOn(fondosMutuosCtrl, 'getFondosMutuosTotal');
+            fondosMutuosCtrl.getFondosMutuos(fondoMutuoInput_stub);
 
             //se resuelva el resultado del defer de getFondosMutuos()
             postWebService_deferred.resolve(fondosMutuos_stub);
             $rootScope.$digest();
             
             //Esperamos que las listas de fondos mutuos (RF y RV) estén correctas.
-            expect(fondosMutuosController.fondosMutuosRF).toBe(fondosMutuos_stub["fondosMutuosRF"]);
-            expect(fondosMutuosController.fondosMutuosRV).toBe(fondosMutuos_stub["fondosMutuosRV"]);
+            expect(fondosMutuosCtrl.fondosMutuosRF).toBe(fondosMutuos_stub["fondosMutuosRF"]);
+            expect(fondosMutuosCtrl.fondosMutuosRV).toBe(fondosMutuos_stub["fondosMutuosRV"]);
             expect(getFondosMutuosTotalSpy).toHaveBeenCalled();
 
         });
 
-        it("getFondosMutuosTotal() - Totales de fondos mutuos sumados correctamente.", function () {
+        it("Totales de fondos mutuos sumados correctamente.", function () {
 
-            fondosMutuosController.fondosMutuosRF = fondosMutuos_stub["fondosMutuosRF"];
-            fondosMutuosController.fondosMutuosRV = fondosMutuos_stub["fondosMutuosRV"];
-            fondosMutuosController.getFondosMutuosTotal();
+            fondosMutuosCtrl.fondosMutuosRF = fondosMutuos_stub["fondosMutuosRF"];
+            fondosMutuosCtrl.fondosMutuosRV = fondosMutuos_stub["fondosMutuosRV"];
+            fondosMutuosCtrl.getFondosMutuosTotal();
 
             //Esperamos que la sumatoria total de los fondos mutuos (RF y RV) sean correctas.
-            expect(fondosMutuosController.fondosMutuosRFTotal).toBe(123945 + 34567);
-            expect(fondosMutuosController.fondosMutuosRVTotal).toBe(785233);            
+            expect(fondosMutuosCtrl.fondosMutuosRFTotal).toBe(123945 + 34567);
+            expect(fondosMutuosCtrl.fondosMutuosRVTotal).toBe(785233);            
 
         });
     });

@@ -1,4 +1,4 @@
-﻿describe("", function () {
+﻿describe("extrasService - ", function () {
 
     beforeEach(function () {
         module("tannerPrivadoApp");
@@ -7,6 +7,8 @@
     var $q, $window, $filter,
         extrasService;
 
+    var fechaActual = new Date();
+
     beforeEach(inject(function (_$q_, _$window_, _$filter_, _extrasService_) {
         $q = _$q_;
         $window = _$window_;
@@ -14,42 +16,48 @@
         extrasService = _extrasService_;
     }));
 
-    it("getRutParteEntera rut válido", function () {
+    it("Obtener parte entera de rut - rut válido", function () {
         var getRutParteEnteraReturn = extrasService.getRutParteEntera("14536748-9");
         expect(getRutParteEnteraReturn).toBe("14536748");
     });
 
-    it("getRutParteEntera rut nulo", function () {
+    it("Obtener parte entera de rut - rut nulo", function () {
         var rut;
         var getRutParteEnteraReturn = extrasService.getRutParteEntera(rut);
         expect(getRutParteEnteraReturn).toBe("");
     });
 
     it("Abrir ruta.", function () {
-        extrasService.abrirRuta("http://www.google.com", "_blank");
-        //var windowOpenSpy = spyOn(extrasService, "$window.open");
 
         spyOn($window, 'open').and.callFake(function () {
             return true;
         });
 
+        extrasService.abrirRuta("http://www.google.com", "_blank");
+        
         expect($window.open).toHaveBeenCalled();
     });
 
     it("Formatear fecha. Formato de fecha de entrada: dd/mm/aaaa", function () {
-        spyOn(extrasService, "getFechaFormat").and.callThrough();
-        var formatoSalida = extrasService.getFechaFormato("02-04-2016", "dd/mm/aaaa");
-        expect(formatoSalida).toBe("02/04/2016");
+
+        var formatoSalida = extrasService.getFechaFormato(fechaActual, "dd/mm/aaaa");
+
+        expect(formatoSalida.length).toBeDefined();
+        expect(formatoSalida.length).toBe(10);
+        expect(formatoSalida).toEqual(jasmine.stringMatching(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/i));
     });
 
     it("Formatear fecha. Formato de fecha de entrada: longdate", function () {
         
-        var formatoSalida = extrasService.getFechaFormato("29/02/2016", "dd-mm-aaaa");
-        expect(formatoSalida).toBe("29/02/2016");
+        var formatoSalida = extrasService.getFechaFormato(fechaActual, "longDate");
+        
+        expect(formatoSalida).toEqual(jasmine.stringMatching(/^\w+\s(\d{1})?\d{1}\,\s\d{4}$/));
     });
 
     it("Formatear fecha. Formato de fecha de entrada: mediumdate", function () {
-        var formatoSalida = extrasService.getFechaFormato("02/04/2016", "dd-mm-aaaa");
-        expect(formatoSalida).toBe("02/04/2016");
+
+        var formatoSalida = extrasService.getFechaFormato(fechaActual, "");
+
+        expect(formatoSalida).toEqual(jasmine.stringMatching(/^[A-Z][a-z][a-z]\s(\d{1})?\d{1}\,\s\d{4}$/));
     });
 });

@@ -1,7 +1,6 @@
-﻿describe("[FrontEnd] AuthService Unit Tests", function () {
+﻿describe("authService - ", function () {
 
     beforeEach(function () {
-        module("ui.bootstrap.pagination");
         module("tannerPrivadoApp");
     });
 
@@ -12,7 +11,7 @@
         $httpBackend, constantService, dataService, extrasService, // service dependencies        
         usuario; 
 
-    //Se injectan todos los servicios menos el authService, ya que al inyectar el authService se llama su constructor y
+    //Se inyectan todos los servicios menos el authService, ya que al inyectar el authService se llama su constructor y
     //se ejecuta la función getUsuarioActual(), por lo que hay que preparar un defer.
     beforeEach(inject(function (_$rootScope_, _$q_, _$httpBackend_, _constantService_, _dataService_, _extrasService_) {
         

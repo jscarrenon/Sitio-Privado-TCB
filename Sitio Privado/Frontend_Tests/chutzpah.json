@@ -16,5 +16,8 @@
     { "Path": "../app/inversiones/", "Includes": [ "*.js" ] },
     { "Path": "../app/mis-inversiones/", "Includes": [ "*.js" ] }
   ],
-  "Tests": [ {"Path": "." }, { "Includes": [ "*Spec.js" ] } ]
+  "Tests": [    
+    { "Path": "./Controllers/", "Includes": [ "*Spec.js" ] },
+    { "Path": "./Services/", "Includes": [ "*Spec.js" ] }
+  ]
 }

@@ -1,13 +1,13 @@
-﻿describe("[FrontEnd] MisInversionesCircularizacionCtrl Unit Tests.", function () {
+﻿describe("misInversionesCircularizacionCtrl - ", function () {
 
     beforeEach( function() {
         module("tannerPrivadoApp");
     });
 
     var $q, $rootScope,
-        getSingle_deferred, postWebService_deferred,
-        misInversionesCircularizacionController,
-        constantService, dataService, authService, extrasService;
+        constantService, dataService, authService, extrasService, // dependecias controlador
+        getSingle_deferred, postWebService_deferred, // defers
+        misInversionesCircularizacionController; // controlador
 
     var usuario = {
             Autenticado: true,
@@ -80,6 +80,7 @@
     ));
 
     it("Seleccionar sección 0", function () {
+
         var id = 0;
         misInversionesCircularizacionController.seleccionarSeccion(id);
 
@@ -88,6 +89,7 @@
     });
 
     it("Seleccionar sección 1", function () {
+
         var id = 1;
         var getArchivoSpy = spyOn(misInversionesCircularizacionController, "getArchivo");
         misInversionesCircularizacionController.seleccionarSeccion(id);
@@ -98,6 +100,7 @@
     });
 
     it("Seleccionar sección 2", function () {
+
         var id = 2;
         misInversionesCircularizacionController.seleccionarSeccion(id);
 

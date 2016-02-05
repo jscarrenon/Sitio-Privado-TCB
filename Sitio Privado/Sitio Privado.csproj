@@ -1897,20 +1897,24 @@
     <Content Include="bower_components\angular\angular.min.js" />
     <Content Include="bower_components\angular\index.js" />
     <Content Include="favicon.ico" />
+    <Content Include="Frontend_Tests\Controllers\inversionesCtrlSpec.js" />
     <Content Include="Global.asax" />
     <Content Include="gulpfile.js" />
     <Content Include="package.json" />
     <Content Include=".bowerrc" />
     <Content Include="bower.json" />
-    <Content Include="Tests\agenteControllerSpec.js" />
-    <Content Include="Tests\authServiceSpec.js" />
-    <Content Include="Tests\bodyControllerSpec.js" />
-    <Content Include="Tests\informacionFinancieraControllerSpec.js" />
-    <Content Include="Tests\informacionFinancieraIndicesControllerSpec.js" />
-    <Content Include="Tests\misInversionesCircularizacionControllerSpec.js" />
-    <Content Include="Tests\misInversionesControllerSpec.js" />
-    <Content Include="Tests\misInversionesFondosMutuosControllerSpec.js" />
-    <Content Include="Tests\webserviceControllerSpec.js" />
+    <Content Include="Frontend_Tests\Controllers\agenteControllerSpec.js" />
+    <Content Include="Frontend_Tests\Services\authServiceSpec.js" />
+    <Content Include="Frontend_Tests\Controllers\bodyControllerSpec.js" />
+    <Content Include="Frontend_Tests\Services\constantServiceSpec.js" />
+    <Content Include="Frontend_Tests\Services\dataServiceSpec.js" />
+    <Content Include="Frontend_Tests\Services\extrasServiceSpec.js" />
+    <Content Include="Frontend_Tests\Controllers\homeControllerSpec.js" />
+    <Content Include="Frontend_Tests\Controllers\informacionFinancieraControllerSpec.js" />
+    <Content Include="Frontend_Tests\Controllers\informacionFinancieraIndicesControllerSpec.js" />
+    <Content Include="Frontend_Tests\Controllers\misInversionesCircularizacionControllerSpec.js" />
+    <Content Include="Frontend_Tests\Controllers\misInversionesControllerSpec.js" />
+    <Content Include="Frontend_Tests\Controllers\misInversionesFondosMutuosControllerSpec.js" />
     <Content Include="Web References\CircularizacionCustodia\archivocli.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
@@ -2050,7 +2054,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Content Include="Tests\chutzpah.json" />
+    <Content Include="Frontend_Tests\chutzpah.json" />
     <None Include="Web References\CartolaResumida\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -2129,6 +2133,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Tests\" />
     <Folder Include="Views\App\" />
   </ItemGroup>
   <ItemGroup>
@@ -2175,7 +2180,6 @@
   <ItemGroup>
     <TypeScriptCompile Include="app\app.ts" />
     <TypeScriptCompile Include="app\common\controllers\agenteCtrl.ts" />
-    <TypeScriptCompile Include="app\common\controllers\webserviceCtrl.ts" />
     <TypeScriptCompile Include="app\common\controllers\bodyCtrl.ts" />
     <TypeScriptCompile Include="app\common\interfaces\ISeccion.ts" />
     <TypeScriptCompile Include="app\common\services\extrasService.ts" />
