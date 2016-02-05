@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using Sitio_Privado.Filters;
 using Sitio_Privado.Helpers;
 using Sitio_Privado.Models;
 using System;
@@ -15,7 +16,8 @@ using System.Web.Http.Tracing;
 
 namespace Sitio_Privado.Controllers
 {
-    //TODO: include authentication
+    [OverrideAuthorization]
+    [TokenAuthorizationFilter]
     public class SyncApiController : ApiController
     {
         #region SyncAPIController Parameters
@@ -39,7 +41,6 @@ namespace Sitio_Privado.Controllers
         private GraphApiClientHelper syncApiHelper = new GraphApiClientHelper();
         private ITraceWriter tracer = GlobalConfiguration.Configuration.Services.GetTraceWriter();
 
-        [AllowAnonymous]
         [HttpPost]
         public async Task<HttpResponseMessage> CreateUser()
         {
@@ -81,7 +82,6 @@ namespace Sitio_Privado.Controllers
             return response;
         }
 
-        [AllowAnonymous]
         [HttpPatch]
         public async Task<HttpResponseMessage> UpdateUser(string id)
         {
@@ -144,8 +144,6 @@ namespace Sitio_Privado.Controllers
             return response;
         }
 
-        [AllowAnonymous]
-        [TokenAuthorizationFilter]
         [HttpGet]
         public async Task<HttpResponseMessage> GetUser(string id)
         {

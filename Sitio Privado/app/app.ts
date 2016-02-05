@@ -31,6 +31,6 @@
     }
     Config.$inject = ['$routeProvider'];
 
-    var mainApp = angular.module('tannerPrivadoApp', ['ngRoute', 'ui.bootstrap.pagination']);
+    var mainApp = angular.module('tannerPrivadoApp', ['ngRoute', 'ui.bootstrap']);
     mainApp.config(Config);
 }

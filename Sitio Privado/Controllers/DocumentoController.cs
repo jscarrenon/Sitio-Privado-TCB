@@ -118,6 +118,21 @@ namespace Sitio_Privado.Controllers
                 return NotFound();
             }
         }
+
+        [HttpPost]
+        public IHttpActionResult GetCantidadPendientes([FromBody]DocumentosPendientesCantidadInput input)
+        {
+            try
+            {
+                DocumentosPendientesCantidadResultado resultado = new DocumentosPendientesCantidadResultado(input);
+
+                return Ok(resultado);
+            }
+            catch (Exception e)
+            {
+                return NotFound();
+            }
+        }
     }
 }
 
