@@ -35,6 +35,11 @@
         getProductos(): void {
             this.dataService.get(this.constantService.apiProductoURI + 'getList')
                 .then((result: app.domain.IProducto[]) => {
+                    result.filter((producto: domain.IProducto) => {
+                        return producto.Categorias.some((categoria: domain.Categoria) => {
+                            return categoria.Identificador == this.categoriaCliente.Identificador;
+                        });
+                    });
                     this.productos = result;
                 });
         }

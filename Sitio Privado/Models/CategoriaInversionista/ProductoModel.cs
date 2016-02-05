@@ -20,6 +20,11 @@ namespace Sitio_Privado.Models.CategoriaInversionista
         {
             Identificador = producto.identificador;
             Descriptor = producto.descriptor;
+            Categorias = new List<Categoria>();
+            foreach (_categoria categoria in producto.Categorias)
+            {
+                Categorias.Add(new Categoria(categoria));
+            }
         }
 
         public Producto(ProductoInput input)
