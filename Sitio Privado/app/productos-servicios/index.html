@@ -6,7 +6,7 @@
                     Productos y Servicios
                 </div>
                 <div class="subtitle">
-                    Su categoría de inversionista es Conservador.
+                    Su categoría de inversionista es {{ctrl.categoriaCliente.Descriptor}}.
                 </div>
             </div>
         </div>
@@ -15,12 +15,12 @@
         <div class="in">
             <div class="col-left products">
                 <div class="profile-products white-box">
-                    <div class="title">Perfil Conservador</div>
+                    <div class="title">Perfil {{ctrl.categoriaCliente.Descriptor}}</div>
                     Usted puede acceder a los siguientes productos y servicios:
                     <ul>
-                        <li><a href="#">Compraventa de Acciones Nacionales</a></li>
-                        <li><a href="#">Compraventa de Acciones Internacionales</a></li>
-                        <li><a href="#">Operaciones de Retro compras (Pactos)</a></li>
+                        <li ng-repeat="producto in ctrl.categoriaCliente.Productos">
+                            <a href="#">{{producto.Descriptor}}</a>
+                        </li>
                     </ul>
                     <div class="go-to-inversiones"><a href="inversiones.html" class="clink">Conozca nuestros perfiles de inversión</a></div>
                 </div>

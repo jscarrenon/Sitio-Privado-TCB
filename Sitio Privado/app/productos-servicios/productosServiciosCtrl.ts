@@ -3,6 +3,7 @@
     interface IProductosServiciosViewModel {
         categoriaCliente: app.domain.ICategoria;
         categoriaClienteInput: app.domain.ICategoriaClienteInput;
+
         getCategoriaCliente(input: app.domain.ICategoriaClienteInput): void;
     }
 
