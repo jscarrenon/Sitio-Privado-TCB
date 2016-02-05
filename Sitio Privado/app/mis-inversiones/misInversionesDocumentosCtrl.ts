@@ -12,6 +12,7 @@
         verDocumento(documento: app.domain.IDocumento): void;
         firmarDocumentos(): void;
         fechaHoy: Date;
+        actualizarDocumentosPendientes(): void;
         actualizarDocumentosFirmados(): void;
         operacionesPendientesPaginaActual: number;
         operacionesPendientesPorPagina: number;
@@ -29,6 +30,7 @@
         toggleTodosDocumentos(): void;
         opcionOperacionToggled(): void;
         opcionDocumentoToggled(): void;
+        confirmacion(): void;
     }
 
     class MisInversionesDocumentosCtrl implements IMisInversionesDocumentosViewModel {
@@ -58,12 +60,13 @@
         todasOperaciones: boolean;
         todosDocumentos: boolean;
 
-        static $inject = ['constantService', 'dataService', 'authService', 'extrasService', '$filter'];
+        static $inject = ['constantService', 'dataService', 'authService', 'extrasService', '$filter', '$uibModal'];
         constructor(private constantService: app.common.services.ConstantService,
             private dataService: app.common.services.DataService,
             private authService: app.common.services.AuthService,
             private extrasService: app.common.services.ExtrasService,
-            private $filter: ng.IFilterService) {
+            private $filter: ng.IFilterService,
+            private $uibModal: ng.ui.bootstrap.IModalService) {
 
             this.setTemplates();
             this.seccionId = 0;
@@ -75,8 +78,7 @@
             this.todasOperaciones = false;
             this.todosDocumentos = false;
 
-            this.documentosPendientesInput = new app.domain.DocumentosPendientesInput(this.extrasService.getRutParteEntera(this.authService.usuario.Rut));
-            this.getDocumentosPendientes(this.documentosPendientesInput);
+            this.actualizarDocumentosPendientes();
 
             this.fechaFirmadosFin = new Date();
             this.fechaFirmadosInicio = new Date();
@@ -133,32 +135,48 @@
                 .then((result: app.domain.IDocumentoLeidoResultado) => {
                     var documentoLeidoResultado: app.domain.IDocumentoLeidoResultado = result;
                     if (result.Resultado == true) {
-                        documento.Leido = "Leido"; // valor? -KUNDER
+                        documento.Leido = 'S'; // valor? -KUNDER
                     }
                 });
         }
 
         firmarDocumentos(): void {
-
             if (this.declaracion) {
-                var operacionCodigo: string = this.$filter('filter')(this.operacionesPendientes, { Seleccionado: true }).map(function (documento) { return documento.Codigo; }).join();
-                var operacionFirmarInput: app.domain.IOperacionFirmarInput = new app.domain.OperacionFirmarInput(this.authService.usuario.Rut, operacionCodigo);
+                var operacionesSeleccionadas: app.domain.IDocumento[] = this.$filter('filter')(this.operacionesPendientes, { Seleccionado: true });
+                if (operacionesSeleccionadas) {
+                    var operacionCodigo = operacionesSeleccionadas.map(function (documento) { return documento.Codigo; }).join();
+                    if (operacionCodigo) {
+                        var operacionFirmarInput: app.domain.IOperacionFirmarInput = new app.domain.OperacionFirmarInput(this.authService.usuario.Rut, operacionCodigo);
 
-                this.dataService.postWebService(this.constantService.apiDocumentoURI + 'setFirmarOperacion', operacionFirmarInput)
-                    .then((result: app.domain.IDocumentoFirmarResultado) => {
-                        var operacionFirmarResultado: app.domain.IDocumentoFirmarResultado = result;
-                        //Debería hacerse algo con los resultados (por ej actualizar listado de operaciones firmadas) --KUNDER
-                    });
+                        this.dataService.postWebService(this.constantService.apiDocumentoURI + 'setFirmarOperacion', operacionFirmarInput)
+                            .then((result: app.domain.IDocumentoFirmarResultado) => {
+                                var operacionFirmarResultado: app.domain.IDocumentoFirmarResultado = result;
+                                this.actualizarDocumentosPendientes();
+                                this.actualizarDocumentosFirmados();
+                            });
+                    }
+                }
 
-                var documentoCodigo: string = this.$filter('filter')(this.documentosPendientes, { Seleccionado: true }).map(function (documento) { return documento.Codigo; }).join();
-                var documentoFirmarInput: app.domain.IDocumentoFirmarInput = new app.domain.DocumentoFirmarInput(this.authService.usuario.Rut, documentoCodigo);
+                var documentosSeleccionados: app.domain.IDocumento[] = this.$filter('filter')(this.documentosPendientes, { Seleccionado: true });
+                if (documentosSeleccionados) {
+                    var documentoCodigo: string = documentosSeleccionados.map(function (documento) { return documento.Codigo; }).join();
+                    if (documentoCodigo) {
+                        var documentoFirmarInput: app.domain.IDocumentoFirmarInput = new app.domain.DocumentoFirmarInput(this.authService.usuario.Rut, documentoCodigo);
 
-                this.dataService.postWebService(this.constantService.apiDocumentoURI + 'setFirmarDocumento', documentoFirmarInput)
-                    .then((result: app.domain.IDocumentoFirmarResultado) => {
-                        var documentoFirmarResultado: app.domain.IDocumentoFirmarResultado = result;
-                        //Debería hacerse algo con los resultados (por ej actualizar listado de documentos firmados) --KUNDER
-                    });
+                        this.dataService.postWebService(this.constantService.apiDocumentoURI + 'setFirmarDocumento', documentoFirmarInput)
+                            .then((result: app.domain.IDocumentoFirmarResultado) => {
+                                var documentoFirmarResultado: app.domain.IDocumentoFirmarResultado = result;
+                                this.actualizarDocumentosPendientes();
+                                this.actualizarDocumentosFirmados();
+                            });
+                    }
+                }
             }
+        }
+
+        actualizarDocumentosPendientes(): void {
+            this.documentosPendientesInput = new app.domain.DocumentosPendientesInput(this.extrasService.getRutParteEntera(this.authService.usuario.Rut));
+            this.getDocumentosPendientes(this.documentosPendientesInput);
         }
 
         actualizarDocumentosFirmados(): void {
@@ -182,6 +200,19 @@
 
         opcionDocumentoToggled(): void {
             this.todosDocumentos = this.documentosPendientes.every(function (documento) { return documento.Seleccionado; });
+        }
+
+        confirmacion(): void {
+
+            var modalInstance: ng.ui.bootstrap.IModalServiceInstance = this.$uibModal.open({
+                templateUrl: 'app/mis-inversiones/estado-documentos_confirmacion.html',
+                controller: 'ModalInstanceCtrl as modal'
+            });
+
+            modalInstance.result.then(
+                _ => this.firmarDocumentos()
+                , function () {
+            });
         }
     }
     angular.module('tannerPrivadoApp')
