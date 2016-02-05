@@ -247,7 +247,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CircularizacionController.cs" />
     <Compile Include="Controllers\IndicesController.cs" />
-    <Compile Include="Controllers\TokenAuthorizationFilterAttribute.cs" />
+    <Compile Include="Filters\TokenAuthorizationFilterAttribute.cs" />
     <Compile Include="Extras\Converters.cs" />
     <Compile Include="Extras\NLogger.cs" />
     <Compile Include="Helpers\AzureStorageHelper.cs" />
