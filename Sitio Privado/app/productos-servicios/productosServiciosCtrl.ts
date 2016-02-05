@@ -22,25 +22,24 @@
 
             this.categoriaClienteInput = new app.domain.CategoriaClienteInput(parseInt(this.extrasService.getRutParteEntera(this.authService.usuario.Rut)));
             this.getCategoriaCliente(this.categoriaClienteInput);
-            this.getProductos();
         }
 
         getCategoriaCliente(input: app.domain.ICategoriaClienteInput): void {
             this.dataService.postWebService(this.constantService.apiCategoriaURI + 'getSingleCliente', input)
                 .then((result: app.domain.ICategoria) => {
                     this.categoriaCliente = result;
+                    this.getProductos();
                 });
         }
 
         getProductos(): void {
             this.dataService.get(this.constantService.apiProductoURI + 'getList')
                 .then((result: app.domain.IProducto[]) => {
-                    result.filter((producto: domain.IProducto) => {
+                    this.productos = result.filter((producto: domain.IProducto) => {
                         return producto.Categorias.some((categoria: domain.Categoria) => {
                             return categoria.Identificador == this.categoriaCliente.Identificador;
                         });
                     });
-                    this.productos = result;
                 });
         }
     }
