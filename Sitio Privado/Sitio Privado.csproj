@@ -383,6 +383,7 @@
     <Content Include="app\mis-inversiones\fondos-mutuos.html" />
     <Content Include="app\mis-inversiones\index.html" />
     <Content Include="app\mis-inversiones\nacionales.html" />
+    <Content Include="app\productos-servicios\index.html" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="gulpfile.js" />
@@ -672,6 +673,7 @@
     <TypeScriptCompile Include="app\mis-inversiones\misInversionesNacionales.ts" />
     <TypeScriptCompile Include="app\mis-inversiones\misInversionesDocumentosCtrl.ts" />
     <TypeScriptCompile Include="app\mis-inversiones\misInversionesCtrl.ts" />
+    <TypeScriptCompile Include="app\productos-servicios\productosServiciosCtrl.ts" />
     <TypeScriptCompile Include="Scripts\typings\angular-ui-bootstrap\angular-ui-bootstrap.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-animate.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-cookies.d.ts" />
