@@ -16,12 +16,12 @@
         extrasService = _extrasService_;
     }));
 
-    it("Obtener parte entera de rut - rut válido", function () {
+    it("Obtener parte entera de rut - rut válido.", function () {
         var getRutParteEnteraReturn = extrasService.getRutParteEntera("14536748-9");
         expect(getRutParteEnteraReturn).toBe("14536748");
     });
 
-    it("Obtener parte entera de rut - rut nulo", function () {
+    it("Obtener parte entera de rut - rut nulo.", function () {
         var rut;
         var getRutParteEnteraReturn = extrasService.getRutParteEntera(rut);
         expect(getRutParteEnteraReturn).toBe("");
@@ -38,7 +38,7 @@
         expect($window.open).toHaveBeenCalled();
     });
 
-    it("Formatear fecha. Formato de fecha de entrada: dd/mm/aaaa", function () {
+    it("Formatear fecha: dd/mm/aaaa.", function () {
 
         var formatoSalida = extrasService.getFechaFormato(fechaActual, "dd/mm/aaaa");
 
@@ -47,14 +47,14 @@
         expect(formatoSalida).toEqual(jasmine.stringMatching(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/i));
     });
 
-    it("Formatear fecha. Formato de fecha de entrada: longdate", function () {
+    it("Formatear fecha: longDate.", function () {
         
         var formatoSalida = extrasService.getFechaFormato(fechaActual, "longDate");
         
         expect(formatoSalida).toEqual(jasmine.stringMatching(/^\w+\s(\d{1})?\d{1}\,\s\d{4}$/));
     });
 
-    it("Formatear fecha. Formato de fecha de entrada: mediumdate", function () {
+    it("Formatear fecha: mediumDate.", function () {
 
         var formatoSalida = extrasService.getFechaFormato(fechaActual, "");
 

@@ -30,7 +30,7 @@
         
     }));
 
-    it("get", function () {
+    it("Verificación llamada a método get()", function () {
 
         spyOn($http, "get").and.returnValue(http_deferred.promise);
         dataService.get("/api/containers/getContainer?name=");
@@ -39,39 +39,46 @@
 
     });
 
-    it("getSingle", function () {
+    it("Verificación llamada a método getSingle()", function () {
 
-        spyOn($http, "getSingle").and.returnValue(http_deferred.promise);
+        spyOn($http, "get").and.returnValue(http_deferred.promise);
         dataService.getSingle("/api/containers/getContainer?name=");
 
-        expect($http.getSingle).toHaveBeenCalled();
+        expect($http.get).toHaveBeenCalled();
 
     });
 
-    it("update", function () {
+    it("Verificación llamada a método add()", function () {
+        spyOn($http, "post").and.returnValue(http_deferred.promise);
+        dataService.add("/api/containers/getContainer?name=");
 
-        spyOn($http, "update").and.returnValue(http_deferred.promise);
+        expect($http.post).toHaveBeenCalled();
+    });
+
+    it("Verificación llamada a método update()", function () {
+
+        spyOn($http, "put").and.returnValue(http_deferred.promise);
         dataService.update("/api/containers/getContainer?name=");
 
-        expect($http.update).toHaveBeenCalled();
+        expect($http.put).toHaveBeenCalled();
 
     });
 
-    it("remove", function () {
+    it("Verificación llamada a método remove()", function () {
 
-        spyOn($http, "remove").and.returnValue(http_deferred.promise);
+        spyOn($http, "delete").and.returnValue(http_deferred.promise);
         dataService.remove("/api/containers/getContainer?name=");
 
-        expect($http.remove).toHaveBeenCalled();
+        expect($http.delete).toHaveBeenCalled();
 
     });
 
-    it("postWebService", function () {
+    it("Verificación llamada a método postWebService()", function () {
 
-        spyOn($http, "postWebService").and.returnValue(http_deferred.promise);
+        spyOn($http, "post").and.returnValue(http_deferred.promise);
         dataService.postWebService("/api/containers/getContainer?name=");
 
-        expect($http.postWebService).toHaveBeenCalled();
+        expect($http.post).toHaveBeenCalled();
 
     });
 });

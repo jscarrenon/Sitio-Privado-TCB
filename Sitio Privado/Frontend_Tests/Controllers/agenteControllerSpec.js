@@ -30,7 +30,7 @@
     var agente_stub = {
         Codigo: 0284,
         Nombre: "Agente de prueba",
-        Sucursal: "sucursal de prueba",
+        Sucursal: "Sucursal de prueba",
         PathImg: "/path/de/prueba/",
         Email: "adeprueba@tanner.cl",
         Telefono: "99000000",

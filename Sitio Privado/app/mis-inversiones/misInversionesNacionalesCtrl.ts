@@ -19,7 +19,7 @@
             private dataService: app.common.services.DataService,
             private authService: app.common.services.AuthService,
             private extrasService: app.common.services.ExtrasService) {
-
+            
             this.balanceInput = new app.domain.BalanceInput(this.authService.usuario.Rut);
             this.getBalance(this.balanceInput);
 

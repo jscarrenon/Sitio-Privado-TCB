@@ -26,14 +26,12 @@
         getIndices(input: app.domain.IIndicesInput): void {
             this.dataService.postWebService(this.constantService.apiIndicesURI + 'getSingle', input)
                 .then((result: app.domain.IIndices) => {
-                    console.log(this.indicesInput);
                     this.indices = result;
                 });
         }
 
         actualizarIndices(): void {
-            this.indicesInput = new app.domain.IndicesInput(this.extrasService.getFechaFormato(this.fecha, "dd/mm/aaaa"));
-            console.log(this.indicesInput);
+            this.indicesInput = new app.domain.IndicesInput(this.extrasService.getFechaFormato(this.fecha, "dd/mm/aaaa"));            
             this.getIndices(this.indicesInput);
         }
     }

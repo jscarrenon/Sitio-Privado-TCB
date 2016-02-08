@@ -1,4 +1,4 @@
-﻿describe("[FrontEnd] ConstantService Unit Tests", function () {
+﻿describe("constantService - ", function () {
     beforeEach(function () {
         module("tannerPrivadoApp");
     });

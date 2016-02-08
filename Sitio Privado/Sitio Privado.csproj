@@ -1896,8 +1896,23 @@
     <Content Include="bower_components\angular\angular.js" />
     <Content Include="bower_components\angular\angular.min.js" />
     <Content Include="bower_components\angular\index.js" />
+    <Content Include="bower_components\jasmine\images\jasmine-horizontal.png" />
+    <Content Include="bower_components\jasmine\images\jasmine-horizontal.svg" />
+    <Content Include="bower_components\jasmine\images\jasmine_favicon.png" />
+    <Content Include="bower_components\jasmine\lib\console\console.js" />
+    <Content Include="bower_components\jasmine\lib\jasmine-core.js" />
+    <Content Include="bower_components\jasmine\lib\jasmine-core\boot.js" />
+    <Content Include="bower_components\jasmine\lib\jasmine-core\example\node_example\lib\jasmine_examples\Player.js" />
+    <Content Include="bower_components\jasmine\lib\jasmine-core\example\node_example\lib\jasmine_examples\Song.js" />
+    <Content Include="bower_components\jasmine\lib\jasmine-core\jasmine-html.js" />
+    <Content Include="bower_components\jasmine\lib\jasmine-core\jasmine.css" />
+    <Content Include="bower_components\jasmine\lib\jasmine-core\jasmine.js" />
+    <Content Include="bower_components\jasmine\lib\jasmine-core\json2.js" />
+    <Content Include="bower_components\jasmine\lib\jasmine-core\node_boot.js" />
+    <Content Include="bower_components\jasmine\requirements.txt" />
     <Content Include="favicon.ico" />
     <Content Include="Frontend_Tests\Controllers\inversionesCtrlSpec.js" />
+    <Content Include="Frontend_Tests\Controllers\misInversionesNacionalesControllerSpec.js" />
     <Content Include="Global.asax" />
     <Content Include="gulpfile.js" />
     <Content Include="package.json" />
@@ -1930,6 +1945,14 @@
     <Content Include="bower_components\angular-i18n\bower.json" />
     <Content Include="bower_components\angular-i18n\package.json" />
     <Content Include="bower_components\angular-i18n\README.md" />
+    <Content Include="bower_components\jasmine\.bower.json" />
+    <Content Include="bower_components\jasmine\bower.json" />
+    <Content Include="bower_components\jasmine\CONTRIBUTING.md" />
+    <Content Include="bower_components\jasmine\MANIFEST.in" />
+    <Content Include="bower_components\jasmine\MIT.LICENSE" />
+    <Content Include="bower_components\jasmine\package.json" />
+    <Content Include="bower_components\jasmine\README.md" />
+    <Content Include="bower_components\jasmine\RELEASE.md" />
     <None Include="Web References\CircularizacionCustodia\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>

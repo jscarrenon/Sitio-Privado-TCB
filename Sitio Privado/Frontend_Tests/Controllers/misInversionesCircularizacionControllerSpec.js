@@ -9,7 +9,7 @@
         getSingle_deferred, postWebService_deferred, // defers
         misInversionesCircularizacionController; // controlador
 
-    var usuario = {
+    var usuario_stub = {
             Autenticado: true,
             Nombres: "",
             Apellidos: "",
@@ -50,7 +50,7 @@
 
     beforeEach(inject(function (_authService_) {
 
-        getSingle_deferred.resolve(usuario);
+        getSingle_deferred.resolve(usuario_stub);
         $rootScope.$digest();
         authService = _authService_;
 

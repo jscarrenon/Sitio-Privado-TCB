@@ -35,6 +35,7 @@
         }
 
         getSingle(resource: string): ng.IPromise<app.domain.EntityBase> {
+
             var self = this;
 
             var deferred = self.qService.defer();

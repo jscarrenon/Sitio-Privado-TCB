@@ -28,19 +28,43 @@
         });
     }));
 
-    it("seleccionarSeccion(id: number)", function () {
+    it("Seleccionar sección 0.", function () {
 
-        for (seccionId = 0; seccionId < misInversionesCtrl.templates.length; seccionId++) {
-            misInversionesCtrl.seleccionarSeccion(seccionId);
-            expect(misInversionesCtrl.seccionId).toBe(seccionId);
-            if (seccionId != 1) {
+        var seccionId = 0;
+        misInversionesCtrl.seleccionarSeccion(seccionId);
 
-                //El valor de templates[1], se encuentra comentado.
-                expect(misInversionesCtrl.templates[seccionId]).toBeNull; 
-            } else {                
-                expect(misInversionesCtrl.seccionURI).toBe('app/mis-inversiones/' + misInversionesCtrl.templates[seccionId]);
-            }            
-        }
+        expect(misInversionesCtrl.seccionId).toBe(seccionId);
+        expect(misInversionesCtrl.seccionURI).toBe("app/mis-inversiones/nacionales.html");
+        
+    });
+
+    it("Seleccionar sección 2", function () {
+
+        var seccionId = 2;
+        misInversionesCtrl.seleccionarSeccion(seccionId);
+
+        expect(misInversionesCtrl.seccionId).toBe(seccionId);
+        expect(misInversionesCtrl.seccionURI).toBe("app/mis-inversiones/fondos-mutuos.html");
+        
+    });
+
+    it("Seleccionar sección 3", function () {
+
+        var seccionId = 3;
+        misInversionesCtrl.seleccionarSeccion(seccionId);
+
+        expect(misInversionesCtrl.seccionId).toBe(seccionId);
+        expect(misInversionesCtrl.seccionURI).toBe("app/mis-inversiones/estado-documentos.html");
+        
+    });
+
+    it("Seleccionar sección 4", function () {
+
+        var seccionId = 4;
+        misInversionesCtrl.seleccionarSeccion(seccionId);
+
+        expect(misInversionesCtrl.seccionId).toBe(seccionId);
+        expect(misInversionesCtrl.seccionURI).toBe("app/mis-inversiones/circularizacion.html");
     });
 
     it("setTemplates", function () {
