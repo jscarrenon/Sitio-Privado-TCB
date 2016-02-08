@@ -15,12 +15,12 @@
             <div class="investment-profiles">
 
                 <div class="one-profile white-box" ng-repeat="categoria in ctrl.categorias">
-                    <div class="img {{ctrl.imagenes[categoria.Descriptor]}}"></div>
+                    <div class="img {{categoria.Descriptor.ToLowerCase()}}"></div>
                     <div class="text">
                         <div class="title">Perfil {{categoria.Descriptor}}</div>
                         {{categoria.Comentario}}
                         <ul>
-                            <li ng-repeat="producto in categoria.productos">
+                            <li ng-repeat="producto in categoria.Productos">
                                 {{producto.Descriptor}}
                             </li>
                         </ul>

@@ -23,15 +23,11 @@
                     this.categorias = result.filter((value: domain.ICategoria) => {
                         return value.Descriptor == 'Conservador' || value.Descriptor == 'Moderado' || value.Descriptor == 'Agresivo';
                     });
+                    this.categorias = this.categorias.sort((a:domain.ICategoria, b:domain.ICategoria) => {
+                        return a.Identificador - b.Identificador;
+                    });
                 });
         }
-
-        setImagenes(): void {
-            this.imagenes['Conservador'] = 'conservador';
-            this.imagenes['Moderado'] = 'moderado';
-            this.imagenes['Agresivo'] = 'agresivo';
-        }
-        
     }
     angular.module('tannerPrivadoApp')
         .controller('InversionesCtrl', InversionesCtrl);
