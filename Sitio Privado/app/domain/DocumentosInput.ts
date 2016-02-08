@@ -78,4 +78,17 @@
             this.codigo = codigo;
         }
     }
+
+    export interface IDocumentosPendientesCantidadInput {
+        rut: string;
+    }
+
+    export class DocumentosPendientesCantidadInput extends app.domain.InputBase implements IDocumentosPendientesCantidadInput {
+        constructor(public rut: string) {
+
+            super();
+
+            this.rut = rut;
+        }
+    }
 }
