@@ -19,22 +19,24 @@
                     Usted puede acceder a los siguientes productos y servicios:
                     <ul>
                         <li ng-repeat="producto in ctrl.categoriaCliente.Productos">
-                            <a href="#">{{producto.Descriptor}}</a>
+                            <a href="" ng-click="ctrl.scrollTo('prod' + producto.Identificador)">{{producto.Descriptor}}</a>
                         </li>
                     </ul>
                     <div class="go-to-inversiones"><a href="#/inversiones" class="clink">Conozca nuestros perfiles de inversión</a></div>
                 </div>
             </div>
         <div class="col-right products">
-            <div class="one-product white-box" ng-repeat="producto in ctrl.productos">
-                <div class="img renta-nacional"></div>
-                <div class="text">
-                    <div class="title">{{producto.Descriptor}}</div>
-                    <div class="description">
-                        <p>Esta es la descripción</p>
+            <div ng-repeat="producto in ctrl.productos">
+                <div id="prod{{producto.Identificador}}" class="one-product white-box">
+                    <div class="img renta-nacional"></div>
+                    <div class="text">
+                        <div class="title">{{producto.Descriptor}}</div>
+                        <div class="description">
+                            <p>Esta es la descripción</p>
+                        </div>
                     </div>
+                    <div id="clear"></div>
                 </div>
-                <div id="clear"></div>
             </div>
         </div>
         <ng-include src="ctrl.constantService.templateFooterURI"></ng-include>

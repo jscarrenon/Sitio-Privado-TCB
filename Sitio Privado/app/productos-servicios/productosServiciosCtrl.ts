@@ -14,11 +14,12 @@
         categoriaClienteInput: app.domain.ICategoriaClienteInput;
         productos: app.domain.IProducto[];
 
-        static $inject = ['constantService', 'dataService', 'authService', 'extrasService'];
+        static $inject = ['constantService', 'dataService', 'authService', 'extrasService', '$anchorScroll'];
         constructor(private constantService: app.common.services.ConstantService,
             private dataService: app.common.services.DataService,
             private authService: app.common.services.AuthService,
-            private extrasService: app.common.services.ExtrasService) {
+            private extrasService: app.common.services.ExtrasService,
+            private $anchorScroll: ng.IAnchorScrollService) {
 
             this.categoriaClienteInput = new app.domain.CategoriaClienteInput(parseInt(this.extrasService.getRutParteEntera(this.authService.usuario.Rut)));
             this.getCategoriaCliente(this.categoriaClienteInput);
@@ -41,6 +42,10 @@
                         });
                     });
                 });
+        }
+
+        scrollTo(id: string): void {
+            this.$anchorScroll(id);
         }
     }
     angular.module('tannerPrivadoApp')
