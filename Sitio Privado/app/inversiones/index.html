@@ -15,7 +15,7 @@
             <div class="investment-profiles">
 
                 <div class="one-profile white-box" ng-repeat="categoria in ctrl.categorias">
-                    <div class="img {{categoria.Descriptor.ToLowerCase()}}"></div>
+                    <div class="img {{categoria.Descriptor.toLowerCase()}}"></div>
                     <div class="text">
                         <div class="title">Perfil {{categoria.Descriptor}}</div>
                         {{categoria.Comentario}}
