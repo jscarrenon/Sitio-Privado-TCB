@@ -12,6 +12,8 @@ namespace Sitio_Privado.Models.CategoriaInversionista
     {
         public int Identificador { get; set; }
         public string Descriptor { get; set; }
+        public string Comentario { get; set; }
+        public string Riesgo { get; set; }
         public List<Categoria> Categorias { get; set; }
 
         public Producto() { }
@@ -21,6 +23,8 @@ namespace Sitio_Privado.Models.CategoriaInversionista
             Identificador = producto.identificador;
             Descriptor = producto.descriptor;
             Categorias = new List<Categoria>();
+            Comentario = producto.comentario;
+            Riesgo = producto.riesgo;
             if(producto.Categorias != null)
             {
                 foreach (_categoria categoria in producto.Categorias)
@@ -36,6 +40,8 @@ namespace Sitio_Privado.Models.CategoriaInversionista
             _producto producto = webService.tann_cns_prod(input.ident_prd);
             Identificador = producto.identificador;
             Descriptor = producto.descriptor;
+            Comentario = producto.comentario;
+            Riesgo = producto.riesgo;
             Categorias = new List<Categoria>();
 
             foreach (_categoria categoria in producto.Categorias)

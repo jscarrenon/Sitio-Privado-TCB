@@ -361,6 +361,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\common\templates\footer.html" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
     <TypeScriptCompile Include="app\common\controllers\modalInstanceCtrl.ts" />
     <TypeScriptCompile Include="app\common\typings\uglipop.ts" />
     <Content Include="app\common\templates\pagination.html" />
@@ -401,6 +410,7 @@
     <Content Include="Web References\CartolaResumida\_cartola_alt.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\kundertannerprivado - Web Deploy.pubxml" />
     <None Include="Web References\CircularizacionCustodia\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -412,9 +422,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Web References\CircularizacionCustodia\tann_circularizacion.disco" />
-    <Content Include="Web.config">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Resources\fonts\Gotham-Medium.svg" />
     <Content Include="Resources\fonts\GothamBold.svg" />
     <Content Include="Resources\fonts\GothamBook.svg" />
@@ -515,9 +522,6 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <None Include="Web References\CartolaResumida\tann_cartola_resumida.wsdl" />
-    <Content Include="Web References\CartolaResumida\_cuentaspisys.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </Content>
     <None Include="Web References\CategoriaInversionista\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -563,17 +567,7 @@
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <Content Include="Web.config">
-      <SubType>Designer</SubType>
-    </Content>
     <None Include="Web References\InformacionClienteAgente\tann_info_cliente.disco" />
-    <Content Include="Web.config" />
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
