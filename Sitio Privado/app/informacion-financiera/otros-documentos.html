@@ -10,8 +10,8 @@
 
     <div id="content">
         <div class="in">
-
-            <div class="one-col documents">
+            <loading param="ctrl.loading"></loading>
+            <div class="one-col documents" ng-show="!ctrl.loading">
                 <div ng-repeat="folder in ctrl.container">
                     <div class="section-title">
                         {{folder.Name}}

@@ -10,7 +10,8 @@
 
     <div id="content">
         <div class="in">
-            <div class="areas">
+            <loading param="ctrl.loading"></loading>
+            <div class="areas" ng-show="!ctrl.loading">
                 <div ng-repeat="folder in ctrl.container">
                     <div class="one-area year">
                         <a href="" class="clink" ng-click="ctrl.selectYear($index)" ng-class="{'active':ctrl.selectedYearIndex == $index}" >
@@ -19,7 +20,7 @@
                     </div>
                 </div>
             </div>
-            <div class="one-col documents">
+            <div class="one-col documents" ng-show="!ctrl.loading">
                 <div ng-repeat="folder in ctrl.selectedYear">
                     <div class="section-title">
                         {{folder.Name}}
