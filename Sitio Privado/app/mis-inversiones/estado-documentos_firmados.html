@@ -13,7 +13,8 @@
     <div class="section-title">Operaciones Firmadas</div>
 
     <div id="cont-table">
-        <table class="balance">
+        <loading param="documentosCtrl.firmadosLoading"></loading>
+        <table class="balance" ng-show="!documentosCtrl.firmadosLoading">
             <tr>
                 <th>Producto</th>
                 <th>Nº Folio</th>
@@ -26,14 +27,14 @@
                 <td>{{documento.Producto}}</td>
                 <td>{{documento.Folio}}</td>
                 <td>{{documento.FechaCreacion}}</td>
-                <td>{{documento.Firmado}}</td>
-                <td>14 Nov 2015</td><!-- valor ? KUNDER -->
+                <td>{{documento.TipoFirma}}</td>
+                <td>{{documento.FechaFirma}}</td>
                 <td><a href="" ng-click="documentosCtrl.verDocumento(documento)">Ver Documento</a></td>
             </tr>
         </table>
     </div>
 
-    <div class="table-tools">
+    <div class="table-tools" ng-show="!documentosCtrl.firmadosLoading">
         <uib-pagination ng-model="documentosCtrl.operacionesFirmadasPaginaActual" total-items="documentosCtrl.operacionesFirmadas.length" items-per-page="documentosCtrl.operacionesFirmadasPorPagina" boundary-links="true" template-url="app/common/templates/pagination.html"></uib-pagination>
     </div>
 
@@ -43,7 +44,8 @@
     <div class="section-title">Documentos Firmados</div>
 
     <div id="cont-table">
-        <table class="balance">
+        <loading param="documentosCtrl.firmadosLoading"></loading>
+        <table class="balance" ng-show="!documentosCtrl.firmadosLoading">
             <tr>
                 <th>Producto</th>
                 <th>Tipo de Documento</th>
@@ -58,14 +60,14 @@
                 <td>{{documento.Tipo}}</td>
                 <td>{{documento.Folio}}</td>
                 <td>{{documento.FechaCreacion}}</td>
-                <td>{{documento.Firmado}}</td>
-                <td>14 Nov 2015</td><!-- valor ? KUNDER -->
+                <td>{{documento.TipoFirma}}</td>
+                <td>{{documento.FechaFirma}}</td>
                 <td><a href="" ng-click="documentosCtrl.verDocumento(documento)">Ver Documento</a></td>
             </tr>
         </table>
     </div>
 
-    <div class="table-tools">
+    <div class="table-tools" ng-show="!documentosCtrl.firmadosLoading">
         <uib-pagination ng-model="documentosCtrl.documentosFirmadosPaginaActual" total-items="documentosCtrl.documentosFirmados.length" items-per-page="documentosCtrl.documentosFirmadosPorPagina" boundary-links="true" template-url="app/common/templates/pagination.html"></uib-pagination>
     </div>
 

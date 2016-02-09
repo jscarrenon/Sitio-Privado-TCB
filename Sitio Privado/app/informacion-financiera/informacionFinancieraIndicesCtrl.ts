@@ -4,6 +4,7 @@
         fecha: Date;
         indices: app.domain.IIndices;
         getIndices(input: app.domain.IIndicesInput): void;
+        loading: boolean;
     }
 
     class InformacionFinancieraIndicesCtrl implements IInformacionFinancieraViewModel {
@@ -11,6 +12,7 @@
         fecha: Date;
         indices: app.domain.IIndices;
         indicesInput: app.domain.IIndicesInput;
+        loading: boolean;
 
         static $inject = ['constantService', 'dataService', 'extrasService'];
         constructor(private constantService: app.common.services.ConstantService,
@@ -24,10 +26,12 @@
         }
 
         getIndices(input: app.domain.IIndicesInput): void {
+            this.loading = true;
             this.dataService.postWebService(this.constantService.apiIndicesURI + 'getSingle', input)
                 .then((result: app.domain.IIndices) => {
                     this.indices = result;
-                });
+                })
+                .finally(() => this.loading = false);
         }
 
         actualizarIndices(): void {

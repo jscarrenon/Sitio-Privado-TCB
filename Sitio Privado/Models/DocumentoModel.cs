@@ -51,6 +51,8 @@ namespace Sitio_Privado.Models
         public string FechaCreacion { get; set; }
         public string Leido { get; set; }
         public string Firmado { get; set; }
+        public string TipoFirma { get; set; }
+        public string FechaFirma { get; set; }
         public string Ruta { get; set; }
         public string NombreCliente { get; set; }
         public string RutaFirmado { get; set; }
@@ -66,6 +68,8 @@ namespace Sitio_Privado.Models
             Folio = documento._folio;
             Leido = documento._leido.Trim();
             Firmado = documento._firmado.Trim();
+            TipoFirma = "Web";
+            FechaFirma = "14 Nov 2015"; //--KUNDER
             Ruta = documento._ruta;
             NombreCliente = documento._nombrecli;
             RutaFirmado = documento._results;

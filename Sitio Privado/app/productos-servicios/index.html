@@ -14,7 +14,8 @@
     <div id="content">
         <div class="in">
             <div class="col-left products">
-                <div class="profile-products white-box">
+                <loading param="ctrl.categoriaClienteLoading" extra-class="'bottom1'"></loading>
+                <div class="profile-products white-box" ng-show="!ctrl.categoriaClienteLoading">
                     <div class="title">Perfil {{ctrl.categoriaCliente.Descriptor}}</div>
                     Usted puede acceder a los siguientes productos y servicios:
                     <ul>
@@ -26,7 +27,8 @@
                 </div>
             </div>
         <div class="col-right products">
-            <div ng-repeat="producto in ctrl.productos">
+            <loading param="ctrl.productosLoading"></loading>
+            <div ng-repeat="producto in ctrl.productos" ng-show="!ctrl.productosLoading">
                 <div id="prod{{producto.Identificador}}" class="one-product white-box">
                     <div class="img {{ctrl.imagenProducto[producto.Identificador]}}"></div>
                     <div class="text">

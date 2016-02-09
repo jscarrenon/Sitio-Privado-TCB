@@ -20,6 +20,7 @@ var paths = {
     homeFolder: './Views/Home/',
     domainFiles: ['./app/domain/IEntity.js', './app/domain/IInput.js', './app/domain/*.js'],
     appFiles: ['./app/*.js',
+                './app/common/directives/*.js',
                 './app/common/services/*.js',
                 './app/common/controllers/*.js',
                 './app/common/typings/*.js',

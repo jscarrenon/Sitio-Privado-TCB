@@ -11,14 +11,16 @@
     <div id="content" ng-controller="InformacionFinancieraIndicesCtrl as indicesCtrl">
         <div class="in">
 
-            <div class="filter date indices">
+            <div class="filter date indices" ng-show="!indicesCtrl.loading">
                 <div class="date-field">
                     Información al: <input type="date" step="1" ng-model="indicesCtrl.fecha" required>
                 </div>
                 <div class="apply-filter pag-button"><a href="" class="clink" ng-click="indicesCtrl.actualizarIndices()"></a></div>
             </div>
 
-            <div class="one-col">
+            <loading param="indicesCtrl.loading"></loading>
+
+            <div class="one-col" ng-show="!indicesCtrl.loading">
 
                 <div class="section-title">Empresa</div>
                 <div class="col-tannersa">

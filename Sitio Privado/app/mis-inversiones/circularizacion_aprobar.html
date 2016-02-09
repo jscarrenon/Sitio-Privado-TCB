@@ -2,7 +2,9 @@
 
     <div class="section-title">Circularización Anual de Custodia {{circularizacionCtrl.fecha|date:'y'}}</div>
 
-    <div class="full-text">
+    <loading param="circularizacionCtrl.respondidaLoading"></loading>
+
+    <div class="full-text" ng-show="!circularizacionCtrl.respondidaLoading">
         <p>De mi/nuestra consideración:</p>
         <p>En respuesta a lo solicitado por ustedes, les manifiesto lo siguiente:</p>
         <p><input type="radio" value="S" ng-model="circularizacionCtrl.respuestaInput.respuesta">Mi conformidad con los saldos en custodia y/o garantía que ustedes informaron como mantenidos al {{circularizacionCtrl.fecha|date:'longDate'}}.</p>
