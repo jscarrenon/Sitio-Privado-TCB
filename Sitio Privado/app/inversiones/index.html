@@ -12,7 +12,8 @@
     <div id="content">
         <div class="in">
 
-            <div class="investment-profiles">
+            <loading param="ctrl.loading"></loading>
+            <div class="investment-profiles" ng-show="!ctrl.loading">
 
                 <div class="one-profile white-box" ng-repeat="categoria in ctrl.categorias">
                     <div class="img {{categoria.Descriptor.toLowerCase()}}"></div>
