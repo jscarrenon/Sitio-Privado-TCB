@@ -22,6 +22,10 @@
                     templateUrl: "/app/informacion-financiera/index.html",
                     controller: "InformacionFinancieraCtrl as ctrl"
                 })
+                .when("/productos-servicios/:seccion?", {
+                    templateUrl: "/app/productos-servicios/index.html",
+                    controller: "ProductosServiciosCtrl as ctrl"
+                })
                 .otherwise({ redirectTo: '/' });
         }
     }

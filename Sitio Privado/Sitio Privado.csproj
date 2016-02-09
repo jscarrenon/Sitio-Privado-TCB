@@ -44,6 +44,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <FilesToIncludeForPublish>OnlyFilesToRunTheApp</FilesToIncludeForPublish>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -360,7 +361,120 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".build\css\stylesCss.css" />
+    <Content Include=".build\css\stylesLess.css" />
+    <Content Include=".build\fonts\Gotham-Medium.svg" />
+    <Content Include=".build\fonts\GothamBold.svg" />
+    <Content Include=".build\fonts\GothamBook.svg" />
+    <Content Include=".build\img\home_indicadores.jpg" />
+    <Content Include=".build\img\home_inversiones.jpg" />
+    <Content Include=".build\img\home_productos.jpg" />
+    <Content Include=".build\img\icon_arrow-down.png" />
+    <Content Include=".build\img\icon_arrow-down2.png" />
+    <Content Include=".build\img\icon_backhome.png" />
+    <Content Include=".build\img\icon_circularizacion.png" />
+    <Content Include=".build\img\icon_circularizacionh.png" />
+    <Content Include=".build\img\icon_close-modal.png" />
+    <Content Include=".build\img\icon_comite.png" />
+    <Content Include=".build\img\icon_comiteh.png" />
+    <Content Include=".build\img\icon_custodia.png" />
+    <Content Include=".build\img\icon_custodiah.png" />
+    <Content Include=".build\img\icon_docs-normativos.png" />
+    <Content Include=".build\img\icon_docs-normativos_gris.png" />
+    <Content Include=".build\img\icon_download.png" />
+    <Content Include=".build\img\icon_estado-documentos.png" />
+    <Content Include=".build\img\icon_estado-documentosh.png" />
+    <Content Include=".build\img\icon_estatutos.png" />
+    <Content Include=".build\img\icon_estatutosh.png" />
+    <Content Include=".build\img\icon_external-link-white.png" />
+    <Content Include=".build\img\icon_external-link.png" />
+    <Content Include=".build\img\icon_filter.png" />
+    <Content Include=".build\img\icon_fondos-mutuos.png" />
+    <Content Include=".build\img\icon_fondos-mutuosh.png" />
+    <Content Include=".build\img\icon_fondos-privados.png" />
+    <Content Include=".build\img\icon_fondos-privadosh.png" />
+    <Content Include=".build\img\icon_go-back.png" />
+    <Content Include=".build\img\icon_hechos-esenciales.png" />
+    <Content Include=".build\img\icon_indices.png" />
+    <Content Include=".build\img\icon_indicesh.png" />
+    <Content Include=".build\img\icon_inv-internacionales.png" />
+    <Content Include=".build\img\icon_inv-nacionales.png" />
+    <Content Include=".build\img\icon_inv-nacionalesh.png" />
+    <Content Include=".build\img\icon_li-arrow.png" />
+    <Content Include=".build\img\icon_link.png" />
+    <Content Include=".build\img\icon_lock.png" />
+    <Content Include=".build\img\icon_logout.png" />
+    <Content Include=".build\img\icon_mis-datos.png" />
+    <Content Include=".build\img\icon_miteh.png" />
+    <Content Include=".build\img\icon_mobile_home.png" />
+    <Content Include=".build\img\icon_mobile_info.png" />
+    <Content Include=".build\img\icon_mobile_inversion.png" />
+    <Content Include=".build\img\icon_mobile_inversiones.png" />
+    <Content Include=".build\img\icon_mobile_logout.png" />
+    <Content Include=".build\img\icon_mobile_prod.png" />
+    <Content Include=".build\img\icon_mobile_productos.png" />
+    <Content Include=".build\img\icon_mobile_target.png" />
+    <Content Include=".build\img\icon_mobile_user.png" />
+    <Content Include=".build\img\icon_next.png" />
+    <Content Include=".build\img\icon_next2.png" />
+    <Content Include=".build\img\icon_normativosh.png" />
+    <Content Include=".build\img\icon_otros-docs.png" />
+    <Content Include=".build\img\icon_otros-docsh.png" />
+    <Content Include=".build\img\icon_otros-docs_gris.png" />
+    <Content Include=".build\img\icon_pdf.png" />
+    <Content Include=".build\img\icon_prev.png" />
+    <Content Include=".build\img\icon_prev2.png" />
+    <Content Include=".build\img\icon_ready.png" />
+    <Content Include=".build\img\icon_status-error.png" />
+    <Content Include=".build\img\icon_status-ok.png" />
+    <Content Include=".build\img\icon_triangle.png" />
+    <Content Include=".build\img\icon_user.png" />
+    <Content Include=".build\img\img_firma.png" />
+    <Content Include=".build\img\img_login1.jpg" />
+    <Content Include=".build\img\img_login2.jpg" />
+    <Content Include=".build\img\img_pagresivo.jpg" />
+    <Content Include=".build\img\img_pconservador.jpg" />
+    <Content Include=".build\img\img_pmoderado.jpg" />
+    <Content Include=".build\img\login_logo.png" />
+    <Content Include=".build\img\logo_mobile_tannerclientes.png" />
+    <Content Include=".build\img\logo_mobile_tannerclientes2.png" />
+    <Content Include=".build\img\logo_tannerclientes.png" />
+    <Content Include=".build\img\prod_admin-cartera.jpg" />
+    <Content Include=".build\img\prod_ahorro-previsional.jpg" />
+    <Content Include=".build\img\prod_distribucion-fm.jpg" />
+    <Content Include=".build\img\prod_irf.jpg" />
+    <Content Include=".build\img\prod_moneda-ext.jpg" />
+    <Content Include=".build\img\prod_operaciones-prestamo.jpg" />
+    <Content Include=".build\img\prod_operaciones-simultaneas.jpg" />
+    <Content Include=".build\img\prod_pactos.jpg" />
+    <Content Include=".build\img\prod_renta-fija-inter.jpg" />
+    <Content Include=".build\img\prod_renta-variable-internacional.jpg" />
+    <Content Include=".build\img\prod_renta-variable-nacional.jpg" />
+    <Content Include=".build\js\extras.js" />
+    <Content Include=".build\spa\app.js" />
+    <Content Include=".build\spa\domain.js" />
+    <Content Include=".build\vendors\vendors.js" />
     <Content Include="app\common\templates\footer.html" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include=".build\fonts\Gotham-Medium.eot" />
+    <Content Include=".build\fonts\Gotham-Medium.ttf" />
+    <Content Include=".build\fonts\Gotham-Medium.woff" />
+    <Content Include=".build\fonts\GothamBold.eot" />
+    <Content Include=".build\fonts\GothamBold.ttf" />
+    <Content Include=".build\fonts\GothamBold.woff" />
+    <Content Include=".build\fonts\GothamBook.eot" />
+    <Content Include=".build\fonts\GothamBook.otf" />
+    <Content Include=".build\fonts\GothamBook.ttf" />
+    <Content Include=".build\fonts\GothamBook.woff" />
+    <None Include="Properties\PublishProfiles\kundertannerprivado - Web Deploy %282%29.pubxml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
     <TypeScriptCompile Include="app\common\controllers\modalInstanceCtrl.ts" />
     <TypeScriptCompile Include="app\common\directives\loadingDirective.ts" />
     <TypeScriptCompile Include="app\common\typings\uglipop.ts" />
@@ -389,6 +503,7 @@
     <Content Include="app\mis-inversiones\fondos-mutuos.html" />
     <Content Include="app\mis-inversiones\index.html" />
     <Content Include="app\mis-inversiones\nacionales.html" />
+    <Content Include="app\productos-servicios\index.html" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="gulpfile.js" />
@@ -403,6 +518,7 @@
     <Content Include="Web References\CartolaResumida\_cartola_alt.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\kundertannerprivado - Web Deploy.pubxml" />
     <None Include="Web References\CircularizacionCustodia\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -414,9 +530,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Web References\CircularizacionCustodia\tann_circularizacion.disco" />
-    <Content Include="Web.config">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Resources\fonts\Gotham-Medium.svg" />
     <Content Include="Resources\fonts\GothamBold.svg" />
     <Content Include="Resources\fonts\GothamBook.svg" />
@@ -517,9 +630,6 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <None Include="Web References\CartolaResumida\tann_cartola_resumida.wsdl" />
-    <Content Include="Web References\CartolaResumida\_cuentaspisys.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </Content>
     <None Include="Web References\CategoriaInversionista\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -565,17 +675,7 @@
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <Content Include="Web.config">
-      <SubType>Designer</SubType>
-    </Content>
     <None Include="Web References\InformacionClienteAgente\tann_info_cliente.disco" />
-    <Content Include="Web.config" />
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -681,6 +781,7 @@
     <TypeScriptCompile Include="app\mis-inversiones\misInversionesNacionales.ts" />
     <TypeScriptCompile Include="app\mis-inversiones\misInversionesDocumentosCtrl.ts" />
     <TypeScriptCompile Include="app\mis-inversiones\misInversionesCtrl.ts" />
+    <TypeScriptCompile Include="app\productos-servicios\productosServiciosCtrl.ts" />
     <TypeScriptCompile Include="Scripts\typings\angular-ui-bootstrap\angular-ui-bootstrap.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-animate.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-cookies.d.ts" />
