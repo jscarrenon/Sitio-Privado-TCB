@@ -14,46 +14,15 @@
 
             <div class="investment-profiles">
 
-                <div class="one-profile white-box">
-                    <div class="img conservador"></div>
+                <div class="one-profile white-box" ng-repeat="categoria in ctrl.categorias">
+                    <div class="img {{categoria.Descriptor.toLowerCase()}}"></div>
                     <div class="text">
-                        <div class="title">Perfil Conservador</div>
-                        Invierte en activos con un bajo grado de sofisticación, disponibles para todos los inversionistas del mercado.
+                        <div class="title">Perfil {{categoria.Descriptor}}</div>
+                        {{categoria.Comentario}}
                         <ul>
-                            <li>Acciones Nacionales / MILA / ETF Locales / Bolsa Off Shore</li>
-                            <li>Monedas (Spot)</li>
-                            <li>Renta Fija Local</li>
-                            <li>Fondos Mutuos</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="one-profile white-box">
-                    <div class="img moderado"></div>
-                    <div class="text">
-                        <div class="title">Perfil Moderado</div>
-                        Busca diversificar sus inversiones vía distintos mercados y monedas, como también está en condiciones de operar con contratos con un cierto grado de complejidad.
-                        <ul>
-                            <li>Compraventa Acciones Locales</li>
-                            <li>Operaciones de Retrocompra (Pactos)</li>
-                            <li>Préstamos de Acciones</li>
-                            <li>Fondos Mutuos Perfil Moderado</li>
-                            <li>Financista Simultáneas (Vendedor a Plazo)</li>
-                            <li>Mercado Internacional (Pershing)</li>
-                            <li>Administración de Cartera (ADC)</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="one-profile white-box">
-                    <div class="img agresivo"></div>
-                    <div class="text">
-                        <div class="title">Perfil Agresivo</div>
-                        Invierte en productos sofisticados con apalancamiento, y puede acceder a toda la gama de productos y alternativas de inversión.
-                        <ul>
-                            <li>Operaciones Simultáneas (Comprador a Plazo)</li>
-                            <li>Operaciones de Venta Corta</li>
-                            <li>Operaciones de Forward</li>
-                            <li>Productos Estructurados en General (Mercado Local e Internacional)</li>
-                            <li>Fondos Mutuos Perfil Agresivo</li>
+                            <li ng-repeat="producto in categoria.Productos">
+                                {{producto.Descriptor}}
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -62,18 +31,7 @@
 
             <div id="clear"></div>
 
-            <div class="footer">
-                <div class="text">
-                    Para más información o detalle de sus inversiones, contacte a su Ejecutivo de Inversiones o llame a la Línea Exclusiva para Clientes (+56 2) 2731 8900
-                </div>
-                <div class="links">
-                    <ul>
-                        <li><a href="#" target="_blank">Sucursales</a></li>
-                        <li><a href="#" target="_blank">Canal de denuncias</a></li>
-                        <li><a href="http://www.tanner.cl" target="_blank">Tanner.cl</a></li>
-                    </ul>
-                </div>
-            </div>
+            <ng-include src="ctrl.constantService.templateFooterURI"></ng-include>
 
         </div><!--end in-->
     </div><!--end content-->
