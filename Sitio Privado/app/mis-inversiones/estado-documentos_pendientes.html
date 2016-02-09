@@ -4,74 +4,81 @@
 </div>
 
 <div class="one-col">
-    <div class="section-title">Operaciones Pendientes (al {{documentosCtrl.fechaHoy|date:'dd/MM/yyyy'}})</div>
 
-    <div id="cont-table">
-        <loading param="documentosCtrl.pendientesLoading"></loading>
-        <table class="balance" ng-show="!documentosCtrl.pendientesLoading">
-            <tr>
-                <th class="small-box">Firmar</th>
-                <th class="small-box">Leído</th>
-                <th>Producto</th>
-                <th>Nº Folio</th>
-                <th>Fecha de Operación</th>
-                <th>Documento</th>
-            </tr>
-            <tr ng-repeat="documento in documentosCtrl.operacionesPendientes.slice(((documentosCtrl.operacionesPendientesPaginaActual-1)*documentosCtrl.operacionesPendientesPorPagina), ((documentosCtrl.operacionesPendientesPaginaActual)*documentosCtrl.operacionesPendientesPorPagina))">
-                <td><input type="checkbox" name="sign" ng-model="documento.Seleccionado" ng-change="documentosCtrl.opcionOperacionToggled()"></td>
-                <td><input type="checkbox" name="read" ng-checked="documento.Leido == 'S'" disabled></td>
-                <td>{{documento.Producto}}</td>
-                <td>{{documento.Folio}}</td>
-                <td>{{documento.FechaCreacion}}</td>
-                <td><a href="" ng-click="documentosCtrl.verDocumento(documento)">Ver Documento</a></td>
-            </tr>
-        </table>
-    </div>
+    <loading param="documentosCtrl.firmarLoading"></loading>
+
+    <div ng-show="!documentosCtrl.firmarLoading">
+
+        <div class="section-title">Operaciones Pendientes (al {{documentosCtrl.fechaHoy|date:'dd/MM/yyyy'}})</div>
+
+        <div id="cont-table">
+            <loading param="documentosCtrl.pendientesLoading"></loading>
+            <table class="balance" ng-show="!documentosCtrl.pendientesLoading">
+                <tr>
+                    <th class="small-box">Firmar</th>
+                    <th class="small-box">Leído</th>
+                    <th>Producto</th>
+                    <th>Nº Folio</th>
+                    <th>Fecha de Operación</th>
+                    <th>Documento</th>
+                </tr>
+                <tr ng-repeat="documento in documentosCtrl.operacionesPendientes.slice(((documentosCtrl.operacionesPendientesPaginaActual-1)*documentosCtrl.operacionesPendientesPorPagina), ((documentosCtrl.operacionesPendientesPaginaActual)*documentosCtrl.operacionesPendientesPorPagina))">
+                    <td><input type="checkbox" name="sign" ng-model="documento.Seleccionado" ng-change="documentosCtrl.opcionOperacionToggled()"></td>
+                    <td><input type="checkbox" name="read" ng-checked="documento.Leido == 'S'" disabled></td>
+                    <td>{{documento.Producto}}</td>
+                    <td>{{documento.Folio}}</td>
+                    <td>{{documento.FechaCreacion}}</td>
+                    <td><a href="" ng-click="documentosCtrl.verDocumento(documento)">Ver Documento</a></td>
+                </tr>
+            </table>
+        </div>
     
-    <div class="table-tools" ng-show="!documentosCtrl.pendientesLoading">
-        <div class="select-all">
-            <input type="checkbox" ng-model="documentosCtrl.todasOperaciones" ng-click="documentosCtrl.toggleTodasOperaciones()"><label>Seleccionar todos</label>
+        <div class="table-tools" ng-show="!documentosCtrl.pendientesLoading">
+            <div class="select-all">
+                <input type="checkbox" ng-model="documentosCtrl.todasOperaciones" ng-click="documentosCtrl.toggleTodasOperaciones()"><label>Seleccionar todos</label>
+            </div>
+            <uib-pagination ng-model="documentosCtrl.operacionesPendientesPaginaActual" total-items="documentosCtrl.operacionesPendientes.length" items-per-page="documentosCtrl.operacionesPendientesPorPagina" boundary-links="true" template-url="app/common/templates/pagination.html"></uib-pagination>
         </div>
-        <uib-pagination ng-model="documentosCtrl.operacionesPendientesPaginaActual" total-items="documentosCtrl.operacionesPendientes.length" items-per-page="documentosCtrl.operacionesPendientesPorPagina" boundary-links="true" template-url="app/common/templates/pagination.html"></uib-pagination>
-    </div>
 
-    <div class="sep-table"></div>
+        <div class="sep-table"></div>
 
-    <div class="section-title">Documentos Pendientes (al {{documentosCtrl.fechaHoy|date:'dd/MM/yyyy'}})</div>
+        <div class="section-title">Documentos Pendientes (al {{documentosCtrl.fechaHoy|date:'dd/MM/yyyy'}})</div>
 
-    <div id="cont-table">
-        <loading param="documentosCtrl.pendientesLoading"></loading>
-        <table class="balance" ng-show="!documentosCtrl.pendientesLoading">
-            <tr>
-                <th class="small-box">Firmar</th>
-                <th class="small-box">Leído</th>
-                <th>Producto</th>
-                <th>Nº Folio</th>
-                <th>Fecha de Operación</th>
-                <th>Documento</th>
-            </tr>
-            <tr ng-repeat="documento in documentosCtrl.documentosPendientes.slice(((documentosCtrl.documentosPendientesPaginaActual-1)*documentosCtrl.documentosPendientesPorPagina), ((documentosCtrl.documentosPendientesPaginaActual)*documentosCtrl.documentosPendientesPorPagina))">
-                <td><input type="checkbox" name="sign" ng-model="documento.Seleccionado" ng-change="documentosCtrl.opcionDocumentoToggled()"></td>
-                <td><input type="checkbox" name="read" ng-checked="documento.Leido == 'S'" disabled></td>
-                <td>{{documento.Producto}}</td>
-                <td>{{documento.Folio}}</td>
-                <td>{{documento.FechaCreacion}}</td>
-                <td><a href="" ng-click="documentosCtrl.verDocumento(documento)">Ver Documento</a></td>
-            </tr>
-        </table>
-    </div>
-
-    <div class="table-tools" ng-show="!documentosCtrl.pendientesLoading">
-        <div class="select-all">
-            <input type="checkbox" ng-model="documentosCtrl.todosDocumentos" ng-click="documentosCtrl.toggleTodosDocumentos()"><label>Seleccionar todos</label>
+        <div id="cont-table">
+            <loading param="documentosCtrl.pendientesLoading"></loading>
+            <table class="balance" ng-show="!documentosCtrl.pendientesLoading">
+                <tr>
+                    <th class="small-box">Firmar</th>
+                    <th class="small-box">Leído</th>
+                    <th>Producto</th>
+                    <th>Nº Folio</th>
+                    <th>Fecha de Operación</th>
+                    <th>Documento</th>
+                </tr>
+                <tr ng-repeat="documento in documentosCtrl.documentosPendientes.slice(((documentosCtrl.documentosPendientesPaginaActual-1)*documentosCtrl.documentosPendientesPorPagina), ((documentosCtrl.documentosPendientesPaginaActual)*documentosCtrl.documentosPendientesPorPagina))">
+                    <td><input type="checkbox" name="sign" ng-model="documento.Seleccionado" ng-change="documentosCtrl.opcionDocumentoToggled()"></td>
+                    <td><input type="checkbox" name="read" ng-checked="documento.Leido == 'S'" disabled></td>
+                    <td>{{documento.Producto}}</td>
+                    <td>{{documento.Folio}}</td>
+                    <td>{{documento.FechaCreacion}}</td>
+                    <td><a href="" ng-click="documentosCtrl.verDocumento(documento)">Ver Documento</a></td>
+                </tr>
+            </table>
         </div>
-        <uib-pagination ng-model="documentosCtrl.documentosPendientesPaginaActual" total-items="documentosCtrl.documentosPendientes.length" items-per-page="documentosCtrl.documentosPendientesPorPagina" boundary-links="true" template-url="app/common/templates/pagination.html"></uib-pagination>
-    </div>
 
-    <div class="sign-note">
-        <input type="checkbox" ng-model="documentosCtrl.declaracion">
-        Declaro conocer y aceptar la(s) operacion(es) y/o contrato(s) seleccionado(s), los cuales fueron instruidos por mi persona a Tanner Corredores de Bolsa S.A., y que, en cumplimiento a lo establecido en los contratos vigentes, confirmo electrónicamente mi total aceptación sobre los términos y condiciones indicados en los mismos.<br />
-        <button class="pop button green" ng-click="documentosCtrl.confirmacion()" ng-if="documentosCtrl.declaracion">Firmar</button>
+        <div class="table-tools" ng-show="!documentosCtrl.pendientesLoading">
+            <div class="select-all">
+                <input type="checkbox" ng-model="documentosCtrl.todosDocumentos" ng-click="documentosCtrl.toggleTodosDocumentos()"><label>Seleccionar todos</label>
+            </div>
+            <uib-pagination ng-model="documentosCtrl.documentosPendientesPaginaActual" total-items="documentosCtrl.documentosPendientes.length" items-per-page="documentosCtrl.documentosPendientesPorPagina" boundary-links="true" template-url="app/common/templates/pagination.html"></uib-pagination>
+        </div>
+
+        <div class="sign-note" ng-show="!documentosCtrl.pendientesLoading">
+            <input type="checkbox" ng-model="documentosCtrl.declaracion">
+            Declaro conocer y aceptar la(s) operacion(es) y/o contrato(s) seleccionado(s), los cuales fueron instruidos por mi persona a Tanner Corredores de Bolsa S.A., y que, en cumplimiento a lo establecido en los contratos vigentes, confirmo electrónicamente mi total aceptación sobre los términos y condiciones indicados en los mismos.<br />
+            <button class="pop button green" ng-click="documentosCtrl.confirmacion()" ng-if="documentosCtrl.declaracion">Firmar</button>
+        </div>
+
     </div>
 
     <div class="legal">

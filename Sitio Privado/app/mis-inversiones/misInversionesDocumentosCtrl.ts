@@ -13,6 +13,7 @@
         fechaFirmadosFin: Date;
         verDocumento(documento: app.domain.IDocumento): void;
         firmarDocumentos(): void;
+        firmarLoading: boolean;
         fechaHoy: Date;
         actualizarDocumentosPendientes(): void;
         actualizarDocumentosFirmados(): void;
@@ -63,6 +64,7 @@
         todosDocumentos: boolean;
         pendientesLoading: boolean;
         firmadosLoading: boolean;
+        firmarLoading: boolean;
 
         static $inject = ['constantService', 'dataService', 'authService', 'extrasService', '$filter', '$uibModal'];
         constructor(private constantService: app.common.services.ConstantService,
@@ -149,6 +151,10 @@
         }
 
         firmarDocumentos(): void {
+            var firmarOperacionesLoading: boolean = false;
+            var firmarDocumentosLoading: boolean = false;
+            this.firmarLoading = firmarOperacionesLoading || firmarDocumentosLoading;
+
             if (this.declaracion) {
                 var operacionesSeleccionadas: app.domain.IDocumento[] = this.$filter('filter')(this.operacionesPendientes, { Seleccionado: true });
                 if (operacionesSeleccionadas) {
@@ -156,12 +162,16 @@
                     if (operacionCodigo) {
                         var operacionFirmarInput: app.domain.IOperacionFirmarInput = new app.domain.OperacionFirmarInput(this.authService.usuario.Rut, operacionCodigo);
 
+                        firmarOperacionesLoading = true;
+                        this.firmarLoading = firmarOperacionesLoading || firmarDocumentosLoading;
+
                         this.dataService.postWebService(this.constantService.apiDocumentoURI + 'setFirmarOperacion', operacionFirmarInput)
                             .then((result: app.domain.IDocumentoFirmarResultado) => {
                                 var operacionFirmarResultado: app.domain.IDocumentoFirmarResultado = result;
                                 this.actualizarDocumentosPendientes();
                                 this.actualizarDocumentosFirmados();
-                            });
+                            })
+                            .finally(() => { firmarOperacionesLoading = false; this.firmarLoading = firmarOperacionesLoading || firmarDocumentosLoading; });
                     }
                 }
 
@@ -171,12 +181,16 @@
                     if (documentoCodigo) {
                         var documentoFirmarInput: app.domain.IDocumentoFirmarInput = new app.domain.DocumentoFirmarInput(this.authService.usuario.Rut, documentoCodigo);
 
+                        firmarDocumentosLoading = true;
+                        this.firmarLoading = firmarOperacionesLoading || firmarDocumentosLoading;
+
                         this.dataService.postWebService(this.constantService.apiDocumentoURI + 'setFirmarDocumento', documentoFirmarInput)
                             .then((result: app.domain.IDocumentoFirmarResultado) => {
                                 var documentoFirmarResultado: app.domain.IDocumentoFirmarResultado = result;
                                 this.actualizarDocumentosPendientes();
                                 this.actualizarDocumentosFirmados();
-                            });
+                            })
+                            .finally(() => { firmarDocumentosLoading = false; this.firmarLoading = firmarOperacionesLoading || firmarDocumentosLoading; });
                     }
                 }
             }
