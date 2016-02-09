@@ -5,7 +5,7 @@
     { "Path": "../bower_components/angular/angular.js" },
     { "Path": "../bower_components/angular-mocks/angular-mocks.js" },
     { "Path": "../bower_components/angular-route/angular-route.js" },
-    { "Path": "../bower_components/angular-bootstrap/ui-bootstrap.js" },
+    { "Path": "../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js" },
     { "Path": "../bower_components/jasmine/lib/jasmine-core/jasmine.js" },
     { "Path": "../.build/spa/domain.js" },
     { "Path": "../.build/spa/app.js" },

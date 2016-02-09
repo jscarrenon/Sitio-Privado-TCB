@@ -79,7 +79,7 @@
         }
     ));
 
-    it("Seleccionar sección 0", function () {
+    it("Seleccionar sección 0.", function () {
 
         var id = 0;
         misInversionesCircularizacionController.seleccionarSeccion(id);
@@ -88,7 +88,7 @@
         expect(misInversionesCircularizacionController.seccionURI).toBe("app/mis-inversiones/circularizacion_pendiente.html");
     });
 
-    it("Seleccionar sección 1", function () {
+    it("Seleccionar sección 1.", function () {
 
         var id = 1;
         var getArchivoSpy = spyOn(misInversionesCircularizacionController, "getArchivo");
@@ -99,7 +99,7 @@
         expect(misInversionesCircularizacionController.seccionURI).toBe("app/mis-inversiones/circularizacion_anual.html");
     });
 
-    it("Seleccionar sección 2", function () {
+    it("Seleccionar sección 2.", function () {
 
         var id = 2;
         misInversionesCircularizacionController.seleccionarSeccion(id);

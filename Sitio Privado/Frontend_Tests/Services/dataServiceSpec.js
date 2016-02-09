@@ -30,7 +30,7 @@
         
     }));
 
-    it("Verificación llamada a método get()", function () {
+    it("Verificación llamada a método get().", function () {
 
         spyOn($http, "get").and.returnValue(http_deferred.promise);
         dataService.get("/api/containers/getContainer?name=");
@@ -39,7 +39,7 @@
 
     });
 
-    it("Verificación llamada a método getSingle()", function () {
+    it("Verificación llamada a método getSingle().", function () {
 
         spyOn($http, "get").and.returnValue(http_deferred.promise);
         dataService.getSingle("/api/containers/getContainer?name=");
@@ -48,14 +48,14 @@
 
     });
 
-    it("Verificación llamada a método add()", function () {
+    it("Verificación llamada a método add().", function () {
         spyOn($http, "post").and.returnValue(http_deferred.promise);
         dataService.add("/api/containers/getContainer?name=");
 
         expect($http.post).toHaveBeenCalled();
     });
 
-    it("Verificación llamada a método update()", function () {
+    it("Verificación llamada a método update().", function () {
 
         spyOn($http, "put").and.returnValue(http_deferred.promise);
         dataService.update("/api/containers/getContainer?name=");
@@ -64,7 +64,7 @@
 
     });
 
-    it("Verificación llamada a método remove()", function () {
+    it("Verificación llamada a método remove().", function () {
 
         spyOn($http, "delete").and.returnValue(http_deferred.promise);
         dataService.remove("/api/containers/getContainer?name=");
@@ -73,7 +73,7 @@
 
     });
 
-    it("Verificación llamada a método postWebService()", function () {
+    it("Verificación llamada a método postWebService().", function () {
 
         spyOn($http, "post").and.returnValue(http_deferred.promise);
         dataService.postWebService("/api/containers/getContainer?name=");

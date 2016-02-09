@@ -63,6 +63,8 @@
 
     beforeEach(inject(function (_authService_) {
 
+        spyOn(_authService_, "getCircularizacionPendiente");
+        spyOn(_authService_, "getDocumentosPendientes");
         getSingle_deferred.resolve(usuario_stub);
         $rootScope.$digest();
         authService = _authService_;

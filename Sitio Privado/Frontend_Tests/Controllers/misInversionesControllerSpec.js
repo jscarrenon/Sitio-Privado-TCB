@@ -38,7 +38,7 @@
         
     });
 
-    it("Seleccionar sección 2", function () {
+    it("Seleccionar sección 2.", function () {
 
         var seccionId = 2;
         misInversionesCtrl.seleccionarSeccion(seccionId);
@@ -48,7 +48,7 @@
         
     });
 
-    it("Seleccionar sección 3", function () {
+    it("Seleccionar sección 3.", function () {
 
         var seccionId = 3;
         misInversionesCtrl.seleccionarSeccion(seccionId);
@@ -58,7 +58,7 @@
         
     });
 
-    it("Seleccionar sección 4", function () {
+    it("Seleccionar sección 4.", function () {
 
         var seccionId = 4;
         misInversionesCtrl.seleccionarSeccion(seccionId);
@@ -67,7 +67,7 @@
         expect(misInversionesCtrl.seccionURI).toBe("app/mis-inversiones/circularizacion.html");
     });
 
-    it("setTemplates", function () {
+    it("Setear plantillas.", function () {
         misInversionesCtrl.setTemplates();
 
         expect(misInversionesCtrl.templates[0]).toBe("nacionales.html");
