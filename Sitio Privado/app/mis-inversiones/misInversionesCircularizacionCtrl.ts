@@ -9,10 +9,12 @@
         pendienteLoading: boolean;
         archivo: app.domain.ICircularizacionArchivo;
         getArchivo(input: app.domain.ICircularizacionArchivoInput): void;
+        archivoLoading: boolean;
         leidaResultado: app.domain.ICircularizacionProcesoResultado;
         setLeida(input: app.domain.ICircularizacionLeidaInput): void;
         respondidaResultado: app.domain.ICircularizacionProcesoResultado;
         setRespondida(input: app.domain.ICircularizacionRespondidaInput): void;
+        respondidaLoading: boolean;
         verDocumento(tipoDocumento: TipoDocumento): void;
         leida: boolean;
         respuestaInput: app.domain.ICircularizacionRespondidaInput;
@@ -34,6 +36,8 @@
         leida: boolean;
         respuestaInput: app.domain.ICircularizacionRespondidaInput;
         pendienteLoading: boolean;
+        archivoLoading: boolean;
+        respondidaLoading: boolean;
 
         static $inject = ['constantService', 'dataService', 'authService', 'extrasService'];
         constructor(private constantService: app.common.services.ConstantService,
@@ -81,10 +85,12 @@
         }
 
         getArchivo(input: app.domain.ICircularizacionArchivoInput): void {
+            this.archivoLoading = true;
             this.dataService.postWebService(this.constantService.apiCircularizacionURI + 'getArchivo', input)
                 .then((result: app.domain.ICircularizacionArchivo) => {
                     this.archivo = result;
-                });
+                })
+                .finally(() => this.archivoLoading = false);
         }
 
         setLeida(input: app.domain.ICircularizacionLeidaInput): void {
@@ -98,6 +104,7 @@
         }
 
         setRespondida(input: app.domain.ICircularizacionRespondidaInput): void {
+            this.respondidaLoading = true;
             this.dataService.postWebService(this.constantService.apiCircularizacionURI + 'setRespondida', input)
                 .then((result: app.domain.ICircularizacionProcesoResultado) => {
                     this.respondidaResultado = result;
@@ -105,7 +112,8 @@
                         this.seleccionarSeccion(0);
                         this.getPendiente(this.pendienteInput);
                     }
-                });
+                })
+                .finally(() => this.respondidaLoading = false);
         }
 
         verDocumento(tipoDocumento: TipoDocumento): void {
