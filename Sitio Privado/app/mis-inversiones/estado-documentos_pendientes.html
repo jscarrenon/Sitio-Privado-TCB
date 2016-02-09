@@ -7,7 +7,8 @@
     <div class="section-title">Operaciones Pendientes (al {{documentosCtrl.fechaHoy|date:'dd/MM/yyyy'}})</div>
 
     <div id="cont-table">
-        <table class="balance">
+        <loading param="documentosCtrl.pendientesLoading"></loading>
+        <table class="balance" ng-show="!documentosCtrl.pendientesLoading">
             <tr>
                 <th class="small-box">Firmar</th>
                 <th class="small-box">Leído</th>
@@ -27,7 +28,7 @@
         </table>
     </div>
     
-    <div class="table-tools">
+    <div class="table-tools" ng-show="!documentosCtrl.pendientesLoading">
         <div class="select-all">
             <input type="checkbox" ng-model="documentosCtrl.todasOperaciones" ng-click="documentosCtrl.toggleTodasOperaciones()"><label>Seleccionar todos</label>
         </div>
@@ -39,7 +40,8 @@
     <div class="section-title">Documentos Pendientes (al {{documentosCtrl.fechaHoy|date:'dd/MM/yyyy'}})</div>
 
     <div id="cont-table">
-        <table class="balance">
+        <loading param="documentosCtrl.pendientesLoading"></loading>
+        <table class="balance" ng-show="!documentosCtrl.pendientesLoading">
             <tr>
                 <th class="small-box">Firmar</th>
                 <th class="small-box">Leído</th>
@@ -59,7 +61,7 @@
         </table>
     </div>
 
-    <div class="table-tools">
+    <div class="table-tools" ng-show="!documentosCtrl.pendientesLoading">
         <div class="select-all">
             <input type="checkbox" ng-model="documentosCtrl.todosDocumentos" ng-click="documentosCtrl.toggleTodosDocumentos()"><label>Seleccionar todos</label>
         </div>

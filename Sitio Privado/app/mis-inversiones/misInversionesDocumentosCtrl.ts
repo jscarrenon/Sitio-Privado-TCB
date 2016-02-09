@@ -4,9 +4,11 @@
         operacionesPendientes: app.domain.IDocumento[];
         documentosPendientes: app.domain.IDocumento[];
         getDocumentosPendientes(input: app.domain.IDocumentosPendientesInput): void;
+        pendientesLoading: boolean;
         operacionesFirmadas: app.domain.IDocumento[];
         documentosFirmados: app.domain.IDocumento[];
         getDocumentosFirmados(input: app.domain.IDocumentosFirmadosInput): void;
+        firmadosLoading: boolean;
         fechaFirmadosInicio: Date;
         fechaFirmadosFin: Date;
         verDocumento(documento: app.domain.IDocumento): void;
@@ -59,6 +61,8 @@
         declaracion: boolean;
         todasOperaciones: boolean;
         todosDocumentos: boolean;
+        pendientesLoading: boolean;
+        firmadosLoading: boolean;
 
         static $inject = ['constantService', 'dataService', 'authService', 'extrasService', '$filter', '$uibModal'];
         constructor(private constantService: app.common.services.ConstantService,
@@ -110,19 +114,23 @@
         }
 
         getDocumentosPendientes(input: app.domain.IDocumentosPendientesInput): void {
+            this.pendientesLoading = true;
             this.dataService.postWebService(this.constantService.apiDocumentoURI + 'getListPendientes', input)
                 .then((result: app.domain.IDocumento[]) => {
                     this.operacionesPendientes = result["operaciones"];
                     this.documentosPendientes = result["documentos"];
-                });
+                })
+                .finally(() => this.pendientesLoading = false);
         }
 
         getDocumentosFirmados(input: app.domain.IDocumentosFirmadosInput): void {
+            this.firmadosLoading = true;
             this.dataService.postWebService(this.constantService.apiDocumentoURI + 'getListFirmados', input)
                 .then((result: app.domain.IDocumento[]) => {
                     this.operacionesFirmadas = result["operaciones"];
                     this.documentosFirmados = result["documentos"];
-                });
+                })
+                .finally(() => this.firmadosLoading = false);
         }
 
         verDocumento(documento: app.domain.IDocumento): void {

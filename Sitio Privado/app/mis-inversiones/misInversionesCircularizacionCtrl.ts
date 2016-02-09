@@ -6,6 +6,7 @@
         fecha: Date;
         pendienteResultado: app.domain.ICircularizacionProcesoResultado;
         getPendiente(input: app.domain.ICircularizacionPendienteInput): void;
+        pendienteLoading: boolean;
         archivo: app.domain.ICircularizacionArchivo;
         getArchivo(input: app.domain.ICircularizacionArchivoInput): void;
         leidaResultado: app.domain.ICircularizacionProcesoResultado;
@@ -32,6 +33,7 @@
         respondidaResultado: app.domain.ICircularizacionProcesoResultado;
         leida: boolean;
         respuestaInput: app.domain.ICircularizacionRespondidaInput;
+        pendienteLoading: boolean;
 
         static $inject = ['constantService', 'dataService', 'authService', 'extrasService'];
         constructor(private constantService: app.common.services.ConstantService,
@@ -70,10 +72,12 @@
         }
 
         getPendiente(input: app.domain.ICircularizacionPendienteInput): void {
+            this.pendienteLoading = true;
             this.dataService.postWebService(this.constantService.apiCircularizacionURI + 'getPendiente', input)
                 .then((result: app.domain.ICircularizacionProcesoResultado) => {
                     this.pendienteResultado = result;
-                });
+                })
+                .finally(() => this.pendienteLoading = false);
         }
 
         getArchivo(input: app.domain.ICircularizacionArchivoInput): void {
