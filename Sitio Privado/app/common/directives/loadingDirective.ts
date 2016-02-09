@@ -2,6 +2,7 @@
 
     interface ILoadingDirectiveScope extends ng.IScope {
         param: boolean;
+        extraClass: string;
         isLoading(): boolean;
     }
 
@@ -11,7 +12,8 @@
         templateUrl = this.constantService.templateLoadingURI;
         replace = true;
         scope = {
-            param: '='
+            param: '=',
+            extraClass: '='
         }
 
         constructor(private constantService: app.common.services.ConstantService) {

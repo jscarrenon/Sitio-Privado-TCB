@@ -20,7 +20,8 @@
                 <div class="section-title">Mi Cuenta de Inversiones (al {{nacionalesCtrl.cartola.Periodo}})</div>
 
                 <div id="cont-table">
-                    <table class="balance">
+                    <loading param="nacionalesCtrl.cartolaLoading"></loading>
+                    <table class="balance" ng-show="!nacionalesCtrl.cartolaLoading">
                         <tr>
                             <th></th>
                             <th class="number">Saldo en Pesos</th>
