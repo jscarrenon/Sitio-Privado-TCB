@@ -30,6 +30,16 @@ namespace Sitio_Privado.Models.CategoriaInversionista
             Identificador = categoria.identificador;
             Descriptor = categoria.descriptor;
             Comentario = categoria.comentario;
+
+            if (categoria.Productos != null)
+            {
+                Productos = new List<Producto>();
+
+                foreach (_producto producto in categoria.Productos)
+                {
+                    Productos.Add(new Producto(producto));
+                }
+            }
         }
 
         public Categoria(CategoriaInput input)
