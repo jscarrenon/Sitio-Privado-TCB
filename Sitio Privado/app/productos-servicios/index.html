@@ -28,7 +28,7 @@
         <div class="col-right products">
             <div ng-repeat="producto in ctrl.productos">
                 <div id="prod{{producto.Identificador}}" class="one-product white-box">
-                    <div class="img renta-nacional"></div>
+                    <div class="img {{ctrl.imagenProducto[producto.Identificador]}}"></div>
                     <div class="text">
                         <div class="title">{{producto.Descriptor}}</div>
                         <div class="description">
