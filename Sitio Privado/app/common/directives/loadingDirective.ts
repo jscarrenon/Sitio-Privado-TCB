@@ -8,10 +8,13 @@
 
     class LoadingDirective implements ng.IDirective {
         restrict = 'E';
-        template = '<div class="loading-spiner"><img src="../.build/img/loader-1.gif" /></div>';
+        templateUrl = this.constantService.templateLoadingURI;
         replace = true;
         scope = {
             param: '='
+        }
+
+        constructor(private constantService: app.common.services.ConstantService) {
         }
 
         link = (scope: ILoadingDirectiveScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => {
@@ -31,7 +34,8 @@
         }
 
         static factory(): ng.IDirectiveFactory {
-            const directive = () => new LoadingDirective();
+            const directive = (constantService: app.common.services.ConstantService) => new LoadingDirective(constantService);
+            directive.$inject = ['constantService'];
             return directive;
         }
     }

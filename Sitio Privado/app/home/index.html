@@ -63,24 +63,26 @@
 
             </div><!--end home acceso rapido-->
 
-            <div class="three-col home">
+            <div class="three-col home" ng-controller="AgenteCtrl as agenteCtrl">
                 <div class="section-title">Ejecutivo de Inversiones</div>
 
-                <div class="executive white-box" ng-controller="AgenteCtrl as agenteCtrl">
+                <div class="executive white-box">
                     <loading param="agenteCtrl.loading"></loading>
-                    <div class="photo"><img src="{{agenteCtrl.agente.PathImg}}" /></div>
-                    <div class="text">
-                        <div class="name">{{agenteCtrl.agente.Nombre}}</div>
-                        <div class="contact">
-                            Tel: {{agenteCtrl.agente.Telefono}}<br />
-                            E-mail: <a href="mailto:{{agenteCtrl.agente.Email}}">{{agenteCtrl.agente.Email}}</a>
+                    <div ng-show="!agenteCtrl.loading">
+                        <div class="photo"><img src="{{agenteCtrl.agente.PathImg}}" /></div>
+                        <div class="text">
+                            <div class="name">{{agenteCtrl.agente.Nombre}}</div>
+                            <div class="contact">
+                                Tel: {{agenteCtrl.agente.Telefono}}<br />
+                                E-mail: <a href="mailto:{{agenteCtrl.agente.Email}}">{{agenteCtrl.agente.Email}}</a>
+                            </div>
+                            <div class="info">
+                                Fecha de acreditación: {{agenteCtrl.agente.FechaInicioAcreditacion}}<br />
+                                Sucursal: {{agenteCtrl.agente.Sucursal}}
+                            </div>
                         </div>
-                        <div class="info">
-                            Fecha de acreditación: {{agenteCtrl.agente.FechaInicioAcreditacion}}<br />
-                            Sucursal: {{agenteCtrl.agente.Sucursal}}
-                        </div>
+                        <div class="button blue call"><a href="tel:{{agenteCtrl.agente.Telefono}}" class="clink">Llamar</a></div>
                     </div>
-                    <div class="button blue call"><a href="tel:{{agenteCtrl.agente.Telefono}}" class="clink">Llamar</a></div>
                     <div id="clear"></div>
                 </div>
             </div>
