@@ -5,6 +5,7 @@
         mvcSignOutURI: string;
         templateFooterURI: string;
         templatePaginationURI: string;
+        templateLoadingURI: string;
         apiAgenteURI: string;
         apiFondosMutuosURI: string;
         apiCategoriaURI: string;
@@ -22,6 +23,7 @@
         mvcSignOutURI: string;
         templateFooterURI: string;
         templatePaginationURI: string;
+        templateLoadingURI: string;
         apiAgenteURI: string;
         apiFondosMutuosURI: string;
         apiCategoriaURI: string;
@@ -38,6 +40,7 @@
             this.mvcSignOutURI = '/Account/SignOut';
             this.templateFooterURI = 'app/common/templates/footer.html';
             this.templatePaginationURI = 'app/common/templates/pagination.html';
+            this.templateLoadingURI = 'app/common/templates/loading.html';
             this.apiAgenteURI = '/api/agente/';
             this.apiFondosMutuosURI = '/api/fondoMutuo/';
             this.apiCategoriaURI = '/api/categoria/';

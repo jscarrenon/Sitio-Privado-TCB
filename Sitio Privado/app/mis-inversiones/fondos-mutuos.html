@@ -14,7 +14,8 @@
             <div class="one-col" ng-controller="MisInversionesFondosMutuosCtrl as fondosMutuosCtrl">
                 <div class="section-title">Saldos Fondos Mutuos de Renta Fija</div>
                 <div id="cont-table">
-                    <table class="balance">
+                    <loading param="fondosMutuosCtrl.loading"></loading>
+                    <table class="balance" ng-show="!fondosMutuosCtrl.loading">
                         <tr>
                             <th>Fondo</th>
                             <th>Tipo Fondo</th>
@@ -45,7 +46,8 @@
                 <div class="section-title">Saldos Fondos Mutuos de Renta Variable</div>
 
                 <div id="cont-table">
-                    <table class="balance">
+                    <loading param="fondosMutuosCtrl.loading"></loading>
+                    <table class="balance" ng-show="!fondosMutuosCtrl.loading">
                         <tr>
                             <th>Fondo</th>
                             <th>Tipo Fondo</th>

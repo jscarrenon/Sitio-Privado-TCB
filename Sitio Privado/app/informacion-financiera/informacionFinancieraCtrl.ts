@@ -7,6 +7,7 @@
     interface IInformacionFinancieraViewModel extends app.common.interfaces.ISeccion {
         setContainerNames(): void;
         getContainer(input: string): void;
+        loading: boolean;
     }
 
     export class InformacionFinancieraCtrl implements IInformacionFinancieraViewModel {
@@ -19,6 +20,8 @@
         container: app.domain.AzureFolder[];
         selectedYear: app.domain.AzureFolder[];
         selectedYearIndex: number;
+
+        loading: boolean;
 
         static $inject = ['constantService', 'dataService', '$routeParams'];
         constructor(private constantService: app.common.services.ConstantService,
@@ -78,6 +81,7 @@
         }
 
         getContainer(input: string): void {
+            this.loading = true;
             this.dataService.get(this.constantService.apiBlobsURI + 'getContainer?name=' + input)
                 .then((result: app.domain.AzureFolder[]) => {
                     if (input == 'documentos-normativos') {
@@ -87,7 +91,8 @@
                         }
                     }
                     this.container = result;
-                });
+                })
+                .finally(() => this.loading = false);
         }
 
         sortYears(a: app.domain.AzureFolder, b: app.domain.AzureFolder): number {

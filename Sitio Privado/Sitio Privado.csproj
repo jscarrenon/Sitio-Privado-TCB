@@ -476,7 +476,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <TypeScriptCompile Include="app\common\controllers\modalInstanceCtrl.ts" />
+    <TypeScriptCompile Include="app\common\directives\loadingDirective.ts" />
     <TypeScriptCompile Include="app\common\typings\uglipop.ts" />
+    <Content Include="app\common\templates\loading.html" />
     <Content Include="app\common\templates\pagination.html" />
     <Content Include="app\home\index.html" />
     <Content Include="app\home\mis-datos.html" />
@@ -2050,6 +2052,7 @@
     <Content Include="Frontend_Tests\Controllers\misInversionesCircularizacionControllerSpec.js" />
     <Content Include="Frontend_Tests\Controllers\misInversionesControllerSpec.js" />
     <Content Include="Frontend_Tests\Controllers\misInversionesFondosMutuosControllerSpec.js" />
+    <Content Include="Resources\img\loader-1.gif" />
     <Content Include="Styles\bootstrap-custom.css" />
     <Content Include="Web References\CircularizacionCustodia\archivocli.datasource">
       <DependentUpon>Reference.map</DependentUpon>

@@ -4,12 +4,14 @@
         agente: app.domain.IAgente;
         agenteInput: app.domain.IAgenteInput;
         getAgente(input: app.domain.IAgenteInput): void;
+        loading: boolean;
     }
 
     export class AgenteCtrl implements IAgenteViewModel {
 
         agente: app.domain.IAgente;
         agenteInput: app.domain.IAgenteInput;
+        loading: boolean;
 
         static $inject = ['constantService', 'dataService', 'authService'];
         constructor(private constantService: app.common.services.ConstantService,
@@ -21,10 +23,12 @@
         }
 
         getAgente(input: app.domain.IAgenteInput): void {
+            this.loading = true;
             this.dataService.postWebService(this.constantService.apiAgenteURI + 'getSingle', input)
                 .then((result: app.domain.IAgente) => {
                     this.agente = result;
-                });
+                })
+                .finally(() => this.loading = false);
         }
     }
 

@@ -8,6 +8,8 @@
         getCategoriaCliente(input: app.domain.ICategoriaClienteInput): void;
         getProductos(): void;
         scrollTo(id: string): void;
+        categoriaClienteLoading: boolean;
+        productosLoading: boolean;
     }
 
     class ProductosServiciosCtrl implements IProductosServiciosViewModel {
@@ -16,6 +18,8 @@
         categoriaClienteInput: app.domain.ICategoriaClienteInput;
         productos: app.domain.IProducto[];
         imagenProducto: {};
+        categoriaClienteLoading: boolean;
+        productosLoading: boolean;
 
         static $inject = ['constantService', 'dataService', 'authService', 'extrasService', '$anchorScroll'];
         constructor(private constantService: app.common.services.ConstantService,
@@ -30,14 +34,17 @@
         }
 
         getCategoriaCliente(input: app.domain.ICategoriaClienteInput): void {
+            this.categoriaClienteLoading = true;
             this.dataService.postWebService(this.constantService.apiCategoriaURI + 'getSingleCliente', input)
                 .then((result: app.domain.ICategoria) => {
                     this.categoriaCliente = result;
                     this.getProductos();
-                });
+                })
+                .finally(() => this.categoriaClienteLoading = false);
         }
 
         getProductos(): void {
+            this.productosLoading = true;
             this.dataService.get(this.constantService.apiProductoURI + 'getList')
                 .then((result: app.domain.IProducto[]) => {
                     this.productos = result.filter((producto: domain.IProducto) => {
@@ -45,7 +52,8 @@
                             return categoria.Identificador == this.categoriaCliente.Identificador;
                         });
                     });
-                });
+                })
+                .finally(() => this.productosLoading = false);
         }
 
         scrollTo(id: string): void {

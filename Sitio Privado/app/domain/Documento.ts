@@ -7,6 +7,8 @@
         FechaCreacion: string;
         Leido: string;
         Firmado: string;
+        TipoFirma: string;
+        FechaFirma: string;
         Ruta: string;
         NombreCliente: string;
         RutaFirmado: string;
@@ -21,6 +23,8 @@
             public FechaCreacion: string,
             public Leido: string,
             public Firmado: string,
+            public TipoFirma: string,
+            public FechaFirma: string,
             public Ruta: string,
             public NombreCliente: string,
             public RutaFirmado: string,
@@ -35,6 +39,8 @@
             this.FechaCreacion = FechaCreacion;
             this.Leido = Leido;
             this.Firmado = Firmado;
+            this.TipoFirma = TipoFirma;
+            this.FechaFirma = FechaFirma;
             this.Ruta = Ruta;
             this.NombreCliente = NombreCliente;
             this.RutaFirmado = RutaFirmado;
