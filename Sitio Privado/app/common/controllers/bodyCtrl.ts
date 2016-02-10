@@ -9,23 +9,30 @@
     export class BodyCtrl implements IBodyViewModel {
 
         seccionId: number;
-
-        static $inject = ['constantService', 'dataService', 'authService', '$uibModal', '$location'];
+        
+        static $inject = ['constantService', 'dataService', 'authService', 'extrasService','$scope', '$uibModal', '$location'];
         constructor(private constantService: app.common.services.ConstantService,
             private dataService: app.common.services.DataService,
             private authService: app.common.services.AuthService,
+            private extrasService: app.common.services.ExtrasService,
+            private $scope: ng.IScope,
             private $uibModal: ng.ui.bootstrap.IModalService,
             private $location: ng.ILocationService) {
+
             this.seccionId = 0;
-            this.seleccionarSeccion(this.seccionId);
-
-            if (this.authService.circularizacionPendiente)
-                this.crearInstanciaModal("circularizacion");
-
-            if (this.authService.documentosPendientes > 0)
-                this.crearInstanciaModal("documentos");
+            this.seleccionarSeccion(this.seccionId);            
+            this.$scope.$watch(() => this.authService.circularizacionPendiente,
+                (newValue: boolean, oldValue: boolean) => {
+                    if ((newValue != oldValue) && newValue)
+                        this.crearInstanciaModal("circularizacion");
+                });
+            this.$scope.$watch(() => this.authService.documentosPendientes,
+                (newValue: number, oldValue: number) => {
+                    if ((newValue != oldValue) && newValue > 0)
+                        this.crearInstanciaModal("documentos");
+                });            
         }
-
+        
         seleccionarSeccion(id: number): void {
             this.seccionId = id;
         }
@@ -53,7 +60,7 @@
 
                 instanciaModal.result.then(_ => this.$location.path(ruta));
             }
-        }
+        }        
     }
 
     angular.module('tannerPrivadoApp')
