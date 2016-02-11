@@ -435,6 +435,7 @@
     <Content Include=".build\img\img_pagresivo.jpg" />
     <Content Include=".build\img\img_pconservador.jpg" />
     <Content Include=".build\img\img_pmoderado.jpg" />
+    <Content Include=".build\img\loader-1.gif" />
     <Content Include=".build\img\login_logo.png" />
     <Content Include=".build\img\logo_mobile_tannerclientes.png" />
     <Content Include=".build\img\logo_mobile_tannerclientes2.png" />
@@ -469,6 +470,7 @@
     <Content Include=".build\fonts\GothamBook.ttf" />
     <Content Include=".build\fonts\GothamBook.woff" />
     <None Include="Properties\PublishProfiles\kundertannerprivado - Web Deploy %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\tannerdes - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
