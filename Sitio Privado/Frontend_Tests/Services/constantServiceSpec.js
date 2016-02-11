@@ -14,6 +14,7 @@
         expect(constantService.mvcSignOutURI).toBe('/Account/SignOut');
         expect(constantService.templateFooterURI).toBe('app/common/templates/footer.html');
         expect(constantService.templatePaginationURI).toBe('app/common/templates/pagination.html');
+        expect(constantService.templateLoadingURI).toBe('app/common/templates/loading.html');
         expect(constantService.apiAgenteURI).toBe('/api/agente/');
         expect(constantService.apiFondosMutuosURI).toBe('/api/fondoMutuo/');
         expect(constantService.apiCategoriaURI).toBe('/api/categoria/');

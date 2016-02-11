@@ -4,7 +4,7 @@
         module('tannerPrivadoApp');
     });
 
-    var $q, $rootScope,
+    var $q, $rootScope, $scope,
         $uibModal, $location, constantService, dataService, authService, // dependecias controlador
         getSingle_deferred, postWebService_deferred, // defers 
         bodyCtrl; // controlador
@@ -47,7 +47,8 @@
 
     beforeEach(inject(function (_$q_, _$rootScope_, _$uibModal_, _$location_, _constantService_, _dataService_) {
         $q = _$q_;
-        $rootScope = _$rootScope_;
+        $rootScope = _$rootScope_.$new();
+        $scope = $rootScope.$new();
         $uibModal = _$uibModal_;
         $location = _$location_;
         constantService = _constantService_;
@@ -61,6 +62,7 @@
         spyOn(dataService, "getSingle").and.returnValues(getSingle_deferred.promise, getSingle_deferred.promise);
         spyOn(dataService, "postWebService").and.returnValues(postWebService_deferred.promise, postWebService_deferred.promise, postWebService_deferred.promise);
         spyOn($uibModal, 'open').and.returnValue(fakeModal);
+        spyOn($scope, '$watch');
     }));
 
     beforeEach(inject(function (_authService_) {
@@ -78,6 +80,7 @@
             constantService: constantService,
             dataService: dataService,
             authService: authService,
+            $scope: $scope,
             $uibModal: $uibModal,
             $location: $location
         });

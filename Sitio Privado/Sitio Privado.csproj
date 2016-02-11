@@ -455,6 +455,8 @@
     <Content Include=".build\spa\domain.js" />
     <Content Include=".build\vendors\vendors.js" />
     <Content Include="app\common\templates\footer.html" />
+    <Content Include="Frontend_Tests\Controllers\misInversionesDocumentosControllerSpec.js" />
+    <Content Include="Frontend_Tests\Controllers\modalInstanceControllerSpec.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

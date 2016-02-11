@@ -164,7 +164,7 @@
 
                         firmarOperacionesLoading = true;
                         this.firmarLoading = firmarOperacionesLoading || firmarDocumentosLoading;
-
+                        
                         this.dataService.postWebService(this.constantService.apiDocumentoURI + 'setFirmarOperacion', operacionFirmarInput)
                             .then((result: app.domain.IDocumentoFirmarResultado) => {
                                 var operacionFirmarResultado: app.domain.IDocumentoFirmarResultado = result;

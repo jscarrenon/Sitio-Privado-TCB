@@ -51,7 +51,7 @@
             this.leida = false;
             this.respuestaInput = new app.domain.CircularizacionRespondidaInput(parseInt(this.extrasService.getRutParteEntera(this.authService.usuario.Rut)), this.extrasService.getFechaFormato(this.fecha), "S", null);
             this.pendienteInput = new app.domain.CircularizacionPendienteInput(parseInt(this.extrasService.getRutParteEntera(this.authService.usuario.Rut)), this.extrasService.getFechaFormato(this.fecha));
-            this.getPendiente(this.pendienteInput);            
+            this.getPendiente(this.pendienteInput);                       
         }
 
         seleccionarSeccion(id: number): void {
@@ -76,7 +76,8 @@
             this.pendienteLoading = true;
             this.dataService.postWebService(this.constantService.apiCircularizacionURI + 'getPendiente', input)
                 .then((result: app.domain.ICircularizacionProcesoResultado) => {
-                    this.pendienteResultado = result;
+                    this.pendienteResultado = result;        
+
                 })
                 .finally(() => this.pendienteLoading = false);
         }
@@ -118,7 +119,7 @@
 
             //Abrir documento
             if (tipoDocumento == TipoDocumento.Cartola && this.archivo.UrlCartola) {
-                this.extrasService.abrirRuta(this.archivo.UrlCartola);
+                this.extrasService.abrirRuta(this.archivo.UrlCartola, '_blank');
                 documentoAbierto = true;
             }
             else if (tipoDocumento == TipoDocumento.Circularizacion && this.archivo.UrlCircularizacion) {

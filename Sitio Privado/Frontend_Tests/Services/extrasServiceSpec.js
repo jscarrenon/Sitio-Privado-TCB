@@ -44,20 +44,20 @@
 
         expect(formatoSalida.length).toBeDefined();
         expect(formatoSalida.length).toBe(10);
-        expect(formatoSalida).toEqual(jasmine.stringMatching(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/i));
+        expect(formatoSalida).toMatch(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/i);
     });
 
     it("Formatear fecha: longDate.", function () {
         
         var formatoSalida = extrasService.getFechaFormato(fechaActual, "longDate");
         
-        expect(formatoSalida).toEqual(jasmine.stringMatching(/^\w+\s(\d{1})?\d{1}\,\s\d{4}$/));
+        expect(formatoSalida).toMatch(/^\w+\s(\d{1})?\d{1}\,\s\d{4}$/);
     });
 
     it("Formatear fecha: mediumDate.", function () {
 
         var formatoSalida = extrasService.getFechaFormato(fechaActual, "");
 
-        expect(formatoSalida).toEqual(jasmine.stringMatching(/^[A-Z][a-z][a-z]\s(\d{1})?\d{1}\,\s\d{4}$/));
+        expect(formatoSalida).toMatch(/^[A-Z][a-z][a-z]\s(\d{1})?\d{1}\,\s\d{4}$/);
     });
 });
