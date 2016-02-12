@@ -13,7 +13,7 @@
         Autenticado: true,
         Nombres: "",
         Apellidos: "",
-        Rut: "12345656",
+        Rut: "12345656-9",
         DireccionComercial: "",
         DireccionParticular: "",
         Ciudad: "",
@@ -57,8 +57,6 @@
         getSingle_deferred = $q.defer();
         postWebService_deferred = $q.defer();
 
-        spyOn(constantService, "mvcHomeURI").and.returnValue("/home/");
-        spyOn(constantService, "apiAgenteURI").and.returnValue("/api/agente/");
         spyOn(dataService, "getSingle").and.returnValues(getSingle_deferred.promise, getSingle_deferred.promise);
         spyOn(dataService, "postWebService").and.returnValues(postWebService_deferred.promise, postWebService_deferred.promise, postWebService_deferred.promise);
         spyOn($uibModal, 'open').and.returnValue(fakeModal);
@@ -69,9 +67,6 @@
         getSingle_deferred.resolve(usuario_stub);
         $rootScope.$digest();
         authService = _authService_;
-        getSingle_deferred = $q.defer();
-        authService.circularizacionPendiente = false;
-        authService.documentosPendientes = 0;
     }));
 
     beforeEach(inject(function (_$controller_) {

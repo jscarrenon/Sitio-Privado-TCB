@@ -13,7 +13,7 @@
         Autenticado: true,
         Nombres: "",
         Apellidos: "",
-        Rut: "12345656",
+        Rut: "12345656-9",
         DireccionComercial: "",
         DireccionParticular: "",
         Ciudad: "",
