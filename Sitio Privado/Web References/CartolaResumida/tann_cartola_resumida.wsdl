@@ -75,10 +75,10 @@
   </wsdl:binding>
   <wsdl:service name="tann_cartola_resumida">
     <wsdl:port name="tann_cartola_resumidaSoap" binding="tns:tann_cartola_resumidaSoap">
-      <soap:address location="http://172.17.1.12:8088/tann_cartola_resumida.asmx" />
+      <soap:address location="https://www.tannercliente.cl/wstsf/tann_cartola_resumida.asmx" />
     </wsdl:port>
     <wsdl:port name="tann_cartola_resumidaSoap12" binding="tns:tann_cartola_resumidaSoap12">
-      <soap12:address location="http://172.17.1.12:8088/tann_cartola_resumida.asmx" />
+      <soap12:address location="https://www.tannercliente.cl/wstsf/tann_cartola_resumida.asmx" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

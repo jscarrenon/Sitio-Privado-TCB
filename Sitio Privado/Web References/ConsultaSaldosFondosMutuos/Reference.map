@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <DiscoveryClientResultsFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Results>
-    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.DiscoveryDocumentReference" url="http://172.17.1.12:8088/tann_fondos_mutuos.asmx?disco" filename="tann_fondos_mutuos.disco" />
-    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.ContractReference" url="http://172.17.1.12:8088/tann_fondos_mutuos.asmx?wsdl" filename="tann_fondos_mutuos.wsdl" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.ContractReference" url="https://www.tannercliente.cl/wstsf/tann_fondos_mutuos.asmx?wsdl" filename="tann_fondos_mutuos.wsdl" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.DiscoveryDocumentReference" url="https://www.tannercliente.cl/wstsf/tann_fondos_mutuos.asmx?disco" filename="tann_fondos_mutuos.disco" />
   </Results>
 </DiscoveryClientResultsFile>
