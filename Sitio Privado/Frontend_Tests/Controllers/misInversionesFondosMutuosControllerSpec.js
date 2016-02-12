@@ -13,7 +13,7 @@
         Autenticado: true,
         Nombres: "",
         Apellidos: "",
-        Rut: "12345656",
+        Rut: "12345656-9",
         DireccionComercial: "",
         DireccionParticular: "",
         Ciudad: "",
@@ -66,7 +66,6 @@
     };
             
     beforeEach(inject(function (_$rootScope_, _$q_, _constantService_, _dataService_, _extrasService_, _$routeParams_) {
-
         $q = _$q_
         constantService = _constantService_;
         dataService = _dataService_;
@@ -77,28 +76,17 @@
         getSingle_deferred = $q.defer();
         postWebService_deferred = $q.defer();
 
-        spyOn(constantService, 'apiFondosMutuosURI').and.returnValues('/api/fondoMutuo/', '/api/fondoMutuo/');
-        spyOn(constantService, 'mvcHomeURI').and.returnValue('/Home/');
-        spyOn(constantService, 'apiCircularizacionURI').and.returnValue('/api/circularizacion/');
-
         spyOn(dataService, 'getSingle').and.returnValue(getSingle_deferred.promise);
-        spyOn(dataService, 'postWebService').and.returnValues(postWebService_deferred.promise, postWebService_deferred.promise, postWebService_deferred.promise);
-        spyOn(extrasService, 'getRutParteEntera');
-
+        spyOn(dataService, 'postWebService').and.returnValue(postWebService_deferred.promise);
     }));
 
     beforeEach(inject(function (_authService_) {
-
-        spyOn(_authService_, "getCircularizacionPendiente");
-        spyOn(_authService_, "getDocumentosPendientes");
         getSingle_deferred.resolve(usuario_stub);
         $rootScope.$digest();
         authService = _authService_;
-
     }));
 
-    beforeEach(inject(function (_$controller_) {           
-            
+    beforeEach(inject(function (_$controller_) {
         fondosMutuosCtrl = _$controller_("MisInversionesFondosMutuosCtrl", {
             $rootScope: $rootScope,
             constantService: constantService,
@@ -107,39 +95,26 @@
             extrasService: extrasService,
             $routeParams: $routeParams
         });
-
-        //en el constructor del controlador se ejecuta getFondosMutuos(), por eso se utiliza el defer.resolve
-        postWebService_deferred.resolve(fondosMutuos_stub);
-        $rootScope.$digest();
-
     }));     
         
     it("Arreglos de fondos mutuos correctamente definidos y asignados.", function () {
-            
-        //postWebService_deferred = $q.defer();
-        var getFondosMutuosTotalSpy = spyOn(fondosMutuosCtrl, 'getFondosMutuosTotal');
-        fondosMutuosCtrl.getFondosMutuos(fondoMutuoInput_stub);
+        spyOn(fondosMutuosCtrl, 'getFondosMutuosTotal');
 
-        //se resuelva el resultado del defer de getFondosMutuos()
+        fondosMutuosCtrl.getFondosMutuos(fondoMutuoInput_stub);
         postWebService_deferred.resolve(fondosMutuos_stub);
         $rootScope.$digest();
-            
-        //Esperamos que las listas de fondos mutuos (RF y RV) estén correctas.
+
         expect(fondosMutuosCtrl.fondosMutuosRF).toBe(fondosMutuos_stub["fondosMutuosRF"]);
         expect(fondosMutuosCtrl.fondosMutuosRV).toBe(fondosMutuos_stub["fondosMutuosRV"]);
-        expect(getFondosMutuosTotalSpy).toHaveBeenCalled();
-
+        expect(fondosMutuosCtrl.getFondosMutuosTotal).toHaveBeenCalled();
     });
 
     it("Totales de fondos mutuos sumados correctamente.", function () {
-
         fondosMutuosCtrl.fondosMutuosRF = fondosMutuos_stub["fondosMutuosRF"];
         fondosMutuosCtrl.fondosMutuosRV = fondosMutuos_stub["fondosMutuosRV"];
         fondosMutuosCtrl.getFondosMutuosTotal();
 
-        //Esperamos que la sumatoria total de los fondos mutuos (RF y RV) sean correctas.
         expect(fondosMutuosCtrl.fondosMutuosRFTotal).toBe(123945 + 34567);
-        expect(fondosMutuosCtrl.fondosMutuosRVTotal).toBe(785233);            
-
+        expect(fondosMutuosCtrl.fondosMutuosRVTotal).toBe(785233);
     });
 });
