@@ -13,7 +13,7 @@
             Autenticado: true,
             Nombres: "",
             Apellidos: "",
-            Rut: "12345656",
+            Rut: "12345656-9",
             DireccionComercial: "",
             DireccionParticular: "",
             Ciudad: "",
@@ -28,7 +28,6 @@
     };
 
     beforeEach(inject(function (_$q_, _$rootScope_, _constantService_, _dataService_, _extrasService_) {
-
         $q = _$q_;
         $rootScope = _$rootScope_;
         constantService = _constantService_;
@@ -39,21 +38,15 @@
         postWebService_deferred = $q.defer();
 
         spyOn(extrasService, "getRutParteEntera");
-        spyOn(extrasService, "getFechaFormato").and.returnValue("24/02/2016");
-        spyOn(constantService, "mvcHomeURI").and.returnValue("/home/");
-        spyOn(constantService, 'apiCircularizacionURI').and.returnValue('/api/circularizacion/');
-        
+        spyOn(extrasService, "getFechaFormato").and.returnValue("24/02/2016");        
         spyOn(dataService, 'getSingle').and.returnValue(getSingle_deferred.promise);
-        spyOn(dataService, 'postWebService').and.returnValue(postWebService_deferred.promise);
-        
+        spyOn(dataService, 'postWebService').and.returnValue(postWebService_deferred.promise);        
     }));
 
     beforeEach(inject(function (_authService_) {
-
         getSingle_deferred.resolve(usuario_stub);
         $rootScope.$digest();
         authService = _authService_;
-
     }));
 
     beforeEach(inject(function (_$controller_) {
@@ -64,13 +57,11 @@
                 authService: authService,
                 extrasService: extrasService
             });
-
-        
     }));
 
     it("Seleccionar sección 0.", function () {
-
         var id = 0;
+
         misInversionesCircularizacionCtrl.seleccionarSeccion(id);
 
         expect(misInversionesCircularizacionCtrl.seccionId).toBe(id);
@@ -78,9 +69,9 @@
     });
 
     it("Seleccionar sección 1.", function () {
-
         var id = 1;
         var getArchivoSpy = spyOn(misInversionesCircularizacionCtrl, "getArchivo");
+
         misInversionesCircularizacionCtrl.seleccionarSeccion(id);
 
         expect(misInversionesCircularizacionCtrl.seccionId).toBe(id);
@@ -89,8 +80,8 @@
     });
 
     it("Seleccionar sección 2.", function () {
-
         var id = 2;
+
         misInversionesCircularizacionCtrl.seleccionarSeccion(id);
 
         expect(misInversionesCircularizacionCtrl.seccionId).toBe(id);
@@ -98,17 +89,16 @@
     });
     
     it("Setear las plantillas.", function () {
-            
         misInversionesCircularizacionCtrl.setTemplates();
 
         expect(misInversionesCircularizacionCtrl.templates[0]).toBe("circularizacion_pendiente.html");
         expect(misInversionesCircularizacionCtrl.templates[1]).toBe("circularizacion_anual.html");
         expect(misInversionesCircularizacionCtrl.templates[2]).toBe("circularizacion_aprobar.html");
-
     });
 
     it("Obtener pendiente, resultado verdadero.", function () {
         var circularizacionPendienteInput_stub = { rut: usuario_stub.Rut, fecha: "25/05/2015" };
+
         misInversionesCircularizacionCtrl.getPendiente(circularizacionPendienteInput_stub);
         postWebService_deferred.resolve({ Resultado: true });
         $rootScope.$digest();
@@ -116,8 +106,7 @@
         expect(misInversionesCircularizacionCtrl.pendienteResultado.Resultado).toBe(true);
     });
 
-    it("Obtener pendiente, resultado falso.", function () {
-        
+    it("Obtener pendiente, resultado falso.", function () {        
         var circularizacionPendienteInput_stub = { rut: usuario_stub.Rut, fecha: "25/05/2015" };
 
         misInversionesCircularizacionCtrl.getPendiente(circularizacionPendienteInput_stub);
@@ -198,8 +187,7 @@
         expect(misInversionesCircularizacionCtrl.respondidaResultado).toEqual({ Resultado: false });
     });
 
-    it("Ver documento (Cartola). Documento abierto.", function () {
-        
+    it("Ver documento (Cartola). Documento abierto.", function () {        
         var TipoDocumento;
         (function (TipoDocumento) {
             TipoDocumento[TipoDocumento["Cartola"] = 0] = "Cartola";
@@ -247,7 +235,6 @@
     });
     
     it("Responder.", function () {
-
         spyOn(misInversionesCircularizacionCtrl, "setRespondida");
         misInversionesCircularizacionCtrl.responder();
 
