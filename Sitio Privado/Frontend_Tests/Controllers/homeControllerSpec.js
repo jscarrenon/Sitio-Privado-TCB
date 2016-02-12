@@ -7,8 +7,7 @@
     var constantService, dataService, // dependecias controlador
         homeCtrl; //controlador
 
-    beforeEach(inject(function (_$controller_, _constantService_, _dataService_) {
-        
+    beforeEach(inject(function (_$controller_, _constantService_, _dataService_) {        
         constantService = _constantService_;
         dataService = _dataService_;
 
@@ -16,6 +15,5 @@
             constantService: constantService,
             dataService: dataService
         });
-
     }));
 });
