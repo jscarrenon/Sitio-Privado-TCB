@@ -29,37 +29,30 @@
     }));
 
     it('Seleccionar sección 0.', function () {
-
         var seccionId = 0;
         misInversionesCtrl.seleccionarSeccion(seccionId);
 
         expect(misInversionesCtrl.seccionId).toBe(seccionId);
-        expect(misInversionesCtrl.seccionURI).toBe('app/mis-inversiones/nacionales.html');
-        
+        expect(misInversionesCtrl.seccionURI).toBe('app/mis-inversiones/nacionales.html');        
     });
 
     it('Seleccionar sección 2.', function () {
-
         var seccionId = 2;
         misInversionesCtrl.seleccionarSeccion(seccionId);
 
         expect(misInversionesCtrl.seccionId).toBe(seccionId);
-        expect(misInversionesCtrl.seccionURI).toBe('app/mis-inversiones/fondos-mutuos.html');
-        
+        expect(misInversionesCtrl.seccionURI).toBe('app/mis-inversiones/fondos-mutuos.html');        
     });
 
     it('Seleccionar sección 3.', function () {
-
         var seccionId = 3;
         misInversionesCtrl.seleccionarSeccion(seccionId);
 
         expect(misInversionesCtrl.seccionId).toBe(seccionId);
-        expect(misInversionesCtrl.seccionURI).toBe('app/mis-inversiones/estado-documentos.html');
-        
+        expect(misInversionesCtrl.seccionURI).toBe('app/mis-inversiones/estado-documentos.html');        
     });
 
     it('Seleccionar sección 4.', function () {
-
         var seccionId = 4;
         misInversionesCtrl.seleccionarSeccion(seccionId);
 
