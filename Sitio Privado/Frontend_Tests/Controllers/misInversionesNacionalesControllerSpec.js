@@ -13,7 +13,7 @@
         Autenticado: true,
         Nombres: "",
         Apellidos: "",
-        Rut: "1234565-6",
+        Rut: "1234565-9",
         DireccionComercial: "",
         DireccionParticular: "",
         Ciudad: "",
@@ -52,28 +52,18 @@
         getSingle_deferred = $q.defer();
         postWebService_deferred = $q.defer();
 
-        spyOn(constantService, "apiBalanceURI").and.returnValue("/api/balance/");
-        spyOn(constantService, "apiCartolaURI").and.returnValue("/api/cartola/");
-        spyOn(constantService, "mvcHomeURI").and.returnValue("/Home/");
-
-        spyOn(dataService, "getSingle").and.returnValues(getSingle_deferred.promise, getSingle_deferred.promise);
-        spyOn(dataService, "postWebService").and.returnValues(postWebService_deferred.promise, postWebService_deferred.promise, postWebService_deferred.promise, postWebService_deferred.promise);
+        spyOn(dataService, "getSingle").and.returnValue(getSingle_deferred.promise);
+        spyOn(dataService, "postWebService").and.returnValue(postWebService_deferred.promise);
 
     }));
 
     beforeEach(inject(function (_authService_) {
-
-        spyOn(_authService_, "getCircularizacionPendiente");
-        spyOn(_authService_, "getDocumentosPendientes");
         getSingle_deferred.resolve(usuario_stub);
         $rootScope.$digest();
-
         authService = _authService_;
-
     }));
 
     beforeEach(inject(function (_$controller_) {
-
         misInversionesNacionalesCtrl = _$controller_("MisInversionesNacionalesCtrl", {
             $rootScope: $rootScope,
             constantService: constantService,
@@ -81,27 +71,21 @@
             authService: authService,
             extrasService: extrasService
         });
-        
-        
     }));
 
     it("Obtener balance.", function () {
-
         misInversionesNacionalesCtrl.getBalance(balanceInput_stub);
         postWebService_deferred.resolve(balance_stub);
         $rootScope.$digest();
 
         expect(misInversionesNacionalesCtrl.balance).toBe(balance_stub);
-
     });
 
     it("Obtener cartola.", function () {
-
         misInversionesNacionalesCtrl.getCartola(cartolaInput_stub);
         postWebService_deferred.resolve(cartola_stub);
         $rootScope.$digest();
 
         expect(misInversionesNacionalesCtrl.cartola).toBe(cartola_stub);
-
     });
 });
