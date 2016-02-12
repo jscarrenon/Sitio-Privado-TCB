@@ -455,6 +455,7 @@
     <Content Include=".build\spa\domain.js" />
     <Content Include=".build\vendors\vendors.js" />
     <Content Include="app\common\templates\footer.html" />
+    <Content Include="Frontend_Tests\Controllers\productosServiciosControllerSpec.js" />
     <Content Include="Frontend_Tests\Controllers\misInversionesDocumentosControllerSpec.js" />
     <Content Include="Frontend_Tests\Controllers\modalInstanceControllerSpec.js" />
     <Content Include="Web.config">
@@ -2040,7 +2041,7 @@
     <Content Include="package.json" />
     <Content Include=".bowerrc" />
     <Content Include="bower.json" />
-    <Content Include="Frontend_Tests\Controllers\inversionesCtrlSpec.js" />
+    <Content Include="Frontend_Tests\Controllers\inversionesControllerSpec.js" />
     <Content Include="Frontend_Tests\Controllers\misInversionesNacionalesControllerSpec.js" />
     <Content Include="Frontend_Tests\Controllers\agenteControllerSpec.js" />
     <Content Include="Frontend_Tests\Services\authServiceSpec.js" />

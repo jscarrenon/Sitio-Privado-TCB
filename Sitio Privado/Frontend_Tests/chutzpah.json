@@ -15,7 +15,8 @@
     { "Path": "../app/home/", "Includes": [ "*.js" ] },
     { "Path": "../app/informacion-financiera/", "Includes": [ "*.js" ] },
     { "Path": "../app/inversiones/", "Includes": [ "*.js" ] },
-    { "Path": "../app/mis-inversiones/", "Includes": [ "*.js" ] }
+    { "Path": "../app/mis-inversiones/", "Includes": [ "*.js" ] },
+    { "Path": "../app/productos-servicios/", "Includes": [ "*.js" ] }
   ],
   "Tests": [    
     { "Path": "./Controllers/", "Includes": [ "*Spec.js" ] },
