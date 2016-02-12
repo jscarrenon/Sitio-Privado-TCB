@@ -53,48 +53,31 @@
         getSingle_deferred = $q.defer();
         postWebService_deferred = $q.defer();
 
-        spyOn(constantService, "mvcHomeURI").and.returnValue("/home/");
-        spyOn(constantService, "apiAgenteURI").and.returnValue("/api/agente/");
-
-        spyOn(dataService, "getSingle").and.returnValues(getSingle_deferred.promise, getSingle_deferred.promise);
-        spyOn(dataService, "postWebService").and.returnValues(postWebService_deferred.promise, postWebService_deferred.promise, postWebService_deferred.promise);
+        spyOn(dataService, "getSingle").and.returnValue(getSingle_deferred.promise);
+        spyOn(dataService, "postWebService").and.returnValue(postWebService_deferred.promise);
                 
     }));
 
     beforeEach(inject(function (_authService_) {
-
-        spyOn(_authService_, "getCircularizacionPendiente");
-        spyOn(_authService_, "getDocumentosPendientes");
         getSingle_deferred.resolve(usuario_stub);
         $rootScope.$digest();
         authService = _authService_;
-        getSingle_deferred = $q.defer();
-
     }));
 
     beforeEach(inject(function (_$controller_) {
-
         agenteCtrl = _$controller_('AgenteCtrl', {
             $rootScope: $rootScope,
             constantService: constantService,
             dataService: dataService,
             authService: authService
         });
-
-        postWebService_deferred.resolve(agente_stub);
-        $rootScope.$digest();
-
-        postWebService_deferred = $q.defer();
     }));
 
-    it('Obtener datos agente.', function () {        
-
-        agenteCtrl.getAgente(agenteInput_stub);
-        
+    it('Obtener datos agente.', function () {
+        agenteCtrl.getAgente(agenteInput_stub);        
         postWebService_deferred.resolve(agente_stub);
         $rootScope.$digest();
 
         expect(agenteCtrl.agente).toBe(agente_stub);
-
     });
 });
