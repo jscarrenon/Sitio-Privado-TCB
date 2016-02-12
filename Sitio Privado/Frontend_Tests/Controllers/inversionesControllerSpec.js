@@ -41,8 +41,6 @@
         dataService = _dataService_;
 
         get_deferred = $q.defer();
-
-        spyOn(constantService, 'apiCategoriaURI').and.returnValue('/api/categoria/');
         spyOn(dataService, "get").and.returnValues(get_deferred.promise, get_deferred.promise);
 
         inversionesCtrl = _$controller_("InversionesCtrl", {
@@ -50,10 +48,6 @@
             constantService: constantService,
             dataService: dataService
         });
-
-        get_deferred.resolve(categorias_stub);
-        $rootScope.$digest();
-
     }));
 
     it("Obtener categorias filtradas por descriptor y ordenadas por identificador.", function () {

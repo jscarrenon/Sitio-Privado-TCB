@@ -38,10 +38,6 @@
         extrasService = _extrasService_;
 
         postWebService_deferred = $q.defer();
-
-        spyOn(constantService, 'apiIndicesURI').and.returnValue('/api/indices/');
-
-        //se usan dos llamadas porque en el constructor del controlador se llama una vez a actualizarIndices() y que a su vez llama a getIndices().
         spyOn(dataService, 'postWebService').and.returnValues(postWebService_deferred.promise, postWebService_deferred.promise);
         spyOn(extrasService, 'getFechaFormato').and.returnValue("24/11/2015", "25/11/2015");
 
