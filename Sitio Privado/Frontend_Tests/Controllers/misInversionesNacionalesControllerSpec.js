@@ -1,7 +1,7 @@
-﻿describe("misInversionesNacionalesCtrl", function () {
+﻿describe('misInversionesNacionalesCtrl', function () {
 
     beforeEach(function () {
-        module("tannerPrivadoApp");
+        module('tannerPrivadoApp');
     });
 
     var $q, $rootScope,
@@ -11,20 +11,20 @@
 
     var usuario_stub = {
         Autenticado: true,
-        Nombres: "",
-        Apellidos: "",
-        Rut: "1234565-9",
-        DireccionComercial: "",
-        DireccionParticular: "",
-        Ciudad: "",
-        Pais: "",
-        TelefonoComercial: "",
-        TelefonoParticular: "",
-        Email: "",
-        CuentaCorriente: "",
-        Banco: "",
-        NombreCompleto: "",
-        CiudadPais: ""
+        Nombres: '',
+        Apellidos: '',
+        Rut: '1234565-9',
+        DireccionComercial: '',
+        DireccionParticular: '',
+        Ciudad: '',
+        Pais: '',
+        TelefonoComercial: '',
+        TelefonoParticular: '',
+        Email: '',
+        CuentaCorriente: '',
+        Banco: '',
+        NombreCompleto: '',
+        CiudadPais: ''
     };
     
     var balanceInput_stub = { rut: usuario_stub.Rut };
@@ -32,12 +32,12 @@
     var cartolaInput_stub = { _rut: usuario_stub.Rut };
 
     var balance_stub = {
-        Enlace: "enlace/a/balance"
+        Enlace: 'enlace/a/balance'
     };
 
     var cartola_stub = {
         Rut: usuario_stub.Rut,
-        Periodo: "perioodsf",
+        Periodo: 'perioodsf',
         Conceptos: []
     };
 
@@ -51,8 +51,8 @@
         getSingle_deferred = $q.defer();
         postWebService_deferred = $q.defer();
 
-        spyOn(dataService, "getSingle").and.returnValue(getSingle_deferred.promise);
-        spyOn(dataService, "postWebService").and.returnValue(postWebService_deferred.promise);
+        spyOn(dataService, 'getSingle').and.returnValue(getSingle_deferred.promise);
+        spyOn(dataService, 'postWebService').and.returnValue(postWebService_deferred.promise);
     }));
 
     beforeEach(inject(function (_authService_) {
@@ -62,7 +62,7 @@
     }));
 
     beforeEach(inject(function (_$controller_) {
-        misInversionesNacionalesCtrl = _$controller_("MisInversionesNacionalesCtrl", {
+        misInversionesNacionalesCtrl = _$controller_('MisInversionesNacionalesCtrl', {
             $rootScope: $rootScope,
             constantService: constantService,
             dataService: dataService,
@@ -71,7 +71,7 @@
         });
     }));
 
-    it("Obtener balance.", function () {
+    it('Obtener balance.', function () {
         misInversionesNacionalesCtrl.getBalance(balanceInput_stub);
         postWebService_deferred.resolve(balance_stub);
         $rootScope.$digest();
@@ -79,7 +79,7 @@
         expect(misInversionesNacionalesCtrl.balance).toBe(balance_stub);
     });
 
-    it("Obtener cartola.", function () {
+    it('Obtener cartola.', function () {
         misInversionesNacionalesCtrl.getCartola(cartolaInput_stub);
         postWebService_deferred.resolve(cartola_stub);
         $rootScope.$digest();

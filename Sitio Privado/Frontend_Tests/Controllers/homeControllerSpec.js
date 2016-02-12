@@ -1,7 +1,7 @@
-﻿describe("homeCtrl - ", function () {
+﻿describe('homeCtrl - ', function () {
 
     beforeEach(function () {
-        module("tannerPrivadoApp");
+        module('tannerPrivadoApp');
     });
 
     var constantService, dataService, // dependecias controlador
@@ -11,7 +11,7 @@
         constantService = _constantService_;
         dataService = _dataService_;
 
-        homeCtrl = _$controller_("HomeCtrl", {
+        homeCtrl = _$controller_('HomeCtrl', {
             constantService: constantService,
             dataService: dataService
         });

@@ -51,7 +51,7 @@
     }));
 
     beforeEach(inject(function (_$controller_) {
-        productosServiciosCtrl = _$controller_("ProductosServiciosCtrl", {
+        productosServiciosCtrl = _$controller_('ProductosServiciosCtrl', {
             $rootScope: $rootScope,
             constantService: constantService,
             dataService: dataService,

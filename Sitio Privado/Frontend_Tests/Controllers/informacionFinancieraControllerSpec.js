@@ -1,7 +1,7 @@
-﻿describe("informacionFinancieraCtrl - ", function () {
+﻿describe('informacionFinancieraCtrl - ', function () {
 
     beforeEach( function() {
-        module("tannerPrivadoApp");        
+        module('tannerPrivadoApp');        
     });
 
     var $q, $rootScope,
@@ -11,62 +11,62 @@
     
     var container_stub = [
             {
-                Name: "Carpeta 1",
+                Name: 'Carpeta 1',
                 Blobs: [{
-                    Name: "Nombre blob 1",
-                    Url: "Url/Blob/1"
+                    Name: 'Nombre blob 1',
+                    Url: 'Url/Blob/1'
                 },
                     {
-                        Name: "Nombre blob 2",
-                        Url: "Url/Blob/2"
+                        Name: 'Nombre blob 2',
+                        Url: 'Url/Blob/2'
                     }],
                 Folders: [{
-                    Name: "Carpeta X2",
+                    Name: 'Carpeta X2',
                     Blobs: [{
-                        Name: "Nombre blob X2",
-                        Url: "Url/Blob/X2"
+                        Name: 'Nombre blob X2',
+                        Url: 'Url/Blob/X2'
                     }],
                     Folders: null
                 }]
             },
             {
-                Name: "Carpeta 1",
+                Name: 'Carpeta 1',
                 Blobs: [{
-                    Name: "Nombre blob 213",
-                    Url: "Url/Blob/213"
+                    Name: 'Nombre blob 213',
+                    Url: 'Url/Blob/213'
                 },
                     {
-                        Name: "Nombre blob 14",
-                        Url: "Url/Blob/14"
+                        Name: 'Nombre blob 14',
+                        Url: 'Url/Blob/14'
                     }],
                 Folders: [{
-                    Name: "Carpeta AMVNA",
+                    Name: 'Carpeta AMVNA',
                     Blobs: [{
-                        Name: "Nombre blob 85NC",
-                        Url: "Url/Blob/85NC"
+                        Name: 'Nombre blob 85NC',
+                        Url: 'Url/Blob/85NC'
                     }],
                     Folders: [
                         {
-                            Name: "Carpeta 435",
+                            Name: 'Carpeta 435',
                             Blobs:
                             [{
-                                Name: "Nombre blob 823C",
-                                Url: "Url/Blob/823C"
+                                Name: 'Nombre blob 823C',
+                                Url: 'Url/Blob/823C'
                             }],
                             Folders: [{
-                                Name: "Carpeta folder",
+                                Name: 'Carpeta folder',
                                 Blobs: [{
-                                    Name: "Nombre blob 1245",
-                                    Url: "Url/Blob/1245"
+                                    Name: 'Nombre blob 1245',
+                                    Url: 'Url/Blob/1245'
                                 }],
                                 Folders: null
                             }]
                         },
                         {
-                            Name: "Carpeta 918",
+                            Name: 'Carpeta 918',
                             Blobs: [{
-                                Name: "Nombre blob B34",
-                                Url: "Url/Blob/B34"
+                                Name: 'Nombre blob B34',
+                                Url: 'Url/Blob/B34'
                             }],
                             Folders: null
                         }
@@ -86,7 +86,7 @@
 
         spyOn(dataService, 'get').and.returnValues(get_deferred.promise, get_deferred.promise);
 
-        informacionFinancieraCtrl = _$controller_("InformacionFinancieraCtrl", {
+        informacionFinancieraCtrl = _$controller_('InformacionFinancieraCtrl', {
             $rootScope: _$rootScope_,
             constantService: _constantService_,
             dataService: _dataService_,
@@ -94,7 +94,7 @@
         });
     }));
 
-    it("Seleccionar sección 0.", function () {
+    it('Seleccionar sección 0.', function () {
         var id = 0;
 
         informacionFinancieraCtrl.seleccionarSeccion(id);
@@ -105,10 +105,10 @@
         expect(informacionFinancieraCtrl.seccionId).toBe(id);
         expect(informacionFinancieraCtrl.selectedYearIndex).toBe(0);
         expect(informacionFinancieraCtrl.selectedYear).toEqual([]);
-        expect(informacionFinancieraCtrl.seccionURI).toBe("app/informacion-financiera/estatutos.html");        
+        expect(informacionFinancieraCtrl.seccionURI).toBe('app/informacion-financiera/estatutos.html');        
     });
 
-    it("Seleccionar sección 1.", function () {
+    it('Seleccionar sección 1.', function () {
         var id = 1;
 
         informacionFinancieraCtrl.seleccionarSeccion(id);
@@ -119,10 +119,10 @@
         expect(informacionFinancieraCtrl.seccionId).toBe(id);
         expect(informacionFinancieraCtrl.selectedYearIndex).toBe(0);
         expect(informacionFinancieraCtrl.selectedYear).toEqual(container_stub[0].Folders);
-        expect(informacionFinancieraCtrl.seccionURI).toBe("app/informacion-financiera/documentos-normativos.html");
+        expect(informacionFinancieraCtrl.seccionURI).toBe('app/informacion-financiera/documentos-normativos.html');
     });
 
-    it("Seleccionar sección 2.", function () {
+    it('Seleccionar sección 2.', function () {
         var id = 2;
 
         informacionFinancieraCtrl.seleccionarSeccion(id);
@@ -133,10 +133,10 @@
         expect(informacionFinancieraCtrl.seccionId).toBe(id);
         expect(informacionFinancieraCtrl.selectedYearIndex).toBe(0);
         expect(informacionFinancieraCtrl.selectedYear).toEqual([]);
-        expect(informacionFinancieraCtrl.seccionURI).toBe("app/informacion-financiera/servicios-custodia.html");
+        expect(informacionFinancieraCtrl.seccionURI).toBe('app/informacion-financiera/servicios-custodia.html');
     });
 
-    it("Seleccionar sección 3.", function () {
+    it('Seleccionar sección 3.', function () {
         var id = 3;
 
         informacionFinancieraCtrl.seleccionarSeccion(id);
@@ -147,10 +147,10 @@
         expect(informacionFinancieraCtrl.seccionId).toBe(id);
         expect(informacionFinancieraCtrl.selectedYearIndex).toBe(0);
         expect(informacionFinancieraCtrl.selectedYear).toEqual([]);
-        expect(informacionFinancieraCtrl.seccionURI).toBe("app/informacion-financiera/indices-liquidez.html");
+        expect(informacionFinancieraCtrl.seccionURI).toBe('app/informacion-financiera/indices-liquidez.html');
     });
 
-    it("Seleccionar sección 4.", function () {
+    it('Seleccionar sección 4.', function () {
         var id = 4;
 
         informacionFinancieraCtrl.seleccionarSeccion(id);
@@ -161,10 +161,10 @@
         expect(informacionFinancieraCtrl.seccionId).toBe(id);
         expect(informacionFinancieraCtrl.selectedYearIndex).toBe(0);
         expect(informacionFinancieraCtrl.selectedYear).toEqual([]);
-        expect(informacionFinancieraCtrl.seccionURI).toBe("app/informacion-financiera/comite-regulacion.html");
+        expect(informacionFinancieraCtrl.seccionURI).toBe('app/informacion-financiera/comite-regulacion.html');
     });
 
-    it("Seleccionar sección 5.", function () {
+    it('Seleccionar sección 5.', function () {
         var id = 5;
 
         informacionFinancieraCtrl.seleccionarSeccion(id);
@@ -175,11 +175,11 @@
         expect(informacionFinancieraCtrl.seccionId).toBe(id);
         expect(informacionFinancieraCtrl.selectedYearIndex).toBe(0);
         expect(informacionFinancieraCtrl.selectedYear).toEqual([]);
-        expect(informacionFinancieraCtrl.seccionURI).toBe("app/informacion-financiera/otros-documentos.html");
+        expect(informacionFinancieraCtrl.seccionURI).toBe('app/informacion-financiera/otros-documentos.html');
     });
         
     
-    it("Seleccionar año (indice = 0).", function () {
+    it('Seleccionar año (indice = 0).', function () {
         var index = 0;
 
         informacionFinancieraCtrl.container = container_stub;
@@ -189,8 +189,8 @@
         expect(informacionFinancieraCtrl.selectedYear).toBe(informacionFinancieraCtrl.container[index].Folders);
     });
     
-    it("Obtener contenedor de estatutos.", function () {
-        var input = "estatutos";
+    it('Obtener contenedor de estatutos.', function () {
+        var input = 'estatutos';
 
         informacionFinancieraCtrl.getContainer(input);
         get_deferred.resolve(container_stub);
@@ -199,8 +199,8 @@
         expect(informacionFinancieraCtrl.container).toBe(container_stub);
     });
     
-    it("Obtener contenedor de documentos normativos.", function () {
-        var input = "documentos-normativos";
+    it('Obtener contenedor de documentos normativos.', function () {
+        var input = 'documentos-normativos';
 
         informacionFinancieraCtrl.getContainer(input);
         get_deferred.resolve(container_stub);
@@ -210,8 +210,8 @@
         expect(informacionFinancieraCtrl.container).toBe(container_stub);
     });
 
-    it("Obtener contenedor de servicios de custodia.", function () {
-        var input = "servicios-custodia";
+    it('Obtener contenedor de servicios de custodia.', function () {
+        var input = 'servicios-custodia';
 
         informacionFinancieraCtrl.getContainer(input);
         get_deferred.resolve(container_stub);
@@ -220,8 +220,8 @@
         expect(informacionFinancieraCtrl.container).toBe(container_stub);
     });
 
-    it("Obtener contenedor de comité de regulación.", function () {
-        var input = "comite-regulacion";
+    it('Obtener contenedor de comité de regulación.', function () {
+        var input = 'comite-regulacion';
 
         informacionFinancieraCtrl.getContainer(input);
         get_deferred.resolve(container_stub);
@@ -230,8 +230,8 @@
         expect(informacionFinancieraCtrl.container).toBe(container_stub);
     });
 
-    it("Obtener contenedor de otros documentos.", function () {
-        var input = "otros-documentos";
+    it('Obtener contenedor de otros documentos.', function () {
+        var input = 'otros-documentos';
 
         informacionFinancieraCtrl.getContainer(input);
         get_deferred.resolve(container_stub);
@@ -240,23 +240,23 @@
         expect(informacionFinancieraCtrl.container).toBe(container_stub);
     });
     
-    it("Setear las plantillas.", function () {
+    it('Setear las plantillas.', function () {
         informacionFinancieraCtrl.setTemplates();
 
-        expect(informacionFinancieraCtrl.templates[0]).toBe("estatutos.html");
-        expect(informacionFinancieraCtrl.templates[1]).toBe("documentos-normativos.html");
-        expect(informacionFinancieraCtrl.templates[2]).toBe("servicios-custodia.html");
-        expect(informacionFinancieraCtrl.templates[3]).toBe("indices-liquidez.html");
-        expect(informacionFinancieraCtrl.templates[4]).toBe("comite-regulacion.html");
-        expect(informacionFinancieraCtrl.templates[5]).toBe("otros-documentos.html");
+        expect(informacionFinancieraCtrl.templates[0]).toBe('estatutos.html');
+        expect(informacionFinancieraCtrl.templates[1]).toBe('documentos-normativos.html');
+        expect(informacionFinancieraCtrl.templates[2]).toBe('servicios-custodia.html');
+        expect(informacionFinancieraCtrl.templates[3]).toBe('indices-liquidez.html');
+        expect(informacionFinancieraCtrl.templates[4]).toBe('comite-regulacion.html');
+        expect(informacionFinancieraCtrl.templates[5]).toBe('otros-documentos.html');
     });
 
-    it("Setear nombres a contenedores.", function () {            
+    it('Setear nombres a contenedores.', function () {            
         informacionFinancieraCtrl.setContainerNames();
 
-        expect(informacionFinancieraCtrl.containerNames[0]).toBe("estatutos");
-        expect(informacionFinancieraCtrl.containerNames[1]).toBe("documentos-normativos");
-        expect(informacionFinancieraCtrl.containerNames[2]).toBe("servicios-custodia");
-        expect(informacionFinancieraCtrl.containerNames[5]).toBe("otros-documentos");
+        expect(informacionFinancieraCtrl.containerNames[0]).toBe('estatutos');
+        expect(informacionFinancieraCtrl.containerNames[1]).toBe('documentos-normativos');
+        expect(informacionFinancieraCtrl.containerNames[2]).toBe('servicios-custodia');
+        expect(informacionFinancieraCtrl.containerNames[5]).toBe('otros-documentos');
     });
 });

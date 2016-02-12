@@ -1,4 +1,4 @@
-﻿describe("bodyCtrl - ", function () {
+﻿describe('bodyCtrl - ', function () {
     
     beforeEach(function () {
         module('tannerPrivadoApp');
@@ -11,20 +11,20 @@
 
     var usuario_stub = {
         Autenticado: true,
-        Nombres: "",
-        Apellidos: "",
-        Rut: "12345656-9",
-        DireccionComercial: "",
-        DireccionParticular: "",
-        Ciudad: "",
-        Pais: "",
-        TelefonoComercial: "",
-        TelefonoParticular: "",
-        Email: "",
-        CuentaCorriente: "",
-        Banco: "",
-        NombreCompleto: "",
-        CiudadPais: ""
+        Nombres: '',
+        Apellidos: '',
+        Rut: '12345656-9',
+        DireccionComercial: '',
+        DireccionParticular: '',
+        Ciudad: '',
+        Pais: '',
+        TelefonoComercial: '',
+        TelefonoParticular: '',
+        Email: '',
+        CuentaCorriente: '',
+        Banco: '',
+        NombreCompleto: '',
+        CiudadPais: ''
     };
     
     var fakeModal = {
@@ -57,8 +57,8 @@
         getSingle_deferred = $q.defer();
         postWebService_deferred = $q.defer();
 
-        spyOn(dataService, "getSingle").and.returnValues(getSingle_deferred.promise, getSingle_deferred.promise);
-        spyOn(dataService, "postWebService").and.returnValues(postWebService_deferred.promise, postWebService_deferred.promise, postWebService_deferred.promise);
+        spyOn(dataService, 'getSingle').and.returnValues(getSingle_deferred.promise, getSingle_deferred.promise);
+        spyOn(dataService, 'postWebService').and.returnValues(postWebService_deferred.promise, postWebService_deferred.promise, postWebService_deferred.promise);
         spyOn($uibModal, 'open').and.returnValue(fakeModal);
         spyOn($scope, '$watch');
     }));
@@ -90,7 +90,7 @@
 
     it('Abrir modal circularización pendiente.', function () {
         authService.circularizacionPendiente = true;
-        bodyCtrl.crearInstanciaModal("circularizacion");
+        bodyCtrl.crearInstanciaModal('circularizacion');
 
         expect(authService.circularizacionPendiente).toBeDefined();
         expect(authService.circularizacionPendiente).toBe(true);
@@ -99,15 +99,15 @@
 
     it('Abrir modal documentos pendientes.', function () {
         authService.documentosPendientes = 2;
-        bodyCtrl.crearInstanciaModal("documentos");
+        bodyCtrl.crearInstanciaModal('documentos');
 
         expect(authService.documentosPendientes).toBeDefined();
         expect(authService.documentosPendientes).toBeGreaterThan(0);
         expect($uibModal.open).toHaveBeenCalled();
     });
 
-    it('No abrir modal si parametro de entrada es distinto a "circularizacion" o "documentos".', function () {
-        bodyCtrl.crearInstanciaModal("otros");
+    it('No abrir modal si parametro de entrada es distinto a 'circularizacion' o 'documentos'.', function () {
+        bodyCtrl.crearInstanciaModal('otros');
 
         expect(authService.circularizacionPendiente).toBeDefined();
         expect(authService.documentosPendientes).toBeDefined();

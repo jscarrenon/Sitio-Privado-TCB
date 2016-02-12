@@ -1,7 +1,7 @@
-﻿describe("informacionFinancieraIndicesCtrl - ", function () {
+﻿describe('informacionFinancieraIndicesCtrl - ', function () {
 
     beforeEach(function () {
-        module("tannerPrivadoApp");
+        module('tannerPrivadoApp');
     });
 
     var $q, $rootScope,
@@ -9,11 +9,11 @@
         postWebService_deferred, // defers
         informacionFinancieraIndicesCtrl; // controlador
 
-    var indices_input_stub = { xfecha: "24/11/2015" };
+    var indices_input_stub = { xfecha: '24/11/2015' };
 
     var indices_stub = {
-        RutTCB: "",
-        DescriptorTCB: "",
+        RutTCB: '',
+        DescriptorTCB: '',
         ActivosSieteDias: 34155,
         PasivosSieteDias: 11577,
         ActivosIntermediacion: 82792,
@@ -22,7 +22,7 @@
         PatrimonioLiquido: 2554,
         MontoCoberturaPatrimonial: 345768,
         PatrimonioDepurado: 1593467654,
-        FechaConsulta: "25 de noviembre de 2015",
+        FechaConsulta: '25 de noviembre de 2015',
         LiquidezGeneral: 21323546,
         LiquidezIntermediacion: 123567821,
         RazonEndeudamiento: 345765,
@@ -39,9 +39,9 @@
 
         postWebService_deferred = $q.defer();
         spyOn(dataService, 'postWebService').and.returnValues(postWebService_deferred.promise, postWebService_deferred.promise);
-        spyOn(extrasService, 'getFechaFormato').and.returnValue("24/11/2015", "25/11/2015");
+        spyOn(extrasService, 'getFechaFormato').and.returnValue('24/11/2015', '25/11/2015');
 
-        informacionFinancieraIndicesCtrl = _$controller_("InformacionFinancieraIndicesCtrl", {
+        informacionFinancieraIndicesCtrl = _$controller_('InformacionFinancieraIndicesCtrl', {
             $rootScope: _$rootScope_,
             constantService: _constantService_,
             dataService: _dataService_,
@@ -54,7 +54,7 @@
 
     }));
 
-    it("Obtener indices.", function () {
+    it('Obtener indices.', function () {
 
         informacionFinancieraIndicesCtrl.getIndices(indices_input_stub);
         postWebService_deferred.resolve(indices_stub);
@@ -64,7 +64,7 @@
 
     });
 
-    it("Indices actualizados correctamente.", function () {
+    it('Indices actualizados correctamente.', function () {
 
         var spy = spyOn(informacionFinancieraIndicesCtrl, 'getIndices');
         informacionFinancieraIndicesCtrl.actualizarIndices();

@@ -363,7 +363,7 @@ if (this.declaracion) {
     it('Seleccionar todas las operaciones pendientes.', function () {
 
         misInversionesDocumentosCtrl.todasOperaciones = true;
-        misInversionesDocumentosCtrl.operacionesPendientes = documentosFirmados_stub["operaciones"];
+        misInversionesDocumentosCtrl.operacionesPendientes = documentosFirmados_stub['operaciones'];
         misInversionesDocumentosCtrl.toggleTodasOperaciones();
 
         expect(misInversionesDocumentosCtrl.operacionesPendientes[0].Seleccionado).toBe(true);
@@ -374,7 +374,7 @@ if (this.declaracion) {
     it('Deseleccionar todas las operaciones pendientes.', function () {
 
         misInversionesDocumentosCtrl.todasOperaciones = false;
-        misInversionesDocumentosCtrl.operacionesPendientes = documentosFirmados_stub["operaciones"];
+        misInversionesDocumentosCtrl.operacionesPendientes = documentosFirmados_stub['operaciones'];
         misInversionesDocumentosCtrl.toggleTodasOperaciones();
 
         expect(misInversionesDocumentosCtrl.operacionesPendientes[0].Seleccionado).toBe(false);
@@ -385,7 +385,7 @@ if (this.declaracion) {
     it('Seleccionar todos los documentos pendientes.', function () {
 
         misInversionesDocumentosCtrl.todosDocumentos = true;
-        misInversionesDocumentosCtrl.documentosPendientes = documentosFirmados_stub["documentos"];
+        misInversionesDocumentosCtrl.documentosPendientes = documentosFirmados_stub['documentos'];
         misInversionesDocumentosCtrl.toggleTodosDocumentos();
 
         expect(misInversionesDocumentosCtrl.documentosPendientes[0].Seleccionado).toBe(true);
@@ -394,14 +394,14 @@ if (this.declaracion) {
 
     it('Deseleccionar todos los documentos pendientes.', function () {
         misInversionesDocumentosCtrl.todosDocumentos = false;
-        misInversionesDocumentosCtrl.documentosPendientes = documentosFirmados_stub["documentos"];
+        misInversionesDocumentosCtrl.documentosPendientes = documentosFirmados_stub['documentos'];
         misInversionesDocumentosCtrl.toggleTodosDocumentos();
 
         expect(misInversionesDocumentosCtrl.documentosPendientes[0].Seleccionado).toBe(false);
         expect(misInversionesDocumentosCtrl.documentosPendientes[1].Seleccionado).toBe(false);
     });
 
-    it('Desactivar check "Todas las operaciones"', function () {
+    it('Desactivar check 'Todas las operaciones'', function () {
         misInversionesDocumentosCtrl.todasOperaciones = true;
         misInversionesDocumentosCtrl.operacionesPendientes = documentosFirmados_stub['operaciones'];
         misInversionesDocumentosCtrl.opcionOperacionToggled();
@@ -409,7 +409,7 @@ if (this.declaracion) {
         expect(misInversionesDocumentosCtrl.todasOperaciones).toBe(false);
     });
 
-    it('Desactivar check "Todos los documentos"', function () {
+    it('Desactivar check 'Todos los documentos'', function () {
         misInversionesDocumentosCtrl.todosDocumentos = true;
         misInversionesDocumentosCtrl.documentosPendientes = documentosFirmados_stub['documentos'];
         misInversionesDocumentosCtrl.opcionDocumentoToggled();

@@ -1,7 +1,7 @@
-﻿describe("authService - ", function () {
+﻿describe('authService - ', function () {
 
     beforeEach(function () {
-        module("tannerPrivadoApp");
+        module('tannerPrivadoApp');
     });
 
     var $q, $rootScope,
@@ -23,25 +23,25 @@
         getSingle_deferred = $q.defer();
         postWebService_deferred = $q.defer();
 
-        spyOn(dataService, "getSingle").and.returnValue(getSingle_deferred.promise);
-        spyOn(dataService, "postWebService").and.returnValue(postWebService_deferred.promise);
+        spyOn(dataService, 'getSingle').and.returnValue(getSingle_deferred.promise);
+        spyOn(dataService, 'postWebService').and.returnValue(postWebService_deferred.promise);
         
         usuario_stub = {
             Autenticado: true,
-            Nombres: "",
-            Apellidos: "",
-            Rut: "12345656-9",
-            DireccionComercial: "",
-            DireccionParticular: "",
-            Ciudad: "",
-            Pais: "",
-            TelefonoComercial: "",
-            TelefonoParticular: "",
-            Email: "",
-            CuentaCorriente: "",
-            Banco: "",
-            NombreCompleto: "",
-            CiudadPais: ""
+            Nombres: '',
+            Apellidos: '',
+            Rut: '12345656-9',
+            DireccionComercial: '',
+            DireccionParticular: '',
+            Ciudad: '',
+            Pais: '',
+            TelefonoComercial: '',
+            TelefonoParticular: '',
+            Email: '',
+            CuentaCorriente: '',
+            Banco: '',
+            NombreCompleto: '',
+            CiudadPais: ''
         };
     }));
 
@@ -51,7 +51,7 @@
         authService = _authService_;
     }));
 
-    it("Obtener usuario actual. Usuario autenticado.", function () {
+    it('Obtener usuario actual. Usuario autenticado.', function () {
         authService.getUsuarioActual();
         getSingle_deferred.resolve(usuario_stub);
         $rootScope.$digest();
@@ -61,7 +61,7 @@
         expect(authService.autenticado).toEqual(usuario_stub.Autenticado);
     });
 
-    it("Obtener usuario actual. Usuario no autenticado.", function () {
+    it('Obtener usuario actual. Usuario no autenticado.', function () {
         usuario_stub.Autenticado = false;
         authService.getUsuarioActual();
         getSingle_deferred.resolve(usuario_stub);
@@ -72,8 +72,8 @@
         expect(authService.circularizacionPendiente).toEqual(false);
     });
 
-    it("Cerrar sesión.", function () {
-        spyOn(extrasService, "abrirRuta").and.callFake(function () {
+    it('Cerrar sesión.', function () {
+        spyOn(extrasService, 'abrirRuta').and.callFake(function () {
             return true;
         });
 
@@ -87,7 +87,7 @@
         expect(extrasService.abrirRuta).toHaveBeenCalled();
     });
 
-    it("Obtener circularización pendiente.", function () {
+    it('Obtener circularización pendiente.', function () {
         authService.getCircularizacionPendiente();
         postWebService_deferred.resolve({ Resultado: true });
         $rootScope.$digest();
@@ -95,7 +95,7 @@
         expect(authService.circularizacionPendiente).toBe(true);
     });
 
-    it("Obtener circularización pendiente. (ninguna pendiente)", function () {
+    it('Obtener circularización pendiente. (ninguna pendiente)', function () {
         authService.getCircularizacionPendiente();
         postWebService_deferred.resolve({ Resultado: false });
         $rootScope.$digest();
@@ -103,7 +103,7 @@
         expect(authService.circularizacionPendiente).toBe(false);
     });
 
-    it("Obtener documentos pendientes.", function () {
+    it('Obtener documentos pendientes.', function () {
         authService.getDocumentosPendientes();
         postWebService_deferred.resolve({ Resultado: 1 });
         $rootScope.$digest();
@@ -111,7 +111,7 @@
         expect(authService.documentosPendientes).toBeGreaterThan(0);
     });
 
-    it("Obtener documentos pendientes. (sin documentos pendientes)", function () {
+    it('Obtener documentos pendientes. (sin documentos pendientes)', function () {
         authService.getDocumentosPendientes();
         postWebService_deferred.resolve({ Resultado: 0 });
         $rootScope.$digest();

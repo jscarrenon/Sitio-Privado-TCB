@@ -1,7 +1,7 @@
-﻿describe("misInversionesFondosMutuosCtrl - ", function () {
+﻿describe('misInversionesFondosMutuosCtrl - ', function () {
         
     beforeEach(function () {
-        module("tannerPrivadoApp");
+        module('tannerPrivadoApp');
     });
 
     var $rootScope, $routeParams,
@@ -11,53 +11,53 @@
 
     var usuario_stub = {
         Autenticado: true,
-        Nombres: "",
-        Apellidos: "",
-        Rut: "12345656-9",
-        DireccionComercial: "",
-        DireccionParticular: "",
-        Ciudad: "",
-        Pais: "",
-        TelefonoComercial: "",
-        TelefonoParticular: "",
-        Email: "",
-        CuentaCorriente: "",
-        Banco: "",
-        NombreCompleto: "",
-        CiudadPais: ""
+        Nombres: '',
+        Apellidos: '',
+        Rut: '12345656-9',
+        DireccionComercial: '',
+        DireccionParticular: '',
+        Ciudad: '',
+        Pais: '',
+        TelefonoComercial: '',
+        TelefonoParticular: '',
+        Email: '',
+        CuentaCorriente: '',
+        Banco: '',
+        NombreCompleto: '',
+        CiudadPais: ''
     };
 
     var fondoMutuoInput_stub = { rut_cli: 123456789 };
 
     var fondosMutuosRF = [{
-        Descripcion: "Fondo A1",
-        Tipo: "Tipo fondo A clase 1",
-        CtaPisys: "235567",
+        Descripcion: 'Fondo A1',
+        Tipo: 'Tipo fondo A clase 1',
+        CtaPisys: '235567',
         ValorCuota: 101000,
         SaldoCuota: 5004999,
-        Csbis: "S",
-        Renta: "RF",
+        Csbis: 'S',
+        Renta: 'RF',
         Pesos: 123945
     },
     {
-        Descripcion: "Fondo C5",
-        Tipo: "Tipo fondo C clase 5",
-        CtaPisys: "235567",
+        Descripcion: 'Fondo C5',
+        Tipo: 'Tipo fondo C clase 5',
+        CtaPisys: '235567',
         ValorCuota: 12345,
         SaldoCuota: 3468,
-        Csbis: "N",
-        Renta: "RF",
+        Csbis: 'N',
+        Renta: 'RF',
         Pesos: 34567
     }];
 
     var fondosMutuosRV = [{
-        Descripcion: "Fondo F4",
-        Tipo: "Tipo fondo F clase 4",
-        CtaPisys: "235567",
+        Descripcion: 'Fondo F4',
+        Tipo: 'Tipo fondo F clase 4',
+        CtaPisys: '235567',
         ValorCuota: 456788,
         SaldoCuota: 2346,
-        Csbis: "S",
-        Renta: "RV",
+        Csbis: 'S',
+        Renta: 'RV',
         Pesos: 785233
     }];
 
@@ -87,7 +87,7 @@
     }));
 
     beforeEach(inject(function (_$controller_) {
-        fondosMutuosCtrl = _$controller_("MisInversionesFondosMutuosCtrl", {
+        fondosMutuosCtrl = _$controller_('MisInversionesFondosMutuosCtrl', {
             $rootScope: $rootScope,
             constantService: constantService,
             dataService: dataService,
@@ -97,21 +97,21 @@
         });
     }));     
         
-    it("Arreglos de fondos mutuos correctamente definidos y asignados.", function () {
+    it('Arreglos de fondos mutuos correctamente definidos y asignados.', function () {
         spyOn(fondosMutuosCtrl, 'getFondosMutuosTotal');
 
         fondosMutuosCtrl.getFondosMutuos(fondoMutuoInput_stub);
         postWebService_deferred.resolve(fondosMutuos_stub);
         $rootScope.$digest();
 
-        expect(fondosMutuosCtrl.fondosMutuosRF).toBe(fondosMutuos_stub["fondosMutuosRF"]);
-        expect(fondosMutuosCtrl.fondosMutuosRV).toBe(fondosMutuos_stub["fondosMutuosRV"]);
+        expect(fondosMutuosCtrl.fondosMutuosRF).toBe(fondosMutuos_stub['fondosMutuosRF']);
+        expect(fondosMutuosCtrl.fondosMutuosRV).toBe(fondosMutuos_stub['fondosMutuosRV']);
         expect(fondosMutuosCtrl.getFondosMutuosTotal).toHaveBeenCalled();
     });
 
-    it("Totales de fondos mutuos sumados correctamente.", function () {
-        fondosMutuosCtrl.fondosMutuosRF = fondosMutuos_stub["fondosMutuosRF"];
-        fondosMutuosCtrl.fondosMutuosRV = fondosMutuos_stub["fondosMutuosRV"];
+    it('Totales de fondos mutuos sumados correctamente.', function () {
+        fondosMutuosCtrl.fondosMutuosRF = fondosMutuos_stub['fondosMutuosRF'];
+        fondosMutuosCtrl.fondosMutuosRV = fondosMutuos_stub['fondosMutuosRV'];
         fondosMutuosCtrl.getFondosMutuosTotal();
 
         expect(fondosMutuosCtrl.fondosMutuosRFTotal).toBe(123945 + 34567);

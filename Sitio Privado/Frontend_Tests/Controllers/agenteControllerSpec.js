@@ -1,4 +1,4 @@
-﻿describe("agenteCtrl - ", function () {
+﻿describe('agenteCtrl - ', function () {
 
     beforeEach(function () {
         module('tannerPrivadoApp');
@@ -11,36 +11,36 @@
         
     var usuario_stub = {
         Autenticado: true,
-        Nombres: "",
-        Apellidos: "",
-        Rut: "12345656-9",
-        DireccionComercial: "",
-        DireccionParticular: "",
-        Ciudad: "",
-        Pais: "",
-        TelefonoComercial: "",
-        TelefonoParticular: "",
-        Email: "",
-        CuentaCorriente: "",
-        Banco: "",
-        NombreCompleto: "",
-        CiudadPais: ""
+        Nombres: '',
+        Apellidos: '',
+        Rut: '12345656-9',
+        DireccionComercial: '',
+        DireccionParticular: '',
+        Ciudad: '',
+        Pais: '',
+        TelefonoComercial: '',
+        TelefonoParticular: '',
+        Email: '',
+        CuentaCorriente: '',
+        Banco: '',
+        NombreCompleto: '',
+        CiudadPais: ''
     };
 
     var agente_stub = {
         Codigo: 0284,
-        Nombre: "Agente de prueba",
-        Sucursal: "Sucursal de prueba",
-        PathImg: "/path/de/prueba/",
-        Email: "adeprueba@tanner.cl",
-        Telefono: "99000000",
-        FechaInicioAcreditacion: "24 de noviembre 2015",
-        FechaExpiracionAcreditacion: "24 de noviembre 2016",
-        Descriptor: "Este es un agente de prueba"
+        Nombre: 'Agente de prueba',
+        Sucursal: 'Sucursal de prueba',
+        PathImg: '/path/de/prueba/',
+        Email: 'adeprueba@tanner.cl',
+        Telefono: '99000000',
+        FechaInicioAcreditacion: '24 de noviembre 2015',
+        FechaExpiracionAcreditacion: '24 de noviembre 2016',
+        Descriptor: 'Este es un agente de prueba'
     };
 
     var agenteInput_stub = {
-        _rut: "111333444-8",
+        _rut: '111333444-8',
         _sec: 0
     };
 
@@ -53,8 +53,8 @@
         getSingle_deferred = $q.defer();
         postWebService_deferred = $q.defer();
 
-        spyOn(dataService, "getSingle").and.returnValue(getSingle_deferred.promise);
-        spyOn(dataService, "postWebService").and.returnValue(postWebService_deferred.promise);
+        spyOn(dataService, 'getSingle').and.returnValue(getSingle_deferred.promise);
+        spyOn(dataService, 'postWebService').and.returnValue(postWebService_deferred.promise);
                 
     }));
 

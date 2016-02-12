@@ -1,6 +1,6 @@
-﻿describe("constantService - ", function () {
+﻿describe('constantService - ', function () {
     beforeEach(function () {
-        module("tannerPrivadoApp");
+        module('tannerPrivadoApp');
     });
 
     var constantService;
@@ -9,7 +9,7 @@
         constantService = _constantService_;
     }));
 
-    it("Constantes definidas correctamente.", function () {
+    it('Constantes definidas correctamente.', function () {
         expect(constantService.mvcHomeURI).toBe('/Home/');
         expect(constantService.mvcSignOutURI).toBe('/Account/SignOut');
         expect(constantService.templateFooterURI).toBe('app/common/templates/footer.html');
