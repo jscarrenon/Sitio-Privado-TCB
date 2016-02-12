@@ -49,6 +49,20 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="cns_contratos_pendientes">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="rut" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="cns_contratos_pendientesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="cns_contratos_pendientesResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="cns_operacion_firmada">
         <s:complexType>
           <s:sequence>
@@ -124,6 +138,12 @@
   <wsdl:message name="cns_operaciones_pendientesSoapOut">
     <wsdl:part name="parameters" element="tns:cns_operaciones_pendientesResponse" />
   </wsdl:message>
+  <wsdl:message name="cns_contratos_pendientesSoapIn">
+    <wsdl:part name="parameters" element="tns:cns_contratos_pendientes" />
+  </wsdl:message>
+  <wsdl:message name="cns_contratos_pendientesSoapOut">
+    <wsdl:part name="parameters" element="tns:cns_contratos_pendientesResponse" />
+  </wsdl:message>
   <wsdl:message name="cns_operacion_firmadaSoapIn">
     <wsdl:part name="parameters" element="tns:cns_operacion_firmada" />
   </wsdl:message>
@@ -157,6 +177,10 @@
       <wsdl:input message="tns:cns_operaciones_pendientesSoapIn" />
       <wsdl:output message="tns:cns_operaciones_pendientesSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="cns_contratos_pendientes">
+      <wsdl:input message="tns:cns_contratos_pendientesSoapIn" />
+      <wsdl:output message="tns:cns_contratos_pendientesSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="cns_operacion_firmada">
       <wsdl:input message="tns:cns_operacion_firmadaSoapIn" />
       <wsdl:output message="tns:cns_operacion_firmadaSoapOut" />
@@ -187,6 +211,15 @@
     </wsdl:operation>
     <wsdl:operation name="cns_operaciones_pendientes">
       <soap:operation soapAction="http://servicios.tanner.cl/documentos/cns_operaciones_pendientes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cns_contratos_pendientes">
+      <soap:operation soapAction="http://servicios.tanner.cl/documentos/cns_contratos_pendientes" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -244,6 +277,15 @@
     </wsdl:operation>
     <wsdl:operation name="cns_operaciones_pendientes">
       <soap12:operation soapAction="http://servicios.tanner.cl/documentos/cns_operaciones_pendientes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cns_contratos_pendientes">
+      <soap12:operation soapAction="http://servicios.tanner.cl/documentos/cns_contratos_pendientes" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
