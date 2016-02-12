@@ -11,12 +11,16 @@ namespace Sitio_Privado.Helpers
     public class TannerDatabaseHelper
     {
         private static string ConnectionString = ConfigurationManager.AppSettings["sql:ConnectionString"];
-        private static string UserViewTableName = "dbo.VW_Clientes_CBV";
         private SqlConnection sqlConnection;
+
+        public TannerDatabaseHelper()
+        {
+            sqlConnection = new SqlConnection(ConnectionString);
+        }
 
         public bool OpenConnection()
         {
-            if(sqlConnection != null)
+            if(sqlConnection == null)
                 sqlConnection = new SqlConnection(ConnectionString);
 
             try
@@ -39,19 +43,19 @@ namespace Sitio_Privado.Helpers
 
         public IList<TannerUserModel> GetUserList()
         {
-            SqlCommand command = new SqlCommand("SELECT * FROM @userViewTable", sqlConnection);
-            command.Parameters.Add(new SqlParameter("userViewTable", UserViewTableName));
+            SqlCommand command = new SqlCommand("SELECT * FROM dbo.VW_Clientes_CBV", sqlConnection);
             SqlDataReader reader = command.ExecuteReader();
 
             IList<TannerUserModel> userList = new List<TannerUserModel>();
             while(reader.Read())
             {
                 TannerUserModel user = new TannerUserModel();
-                if (reader[0] != null) user.FullName = (string)reader[0];
-                if (reader[1] != null) user.RutID = ((Int32)reader[1]).ToString();
-                if (reader[2] != null) user.RutVD = ((Char)reader[2]).ToString();
-                if (reader[3] != null) user.WorkAddress = (string)reader[3];
-                if (reader[4] != null) user.HomeAddress = (string)reader[4];
+                if (reader[0] != null) user.FullName = reader[0].ToString();
+                if (reader[1] != null) user.RutID = reader[1].ToString();
+                if (reader[2] != null) user.RutVD = reader[2].ToString();
+                if (reader[3] != null) user.WorkAddress = reader[3].ToString();
+                if (reader[4] != null) user.HomeAddress = reader[4].ToString();
+                userList.Add(user);
             }
             return userList;
         }

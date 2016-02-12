@@ -19,6 +19,7 @@ namespace Sitio_Privado.Tasks
             if (dbHelper.OpenConnection())
             {
                 IList<TannerUserModel> userList = dbHelper.GetUserList();
+                dbHelper.CloseConnection();
             }
         }
     }
