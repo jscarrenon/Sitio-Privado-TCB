@@ -12,8 +12,6 @@
         usuario_stub,
         modalInstance;
 
-    //Se inyectan todos los servicios menos el authService, ya que al inyectar el authService se llama su constructor y
-    //se ejecuta la función getUsuarioActual(), por lo que hay que preparar un defer.
     beforeEach(inject(function (_$rootScope_, _$q_, _constantService_, _dataService_, _extrasService_) {
 
         $q = _$q_;
@@ -25,19 +23,14 @@
         getSingle_deferred = $q.defer();
         postWebService_deferred = $q.defer();
 
-        spyOn(constantService, "mvcHomeURI").and.returnValue("/Home/");
-        spyOn(constantService, "apiCircularizacionURI").and.returnValue("/api/circularizacion/");
-        spyOn(constantService, "apiDocumentoURI").and.returnValue("/Home/");
-
-        //Se usa returnValues porque no es puede repetir el spyOn en la misma función.
-        spyOn(dataService, "getSingle").and.returnValues(getSingle_deferred.promise, getSingle_deferred.promise);
-        spyOn(dataService, "postWebService").and.returnValues(postWebService_deferred.promise, postWebService_deferred.promise, postWebService_deferred.promise, postWebService_deferred.promise);
+        spyOn(dataService, "getSingle").and.returnValue(getSingle_deferred.promise);
+        spyOn(dataService, "postWebService").and.returnValue(postWebService_deferred.promise);
         
         usuario_stub = {
             Autenticado: true,
             Nombres: "",
             Apellidos: "",
-            Rut: "12345656",
+            Rut: "12345656-9",
             DireccionComercial: "",
             DireccionParticular: "",
             Ciudad: "",
@@ -52,14 +45,10 @@
         };
     }));
 
-    //se injecta el authService solo para evitar el problema de la doble llamada.
-    beforeEach(inject(function (_authService_) {
-        
+    beforeEach(inject(function (_authService_) {        
         getSingle_deferred.resolve(usuario_stub);
         $rootScope.$digest();
         authService = _authService_;
-        getSingle_deferred = $q.defer();        
-
     }));
 
     it("Obtener usuario actual. Usuario autenticado.", function () {

@@ -42,7 +42,6 @@
     };
 
     beforeEach(inject(function (_$q_, _$rootScope_, _constantService_, _dataService_, _extrasService_) {
-
         $q = _$q_;
         $rootScope = _$rootScope_;
         constantService = _constantService_;
@@ -54,7 +53,6 @@
 
         spyOn(dataService, "getSingle").and.returnValue(getSingle_deferred.promise);
         spyOn(dataService, "postWebService").and.returnValue(postWebService_deferred.promise);
-
     }));
 
     beforeEach(inject(function (_authService_) {

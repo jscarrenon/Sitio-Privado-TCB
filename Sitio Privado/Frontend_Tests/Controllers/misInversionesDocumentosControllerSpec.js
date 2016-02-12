@@ -1,4 +1,5 @@
 ﻿describe('misInversionesDocumentosCtrl - ', function () {
+
     beforeEach(function () {
         module('tannerPrivadoApp');
     });
