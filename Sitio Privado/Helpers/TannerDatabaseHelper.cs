@@ -16,6 +16,7 @@ namespace Sitio_Privado.Helpers
         {
             using( SqlConnection sqlConnection = new SqlConnection(ConnectionString))
             {
+                sqlConnection.Open();
                 SqlCommand command = new SqlCommand("SELECT * FROM dbo.VW_Clientes_CBV", sqlConnection);
                 SqlDataReader reader = command.ExecuteReader();
 
