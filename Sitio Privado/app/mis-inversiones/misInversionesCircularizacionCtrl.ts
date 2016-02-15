@@ -65,7 +65,7 @@
                 this.getArchivo(archivoInput);
             }
 
-            this.seccionURI = 'app/mis-inversiones/' + this.templates[this.seccionId];
+            this.seccionURI = this.constantService.buildFolderURI + 'html/mis-inversiones/' + this.templates[this.seccionId];
         }  
 
         setTemplates(): void {
