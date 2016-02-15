@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 
@@ -61,19 +62,19 @@ namespace Sitio_Privado.Helpers
         private TannerUserModel ParseUser(SqlDataReader reader)
         {
             TannerUserModel user = new TannerUserModel();
-            if (reader[0] != null) user.Name = reader[0].ToString().Trim();
-            if (reader[1] != null) user.Surname = reader[1].ToString().Trim();
+            if (reader[0] != null) user.Name = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[0].ToString().Trim().ToLower());
+            if (reader[1] != null) user.Surname = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[1].ToString().Trim().ToLower());
             if (reader[2] != null) user.RutID = reader[2].ToString().Trim();
-            if (reader[3] != null) user.RutVD = reader[3].ToString().Trim();
-            if (reader[4] != null) user.WorkAddress = reader[4].ToString().Trim();
-            if (reader[5] != null) user.HomeAddress = reader[5].ToString().Trim();
-            if (reader[6] != null) user.City = reader[6].ToString().Trim();
-            if (reader[7] != null) user.Country = reader[7].ToString().Trim();
+            if (reader[3] != null) user.RutVD = reader[3].ToString().Trim().ToUpper();
+            if (reader[4] != null) user.WorkAddress = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[4].ToString().Trim().ToLower());
+            if (reader[5] != null) user.HomeAddress = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[5].ToString().Trim().ToLower());
+            if (reader[6] != null) user.City = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[6].ToString().Trim().ToLower());
+            if (reader[7] != null) user.Country = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[7].ToString().Trim().ToLower());
             if (reader[8] != null) user.WorkPhone = reader[8].ToString().Trim();
             if (reader[9] != null) user.HomePhone = reader[9].ToString().Trim();
-            if (reader[10] != null) user.Email = reader[10].ToString().Trim();
-            if (reader[11] != null) user.CheckingAccount = reader[11].ToString().Trim();
-            if (reader[12] != null) user.Bank = reader[12].ToString().Trim();
+            if (reader[10] != null) user.Email = reader[10].ToString().Trim().ToLower();
+            if (reader[11] != null) user.CheckingAccount = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[11].ToString().Trim().ToLower());
+            if (reader[12] != null) user.Bank = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[12].ToString().Trim().ToLower());
             if (reader[13] != null) user.TemporalPassword = reader[13].ToString().Trim();
             if (reader[14] != null) user.UpdatedAt = reader[14].ToString().Trim();
 
