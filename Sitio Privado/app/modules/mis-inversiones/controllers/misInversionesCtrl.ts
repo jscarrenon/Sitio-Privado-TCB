@@ -52,7 +52,7 @@
 
         seleccionarSeccion(id: number): void {
             this.seccionId = id;
-            this.seccionURI = this.constantService.buildFolderURI + 'html/mis-inversiones/' + this.templates[this.seccionId];
+            this.seccionURI = this.constantService.buildFolderURI + 'html/modules/mis-inversiones/templates/' + this.templates[this.seccionId];
         }    
 
         setTemplates(): void {

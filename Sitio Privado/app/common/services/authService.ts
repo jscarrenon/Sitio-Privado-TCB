@@ -61,7 +61,7 @@
                     this.circularizacionPendiente = result.Resultado;
                     if (this.circularizacionPendiente) {                        
                         var modalInstance: ng.ui.bootstrap.IModalServiceInstance = this.$uibModal.open({
-                            templateUrl: this.constantService.buildFolderURI + 'html/mis-inversiones/circularizacion_pendiente_modal.html',
+                            templateUrl: this.constantService.buildFolderURI + 'html/modules/mis-inversiones/templates/circularizacion_pendiente_modal.html',
                             controller: 'ModalInstanceCtrl as modal'
                         });
 
@@ -78,7 +78,7 @@
                     this.documentosPendientes = result.Resultado;
                     if (this.documentosPendientes > 0) {
                         var modalInstance: ng.ui.bootstrap.IModalServiceInstance = this.$uibModal.open({
-                                templateUrl: this.constantService.buildFolderURI + 'html/mis-inversiones/estado-documentos_pendientes_modal.html',
+                                templateUrl: this.constantService.buildFolderURI + 'html/modules/mis-inversiones/templates/estado-documentos_pendientes_modal.html',
                                 controller: 'ModalInstanceCtrl as modal'
                             });
 
