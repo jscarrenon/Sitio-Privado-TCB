@@ -19,9 +19,9 @@ namespace Sitio_Privado.Tasks
         {
             logger.Info("Starting Synchronization Task");
             graphClient = new GraphApiClientHelper();
-            logger.Info("Retreiving users from database");
+            logger.Info("Retrieving users from database");
             IList<TannerUserModel> userList = TannerDatabaseHelper.GetUserList();
-            logger.Info("Users retreived");
+            logger.Info("Users retrieved");
             logger.Info("Processing users");
             await ProcessUsers(userList);
             logger.Info("End processing users");
@@ -39,7 +39,7 @@ namespace Sitio_Privado.Tasks
                     //Create User
                     logger.Info("User " + user.Rut + " not found. Creating user");
                     GraphUserModel graphUser = GetGraphUserModel(user);
-                    await graphClient.CreateUser(graphUser);
+                    GraphApiResponseInfo createResponse = await graphClient.CreateUser(graphUser);
                     logger.Info("User " + user.Rut + " created");
                 }
 
@@ -48,13 +48,13 @@ namespace Sitio_Privado.Tasks
                     //Update User
                     logger.Info("User " + user.Rut + " found. Updating user");
                     GraphUserModel graphUser = GetGraphUserModel(user);
-                    await graphClient.UpdateUser(response.User.ObjectId, graphUser);
+                    GraphApiResponseInfo updateResponse = await graphClient.UpdateUser(response.User.ObjectId, graphUser);
                     logger.Info("User " + user.Rut + " updated");
                 }
                 else
                 {
                     //Error
-                    logger.Info("Error retreiving user");
+                    logger.Info("Error retrieving user");
                 }
             }
         }
