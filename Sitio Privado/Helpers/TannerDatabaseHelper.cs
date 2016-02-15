@@ -20,7 +20,7 @@ namespace Sitio_Privado.Helpers
                 try
                 {
                     sqlConnection.Open();
-                    SqlCommand command = new SqlCommand("SELECT * FROM dbo.VW_Clientes_CBV", sqlConnection);
+                    SqlCommand command = new SqlCommand("SELECT TOP 20 * FROM dbo.VW_Clientes_CBV", sqlConnection); //TODO: remove number filter
                     SqlDataReader reader = command.ExecuteReader();
 
 
