@@ -26,7 +26,7 @@ namespace Sitio_Privado.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://172.17.1.12:8088/tann_catsvc.asmx")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://www.tannercliente.cl/wstsf/tann_catsvc.asmx")]
         public string Sitio_Privado_CategoriaInversionista_tann_catsvc {
             get {
                 return ((string)(this["Sitio_Privado_CategoriaInversionista_tann_catsvc"]));
@@ -36,7 +36,7 @@ namespace Sitio_Privado.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://172.17.1.12:8088/tann_fondos_mutuos.asmx")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://www.tannercliente.cl/wstsf/tann_fondos_mutuos.asmx")]
         public string Sitio_Privado_ConsultaSaldosFondosMutuos_tann_fondos_mutuos {
             get {
                 return ((string)(this["Sitio_Privado_ConsultaSaldosFondosMutuos_tann_fondos_mutuos"]));
@@ -46,7 +46,7 @@ namespace Sitio_Privado.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://172.17.1.12:8088/tann_indicadores.asmx")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://www.tannercliente.cl/wstsf/tann_indicadores.asmx")]
         public string Sitio_Privado_IndicesLiquidezSolvencia_tann_indicadores {
             get {
                 return ((string)(this["Sitio_Privado_IndicesLiquidezSolvencia_tann_indicadores"]));
@@ -56,7 +56,7 @@ namespace Sitio_Privado.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://172.17.1.12:8088/tann_info_cliente.asmx")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://www.tannercliente.cl/wstsf/tann_info_cliente.asmx")]
         public string Sitio_Privado_InformacionClienteAgente_tann_info_cliente {
             get {
                 return ((string)(this["Sitio_Privado_InformacionClienteAgente_tann_info_cliente"]));
@@ -66,7 +66,7 @@ namespace Sitio_Privado.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://172.17.1.12:8088/tann_documentos.asmx")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://www.tannercliente.cl/wstsf/tann_documentos.asmx")]
         public string Sitio_Privado_DocumentosPendientesFirma_tann_documentos {
             get {
                 return ((string)(this["Sitio_Privado_DocumentosPendientesFirma_tann_documentos"]));
@@ -76,7 +76,7 @@ namespace Sitio_Privado.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://172.17.1.12:8088/tann_cartola_resumida.asmx")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://www.tannercliente.cl/wstsf/tann_cartola_resumida.asmx")]
         public string Sitio_Privado_CartolaResumida_tann_cartola_resumida {
             get {
                 return ((string)(this["Sitio_Privado_CartolaResumida_tann_cartola_resumida"]));
@@ -86,7 +86,7 @@ namespace Sitio_Privado.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://172.17.1.12:8088/tann_circularizacion.asmx")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://www.tannercliente.cl/wstsf/tann_circularizacion.asmx")]
         public string Sitio_Privado_CircularizacionCustodia_tann_circularizacion {
             get {
                 return ((string)(this["Sitio_Privado_CircularizacionCustodia_tann_circularizacion"]));
