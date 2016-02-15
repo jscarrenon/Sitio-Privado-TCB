@@ -65,7 +65,7 @@
                 <div class="executive white-box">
                     <loading param="agenteCtrl.loading" extra-class="'top1'"></loading>
                     <div ng-show="!agenteCtrl.loading">
-                        <div class="photo"><img src="{{agenteCtrl.agente.PathImg}}" /></div>
+                        <div class="photo" ng-style="{'background-image':'url({{agenteCtrl.agente.PathImg}})'}"></div>
                         <div class="text">
                             <div class="name">{{agenteCtrl.agente.Nombre}}</div>
                             <div class="contact">

@@ -1,29 +1,30 @@
 ﻿module app {
     class Config {
         constructor($routeProvider: ng.route.IRouteProvider) {
+            var buildFolderURI: string = ".build/";
             $routeProvider
                 .when("/", {
-                    templateUrl: "/app/home/index.html",
+                    templateUrl: buildFolderURI + "html/modules/home/templates/index.html",
                     controller: "HomeCtrl as ctrl"
                 })
                 .when("/mis-inversiones/:seccion?", {
-                    templateUrl: "/app/mis-inversiones/index.html",
+                    templateUrl: buildFolderURI + "html/modules/mis-inversiones/templates/index.html",
                     controller: "MisInversionesCtrl as ctrl"
                 })
                 .when("/inversiones", {
-                    templateUrl: "/app/inversiones/index.html",
+                    templateUrl: buildFolderURI + "html/modules/inversiones/templates/index.html",
                     controller: "InversionesCtrl as ctrl"
                 })
                 .when("/mis-datos", {
-                    templateUrl: "/app/home/mis-datos.html",
+                    templateUrl: buildFolderURI + "html/modules/home/templates/mis-datos.html",
                     controller: "HomeCtrl as ctrl"
                 })
                 .when("/informacion-financiera/:seccion?", {
-                    templateUrl: "/app/informacion-financiera/index.html",
+                    templateUrl: buildFolderURI + "html/modules/informacion-financiera/templates/index.html",
                     controller: "InformacionFinancieraCtrl as ctrl"
                 })
                 .when("/productos-servicios/:seccion?", {
-                    templateUrl: "/app/productos-servicios/index.html",
+                    templateUrl: buildFolderURI + "html/modules/productos-servicios/templates/index.html",
                     controller: "ProductosServiciosCtrl as ctrl"
                 })
                 .otherwise({ redirectTo: '/' });

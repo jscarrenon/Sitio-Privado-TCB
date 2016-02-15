@@ -70,7 +70,7 @@
             this.seccionId = id;
             this.selectedYearIndex = 0;
             this.selectedYear = [];
-            this.seccionURI = 'app/informacion-financiera/' + this.templates[this.seccionId];
+            this.seccionURI = this.constantService.buildFolderURI + 'html/modules/informacion-financiera/templates/' + this.templates[this.seccionId];
             if (id != 3 && id != 4) {
                 this.getContainer(this.containerNames[id]);
             }
