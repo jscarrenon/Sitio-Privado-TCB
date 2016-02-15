@@ -27,21 +27,21 @@ namespace Sitio_Privado.Helpers
                     while (reader.Read())
                     {
                         TannerUserModel user = new TannerUserModel();
-                        if (reader[0] != null) user.Name = reader[0].ToString();
-                        if (reader[1] != null) user.Surname = reader[1].ToString();
-                        if (reader[2] != null) user.RutID = reader[2].ToString();
-                        if (reader[3] != null) user.RutVD = reader[3].ToString();
-                        if (reader[4] != null) user.WorkAddress = reader[4].ToString();
-                        if (reader[5] != null) user.HomeAddress = reader[5].ToString();
-                        if (reader[6] != null) user.City = reader[6].ToString();
-                        if (reader[7] != null) user.Country = reader[7].ToString();
-                        if (reader[8] != null) user.WorkPhone = reader[8].ToString();
-                        if (reader[9] != null) user.HomePhone = reader[9].ToString();
-                        if (reader[10] != null) user.Email = reader[10].ToString();
-                        if (reader[11] != null) user.CheckingAccount = reader[11].ToString();
-                        if (reader[12] != null) user.Bank = reader[12].ToString();
-                        if (reader[13] != null) user.TemporalPassword = reader[13].ToString();
-                        if (reader[14] != null) { string timestamp = reader[14].ToString(); }
+                        if (reader[0] != null) user.Name = reader[0].ToString().Trim();
+                        if (reader[1] != null) user.Surname = reader[1].ToString().Trim();
+                        if (reader[2] != null) user.RutID = reader[2].ToString().Trim();
+                        if (reader[3] != null) user.RutVD = reader[3].ToString().Trim();
+                        if (reader[4] != null) user.WorkAddress = reader[4].ToString().Trim();
+                        if (reader[5] != null) user.HomeAddress = reader[5].ToString().Trim();
+                        if (reader[6] != null) user.City = reader[6].ToString().Trim();
+                        if (reader[7] != null) user.Country = reader[7].ToString().Trim();
+                        if (reader[8] != null) user.WorkPhone = reader[8].ToString().Trim();
+                        if (reader[9] != null) user.HomePhone = reader[9].ToString().Trim();
+                        if (reader[10] != null) user.Email = reader[10].ToString().Trim();
+                        if (reader[11] != null) user.CheckingAccount = reader[11].ToString().Trim();
+                        if (reader[12] != null) user.Bank = reader[12].ToString().Trim();
+                        if (reader[13] != null) user.TemporalPassword = reader[13].ToString().Trim();
+                        if (reader[14] != null) { string timestamp = reader[14].ToString().Trim(); }
                         userList.Add(user);
                     }
                 }
