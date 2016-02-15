@@ -1,4 +1,5 @@
-﻿using Quartz;
+﻿using NLog;
+using Quartz;
 using Sitio_Privado.Helpers;
 using Sitio_Privado.Models;
 using System;
@@ -11,41 +12,49 @@ namespace Sitio_Privado.Tasks
 {
     public class SyncUsersDataJob : IJob
     {
-        GraphApiClientHelper graphClient;
+        private GraphApiClientHelper graphClient;
+        private static Logger logger = LogManager.GetLogger("MigrationLog");
 
         public async void Execute(IJobExecutionContext context)
         {
-            //TODO: Implement task
-            System.Diagnostics.Debug.WriteLine("Test Message");
+            logger.Info("Starting Synchronization Task");
             graphClient = new GraphApiClientHelper();
+            logger.Info("Retreiving users from database");
             IList<TannerUserModel> userList = TannerDatabaseHelper.GetUserList();
+            logger.Info("Users retreived");
+            logger.Info("Processing users");
             await ProcessUsers(userList);
+            logger.Info("End processing users");
+            logger.Info("Task finished");
         }
 
         private async Task ProcessUsers(IList<TannerUserModel> userList)
         {
-            foreach(var user in userList)
+            foreach (var user in userList)
             {
+                logger.Info("Checking if user " + user.Rut + " already exists");
                 GraphApiResponseInfo response = await graphClient.GetUserByRut(user.Rut);
                 if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
                 {
                     //Create User
+                    logger.Info("User " + user.Rut + " not found. Creating user");
                     GraphUserModel graphUser = GetGraphUserModel(user);
-                    System.Diagnostics.Debug.WriteLine("Creating");
                     await graphClient.CreateUser(graphUser);
+                    logger.Info("User " + user.Rut + " created");
                 }
 
                 else if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
                     //Update User
+                    logger.Info("User " + user.Rut + " found. Updating user");
                     GraphUserModel graphUser = GetGraphUserModel(user);
-                    System.Diagnostics.Debug.WriteLine("Updating");
                     await graphClient.UpdateUser(response.User.ObjectId, graphUser);
+                    logger.Info("User " + user.Rut + " updated");
                 }
                 else
                 {
                     //Error
-                    System.Diagnostics.Debug.WriteLine("Error");
+                    logger.Info("Error retreiving user");
                 }
             }
         }
