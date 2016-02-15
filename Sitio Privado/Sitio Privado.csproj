@@ -298,6 +298,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\TannerDatabaseHelper.cs" />
     <Compile Include="Models\AzureFolder.cs" />
     <Compile Include="Models\AzureBlob.cs" />
     <Compile Include="Helpers\GraphApiResponseInfo.cs" />
@@ -311,6 +312,7 @@
     <Compile Include="Models\GraphUserModel.cs" />
     <Compile Include="Models\CategoriaInversionista\ProductoModel.cs" />
     <Compile Include="Models\CategoriaInversionista\CategoriaModel.cs" />
+    <Compile Include="Models\TannerUserModel.cs" />
     <Compile Include="Models\UsuarioModels.cs" />
     <Compile Include="PolicyAuthHelpers\HttpDocumentRetriever.cs" />
     <Compile Include="PolicyAuthHelpers\PolicyAuthorize.cs" />

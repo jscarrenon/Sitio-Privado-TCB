@@ -11,7 +11,7 @@ namespace Sitio_Privado.Extras
 {
     public class NLogger : ITraceWriter
     {
-        private static readonly Logger classLogger = LogManager.GetCurrentClassLogger();
+        private static readonly Logger classLogger = LogManager.GetLogger("WebApiLog");
 
         private static readonly Lazy<Dictionary<TraceLevel, Action<string>>> loggingMap =
             new Lazy<Dictionary<TraceLevel, Action<string>>>(() => new Dictionary<TraceLevel, Action<string>>
