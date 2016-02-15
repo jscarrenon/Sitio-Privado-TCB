@@ -17,19 +17,25 @@ namespace Sitio_Privado.Tasks
 
         public async void Execute(IJobExecutionContext context)
         {
-            logger.Info("Starting Synchronization Task");
+            logger.Info("Starting synchronization task.");
             graphClient = new GraphApiClientHelper();
-            logger.Info("Retrieving users from database");
-            IList<TannerUserModel> userList = TannerDatabaseHelper.GetUserList();
-            logger.Info("Users retrieved");
-            logger.Info("Processing users");
-            await ProcessUsers(userList);
-            logger.Info("End processing users");
+            TannerDatabaseHelper tannerDatabaseHelper = new TannerDatabaseHelper(logger);
+            logger.Info("Retrieving users from database.");
+            IList<TannerUserModel> userList = tannerDatabaseHelper.GetUserList();
+            if(userList != null)
+            {
+                await ProcessUsers(userList);
+            }
+            else
+            {
+                logger.Warn("The task couldn't obtain the user list from the database");
+            }
             logger.Info("Task finished");
         }
 
         private async Task ProcessUsers(IList<TannerUserModel> userList)
         {
+            logger.Info("Processing user list.");
             foreach (var user in userList)
             {
                 logger.Info("Checking if user " + user.Rut + " already exists");
@@ -40,7 +46,14 @@ namespace Sitio_Privado.Tasks
                     logger.Info("User " + user.Rut + " not found. Creating user");
                     GraphUserModel graphUser = GetGraphUserModel(user);
                     GraphApiResponseInfo createResponse = await graphClient.CreateUser(graphUser);
-                    logger.Info("User " + user.Rut + " created");
+                    if(createResponse.StatusCode == System.Net.HttpStatusCode.Created)
+                    {
+                        logger.Info("User " + user.Rut + " created");
+                    }
+                    else
+                    {
+                        logger.Warn("User not created. Error: " + createResponse.Message);
+                    }
                 }
 
                 else if (response.StatusCode == System.Net.HttpStatusCode.OK)
@@ -49,12 +62,19 @@ namespace Sitio_Privado.Tasks
                     logger.Info("User " + user.Rut + " found. Updating user");
                     GraphUserModel graphUser = GetGraphUserModel(user);
                     GraphApiResponseInfo updateResponse = await graphClient.UpdateUser(response.User.ObjectId, graphUser);
-                    logger.Info("User " + user.Rut + " updated");
+                    if (updateResponse.StatusCode == System.Net.HttpStatusCode.NoContent)
+                    {
+                        logger.Info("User " + user.Rut + " updated");
+                    }
+                    else
+                    {
+                        logger.Warn("User not updated. Error: " + updateResponse.Message);
+                    }
                 }
                 else
                 {
                     //Error
-                    logger.Info("Error retrieving user");
+                    logger.Info("Error retrieving user. Error: " + response.Message);
                 }
             }
         }
