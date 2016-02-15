@@ -16,8 +16,9 @@ var merge = require('merge-stream');
 var del = require('del');
 
 var paths = {
+    buildFolder: '.build',
     index: './Views/Home/Index.cshtml',
-    homeFolder: './Views/Home/',
+    homeFolder: './Views/Home',
     domainFiles: ['./app/domain/IEntity.js', './app/domain/IInput.js', './app/domain/*.js'],
     appFiles: ['./app/*.js',
                 './app/common/directives/*.js',
@@ -39,11 +40,12 @@ var paths = {
                         './bower_components/angular/angular.js',
                         './bower_components/jquery/dist/jquery.js'],
     images: ['./Resources/img/*'],
-    fonts: ['./Resources/fonts/*']
+    fonts: ['./Resources/fonts/*'],
+    htmls: ['./app/**/*.html']
 };
 
 gulp.task('clean', function () {
-    return del(['.build']);
+    return del([paths.buildFolder]);
 });
 
 gulp.task('spa-task', function () {
@@ -57,13 +59,13 @@ gulp.task('spa-task', function () {
                     .pipe(print())
                     .pipe(concat('domain.js'))
                     .pipe(uglify())
-                    .pipe(gulp.dest('.build/spa')), { name: 'domain' }))
+                    .pipe(gulp.dest(paths.buildFolder+'/spa')), { name: 'domain' }))
             .pipe(gulp.dest(paths.homeFolder))
             .pipe(inject(appStream
                     .pipe(print())
                     .pipe(concat('app.js'))
                     .pipe(uglify())
-                    .pipe(gulp.dest('.build/spa')), { name: 'app' }))
+                    .pipe(gulp.dest(paths.buildFolder+'/spa')), { name: 'app' }))
             .pipe(gulp.dest(paths.homeFolder))
 });
 
@@ -77,7 +79,7 @@ gulp.task('vendors-task', function () {
                 vendorStream.pipe(print())
                             .pipe(angularFilesort()) // comment out and the application will break
                             .pipe(concat('vendors.js'))
-                            .pipe(gulp.dest('.build/vendors')), { name: 'vendors' }))
+                            .pipe(gulp.dest(paths.buildFolder+'/vendors')), { name: 'vendors' }))
             .pipe(gulp.dest(paths.homeFolder));
 });
 
@@ -91,14 +93,14 @@ gulp.task('css-task', function () {
             .pipe(inject(
                 customCssStream.pipe(print())
                 .pipe(concat('stylesCss.css'))
-                .pipe(gulp.dest('.build/css')), { name: 'stylesCss' })
+                .pipe(gulp.dest(paths.buildFolder+'/css')), { name: 'stylesCss' })
                 )
             .pipe(gulp.dest(paths.homeFolder))
             .pipe(inject(
                 customLessStream.pipe(print())
                 .pipe(concat('stylesLess.css'))
                 .pipe(less())
-                .pipe(gulp.dest('.build/css')), { name: 'stylesLess' })
+                .pipe(gulp.dest(paths.buildFolder+'/css')), { name: 'stylesLess' })
                 )
             .pipe(gulp.dest(paths.homeFolder));
 });
@@ -112,7 +114,7 @@ gulp.task('scripts-task', function () {
             .pipe(inject(
                 extrasJsStream.pipe(print())
                 .pipe(concat('extras.js'))
-                .pipe(gulp.dest('.build/js')), { name: 'extras' })
+                .pipe(gulp.dest(paths.buildFolder+'/js')), { name: 'extras' })
                 )
             .pipe(gulp.dest(paths.homeFolder));
 });
@@ -121,13 +123,16 @@ gulp.task('resources-task', function () {
 
     var imagesStream = gulp.src(paths.images);
     var fontsStream = gulp.src(paths.fonts);
+    var htmlsStream = gulp.src(paths.htmls);
 
     var images = imagesStream.pipe(print())
-                    .pipe(gulp.dest('.build/img'));
+                    .pipe(gulp.dest(paths.buildFolder+'/img'));
     var fonts = fontsStream.pipe(print())
-                .pipe(gulp.dest('.build/fonts'));
+                .pipe(gulp.dest(paths.buildFolder+'/fonts'));
+    var htmls = htmlsStream.pipe(print())
+                .pipe(gulp.dest(paths.buildFolder+'/html'));
 
-    return merge(images, fonts);
+    return merge(images, fonts, htmls);
 });
 
 gulp.task('encoding-task', function () {
