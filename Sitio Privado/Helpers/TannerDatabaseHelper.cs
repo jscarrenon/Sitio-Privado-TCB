@@ -27,7 +27,7 @@ namespace Sitio_Privado.Helpers
                     while (reader.Read())
                     {
                         TannerUserModel user = new TannerUserModel();
-                        if (reader[0] != null) user.FullName = reader[0].ToString();
+                        if (reader[0] != null) user.Name = reader[0].ToString();
                         if (reader[1] != null) user.Surname = reader[1].ToString();
                         if (reader[2] != null) user.RutID = reader[2].ToString();
                         if (reader[3] != null) user.RutVD = reader[3].ToString();
