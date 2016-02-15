@@ -295,13 +295,16 @@ namespace Sitio_Privado.Helpers
             signInAlternative.Add(SignInTypeParamKey, "userName");
             signInAlternative.Add(SignInValueParamKey, graphUser.Rut);
 
-            JObject signInAlternativeEmail = new JObject();
-            signInAlternativeEmail.Add(SignInTypeParamKey, "emailAddress");
-            signInAlternativeEmail.Add(SignInValueParamKey, graphUser.Email);
-
             JArray signInAlternativesArray = new JArray();
             signInAlternativesArray.Add(signInAlternative);
-            signInAlternativesArray.Add(signInAlternativeEmail);
+
+            if(graphUser.Email != null && graphUser.Email != "")
+            {
+                JObject signInAlternativeEmail = new JObject();
+                signInAlternativeEmail.Add(SignInTypeParamKey, "emailAddress");
+                signInAlternativeEmail.Add(SignInValueParamKey, graphUser.Email);
+                signInAlternativesArray.Add(signInAlternativeEmail);
+            }
 
             json.Add(SignInAlternativesParamKey, signInAlternativesArray);
             
