@@ -270,7 +270,7 @@ namespace Sitio_Privado.Helpers
 
             //General information
             json.Add(GivenNameParamKey, graphUser.Name);
-            json.Add(SurnameParamKey, graphUser.Surname);
+            if(graphUser.Surname != null && graphUser.Surname != "") json.Add(SurnameParamKey, graphUser.Surname);
             json.Add(RutParamKey, graphUser.Rut);
             json.Add(WorkAddressParamKey, graphUser.WorkAddress);
             json.Add(HomeAddressParamKey, graphUser.HomeAddress);

@@ -30,14 +30,17 @@ namespace Sitio_Privado.Tasks
                 if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
                 {
                     //Create User
+                    GraphUserModel graphUser = GetGraphUserModel(user);
                     System.Diagnostics.Debug.WriteLine("Creating");
-                    await CreateUser(user);
+                    await graphClient.CreateUser(graphUser);
                 }
 
-                else if(response.StatusCode == System.Net.HttpStatusCode.OK)
+                else if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
                     //Update User
+                    GraphUserModel graphUser = GetGraphUserModel(user);
                     System.Diagnostics.Debug.WriteLine("Updating");
+                    await graphClient.UpdateUser(response.User.ObjectId, graphUser);
                 }
                 else
                 {
@@ -47,7 +50,7 @@ namespace Sitio_Privado.Tasks
             }
         }
 
-        private async Task CreateUser(TannerUserModel user)
+        private GraphUserModel GetGraphUserModel(TannerUserModel user)
         {
             GraphUserModel graphUser = new GraphUserModel();
             graphUser.Name = user.Name;
@@ -63,8 +66,8 @@ namespace Sitio_Privado.Tasks
             graphUser.Bank = user.Bank;
             graphUser.CheckingAccount = user.CheckingAccount;
             graphUser.TemporalPassword = user.TemporalPassword + "Kunder2015";//TODO
-
-            GraphApiResponseInfo response = await graphClient.CreateUser(graphUser);
+            graphUser.UpdatedAt = DateTime.Now.ToString();
+            return graphUser;
         }
     }
 }
