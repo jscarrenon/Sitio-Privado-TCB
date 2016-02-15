@@ -11,24 +11,19 @@ namespace Sitio_Privado.Tasks
 {
     public class SyncUsersDataJob : IJob
     {
-        public void Execute(IJobExecutionContext context)
+        GraphApiClientHelper graphClient;
+
+        public async void Execute(IJobExecutionContext context)
         {
             //TODO: Implement task
             System.Diagnostics.Debug.WriteLine("Test Message");
-            TannerDatabaseHelper dbHelper = new TannerDatabaseHelper();
-
-            if (dbHelper.OpenConnection())
-            {
-                IList<TannerUserModel> userList = dbHelper.GetUserList();
-                dbHelper.CloseConnection();
-                ProcessUsers(userList);
-            }
+            graphClient = new GraphApiClientHelper();
+            IList<TannerUserModel> userList = TannerDatabaseHelper.GetUserList();
+            await ProcessUsers(userList);
         }
 
         private async Task ProcessUsers(IList<TannerUserModel> userList)
         {
-            GraphApiClientHelper graphClient = new GraphApiClientHelper();
-
             foreach(var user in userList)
             {
                 GraphApiResponseInfo response = await graphClient.GetUserByRut(user.Rut);
@@ -36,6 +31,7 @@ namespace Sitio_Privado.Tasks
                 {
                     //Create User
                     System.Diagnostics.Debug.WriteLine("Creating");
+                    await CreateUser(user);
                 }
 
                 else if(response.StatusCode == System.Net.HttpStatusCode.OK)
@@ -49,6 +45,26 @@ namespace Sitio_Privado.Tasks
                     System.Diagnostics.Debug.WriteLine("Error");
                 }
             }
+        }
+
+        private async Task CreateUser(TannerUserModel user)
+        {
+            GraphUserModel graphUser = new GraphUserModel();
+            graphUser.Name = user.Name;
+            graphUser.Rut = user.Rut;
+            graphUser.Surname = user.Surname;
+            graphUser.WorkAddress = user.WorkAddress;
+            graphUser.HomeAddress = user.HomeAddress;
+            graphUser.WorkPhone = user.WorkPhone;
+            graphUser.HomePhone = user.HomePhone;
+            graphUser.Email = user.Email;
+            graphUser.Country = user.Country;
+            graphUser.City = user.City;
+            graphUser.Bank = user.Bank;
+            graphUser.CheckingAccount = user.CheckingAccount;
+            graphUser.TemporalPassword = user.TemporalPassword + "Kunder2015";//TODO
+
+            GraphApiResponseInfo response = await graphClient.CreateUser(graphUser);
         }
     }
 }
