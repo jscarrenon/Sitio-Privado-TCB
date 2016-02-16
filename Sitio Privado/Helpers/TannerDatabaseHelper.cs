@@ -33,7 +33,7 @@ namespace Sitio_Privado.Helpers
                     {
                         logger.Info("Trying to open a database connection. Attempt " + currentAttempt + ".");
                         sqlConnection.Open();
-                        SqlCommand command = new SqlCommand("SELECT TOP 20 * FROM dbo.VW_Clientes_CBV", sqlConnection); //TODO: remove number filter
+                        SqlCommand command = new SqlCommand("SELECT * FROM dbo.VW_Clientes_CBV", sqlConnection); //TODO: remove number filter
                         logger.Info("Obtaining users from database");
                         SqlDataReader reader = command.ExecuteReader();
 
