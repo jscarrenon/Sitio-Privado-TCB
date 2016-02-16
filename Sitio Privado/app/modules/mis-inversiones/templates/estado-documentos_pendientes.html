@@ -37,7 +37,7 @@
             <div class="select-all">
                 <input type="checkbox" ng-model="documentosCtrl.todasOperaciones" ng-click="documentosCtrl.toggleTodasOperaciones()"><label>Seleccionar todos</label>
             </div>
-            <uib-pagination ng-model="documentosCtrl.operacionesPendientesPaginaActual" total-items="documentosCtrl.operacionesPendientes.length" items-per-page="documentosCtrl.operacionesPendientesPorPagina" boundary-links="true" template-url=".build/html/common/templates/pagination.html"></uib-pagination>
+            <uib-pagination ng-model="documentosCtrl.operacionesPendientesPaginaActual" total-items="documentosCtrl.operacionesPendientes.length" items-per-page="documentosCtrl.operacionesPendientesPorPagina" boundary-links="true" template-url="pagination.html"></uib-pagination>
         </div>
 
         <div class="sep-table"></div>
@@ -70,7 +70,7 @@
             <div class="select-all">
                 <input type="checkbox" ng-model="documentosCtrl.todosDocumentos" ng-click="documentosCtrl.toggleTodosDocumentos()"><label>Seleccionar todos</label>
             </div>
-            <uib-pagination ng-model="documentosCtrl.documentosPendientesPaginaActual" total-items="documentosCtrl.documentosPendientes.length" items-per-page="documentosCtrl.documentosPendientesPorPagina" boundary-links="true" template-url=".build/html/common/templates/pagination.html"></uib-pagination>
+            <uib-pagination ng-model="documentosCtrl.documentosPendientesPaginaActual" total-items="documentosCtrl.documentosPendientes.length" items-per-page="documentosCtrl.documentosPendientesPorPagina" boundary-links="true" template-url="pagination.html"></uib-pagination>
         </div>
 
         <div class="sign-note" ng-show="!documentosCtrl.pendientesLoading">

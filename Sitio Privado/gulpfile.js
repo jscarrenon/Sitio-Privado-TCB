@@ -1,4 +1,4 @@
-/// <binding BeforeBuild='clean' AfterBuild='css-task, scripts-task, vendors-task, spa-task, encoding-task, resources-task' Clean='clean' />
+/// <binding BeforeBuild='clean' AfterBuild='css-task, templates-task, scripts-task, vendors-task, spa-task, encoding-task, resources-task' Clean='clean' />
 /*
 This file in the main entry point for defining Gulp tasks and using Gulp plugins.
 Click here to learn more. http://go.microsoft.com/fwlink/?LinkId=518007
@@ -14,6 +14,9 @@ var header = require('gulp-header');
 var less = require('gulp-less');
 var merge = require('merge-stream');
 var del = require('del');
+var templateCache = require('gulp-angular-templatecache');
+
+var appName = 'tannerPrivadoApp';
 
 var paths = {
     buildFolder: '.build',
@@ -36,7 +39,8 @@ var paths = {
                         './bower_components/jquery/dist/jquery.js'],
     images: ['./Resources/img/*'],
     fonts: ['./Resources/fonts/*'],
-    htmls: ['./app/**/*.html']
+    htmls: ['./app/**/*.html'],
+    templates: ['./app/common/templates/pagination.html']
 };
 
 gulp.task('clean', function () {
@@ -128,6 +132,20 @@ gulp.task('resources-task', function () {
                 .pipe(gulp.dest(paths.buildFolder+'/html'));
 
     return merge(images, fonts, htmls);
+});
+
+gulp.task('templates-task', function () {
+    var target = gulp.src(paths.index);
+
+    var templatesStream = gulp.src(paths.templates);
+
+    return target
+            .pipe(inject(
+                templatesStream.pipe(print())
+                .pipe(templateCache('templates.js', { module: appName }))
+                .pipe(gulp.dest(paths.buildFolder + '/js')), { name: 'templates' })
+                )
+            .pipe(gulp.dest(paths.homeFolder));
 });
 
 gulp.task('encoding-task', function () {
