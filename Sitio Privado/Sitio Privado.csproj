@@ -712,7 +712,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <None Include="Web References\InformacionClienteAgente\tann_info_cliente.wsdl" />
@@ -722,7 +721,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\App\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
