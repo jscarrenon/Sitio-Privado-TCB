@@ -481,6 +481,7 @@
     <Content Include=".build\img\prod_renta-variable-internacional.jpg" />
     <Content Include=".build\img\prod_renta-variable-nacional.jpg" />
     <Content Include=".build\js\extras.js" />
+    <Content Include=".build\js\templates.js" />
     <Content Include=".build\spa\app.js" />
     <Content Include=".build\spa\domain.js" />
     <Content Include=".build\vendors\vendors.js" />
