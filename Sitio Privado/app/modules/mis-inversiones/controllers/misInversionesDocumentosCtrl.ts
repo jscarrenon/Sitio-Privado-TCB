@@ -145,7 +145,7 @@
                 .then((result: app.domain.IDocumentoLeidoResultado) => {
                     var documentoLeidoResultado: app.domain.IDocumentoLeidoResultado = result;
                     if (result.Resultado == true) {
-                        documento.Leido = 'S'; // valor? -KUNDER
+                        documento.Leido = 'S';
                     }
                 });
         }

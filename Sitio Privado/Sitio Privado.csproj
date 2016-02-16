@@ -481,6 +481,7 @@
     <Content Include=".build\img\prod_renta-variable-internacional.jpg" />
     <Content Include=".build\img\prod_renta-variable-nacional.jpg" />
     <Content Include=".build\js\extras.js" />
+    <Content Include=".build\js\templates.js" />
     <Content Include=".build\spa\app.js" />
     <Content Include=".build\spa\domain.js" />
     <Content Include=".build\vendors\vendors.js" />
@@ -711,9 +712,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <None Include="Web References\InformacionClienteAgente\tann_info_cliente.wsdl" />
     <Content Include="Web References\InformacionClienteAgente\_agente.datasource">
       <DependentUpon>Reference.map</DependentUpon>
@@ -721,7 +720,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\App\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -767,7 +765,6 @@
   <ItemGroup>
     <TypeScriptCompile Include="app\app.ts" />
     <TypeScriptCompile Include="app\common\controllers\agenteCtrl.ts" />
-    <TypeScriptCompile Include="app\common\controllers\webserviceCtrl.ts" />
     <TypeScriptCompile Include="app\common\controllers\bodyCtrl.ts" />
     <TypeScriptCompile Include="app\common\interfaces\ISeccion.ts" />
     <TypeScriptCompile Include="app\common\services\extrasService.ts" />

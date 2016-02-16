@@ -7,8 +7,6 @@
         constructor(public Documentos: IDocumento[]) {
 
             super();
-
-            this.Documentos = Documentos;
         }
     }
 }

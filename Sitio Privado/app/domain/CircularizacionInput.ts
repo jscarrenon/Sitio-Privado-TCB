@@ -9,9 +9,6 @@
             public fecha: string) {
 
             super();
-
-            this.rut = rut;
-            this.fecha = fecha;
         }
     }
 
@@ -25,9 +22,6 @@
             public fecha: string) {
 
             super();
-
-            this.rut = rut;
-            this.fecha = fecha;
         }
     }
 
@@ -41,9 +35,6 @@
             public fecha: string) {
 
             super();
-
-            this.rut = rut;
-            this.fecha = fecha;
         }
     }
 
@@ -61,11 +52,6 @@
             public comentario: string) {
             
             super();
-
-            this.rut_cli = rut_cli;
-            this.fecha = fecha;
-            this.respuesta = respuesta;
-            this.comentario = comentario;
         }
     }
 }

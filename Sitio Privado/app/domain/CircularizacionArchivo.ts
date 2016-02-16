@@ -9,9 +9,6 @@
             public UrlCircularizacion: string) {
             
             super();
-
-            this.UrlCartola = UrlCartola;
-            this.UrlCircularizacion = UrlCircularizacion;
         }
     }
 }

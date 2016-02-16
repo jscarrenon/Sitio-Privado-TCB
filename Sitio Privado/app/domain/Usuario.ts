@@ -35,22 +35,6 @@
             public CiudadPais: string) {
 
             super();
-
-            this.Autenticado = Autenticado;
-            this.Nombres = Nombres;
-            this.Apellidos = Apellidos;
-            this.Rut = Rut;
-            this.DireccionComercial = DireccionComercial;
-            this.DireccionParticular = DireccionParticular;
-            this.Ciudad = Ciudad;
-            this.Pais = Pais;
-            this.TelefonoComercial = TelefonoComercial;
-            this.TelefonoParticular = TelefonoParticular;
-            this.Email = Email;
-            this.CuentaCorriente = CuentaCorriente;
-            this.Banco = Banco;
-            this.NombreCompleto = NombreCompleto;
-            this.CiudadPais = CiudadPais;
         }
     }
 }

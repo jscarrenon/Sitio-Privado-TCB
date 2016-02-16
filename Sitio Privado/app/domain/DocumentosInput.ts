@@ -7,8 +7,6 @@
         constructor(public rut: string) {
 
             super();
-
-            this.rut = rut;
         }
     }
 
@@ -24,10 +22,6 @@
             public fechaFin: string) {
 
             super();
-
-            this.rut = rut;
-            this.fechaIni = fechaIni;
-            this.fechaFin = fechaFin;
         }
     }
 
@@ -41,9 +35,6 @@
             public codigo: string) {
 
             super();
-
-            this.rut = rut;
-            this.codigo = codigo;
         }
     }
 
@@ -57,9 +48,6 @@
             public codigo: string) {
 
             super();
-
-            this.rut = rut;
-            this.codigo = codigo;
         }
     }
 
@@ -73,9 +61,6 @@
             public codigo: string) {
 
             super();
-
-            this.rut = rut;
-            this.codigo = codigo;
         }
     }
 
@@ -87,8 +72,6 @@
         constructor(public rut: string) {
 
             super();
-
-            this.rut = rut;
         }
     }
 }

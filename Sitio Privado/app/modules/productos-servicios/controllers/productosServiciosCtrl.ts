@@ -35,12 +35,13 @@
 
         getCategoriaCliente(input: app.domain.ICategoriaClienteInput): void {
             this.categoriaClienteLoading = true;
+            this.productosLoading = true;
             this.dataService.postWebService(this.constantService.apiCategoriaURI + 'getSingleCliente', input)
                 .then((result: app.domain.ICategoria) => {
                     this.categoriaCliente = result;
-                    this.getProductos();
+                    this.productos = result.Productos;
                 })
-                .finally(() => this.categoriaClienteLoading = false);
+                .finally(() => { this.categoriaClienteLoading = false; this.productosLoading = false; });
         }
 
         getProductos(): void {

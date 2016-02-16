@@ -10,10 +10,6 @@
         constructor(public Name: string, public Blobs: app.domain.AzureBlob[], public Folders: app.domain.AzureFolder[]) {
 
             super();
-
-            this.Name = Name;
-            this.Blobs = Blobs;
-            this.Folders = Folders;
         }
     }
 }
