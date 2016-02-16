@@ -343,6 +343,24 @@ namespace Sitio_Privado.Helpers
             if (graphUser.Bank != null)
                 json.Add(BankParamKey, graphUser.Bank);
 
+            //If email is updated, then set sign-in options again.
+            if (graphUser.Email != null && graphUser.Email != "")
+            {
+                JArray signInAlternativesArray = new JArray();
+
+                JObject signInAlternative = new JObject();
+                signInAlternative.Add(SignInTypeParamKey, "userName");
+                signInAlternative.Add(SignInValueParamKey, graphUser.Rut);
+                signInAlternativesArray.Add(signInAlternative);
+
+                JObject signInAlternativeEmail = new JObject();
+                signInAlternativeEmail.Add(SignInTypeParamKey, "emailAddress");
+                signInAlternativeEmail.Add(SignInValueParamKey, graphUser.Email);
+                signInAlternativesArray.Add(signInAlternativeEmail);
+
+                json.Add(SignInAlternativesParamKey, signInAlternativesArray);
+            }
+
             json.Add(UpdatedAtParamKey, graphUser.UpdatedAt);
 
             return json.ToString();

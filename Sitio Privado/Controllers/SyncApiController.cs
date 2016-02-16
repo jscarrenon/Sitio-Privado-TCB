@@ -5,6 +5,7 @@ using Sitio_Privado.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -112,6 +113,8 @@ namespace Sitio_Privado.Controllers
                 return response;
             }
 
+            //Format Rut
+            id = id.Trim().ToUpper();
             //Get user
             GraphApiResponseInfo getGraphResponse = await syncApiHelper.GetUserByRut(id);
 
@@ -124,7 +127,8 @@ namespace Sitio_Privado.Controllers
                     new string[] { response.StatusCode.ToString(), await response.Content.ReadAsStringAsync() });
                 return response;
             }
-
+            //Assign rut in case that email is modified
+            requestUser.Rut = id;
             string userGraphId = getGraphResponse.User.ObjectId;
             GraphApiResponseInfo graphResponse = await syncApiHelper.UpdateUser(userGraphId, requestUser);
             response.StatusCode = graphResponse.StatusCode;
@@ -161,6 +165,7 @@ namespace Sitio_Privado.Controllers
                 return response;
             }
 
+            id = id.Trim().ToUpper();
             GraphApiResponseInfo graphApiResponse = await syncApiHelper.GetUserByRut(id);
             response.StatusCode = graphApiResponse.StatusCode;
             if (response.StatusCode == HttpStatusCode.OK)
@@ -207,31 +212,31 @@ namespace Sitio_Privado.Controllers
             GraphUserModel user = new GraphUserModel();
 
             if (content.GetValue(WorkAddressParam) != null)
-                user.WorkAddress = content.GetValue(WorkAddressParam).ToString();
+                user.WorkAddress = GetTitleFormatString(content.GetValue(WorkAddressParam).ToString());
 
             if (content.GetValue(HomeAddressParam) != null)
-                user.HomeAddress = content.GetValue(HomeAddressParam).ToString();
+                user.HomeAddress = GetTitleFormatString(content.GetValue(HomeAddressParam).ToString());
 
             if (content.GetValue(CountryParam) != null)
-                user.Country = content.GetValue(CountryParam).ToString();
+                user.Country = GetTitleFormatString(content.GetValue(CountryParam).ToString());
 
             if (content.GetValue(CityParam) != null)
-                user.City = content.GetValue(CityParam).ToString();
+                user.City = GetTitleFormatString(content.GetValue(CityParam).ToString());
 
             if (content.GetValue(WorkPhoneParam) != null)
-                user.WorkPhone = content.GetValue(WorkPhoneParam).ToString();
+                user.WorkPhone = content.GetValue(WorkPhoneParam).ToString().Trim();
 
             if (content.GetValue(HomePhoneParam) != null)
-                user.HomePhone = content.GetValue(HomePhoneParam).ToString();
+                user.HomePhone = content.GetValue(HomePhoneParam).ToString().Trim();
 
             if (content.GetValue(EmailParam) != null)
-                user.Email = content.GetValue(EmailParam).ToString();
+                user.Email = content.GetValue(EmailParam).ToString().Trim().ToLower();
 
             if (content.GetValue(CheckingAccountParam) != null)
-                user.CheckingAccount = content.GetValue(CheckingAccountParam).ToString();
+                user.CheckingAccount = content.GetValue(CheckingAccountParam).ToString().Trim();
 
             if (content.GetValue(BankParam) != null)
-                user.Bank = content.GetValue(BankParam).ToString();
+                user.Bank = GetTitleFormatString(content.GetValue(BankParam).ToString());
 
             user.UpdatedAt = DateTime.Now.ToString();
 
@@ -241,40 +246,49 @@ namespace Sitio_Privado.Controllers
         private GraphUserModel GetGraphUserCreateRequest(JObject content)
         {
             GraphUserModel user = new GraphUserModel();
-            user.Name = content.GetValue(NameParam).ToString();
-            user.Surname = content.GetValue(SurnameParam).ToString();
-            user.Rut = content.GetValue(RutParam).ToString();
-            user.TemporalPassword = content.GetValue(TemporalPasswordParam).ToString();
 
-            if(content.GetValue(WorkAddressParam) != null)
-                user.WorkAddress = content.GetValue(WorkAddressParam).ToString();
+            //Retrieve formatted values
+            user.Name = GetTitleFormatString(content.GetValue(NameParam).ToString());
+            user.Rut = content.GetValue(RutParam).ToString().Trim().ToUpper();
+            user.TemporalPassword = content.GetValue(TemporalPasswordParam).ToString().Trim();
+
+            if (content.GetValue(SurnameParam) != null)
+                user.Surname = GetTitleFormatString(content.GetValue(SurnameParam).ToString());
+
+            if (content.GetValue(WorkAddressParam) != null)
+                user.WorkAddress = GetTitleFormatString(content.GetValue(WorkAddressParam).ToString());
 
             if(content.GetValue(HomeAddressParam) != null)
-                user.HomeAddress = content.GetValue(HomeAddressParam).ToString();
+                user.HomeAddress = GetTitleFormatString(content.GetValue(HomeAddressParam).ToString());
 
             if(content.GetValue(CountryParam) != null)
-                user.Country = content.GetValue(CountryParam).ToString();
+                user.Country = GetTitleFormatString(content.GetValue(CountryParam).ToString());
 
             if(content.GetValue(CityParam) != null)
-                user.City = content.GetValue(CityParam).ToString();
+                user.City = GetTitleFormatString(content.GetValue(CityParam).ToString());
 
             if(content.GetValue(WorkPhoneParam) != null)
-                user.WorkPhone = content.GetValue(WorkPhoneParam).ToString();
+                user.WorkPhone = content.GetValue(WorkPhoneParam).ToString().Trim();
 
             if(content.GetValue(HomePhoneParam) != null)
-                user.HomePhone = content.GetValue(HomePhoneParam).ToString();
+                user.HomePhone = content.GetValue(HomePhoneParam).ToString().Trim();
 
             if (content.GetValue(EmailParam) != null)
-                user.Email = content.GetValue(EmailParam).ToString();
+                user.Email = content.GetValue(EmailParam).ToString().Trim().ToLower();
 
             if (content.GetValue(CheckingAccountParam) != null)
-                user.CheckingAccount = content.GetValue(CheckingAccountParam).ToString();
+                user.CheckingAccount = content.GetValue(CheckingAccountParam).ToString().Trim();
 
             if (content.GetValue(BankParam) != null)
-                user.Bank = content.GetValue(BankParam).ToString();
+                user.Bank = GetTitleFormatString(content.GetValue(BankParam).ToString());
 
             user.UpdatedAt = DateTime.Now.ToString();
             return user;
+        }
+
+        private string GetTitleFormatString(string s)
+        {
+            return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(s.Trim().ToLower());
         }
 
         private bool CheckNeededAttributesForCreatingUser(JObject requestBody)
