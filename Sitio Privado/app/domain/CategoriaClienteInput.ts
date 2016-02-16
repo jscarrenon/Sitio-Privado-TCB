@@ -7,8 +7,6 @@
         constructor(public rut_cli: number) {
 
             super();
-
-            this.rut_cli = rut_cli;
         }
     }
 }

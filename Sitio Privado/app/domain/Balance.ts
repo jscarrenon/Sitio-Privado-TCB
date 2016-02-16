@@ -7,8 +7,6 @@
         constructor(public Enlace: string) {
 
             super();
-
-            this.Enlace = Enlace;
         }
     }
 }

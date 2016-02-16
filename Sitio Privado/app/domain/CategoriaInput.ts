@@ -7,8 +7,6 @@
         constructor(public ident_cat: number) {
 
             super();
-
-            this.ident_cat = ident_cat;
         }
     }
 }

@@ -713,7 +713,6 @@
     </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <None Include="Web References\InformacionClienteAgente\tann_info_cliente.wsdl" />
     <Content Include="Web References\InformacionClienteAgente\_agente.datasource">
       <DependentUpon>Reference.map</DependentUpon>
@@ -766,7 +765,6 @@
   <ItemGroup>
     <TypeScriptCompile Include="app\app.ts" />
     <TypeScriptCompile Include="app\common\controllers\agenteCtrl.ts" />
-    <TypeScriptCompile Include="app\common\controllers\webserviceCtrl.ts" />
     <TypeScriptCompile Include="app\common\controllers\bodyCtrl.ts" />
     <TypeScriptCompile Include="app\common\interfaces\ISeccion.ts" />
     <TypeScriptCompile Include="app\common\services\extrasService.ts" />

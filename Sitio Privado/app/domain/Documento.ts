@@ -31,20 +31,6 @@
             public Seleccionado: boolean) {
 
             super();
-
-            this.Codigo = Codigo;
-            this.Producto = Producto;
-            this.Tipo = Tipo;
-            this.Folio = Folio;
-            this.FechaCreacion = FechaCreacion;
-            this.Leido = Leido;
-            this.Firmado = Firmado;
-            this.TipoFirma = TipoFirma;
-            this.FechaFirma = FechaFirma;
-            this.Ruta = Ruta;
-            this.NombreCliente = NombreCliente;
-            this.RutaFirmado = RutaFirmado;
-            this.Seleccionado = Seleccionado;
         }
     }
 }
