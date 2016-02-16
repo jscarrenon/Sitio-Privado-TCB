@@ -33,7 +33,7 @@ namespace Sitio_Privado.Helpers
                     {
                         logger.Info("Trying to open a database connection. Attempt " + currentAttempt + ".");
                         sqlConnection.Open();
-                        SqlCommand command = new SqlCommand("SELECT TOP 20 * FROM dbo.VW_Clientes_CBV", sqlConnection); //TODO: remove number filter
+                        SqlCommand command = new SqlCommand("SELECT * FROM dbo.VW_Clientes_CBV", sqlConnection);
                         logger.Info("Obtaining users from database");
                         SqlDataReader reader = command.ExecuteReader();
 
@@ -73,7 +73,7 @@ namespace Sitio_Privado.Helpers
             if (reader[8] != null) user.WorkPhone = reader[8].ToString().Trim();
             if (reader[9] != null) user.HomePhone = reader[9].ToString().Trim();
             if (reader[10] != null) user.Email = reader[10].ToString().Trim().ToLower();
-            if (reader[11] != null) user.CheckingAccount = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[11].ToString().Trim().ToLower());
+            if (reader[11] != null) user.CheckingAccount = reader[11].ToString().Trim();
             if (reader[12] != null) user.Bank = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[12].ToString().Trim().ToLower());
             if (reader[13] != null) user.TemporalPassword = reader[13].ToString().Trim();
             if (reader[14] != null) user.UpdatedAt = reader[14].ToString().Trim();
