@@ -7,8 +7,6 @@
         constructor(public xfecha: string) {
 
             super();
-
-            this.xfecha = xfecha;
         }
     }
 }

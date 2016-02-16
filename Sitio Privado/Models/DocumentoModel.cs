@@ -69,7 +69,7 @@ namespace Sitio_Privado.Models
             Leido = documento._leido.Trim();
             Firmado = documento._firmado.Trim();
             TipoFirma = "Web";
-            FechaFirma = "14 Nov 2015"; //--KUNDER
+            FechaFirma = Converters.getFecha(documento._fechafirm).ToString("dd MMM yyyy");
             Ruta = documento._ruta;
             NombreCliente = documento._nombrecli;
             RutaFirmado = documento._results;

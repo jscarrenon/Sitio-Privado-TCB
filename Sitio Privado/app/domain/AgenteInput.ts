@@ -9,9 +9,6 @@
             public _sec: number) {
 
             super();
-
-            this._rut = _rut;
-            this._sec = _sec;
         }
     }
 }

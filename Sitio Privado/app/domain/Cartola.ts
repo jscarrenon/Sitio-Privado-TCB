@@ -11,10 +11,6 @@
             public Porcentaje: number) {
 
             super();
-
-            this.Concepto = Concepto;
-            this.Valor = Valor;
-            this.Porcentaje = Porcentaje;
         }
     }
 
@@ -31,10 +27,6 @@
             public Conceptos: ICartolaConcepto[]) {
 
             super();
-
-            this.Rut = Rut;
-            this.Periodo = Periodo;
-            this.Conceptos = Conceptos;
         }
     }
 }

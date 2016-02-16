@@ -35,22 +35,6 @@
             public RazonCoberturaPatrimonial: number) {
 
             super();
-
-            this.RutTCB = RutTCB;
-            this.DescriptorTCB = DescriptorTCB;
-            this.ActivosSieteDias = ActivosSieteDias;
-            this.PasivosSieteDias = PasivosSieteDias;
-            this.ActivosIntermediacion = ActivosIntermediacion;
-            this.AcreedoresIntermediacion = AcreedoresIntermediacion;
-            this.TotalPasivosExigibles = TotalPasivosExigibles;
-            this.PatrimonioLiquido = PatrimonioLiquido;
-            this.MontoCoberturaPatrimonial = MontoCoberturaPatrimonial;
-            this.PatrimonioDepurado = PatrimonioDepurado;
-            this.FechaConsulta = FechaConsulta;
-            this.LiquidezGeneral = LiquidezGeneral;
-            this.LiquidezIntermediacion = LiquidezIntermediacion;
-            this.RazonEndeudamiento = RazonEndeudamiento;
-            this.RazonCoberturaPatrimonial = RazonCoberturaPatrimonial;
         }
     }
 }

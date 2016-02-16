@@ -7,8 +7,6 @@
         constructor(public ident_prd: number) {
 
             super();
-
-            this.ident_prd = ident_prd;
         }
     }
 }

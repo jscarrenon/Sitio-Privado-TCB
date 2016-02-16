@@ -7,8 +7,6 @@
         constructor(public Resultado: number) {
 
             super();
-
-            this.Resultado = Resultado;
         }
     }
 }

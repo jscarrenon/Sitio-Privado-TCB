@@ -16,12 +16,6 @@
             public Categorias: Categoria[]) {
 
             super();
-
-            this.Identificador = Identificador;
-            this.Descriptor = Descriptor;
-            this.Comentario = Comentario;
-            this.Riesgo = Riesgo;
-            this.Categorias = Categorias;
         }
     }
 }

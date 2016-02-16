@@ -23,16 +23,6 @@
             public Descriptor: string) {
 
             super();
-
-            this.Codigo = Codigo;
-            this.Nombre = Nombre;
-            this.Sucursal = Sucursal;
-            this.PathImg = PathImg;
-            this.Email = Email;
-            this.Telefono = Telefono;
-            this.FechaInicioAcreditacion = FechaInicioAcreditacion;
-            this.FechaExpiracionAcreditacion = FechaExpiracionAcreditacion;
-            this.Descriptor = Descriptor;
         }
     }
 }

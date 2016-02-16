@@ -14,11 +14,6 @@
             public Productos: Producto[]) {
 
             super();
-
-            this.Identificador = Identificador;
-            this.Descriptor = Descriptor;
-            this.Comentario = Comentario;
-            this.Productos = Productos;
         }
     }
 }
