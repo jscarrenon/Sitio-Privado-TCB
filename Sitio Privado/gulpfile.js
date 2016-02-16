@@ -5,6 +5,7 @@ Click here to learn more. http://go.microsoft.com/fwlink/?LinkId=518007
 */
 
 var gulp = require('gulp');
+var runSequence = require('run-sequence');
 var inject = require('gulp-inject');
 var concat = require('gulp-concat');
 var print = require('gulp-print');
@@ -38,6 +39,10 @@ var paths = {
     fonts: ['./Resources/fonts/*'],
     htmls: ['./app/**/*.html']
 };
+
+gulp.task('default', function (callback) {
+    runSequence('clean', 'css-task', 'scripts-task', 'vendors-task', 'spa-task', 'encoding-task', 'resources-task', callback);
+});
 
 gulp.task('clean', function () {
     return del([paths.buildFolder]);
