@@ -95,7 +95,7 @@
 
         seleccionarSeccion(id: number): void {
             this.seccionId = id;
-            this.seccionURI = 'app/mis-inversiones/' + this.templates[this.seccionId];
+            this.seccionURI = this.constantService.buildFolderURI + 'html/modules/mis-inversiones/templates/' + this.templates[this.seccionId];
         }
 
         setTemplates(): void {
@@ -227,7 +227,7 @@
         confirmacion(): void {
 
             var modalInstance: ng.ui.bootstrap.IModalServiceInstance = this.$uibModal.open({
-                templateUrl: 'app/mis-inversiones/estado-documentos_confirmacion.html',
+                templateUrl: this.constantService.buildFolderURI + 'html/modules/mis-inversiones/templates/estado-documentos_confirmacion.html',
                 controller: 'ModalInstanceCtrl as modal'
             });
 
