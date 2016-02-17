@@ -1,4 +1,5 @@
-﻿using Sitio_Privado.Models;
+﻿using Sitio_Privado.Filters;
+using Sitio_Privado.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Web.Mvc;
 
 namespace Sitio_Privado.Controllers
 {
+    [NoCache]
     public abstract class BaseController : Controller
     {
         public virtual Usuario Usuario
