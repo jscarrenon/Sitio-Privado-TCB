@@ -69,11 +69,11 @@ namespace Sitio_Privado.Models
             Leido = documento._leido.Trim();
             Firmado = documento._firmado.Trim();
             TipoFirma = "Web";
-            FechaFirma = Converters.getFecha(documento._fechafirm).ToString("dd MMM yyyy");
+            FechaFirma = documento._fechafirm != null ? Converters.getFecha(documento._fechafirm).ToString("dd MMM yyyy") : "";
             Ruta = documento._ruta;
             NombreCliente = documento._nombrecli;
             RutaFirmado = documento._results;
-            FechaCreacion = Converters.getFecha(documento._fechacre).ToString("dd MMM yyyy");
+            FechaCreacion = documento._fechacre != null ? Converters.getFecha(documento._fechacre).ToString("dd MMM yyyy") : "";
             Seleccionado = false;
         }
     }
