@@ -33,11 +33,16 @@ var paths = {
     stylesCss: ['./Styles/*.css'],
     stylesLess: ['./Styles/*.less'],
     scripts: ['./Scripts/extras/jquery.sticky.js','./Scripts/extras/*.js'],
-    bower_components: ['./bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
+    bower_components: ['./bower_components/better-dateinput-polyfill/i18n/better-dateinput-polyfill.es.js',
+                        './bower_components/better-dateinput-polyfill/dist/better-dateinput-polyfill.js',
+                        './bower_components/better-i18n-plugin/dist/better-i18n-plugin.js',
+                        './bower_components/better-dom/dist/better-dom.js',
+                        './bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
                         './bower_components/angular-i18n/angular-locale_es-cl.js',
                         './bower_components/angular-route/angular-route.js',
                         './bower_components/angular/angular.js',
                         './bower_components/jquery/dist/jquery.js'],
+    bower_components_legacy: ['./bower_components/better-dom/dist/better-dom-legacy.js'],
     images: ['./Resources/img/*'],
     fonts: ['./Resources/fonts/*'],
     htmls: ['./app/**/*.html'],
@@ -77,6 +82,7 @@ gulp.task('vendors-task', function () {
     var target = gulp.src(paths.index);
 
     var vendorStream = gulp.src(paths.bower_components);
+    var vendorsExtraStream = gulp.src(paths.bower_components_legacy);
 
     return target
             .pipe(inject(
@@ -84,6 +90,11 @@ gulp.task('vendors-task', function () {
                             .pipe(angularFilesort()) // comment out and the application will break
                             .pipe(concat('vendors.js'))
                             .pipe(gulp.dest(paths.buildFolder+'/vendors')), { name: 'vendors' }))
+            .pipe(gulp.dest(paths.homeFolder))
+            .pipe(inject(
+                vendorsExtraStream.pipe(print())
+                            .pipe(concat('vendors-extra.js'))
+                            .pipe(gulp.dest(paths.buildFolder+'/vendors')), { starttag: '<!--[if IE]>', endtag: '<![endif]-->' }))
             .pipe(gulp.dest(paths.homeFolder));
 });
 
