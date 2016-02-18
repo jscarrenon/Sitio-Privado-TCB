@@ -27,8 +27,12 @@
     <!-- templates:js -->
     <script src="/.build/js/templates.js"></script>
     <!-- endinject -->
+    <!--[if IE]>
+    <script src="/.build/vendors/vendors-extra.js"></script>
+    <![endif]-->
 </head>
 <body ng-controller="BodyCtrl as bodyCtrl">
+
     <div ng-if="bodyCtrl.authService.autenticado">
 
         <div id="prebar" ng-if="bodyCtrl.authService.autenticado">
