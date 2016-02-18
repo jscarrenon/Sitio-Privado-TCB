@@ -5,6 +5,7 @@
     "angular": "^1.4.7",
     "angular-route": "~1.4.8",
     "angular-i18n": "1.4.7",
-    "angular-bootstrap": "1.1.2"
+    "angular-bootstrap": "1.1.2",
+    "better-dateinput-polyfill": "1.5.2"
   }
 }
