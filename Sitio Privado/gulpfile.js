@@ -93,7 +93,6 @@ gulp.task('vendors-task', function () {
             .pipe(gulp.dest(paths.homeFolder))
             .pipe(inject(
                 vendorsExtraStream.pipe(print())
-                            .pipe(concat('vendors-extra.js'))
                             .pipe(gulp.dest(paths.buildFolder+'/vendors')), { starttag: '<!--[if IE]>', endtag: '<![endif]-->' }))
             .pipe(gulp.dest(paths.homeFolder));
 });
