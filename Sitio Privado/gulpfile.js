@@ -50,7 +50,7 @@ var paths = {
 };
 
 gulp.task('default', function (callback) {
-    runSequence('clean', 'css-task', 'scripts-task', 'vendors-task', 'spa-task', 'encoding-task', 'resources-task', callback);
+    runSequence('clean', 'css-task', 'templates-task', 'scripts-task', 'vendors-task', 'spa-task', 'encoding-task', 'resources-task', callback);
 });
 
 gulp.task('clean', function () {
