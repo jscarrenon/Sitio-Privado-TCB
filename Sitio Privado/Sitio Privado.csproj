@@ -458,6 +458,7 @@
     <Content Include="Frontend_Tests\Controllers\productosServiciosControllerSpec.js" />
     <Content Include="Frontend_Tests\Controllers\misInversionesDocumentosControllerSpec.js" />
     <Content Include="Frontend_Tests\Controllers\modalInstanceControllerSpec.js" />
+    <Content Include="Frontend_Tests\Directives\loadingDirectiveSpec.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
