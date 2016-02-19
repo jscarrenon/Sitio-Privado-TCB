@@ -92,7 +92,7 @@ IF DEFINED KUDU_SELECT_NODE_VERSION_CMD (
 )
 
 echo Select Node Version Section Ending
-goto :NPMPACKAGES
+goto :EOF
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :: Deployment
@@ -114,15 +114,20 @@ IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
   call :ExecuteCmd "%MSBUILD_PATH%" "%DEPLOYMENT_SOURCE%\Sitio Privado\Sitio Privado.csproj" /nologo /verbosity:m /t:Build /p:AutoParameterizationWebConfigConnectionStrings=false;Configuration=Release;UseSharedCompilation=false /p:SolutionDir="%DEPLOYMENT_SOURCE%\.\\" %SCM_BUILD_ARGS%
 )
 
-:: 3. Select node version
+:: 3. KuduSync
+IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
+  call :ExecuteCmd "%KUDU_SYNC_CMD%" -v 50 -f "%DEPLOYMENT_TEMP%" -t "%DEPLOYMENT_TARGET%" -n "%NEXT_MANIFEST_PATH%" -p "%PREVIOUS_MANIFEST_PATH%" -i ".git;.hg;.deployment;deploy.cmd"
+  IF !ERRORLEVEL! NEQ 0 goto error
+)
+
+:: 4. Select node version
 call :SelectNodeVersion
 
-:: 4. Install npm packages
+:: 5. Install npm packages
 :NPMPACKAGES
 echo NPM install
-IF EXIST "%DEPLOYMENT_SOURCE%\Sitio Privado\package.json" (
+IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
   echo package.json file found
-  xcopy "%DEPLOYMENT_SOURCE%\Sitio Privado\package.json" "%DEPLOYMENT_TARGET%\package.json" /y
   pushd "%DEPLOYMENT_TARGET%"
   call :ExecuteCmd !NPM_CMD! install
   IF !ERRORLEVEL! NEQ 0 goto error
@@ -131,10 +136,9 @@ IF EXIST "%DEPLOYMENT_SOURCE%\Sitio Privado\package.json" (
 )
 
 
-:: 5. Install bower packages
-IF EXIST "%DEPLOYMENT_SOURCE%\Sitio Privado\bower.json" (
+:: 6. Install bower packages
+IF EXIST "%DEPLOYMENT_TARGET%\bower.json" (
   echo bower.json file found
-  xcopy "%DEPLOYMENT_SOURCE%\Sitio Privado\bower.json" "%DEPLOYMENT_TARGET%\bower.json" /y
   pushd "%DEPLOYMENT_TARGET%"
   call :ExecuteCmd .\node_modules\.bin\bower install
   IF !ERRORLEVEL! NEQ 0 goto error
@@ -143,10 +147,9 @@ IF EXIST "%DEPLOYMENT_SOURCE%\Sitio Privado\bower.json" (
 )
 
 
-:: 6. Run gulp transformations
-IF EXIST "%DEPLOYMENT_SOURCE%\Sitio Privado\gulpfile.js" (
+:: 7. Run gulp transformations
+IF EXIST "%DEPLOYMENT_TARGET%\gulpfile.js" (
   echo gulpfile.js file found
-  xcopy "%DEPLOYMENT_SOURCE%\Sitio Privado\gulpfile.js" "%DEPLOYMENT_TARGET%\gulpfile.js" /y
   pushd "%DEPLOYMENT_TARGET%"
   call :ExecuteCmd .\node_modules\.bin\gulp
   IF !ERRORLEVEL! NEQ 0 goto error
@@ -156,11 +159,7 @@ IF EXIST "%DEPLOYMENT_SOURCE%\Sitio Privado\gulpfile.js" (
 
 IF !ERRORLEVEL! NEQ 0 goto error
 
-:: 7. KuduSync
-IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
-  call :ExecuteCmd "%KUDU_SYNC_CMD%" -v 50 -f "%DEPLOYMENT_TEMP%" -t "%DEPLOYMENT_TARGET%" -n "%NEXT_MANIFEST_PATH%" -p "%PREVIOUS_MANIFEST_PATH%" -i ".git;.hg;.deployment;deploy.cmd"
-  IF !ERRORLEVEL! NEQ 0 goto error
-)
+
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -168,7 +167,7 @@ IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
 IF DEFINED POST_DEPLOYMENT_ACTION call "%POST_DEPLOYMENT_ACTION%"
 IF !ERRORLEVEL! NEQ 0 goto error
 
-goto :EOF
+goto end
 
 :: Execute command routine that will echo out when error
 :ExecuteCmd
