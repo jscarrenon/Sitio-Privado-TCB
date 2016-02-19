@@ -1,9 +1,9 @@
 ﻿<div class="filter date">
     <div class="date-field">
-        Desde: <input type="date" step="1" ng-model="documentosCtrl.fechaFirmadosInicio" required>
+        Desde: <input type="date" step="1" ng-model="documentosCtrl.fechaFirmadosInicio" data-format="dd-MM-yyyy" required>
     </div>
     <div class="date-field">
-        Hasta: <input type="date" step="2" ng-model="documentosCtrl.fechaFirmadosFin" required>
+        Hasta: <input type="date" step="2" ng-model="documentosCtrl.fechaFirmadosFin" data-format="dd-MM-yyyy" required>
     </div>
     <div class="apply-filter pag-button"><a href="" class="clink" ng-click="documentosCtrl.actualizarDocumentosFirmados()"></a></div>
 </div>
@@ -35,7 +35,7 @@
     </div>
 
     <div class="table-tools" ng-show="!documentosCtrl.firmadosLoading">
-        <uib-pagination ng-model="documentosCtrl.operacionesFirmadasPaginaActual" total-items="documentosCtrl.operacionesFirmadas.length" items-per-page="documentosCtrl.operacionesFirmadasPorPagina" boundary-links="true" template-url="app/common/templates/pagination.html"></uib-pagination>
+        <uib-pagination ng-model="documentosCtrl.operacionesFirmadasPaginaActual" total-items="documentosCtrl.operacionesFirmadas.length" items-per-page="documentosCtrl.operacionesFirmadasPorPagina" boundary-links="true" template-url="pagination.html"></uib-pagination>
     </div>
 
 
@@ -68,7 +68,7 @@
     </div>
 
     <div class="table-tools" ng-show="!documentosCtrl.firmadosLoading">
-        <uib-pagination ng-model="documentosCtrl.documentosFirmadosPaginaActual" total-items="documentosCtrl.documentosFirmados.length" items-per-page="documentosCtrl.documentosFirmadosPorPagina" boundary-links="true" template-url="app/common/templates/pagination.html"></uib-pagination>
+        <uib-pagination ng-model="documentosCtrl.documentosFirmadosPaginaActual" total-items="documentosCtrl.documentosFirmados.length" items-per-page="documentosCtrl.documentosFirmadosPorPagina" boundary-links="true" template-url="pagination.html"></uib-pagination>
     </div>
 
     <div class="legal">

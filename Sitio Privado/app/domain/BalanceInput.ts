@@ -7,8 +7,6 @@
         constructor(public rut: string) {
 
             super();
-
-            this.rut = rut;
         }
     }
 }

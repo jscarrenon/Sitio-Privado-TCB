@@ -9,9 +9,6 @@
         constructor(public Name: string, public Url: string) {
 
             super();
-
-            this.Name = Name;
-            this.Url = Url;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿module app.common.services {
 
     interface IConstant {
+        buildFolderURI: string;
         mvcHomeURI: string;
         mvcSignOutURI: string;
         templateFooterURI: string;
@@ -19,6 +20,7 @@
     }
 
     export class ConstantService implements IConstant {
+        buildFolderURI: string;
         mvcHomeURI: string;
         mvcSignOutURI: string;
         templateFooterURI: string;
@@ -36,11 +38,12 @@
         apiCircularizacionURI: string;
 
         constructor() {
+            this.buildFolderURI = '.build/';
             this.mvcHomeURI = '/Home/';
             this.mvcSignOutURI = '/Account/SignOut';
-            this.templateFooterURI = 'app/common/templates/footer.html';
-            this.templatePaginationURI = 'app/common/templates/pagination.html';
-            this.templateLoadingURI = 'app/common/templates/loading.html';
+            this.templateFooterURI = this.buildFolderURI + 'html/common/templates/footer.html';
+            this.templatePaginationURI = this.buildFolderURI + 'html/common/templates/pagination.html';
+            this.templateLoadingURI = this.buildFolderURI + 'html/common/templates/loading.html';
             this.apiAgenteURI = '/api/agente/';
             this.apiFondosMutuosURI = '/api/fondoMutuo/';
             this.apiCategoriaURI = '/api/categoria/';

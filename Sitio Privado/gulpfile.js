@@ -1,10 +1,11 @@
-/// <binding BeforeBuild='clean' AfterBuild='css-task, scripts-task, vendors-task, spa-task, encoding-task, resources-task' Clean='clean' />
+/// <binding BeforeBuild='clean' AfterBuild='css-task, templates-task, scripts-task, better-dom-task, vendors-task, spa-task, encoding-task, resources-task' Clean='clean' />
 /*
 This file in the main entry point for defining Gulp tasks and using Gulp plugins.
 Click here to learn more. http://go.microsoft.com/fwlink/?LinkId=518007
 */
 
 var gulp = require('gulp');
+var runSequence = require('run-sequence');
 var inject = require('gulp-inject');
 var concat = require('gulp-concat');
 var print = require('gulp-print');
@@ -14,22 +15,21 @@ var header = require('gulp-header');
 var less = require('gulp-less');
 var merge = require('merge-stream');
 var del = require('del');
+var templateCache = require('gulp-angular-templatecache');
+
+var appName = 'tannerPrivadoApp';
 
 var paths = {
+    buildFolder: '.build',
     index: './Views/Home/Index.cshtml',
-    homeFolder: './Views/Home/',
+    homeFolder: './Views/Home',
     domainFiles: ['./app/domain/IEntity.js', './app/domain/IInput.js', './app/domain/*.js'],
     appFiles: ['./app/*.js',
                 './app/common/directives/*.js',
                 './app/common/services/*.js',
                 './app/common/controllers/*.js',
                 './app/common/typings/*.js',
-                './app/home/*.js',
-                './app/inversiones/*.js',
-                './app/mis-inversiones/misInversionesCtrl.js',
-                './app/mis-inversiones/*.js',
-                './app/informacion-financiera/*.js',
-                './app/productos-servicios/*.js'],
+                './app/modules/**/*.js'],
     stylesCss: ['./Styles/*.css'],
     stylesLess: ['./Styles/*.less'],
     scripts: ['./Scripts/extras/jquery.sticky.js','./Scripts/extras/*.js'],
@@ -38,12 +38,24 @@ var paths = {
                         './bower_components/angular-route/angular-route.js',
                         './bower_components/angular/angular.js',
                         './bower_components/jquery/dist/jquery.js'],
+    better_dom: ['./bower_components/better-dom/dist/better-dom.js',
+                    './bower_components/better-i18n-plugin/dist/better-i18n-plugin.js',
+                    './bower_components/better-dateinput-polyfill/dist/better-dateinput-polyfill.js',
+                    './bower_components/better-dateinput-polyfill/i18n/better-dateinput-polyfill.es.js'],
+    better_dom_legacy: ['./bower_components/better-dom/dist/better-dom-legacy.js',
+                        './bower_components/better-dom/dist/better-dom-legacy.htc'],
     images: ['./Resources/img/*'],
-    fonts: ['./Resources/fonts/*']
+    fonts: ['./Resources/fonts/*'],
+    htmls: ['./app/**/*.html'],
+    templates: ['./app/common/templates/pagination.html']
 };
 
+gulp.task('default', function (callback) {
+    runSequence('clean', 'css-task', 'templates-task', 'scripts-task', 'better-dom-task', 'vendors-task', 'spa-task', 'encoding-task', 'resources-task', callback);
+});
+
 gulp.task('clean', function () {
-    return del(['.build']);
+    return del([paths.buildFolder]);
 });
 
 gulp.task('spa-task', function () {
@@ -57,13 +69,13 @@ gulp.task('spa-task', function () {
                     .pipe(print())
                     .pipe(concat('domain.js'))
                     .pipe(uglify())
-                    .pipe(gulp.dest('.build/spa')), { name: 'domain' }))
+                    .pipe(gulp.dest(paths.buildFolder+'/spa')), { name: 'domain' }))
             .pipe(gulp.dest(paths.homeFolder))
             .pipe(inject(appStream
                     .pipe(print())
                     .pipe(concat('app.js'))
                     .pipe(uglify())
-                    .pipe(gulp.dest('.build/spa')), { name: 'app' }))
+                    .pipe(gulp.dest(paths.buildFolder+'/spa')), { name: 'app' }))
             .pipe(gulp.dest(paths.homeFolder))
 });
 
@@ -77,8 +89,31 @@ gulp.task('vendors-task', function () {
                 vendorStream.pipe(print())
                             .pipe(angularFilesort()) // comment out and the application will break
                             .pipe(concat('vendors.js'))
-                            .pipe(gulp.dest('.build/vendors')), { name: 'vendors' }))
+                            .pipe(gulp.dest(paths.buildFolder+'/vendors')), { name: 'vendors' }))
             .pipe(gulp.dest(paths.homeFolder));
+});
+
+gulp.task('better-dom-task', function () {
+    var target = gulp.src(paths.index);
+
+    var betterDomStream = gulp.src(paths.better_dom);
+    var betterDomLegacyJsStream = gulp.src(paths.better_dom_legacy[0]);
+    var betterDomLegacyHtcStream = gulp.src(paths.better_dom_legacy[1]);
+
+    var betterDom = target
+                        .pipe(inject(
+                            betterDomStream.pipe(print())
+                                        .pipe(gulp.dest(paths.buildFolder + '/js')), { name: 'better-dom' }))
+                        .pipe(gulp.dest(paths.homeFolder));
+    var betterDomLegacyJs = target
+            .pipe(inject(
+                    betterDomLegacyJsStream.pipe(print())
+                                        .pipe(gulp.dest(paths.buildFolder + '/js')), { starttag: '<!--[if IE]>', endtag: '<![endif]-->' }))
+            .pipe(gulp.dest(paths.homeFolder));
+    var betterDomLegacyHtc = betterDomLegacyHtcStream.pipe(print())
+                                        .pipe(gulp.dest(paths.buildFolder + '/js'));
+
+    return merge(betterDom, betterDomLegacyJs, betterDomLegacyHtc);
 });
 
 gulp.task('css-task', function () {
@@ -91,14 +126,14 @@ gulp.task('css-task', function () {
             .pipe(inject(
                 customCssStream.pipe(print())
                 .pipe(concat('stylesCss.css'))
-                .pipe(gulp.dest('.build/css')), { name: 'stylesCss' })
+                .pipe(gulp.dest(paths.buildFolder+'/css')), { name: 'stylesCss' })
                 )
             .pipe(gulp.dest(paths.homeFolder))
             .pipe(inject(
                 customLessStream.pipe(print())
                 .pipe(concat('stylesLess.css'))
                 .pipe(less())
-                .pipe(gulp.dest('.build/css')), { name: 'stylesLess' })
+                .pipe(gulp.dest(paths.buildFolder+'/css')), { name: 'stylesLess' })
                 )
             .pipe(gulp.dest(paths.homeFolder));
 });
@@ -112,7 +147,7 @@ gulp.task('scripts-task', function () {
             .pipe(inject(
                 extrasJsStream.pipe(print())
                 .pipe(concat('extras.js'))
-                .pipe(gulp.dest('.build/js')), { name: 'extras' })
+                .pipe(gulp.dest(paths.buildFolder+'/js')), { name: 'extras' })
                 )
             .pipe(gulp.dest(paths.homeFolder));
 });
@@ -121,13 +156,30 @@ gulp.task('resources-task', function () {
 
     var imagesStream = gulp.src(paths.images);
     var fontsStream = gulp.src(paths.fonts);
+    var htmlsStream = gulp.src(paths.htmls);
 
     var images = imagesStream.pipe(print())
-                    .pipe(gulp.dest('.build/img'));
+                    .pipe(gulp.dest(paths.buildFolder+'/img'));
     var fonts = fontsStream.pipe(print())
-                .pipe(gulp.dest('.build/fonts'));
+                .pipe(gulp.dest(paths.buildFolder+'/fonts'));
+    var htmls = htmlsStream.pipe(print())
+                .pipe(gulp.dest(paths.buildFolder+'/html'));
 
-    return merge(images, fonts);
+    return merge(images, fonts, htmls);
+});
+
+gulp.task('templates-task', function () {
+    var target = gulp.src(paths.index);
+
+    var templatesStream = gulp.src(paths.templates);
+
+    return target
+            .pipe(inject(
+                templatesStream.pipe(print())
+                .pipe(templateCache('templates.js', { module: appName }))
+                .pipe(gulp.dest(paths.buildFolder + '/js')), { name: 'templates' })
+                )
+            .pipe(gulp.dest(paths.homeFolder));
 });
 
 gulp.task('encoding-task', function () {

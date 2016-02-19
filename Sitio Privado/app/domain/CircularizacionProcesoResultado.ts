@@ -7,8 +7,6 @@
         constructor(public Resultado: boolean) {
 
             super();
-
-            this.Resultado = Resultado;
         }
     }
 }

@@ -33,6 +33,7 @@
           <s:element minOccurs="0" maxOccurs="1" name="_ruta" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="_nombrecli" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="_results" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="_fechafirm" type="s:string" />
         </s:sequence>
       </s:complexType>
       <s:element name="cns_operaciones_pendientes">
@@ -290,10 +291,10 @@
   </wsdl:binding>
   <wsdl:service name="tann_documentos">
     <wsdl:port name="tann_documentosSoap" binding="tns:tann_documentosSoap">
-      <soap:address location="http://172.17.1.12:8088/tann_documentos.asmx" />
+      <soap:address location="https://www.tannercliente.cl/wstsf/tann_documentos.asmx" />
     </wsdl:port>
     <wsdl:port name="tann_documentosSoap12" binding="tns:tann_documentosSoap12">
-      <soap12:address location="http://172.17.1.12:8088/tann_documentos.asmx" />
+      <soap12:address location="https://www.tannercliente.cl/wstsf/tann_documentos.asmx" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

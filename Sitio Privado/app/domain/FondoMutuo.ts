@@ -21,15 +21,6 @@
             public Pesos: number) {
 
             super();
-
-            this.Descripcion = Descripcion;
-            this.Tipo = Tipo;
-            this.CtaPisys = CtaPisys;
-            this.ValorCuota = ValorCuota;
-            this.SaldoCuota = SaldoCuota;
-            this.Csbis = Csbis;
-            this.Renta = Renta;
-            this.Pesos = Pesos;
         }
     }
 

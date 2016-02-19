@@ -30,13 +30,13 @@
                             <td>{{fondoMutuo.Tipo}}</td>
                             <td>{{fondoMutuo.CtaPisys}}</td>
                             <td>{{fondoMutuo.Csbis}}</td>
-                            <td class="number">${{fondoMutuo.ValorCuota}}</td>
-                            <td class="number">${{fondoMutuo.SaldoCuota}}</td>
-                            <td class="number">${{fondoMutuo.Pesos}}</td>
+                            <td class="number">{{fondoMutuo.ValorCuota|currency}}</td>
+                            <td class="number">{{fondoMutuo.SaldoCuota|currency}}</td>
+                            <td class="number">{{fondoMutuo.Pesos|currency}}</td>
                         </tr>
                         <tr class="total">
                             <td colspan="6">Total Fondos Mutuos Renta Fija</td>
-                            <td class="number">${{fondosMutuosCtrl.fondosMutuosRFTotal}}</td>
+                            <td class="number">{{fondosMutuosCtrl.fondosMutuosRFTotal|currency}}</td>
                         </tr>
                     </table>
                 </div>
@@ -62,13 +62,13 @@
                             <td>{{fondoMutuo.Tipo}}</td>
                             <td>{{fondoMutuo.CtaPisys}}</td>
                             <td>{{fondoMutuo.Csbis}}</td>
-                            <td class="number">${{fondoMutuo.ValorCuota}}</td>
-                            <td class="number">${{fondoMutuo.SaldoCuota}}</td>
-                            <td class="number">${{fondoMutuo.Pesos}}</td>
+                            <td class="number">{{fondoMutuo.ValorCuota|currency}}</td>
+                            <td class="number">{{fondoMutuo.SaldoCuota|currency}}</td>
+                            <td class="number">{{fondoMutuo.Pesos|currency}}</td>
                         </tr>
                         <tr class="total">
                             <td colspan="6">Total Fondos Mutuos Renta Variable</td>
-                            <td class="number">${{fondosMutuosCtrl.fondosMutuosRVTotal}}</td>
+                            <td class="number">{{fondosMutuosCtrl.fondosMutuosRVTotal|currency}}</td>
                         </tr>
                     </table>
                 </div>

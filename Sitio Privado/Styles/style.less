@@ -1734,7 +1734,7 @@ div.one-col.home {
 
 #cont-table {
 	max-width:100%;
-	overflow-x:scroll;
+	overflow-x:hidden;
 	clear:both;
     margin-top:25px;
 }
@@ -1849,6 +1849,11 @@ th.small-box {width:5%;}
 }
 
 /* tables responsive --------------------------------------- */
+@media only screen and (max-width: 900px) {
+    #cont-table {
+        overflow-x:scroll;
+    }
+}
 
 @media only screen and (max-width: 360px) {
     .table-tools {
@@ -2444,4 +2449,8 @@ input[type="date"] {
 
 .loading-spinner.bottom1{
     margin-bottom:45px;
+}
+
+.btr-dateinput-calendar table td:nth-child(1) {
+    font-family:Helvetica Neue,Helvetica,Arial,sans-serif;
 }
