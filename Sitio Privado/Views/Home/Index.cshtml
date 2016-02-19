@@ -15,6 +15,15 @@
     <!-- extras:js -->
     <script src="/.build/js/extras.js"></script>
     <!-- endinject -->
+    <!--[if IE]>
+    <script src="/.build/js/better-dom-legacy.js"></script>
+    <![endif]-->
+    <!-- better-dom:js -->
+    <script src="/.build/js/better-dom.js"></script>
+    <script src="/.build/js/better-i18n-plugin.js"></script>
+    <script src="/.build/js/better-dateinput-polyfill.js"></script>
+    <script src="/.build/js/better-dateinput-polyfill.es.js"></script>
+    <!-- endinject -->
     <!-- vendors:js -->
     <script src="/.build/vendors/vendors.js"></script>
     <!-- endinject -->
@@ -27,9 +36,6 @@
     <!-- templates:js -->
     <script src="/.build/js/templates.js"></script>
     <!-- endinject -->
-    <!--[if IE]>
-    <script src="/.build/vendors/better-dom-legacy.js"></script>
-    <![endif]-->
 </head>
 <body ng-controller="BodyCtrl as bodyCtrl">
 
