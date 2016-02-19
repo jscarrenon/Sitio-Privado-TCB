@@ -1734,7 +1734,7 @@ div.one-col.home {
 
 #cont-table {
 	max-width:100%;
-	overflow-x:scroll;
+	overflow-x:hidden;
 	clear:both;
     margin-top:25px;
 }
@@ -1849,6 +1849,11 @@ th.small-box {width:5%;}
 }
 
 /* tables responsive --------------------------------------- */
+@media only screen and (max-width: 900px) {
+    #cont-table {
+        overflow-x:scroll;
+    }
+}
 
 @media only screen and (max-width: 360px) {
     .table-tools {
