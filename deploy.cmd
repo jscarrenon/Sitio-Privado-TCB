@@ -168,7 +168,7 @@ IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
 IF DEFINED POST_DEPLOYMENT_ACTION call "%POST_DEPLOYMENT_ACTION%"
 IF !ERRORLEVEL! NEQ 0 goto error
 
-goto end
+goto :EOF
 
 :: Execute command routine that will echo out when error
 :ExecuteCmd
