@@ -33,7 +33,7 @@
         misInversionesCtrl.seleccionarSeccion(seccionId);
 
         expect(misInversionesCtrl.seccionId).toBe(seccionId);
-        expect(misInversionesCtrl.seccionURI).toBe('app/mis-inversiones/nacionales.html');        
+        expect(misInversionesCtrl.seccionURI).toEqual('.build/html/modules/mis-inversiones/templates/nacionales.html');
     });
 
     it('Seleccionar sección 2.', function () {
@@ -41,7 +41,7 @@
         misInversionesCtrl.seleccionarSeccion(seccionId);
 
         expect(misInversionesCtrl.seccionId).toBe(seccionId);
-        expect(misInversionesCtrl.seccionURI).toBe('app/mis-inversiones/fondos-mutuos.html');        
+        expect(misInversionesCtrl.seccionURI).toEqual('.build/html/modules/mis-inversiones/templates/fondos-mutuos.html');
     });
 
     it('Seleccionar sección 3.', function () {
@@ -49,7 +49,7 @@
         misInversionesCtrl.seleccionarSeccion(seccionId);
 
         expect(misInversionesCtrl.seccionId).toBe(seccionId);
-        expect(misInversionesCtrl.seccionURI).toBe('app/mis-inversiones/estado-documentos.html');        
+        expect(misInversionesCtrl.seccionURI).toEqual('.build/html/modules/mis-inversiones/templates/estado-documentos.html');
     });
 
     it('Seleccionar sección 4.', function () {
@@ -57,7 +57,7 @@
         misInversionesCtrl.seleccionarSeccion(seccionId);
 
         expect(misInversionesCtrl.seccionId).toBe(seccionId);
-        expect(misInversionesCtrl.seccionURI).toBe('app/mis-inversiones/circularizacion.html');
+        expect(misInversionesCtrl.seccionURI).toEqual('.build/html/modules/mis-inversiones/templates/circularizacion.html');
     });
 
     it('Setear plantillas.', function () {

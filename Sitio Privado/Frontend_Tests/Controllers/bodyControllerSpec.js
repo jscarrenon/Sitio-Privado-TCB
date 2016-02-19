@@ -106,7 +106,7 @@
         expect($uibModal.open).toHaveBeenCalled();
     });
 
-    it('No abrir modal si parametro de entrada es distinto a 'circularizacion' o 'documentos'.', function () {
+    it('No abrir modal si parametro de entrada es distinto a circularizacion o documentos.', function () {
         bodyCtrl.crearInstanciaModal('otros');
 
         expect(authService.circularizacionPendiente).toBeDefined();

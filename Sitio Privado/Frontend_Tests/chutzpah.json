@@ -12,11 +12,11 @@
     { "Path": "../app/app.js" },
     { "Path": "../app/common/controllers", "Includes": [ "*.js" ] },
     { "Path": "../app/common/services", "Includes": [ "*.js" ] },
-    { "Path": "../app/home/", "Includes": [ "*.js" ] },
-    { "Path": "../app/informacion-financiera/", "Includes": [ "*.js" ] },
-    { "Path": "../app/inversiones/", "Includes": [ "*.js" ] },
-    { "Path": "../app/mis-inversiones/", "Includes": [ "*.js" ] },
-    { "Path": "../app/productos-servicios/", "Includes": [ "*.js" ] }
+    { "Path": "../app/modules/home/controllers/", "Includes": [ "*.js" ] },
+    { "Path": "../app/modules/informacion-financiera/controllers/", "Includes": [ "*.js" ] },
+    { "Path": "../app/modules/inversiones/controllers/", "Includes": [ "*.js" ] },
+    { "Path": "../app/modules/mis-inversiones/controllers/", "Includes": [ "*.js" ] },
+    { "Path": "../app/modules/productos-servicios/controllers/", "Includes": [ "*.js" ] }
   ],
   "Tests": [    
     { "Path": "./Controllers/", "Includes": [ "*Spec.js" ] },

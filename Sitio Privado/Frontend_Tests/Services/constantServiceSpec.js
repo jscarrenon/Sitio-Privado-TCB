@@ -10,20 +10,20 @@
     }));
 
     it('Constantes definidas correctamente.', function () {
-        expect(constantService.mvcHomeURI).toBe('/Home/');
-        expect(constantService.mvcSignOutURI).toBe('/Account/SignOut');
-        expect(constantService.templateFooterURI).toBe('app/common/templates/footer.html');
-        expect(constantService.templatePaginationURI).toBe('app/common/templates/pagination.html');
-        expect(constantService.templateLoadingURI).toBe('app/common/templates/loading.html');
-        expect(constantService.apiAgenteURI).toBe('/api/agente/');
-        expect(constantService.apiFondosMutuosURI).toBe('/api/fondoMutuo/');
-        expect(constantService.apiCategoriaURI).toBe('/api/categoria/');
-        expect(constantService.apiProductoURI).toBe('/api/producto/');
-        expect(constantService.apiBlobsURI).toBe('/api/containers/');
-        expect(constantService.apiBalanceURI).toBe('/api/balance/');
-        expect(constantService.apiCartolaURI).toBe('/api/cartola/');
-        expect(constantService.apiDocumentoURI).toBe('/api/documento/');
-        expect(constantService.apiIndicesURI).toBe('/api/indices/');
-        expect(constantService.apiCircularizacionURI).toBe('/api/circularizacion/');
+        expect(constantService.mvcHomeURI).toEqual('/Home/');
+        expect(constantService.mvcSignOutURI).toEqual('/Account/SignOut');
+        expect(constantService.templateFooterURI).toEqual('.build/html/common/templates/footer.html');
+        expect(constantService.templatePaginationURI).toEqual('.build/html/common/templates/pagination.html');
+        expect(constantService.templateLoadingURI).toEqual('.build/html/common/templates/loading.html');
+        expect(constantService.apiAgenteURI).toEqual('/api/agente/');
+        expect(constantService.apiFondosMutuosURI).toEqual('/api/fondoMutuo/');
+        expect(constantService.apiCategoriaURI).toEqual('/api/categoria/');
+        expect(constantService.apiProductoURI).toEqual('/api/producto/');
+        expect(constantService.apiBlobsURI).toEqual('/api/containers/');
+        expect(constantService.apiBalanceURI).toEqual('/api/balance/');
+        expect(constantService.apiCartolaURI).toEqual('/api/cartola/');
+        expect(constantService.apiDocumentoURI).toEqual('/api/documento/');
+        expect(constantService.apiIndicesURI).toEqual('/api/indices/');
+        expect(constantService.apiCircularizacionURI).toEqual('/api/circularizacion/');
     });
 });

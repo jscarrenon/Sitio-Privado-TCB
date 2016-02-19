@@ -65,7 +65,7 @@
         misInversionesCircularizacionCtrl.seleccionarSeccion(id);
 
         expect(misInversionesCircularizacionCtrl.seccionId).toBe(id);
-        expect(misInversionesCircularizacionCtrl.seccionURI).toBe('app/mis-inversiones/circularizacion_pendiente.html');
+        expect(misInversionesCircularizacionCtrl.seccionURI).toEqual('.build/html/modules/mis-inversiones/templates/circularizacion_pendiente.html');
     });
 
     it('Seleccionar sección 1.', function () {
@@ -76,7 +76,7 @@
 
         expect(misInversionesCircularizacionCtrl.seccionId).toBe(id);
         expect(getArchivoSpy).toHaveBeenCalled();
-        expect(misInversionesCircularizacionCtrl.seccionURI).toBe('app/mis-inversiones/circularizacion_anual.html');
+        expect(misInversionesCircularizacionCtrl.seccionURI).toEqual('.build/html/modules/mis-inversiones/templates/circularizacion_anual.html');
     });
 
     it('Seleccionar sección 2.', function () {
@@ -85,7 +85,7 @@
         misInversionesCircularizacionCtrl.seleccionarSeccion(id);
 
         expect(misInversionesCircularizacionCtrl.seccionId).toBe(id);
-        expect(misInversionesCircularizacionCtrl.seccionURI).toBe('app/mis-inversiones/circularizacion_aprobar.html');
+        expect(misInversionesCircularizacionCtrl.seccionURI).toEqual('.build/html/modules/mis-inversiones/templates/circularizacion_aprobar.html');
     });
     
     it('Setear las plantillas.', function () {

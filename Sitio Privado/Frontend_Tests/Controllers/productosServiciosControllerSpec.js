@@ -70,14 +70,15 @@
             Productos: null
         };  
 
-        spyOn(productosServiciosCtrl, 'getProductos');
-
         productosServiciosCtrl.getCategoriaCliente(categoriaClienteInput_stub);
         postWebService_deferred.resolve(categoriaCliente_stub);
         $rootScope.$digest();
 
+        this.categoriaClienteLoading = false; this.productosLoading = false;
+
         expect(productosServiciosCtrl.categoriaCliente).toEqual(categoriaCliente_stub);
-        expect(productosServiciosCtrl.getProductos).toHaveBeenCalled();
+        expect(productosServiciosCtrl.categoriaClienteLoading).toBe(false);
+        expect(productosServiciosCtrl.productosLoading).toBe(false);
     });
 
     it('getProductos', function () {

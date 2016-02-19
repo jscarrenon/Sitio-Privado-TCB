@@ -105,7 +105,7 @@
         expect(informacionFinancieraCtrl.seccionId).toBe(id);
         expect(informacionFinancieraCtrl.selectedYearIndex).toBe(0);
         expect(informacionFinancieraCtrl.selectedYear).toEqual([]);
-        expect(informacionFinancieraCtrl.seccionURI).toBe('app/informacion-financiera/estatutos.html');        
+        expect(informacionFinancieraCtrl.seccionURI).toEqual('.build/html/modules/informacion-financiera/templates/estatutos.html');        
     });
 
     it('Seleccionar sección 1.', function () {
@@ -119,7 +119,7 @@
         expect(informacionFinancieraCtrl.seccionId).toBe(id);
         expect(informacionFinancieraCtrl.selectedYearIndex).toBe(0);
         expect(informacionFinancieraCtrl.selectedYear).toEqual(container_stub[0].Folders);
-        expect(informacionFinancieraCtrl.seccionURI).toBe('app/informacion-financiera/documentos-normativos.html');
+        expect(informacionFinancieraCtrl.seccionURI).toEqual('.build/html/modules/informacion-financiera/templates/documentos-normativos.html');
     });
 
     it('Seleccionar sección 2.', function () {
@@ -133,7 +133,7 @@
         expect(informacionFinancieraCtrl.seccionId).toBe(id);
         expect(informacionFinancieraCtrl.selectedYearIndex).toBe(0);
         expect(informacionFinancieraCtrl.selectedYear).toEqual([]);
-        expect(informacionFinancieraCtrl.seccionURI).toBe('app/informacion-financiera/servicios-custodia.html');
+        expect(informacionFinancieraCtrl.seccionURI).toEqual('.build/html/modules/informacion-financiera/templates/servicios-custodia.html');
     });
 
     it('Seleccionar sección 3.', function () {
@@ -147,7 +147,7 @@
         expect(informacionFinancieraCtrl.seccionId).toBe(id);
         expect(informacionFinancieraCtrl.selectedYearIndex).toBe(0);
         expect(informacionFinancieraCtrl.selectedYear).toEqual([]);
-        expect(informacionFinancieraCtrl.seccionURI).toBe('app/informacion-financiera/indices-liquidez.html');
+        expect(informacionFinancieraCtrl.seccionURI).toEqual('.build/html/modules/informacion-financiera/templates/indices-liquidez.html');
     });
 
     it('Seleccionar sección 4.', function () {
@@ -161,7 +161,7 @@
         expect(informacionFinancieraCtrl.seccionId).toBe(id);
         expect(informacionFinancieraCtrl.selectedYearIndex).toBe(0);
         expect(informacionFinancieraCtrl.selectedYear).toEqual([]);
-        expect(informacionFinancieraCtrl.seccionURI).toBe('app/informacion-financiera/comite-regulacion.html');
+        expect(informacionFinancieraCtrl.seccionURI).toEqual('.build/html/modules/informacion-financiera/templates/comite-regulacion.html');
     });
 
     it('Seleccionar sección 5.', function () {
@@ -175,7 +175,7 @@
         expect(informacionFinancieraCtrl.seccionId).toBe(id);
         expect(informacionFinancieraCtrl.selectedYearIndex).toBe(0);
         expect(informacionFinancieraCtrl.selectedYear).toEqual([]);
-        expect(informacionFinancieraCtrl.seccionURI).toBe('app/informacion-financiera/otros-documentos.html');
+        expect(informacionFinancieraCtrl.seccionURI).toEqual('.build/html/modules/informacion-financiera/templates/otros-documentos.html');
     });
         
     
