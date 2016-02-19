@@ -106,13 +106,13 @@
 
         configurarPaginacion(): void {
             this.operacionesPendientesPaginaActual = 1;
-            this.operacionesPendientesPorPagina = 10;
+            this.operacionesPendientesPorPagina = 15;
             this.documentosPendientesPaginaActual = 1;
-            this.documentosPendientesPorPagina = 10;
+            this.documentosPendientesPorPagina = 15;
             this.operacionesFirmadasPaginaActual = 1;
-            this.operacionesFirmadasPorPagina = 10;
+            this.operacionesFirmadasPorPagina = 15;
             this.documentosFirmadosPaginaActual = 1;
-            this.documentosFirmadosPorPagina = 10;
+            this.documentosFirmadosPorPagina = 15;
         }
 
         getDocumentosPendientes(input: app.domain.IDocumentosPendientesInput): void {
