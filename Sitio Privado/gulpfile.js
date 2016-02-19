@@ -1,4 +1,4 @@
-/// <binding BeforeBuild='clean' AfterBuild='css-task, templates-task, scripts-task, vendors-task, spa-task, encoding-task, resources-task' Clean='clean' />
+/// <binding BeforeBuild='clean' AfterBuild='css-task, templates-task, scripts-task, better-dom-task, vendors-task, spa-task, encoding-task, resources-task' Clean='clean' />
 /*
 This file in the main entry point for defining Gulp tasks and using Gulp plugins.
 Click here to learn more. http://go.microsoft.com/fwlink/?LinkId=518007
@@ -33,16 +33,17 @@ var paths = {
     stylesCss: ['./Styles/*.css'],
     stylesLess: ['./Styles/*.less'],
     scripts: ['./Scripts/extras/jquery.sticky.js','./Scripts/extras/*.js'],
-    bower_components: ['./bower_components/better-dateinput-polyfill/i18n/better-dateinput-polyfill.es.js',
-                        './bower_components/better-dateinput-polyfill/dist/better-dateinput-polyfill.js',
-                        './bower_components/better-i18n-plugin/dist/better-i18n-plugin.js',
-                        './bower_components/better-dom/dist/better-dom.js',
-                        './bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
+    bower_components: ['./bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
                         './bower_components/angular-i18n/angular-locale_es-cl.js',
                         './bower_components/angular-route/angular-route.js',
                         './bower_components/angular/angular.js',
                         './bower_components/jquery/dist/jquery.js'],
-    bower_components_legacy: ['./bower_components/better-dom/dist/better-dom-legacy.js'],
+    better_dom: ['./bower_components/better-dom/dist/better-dom.js',
+                    './bower_components/better-i18n-plugin/dist/better-i18n-plugin.js',
+                    './bower_components/better-dateinput-polyfill/dist/better-dateinput-polyfill.js',
+                    './bower_components/better-dateinput-polyfill/i18n/better-dateinput-polyfill.es.js'],
+    better_dom_legacy: ['./bower_components/better-dom/dist/better-dom-legacy.js',
+                        './bower_components/better-dom/dist/better-dom-legacy.htc'],
     images: ['./Resources/img/*'],
     fonts: ['./Resources/fonts/*'],
     htmls: ['./app/**/*.html'],
@@ -50,7 +51,7 @@ var paths = {
 };
 
 gulp.task('default', function (callback) {
-    runSequence('clean', 'css-task', 'templates-task', 'scripts-task', 'vendors-task', 'spa-task', 'encoding-task', 'resources-task', callback);
+    runSequence('clean', 'css-task', 'templates-task', 'scripts-task', 'better-dom-task', 'vendors-task', 'spa-task', 'encoding-task', 'resources-task', callback);
 });
 
 gulp.task('clean', function () {
@@ -82,7 +83,6 @@ gulp.task('vendors-task', function () {
     var target = gulp.src(paths.index);
 
     var vendorStream = gulp.src(paths.bower_components);
-    var vendorsExtraStream = gulp.src(paths.bower_components_legacy);
 
     return target
             .pipe(inject(
@@ -90,11 +90,30 @@ gulp.task('vendors-task', function () {
                             .pipe(angularFilesort()) // comment out and the application will break
                             .pipe(concat('vendors.js'))
                             .pipe(gulp.dest(paths.buildFolder+'/vendors')), { name: 'vendors' }))
-            .pipe(gulp.dest(paths.homeFolder))
-            .pipe(inject(
-                vendorsExtraStream.pipe(print())
-                            .pipe(gulp.dest(paths.buildFolder+'/vendors')), { starttag: '<!--[if IE]>', endtag: '<![endif]-->' }))
             .pipe(gulp.dest(paths.homeFolder));
+});
+
+gulp.task('better-dom-task', function () {
+    var target = gulp.src(paths.index);
+
+    var betterDomStream = gulp.src(paths.better_dom);
+    var betterDomLegacyJsStream = gulp.src(paths.better_dom_legacy[0]);
+    var betterDomLegacyHtcStream = gulp.src(paths.better_dom_legacy[1]);
+
+    var betterDom = target
+                        .pipe(inject(
+                            betterDomStream.pipe(print())
+                                        .pipe(gulp.dest(paths.buildFolder + '/js')), { name: 'better-dom' }))
+                        .pipe(gulp.dest(paths.homeFolder));
+    var betterDomLegacyJs = target
+            .pipe(inject(
+                    betterDomLegacyJsStream.pipe(print())
+                                        .pipe(gulp.dest(paths.buildFolder + '/js')), { starttag: '<!--[if IE]>', endtag: '<![endif]-->' }))
+            .pipe(gulp.dest(paths.homeFolder));
+    var betterDomLegacyHtc = betterDomLegacyHtcStream.pipe(print())
+                                        .pipe(gulp.dest(paths.buildFolder + '/js'));
+
+    return merge(betterDom, betterDomLegacyJs, betterDomLegacyHtc);
 });
 
 gulp.task('css-task', function () {
