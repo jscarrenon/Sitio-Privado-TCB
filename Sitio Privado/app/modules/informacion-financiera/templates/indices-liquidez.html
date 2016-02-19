@@ -13,9 +13,12 @@
 
             <div class="filter date indices">
                 <div class="date-field">
-                    Información al: <input type="date" step="1" ng-model="indicesCtrl.fecha" data-format="dd-MM-yyyy" required>
+                    Información al: <input type="date" step="1" ng-model="indicesCtrl.fecha" data-format="dd-MM-yyyy" ng-change="indicesCtrl.validarFecha()" required>
                 </div>
-                <div class="apply-filter pag-button"><a href="" class="clink" ng-click="indicesCtrl.actualizarIndices()"></a></div>
+                <div class="apply-filter pag-button" ng-show="indicesCtrl.errorFecha == null"><a href="" class="clink" ng-click="indicesCtrl.actualizarIndices()"></a></div>
+                <div class="error" ng-show="indicesCtrl.errorFecha">
+                    {{indicesCtrl.errorFecha}}
+                </div>
             </div>
 
             <loading param="indicesCtrl.loading"></loading>
