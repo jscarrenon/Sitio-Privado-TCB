@@ -61,10 +61,44 @@ IF DEFINED MSBUILD_PATH goto MsbuildPathDefined
 SET MSBUILD_PATH=%ProgramFiles(x86)%\MSBuild\14.0\Bin\MSBuild.exe
 :MsbuildPathDefined
 
+
+goto :DEPLOYMENT
+
+:SelectNodeVersion
+echo Select Node Version Section
+IF DEFINED KUDU_SELECT_NODE_VERSION_CMD (
+  :: The following are done only on Windows Azure Websites environment
+  call %KUDU_SELECT_NODE_VERSION_CMD% "%DEPLOYMENT_SOURCE%" "%DEPLOYMENT_TARGET%" "%DEPLOYMENT_TEMP%"
+  IF !ERRORLEVEL! NEQ 0 goto error
+
+  IF EXIST "%DEPLOYMENT_TEMP%\__nodeVersion.tmp" (
+    SET /p NODE_EXE=<"%DEPLOYMENT_TEMP%\__nodeVersion.tmp"
+    IF !ERRORLEVEL! NEQ 0 goto error
+  )
+
+  IF EXIST "%DEPLOYMENT_TEMP%\__npmVersion.tmp" (
+    SET /p NPM_JS_PATH=<"%DEPLOYMENT_TEMP%\__npmVersion.tmp"
+    IF !ERRORLEVEL! NEQ 0 goto error
+  )
+
+  IF NOT DEFINED NODE_EXE (
+    SET NODE_EXE=node
+  )
+
+  SET NPM_CMD="!NODE_EXE!" "!NPM_JS_PATH!"
+) ELSE (
+  SET NPM_CMD=npm
+  SET NODE_EXE=node
+)
+
+echo Select Node Version Section Ending
+goto :EOF
+
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :: Deployment
 :: ----------
 
+:DEPLOYMENT
 echo Handling .NET Web Application deployment.
 
 :: 1. Restore NuGet packages
@@ -80,15 +114,20 @@ IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
   call :ExecuteCmd "%MSBUILD_PATH%" "%DEPLOYMENT_SOURCE%\Sitio Privado\Sitio Privado.csproj" /nologo /verbosity:m /t:Build /p:AutoParameterizationWebConfigConnectionStrings=false;Configuration=Release;UseSharedCompilation=false /p:SolutionDir="%DEPLOYMENT_SOURCE%\.\\" %SCM_BUILD_ARGS%
 )
 
-:: 2. Select node version
+:: 3. KuduSync
+IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
+  call :ExecuteCmd "%KUDU_SYNC_CMD%" -v 50 -f "%DEPLOYMENT_TEMP%" -t "%DEPLOYMENT_TARGET%" -n "%NEXT_MANIFEST_PATH%" -p "%PREVIOUS_MANIFEST_PATH%" -i ".git;.hg;.deployment;deploy.cmd"
+  IF !ERRORLEVEL! NEQ 0 goto error
+)
+
+:: 4. Select node version
 call :SelectNodeVersion
 
-:: 3. Install npm packages
+:: 5. Install npm packages
 :NPMPACKAGES
 echo NPM install
-IF EXIST "%DEPLOYMENT_SOURCE%\Sitio Privado\package.json" (
+IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
   echo package.json file found
-  xcopy "%DEPLOYMENT_SOURCE%\Sitio Privado\package.json" "%DEPLOYMENT_TARGET%\package.json" /y
   pushd "%DEPLOYMENT_TARGET%"
   call :ExecuteCmd !NPM_CMD! install
   IF !ERRORLEVEL! NEQ 0 goto error
@@ -97,10 +136,9 @@ IF EXIST "%DEPLOYMENT_SOURCE%\Sitio Privado\package.json" (
 )
 
 
-:: 4. Install bower packages
-IF EXIST "%DEPLOYMENT_SOURCE%\Sitio Privado\bower.json" (
+:: 6. Install bower packages
+IF EXIST "%DEPLOYMENT_TARGET%\bower.json" (
   echo bower.json file found
-  xcopy "%DEPLOYMENT_SOURCE%\Sitio Privado\bower.json" "%DEPLOYMENT_TARGET%\bower.json" /y
   pushd "%DEPLOYMENT_TARGET%"
   call :ExecuteCmd .\node_modules\.bin\bower install
   IF !ERRORLEVEL! NEQ 0 goto error
@@ -109,10 +147,9 @@ IF EXIST "%DEPLOYMENT_SOURCE%\Sitio Privado\bower.json" (
 )
 
 
-:: 5. Run gulp transformations
-IF EXIST "%DEPLOYMENT_SOURCE%\Sitio Privado\gulpfile.js" (
+:: 7. Run gulp transformations
+IF EXIST "%DEPLOYMENT_TARGET%\gulpfile.js" (
   echo gulpfile.js file found
-  xcopy "%DEPLOYMENT_SOURCE%\Sitio Privado\gulpfile.js" "%DEPLOYMENT_TARGET%\gulpfile.js" /y
   pushd "%DEPLOYMENT_TARGET%"
   call :ExecuteCmd .\node_modules\.bin\gulp
   IF !ERRORLEVEL! NEQ 0 goto error
@@ -122,11 +159,7 @@ IF EXIST "%DEPLOYMENT_SOURCE%\Sitio Privado\gulpfile.js" (
 
 IF !ERRORLEVEL! NEQ 0 goto error
 
-:: 3. KuduSync
-IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
-  call :ExecuteCmd "%KUDU_SYNC_CMD%" -v 50 -f "%DEPLOYMENT_TEMP%" -t "%DEPLOYMENT_TARGET%" -n "%NEXT_MANIFEST_PATH%" -p "%PREVIOUS_MANIFEST_PATH%" -i ".git;.hg;.deployment;deploy.cmd"
-  IF !ERRORLEVEL! NEQ 0 goto error
-)
+
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -159,35 +192,3 @@ exit /b 1
 :end
 endlocal
 echo Finished successfully.
-goto :EOF
-
-:SelectNodeVersion
-
-echo Select Node Version Section
-IF DEFINED KUDU_SELECT_NODE_VERSION_CMD (
-  :: The following are done only on Windows Azure Websites environment
-  call %KUDU_SELECT_NODE_VERSION_CMD% "%DEPLOYMENT_SOURCE%" "%DEPLOYMENT_TARGET%" "%DEPLOYMENT_TEMP%"
-  IF !ERRORLEVEL! NEQ 0 goto error
-
-  IF EXIST "%DEPLOYMENT_TEMP%\__nodeVersion.tmp" (
-    SET /p NODE_EXE=<"%DEPLOYMENT_TEMP%\__nodeVersion.tmp"
-    IF !ERRORLEVEL! NEQ 0 goto error
-  )
-
-  IF EXIST "%DEPLOYMENT_TEMP%\__npmVersion.tmp" (
-    SET /p NPM_JS_PATH=<"%DEPLOYMENT_TEMP%\__npmVersion.tmp"
-    IF !ERRORLEVEL! NEQ 0 goto error
-  )
-
-  IF NOT DEFINED NODE_EXE (
-    SET NODE_EXE=node
-  )
-
-  SET NPM_CMD="!NODE_EXE!" "!NPM_JS_PATH!"
-) ELSE (
-  SET NPM_CMD=npm
-  SET NODE_EXE=node
-)
-
-echo Select Node Version Section Ending
-goto :NPMPACKAGES

@@ -24,11 +24,12 @@ namespace Sitio_Privado.Controllers
         [HttpGet]
         public IHttpActionResult GetContainer(string name)
         {
-            CloudBlobContainer container = azureStorageHelper.GetContanerReferenceByName(name);
+            CloudBlobContainer container = azureStorageHelper.GetContainerReferenceByName(name);
             if (container.Exists())
             {
                 List<AzureFolder> folders = new List<AzureFolder>();
                 IEnumerable<IListBlobItem> blobs = container.ListBlobs(null, true, BlobListingDetails.All);
+                blobs = blobs.OrderBy(item => item.Uri.LocalPath);
 
                 foreach (var item in blobs)
                 {
