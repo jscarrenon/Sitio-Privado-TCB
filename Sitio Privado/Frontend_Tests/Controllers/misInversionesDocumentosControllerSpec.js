@@ -126,7 +126,7 @@
             this.result.cancelCallback(type);
         }
     };
-
+     
     beforeEach(inject(function (_$q_, _$rootScope_, _$filter_, _$uibModal_, _constantService_, _dataService_, _extrasService_) {
         $q = _$q_;
         $rootScope = _$rootScope_;
@@ -167,7 +167,7 @@
         misInversionesDocumentosCtrl.seleccionarSeccion(id);
 
         expect(misInversionesDocumentosCtrl.seccionId).toBe(id);
-        expect(misInversionesDocumentosCtrl.seccionURI).toBe('app/mis-inversiones/estado-documentos_pendientes.html');
+        expect(misInversionesDocumentosCtrl.seccionURI).toBe('.build/html/modules/mis-inversiones/templates/estado-documentos_pendientes.html');
     });
 
     it('Seleccionar sección 1.', function () {
@@ -175,7 +175,7 @@
         misInversionesDocumentosCtrl.seleccionarSeccion(id);
 
         expect(misInversionesDocumentosCtrl.seccionId).toBe(id);
-        expect(misInversionesDocumentosCtrl.seccionURI).toBe('app/mis-inversiones/estado-documentos_firmados.html');
+        expect(misInversionesDocumentosCtrl.seccionURI).toBe('.build/html/modules/mis-inversiones/templates/estado-documentos_firmados.html');
     });
 
     it('Setear plantillas.', function () {
@@ -189,13 +189,13 @@
         misInversionesDocumentosCtrl.configurarPaginacion();
 
         expect(misInversionesDocumentosCtrl.operacionesPendientesPaginaActual).toBe(1);
-        expect(misInversionesDocumentosCtrl.operacionesPendientesPorPagina).toBe(10);
+        expect(misInversionesDocumentosCtrl.operacionesPendientesPorPagina).toBe(15);
         expect(misInversionesDocumentosCtrl.documentosPendientesPaginaActual).toBe(1);
-        expect(misInversionesDocumentosCtrl.documentosPendientesPorPagina).toBe(10);
+        expect(misInversionesDocumentosCtrl.documentosPendientesPorPagina).toBe(15);
         expect(misInversionesDocumentosCtrl.operacionesFirmadasPaginaActual).toBe(1);
-        expect(misInversionesDocumentosCtrl.operacionesFirmadasPorPagina).toBe(10);
+        expect(misInversionesDocumentosCtrl.operacionesFirmadasPorPagina).toBe(15);
         expect(misInversionesDocumentosCtrl.documentosFirmadosPaginaActual).toBe(1);
-        expect(misInversionesDocumentosCtrl.documentosFirmadosPorPagina).toBe(10);    
+        expect(misInversionesDocumentosCtrl.documentosFirmadosPorPagina).toBe(15);    
     });
 
     it('Obtener documentos pendientes.', function () {
@@ -281,9 +281,10 @@
         expect(archivo_stub.Leido).toBe('N');
     });
 
-    it('Firmar documentos. Declaración verdadera.', function () {
+    it('Firmar documentos. Declaración verdadera con operaciones y documentos pendientes.', function () {
         misInversionesDocumentosCtrl.declaracion = true;
         misInversionesDocumentosCtrl.operacionesPendientes = documentosFirmados_stub['operaciones'];
+        misInversionesDocumentosCtrl.documentosPendientes = documentosFirmados_stub['documentos'];
 
         spyOn(misInversionesDocumentosCtrl, 'actualizarDocumentosPendientes');
         spyOn(misInversionesDocumentosCtrl, 'actualizarDocumentosFirmados');
@@ -292,54 +293,59 @@
         postWebService_deferred.resolve({ Documentos: documentosFirmados_stub['operaciones'] });
         $rootScope.$digest();
 
-        expect(misInversionesDocumentosCtrl.actualizarDocumentosPendientes).toHaveBeenCalled();
-        expect(misInversionesDocumentosCtrl.actualizarDocumentosFirmados).toHaveBeenCalled();
+        postWebService_deferred.resolve({ Documentos: documentosFirmados_stub['documentos'] });
+        $rootScope.$digest();
 
-        /*firmarDocumentos(): void {
-    var firmarOperacionesLoading: boolean = false;
-var firmarDocumentosLoading: boolean = false;
-this.firmarLoading = firmarOperacionesLoading || firmarDocumentosLoading;
+        expect(misInversionesDocumentosCtrl.actualizarDocumentosPendientes).toHaveBeenCalledTimes(2);
+        expect(misInversionesDocumentosCtrl.actualizarDocumentosFirmados).toHaveBeenCalledTimes(2);
+    });
 
-if (this.declaracion) {
-    var operacionesSeleccionadas: app.domain.IDocumento[] = this.$filter('filter')(this.operacionesPendientes, { Seleccionado: true });
-    if (operacionesSeleccionadas) {
-        var operacionCodigo = operacionesSeleccionadas.map(function (documento) { return documento.Codigo; }).join();
-        if (operacionCodigo) {
-            var operacionFirmarInput: app.domain.IOperacionFirmarInput = new app.domain.OperacionFirmarInput(this.authService.usuario.Rut, operacionCodigo);
+    it('Firmar documentos. Declaración verdadera sólo con operaciones pendientes.', function () {
+        misInversionesDocumentosCtrl.declaracion = true;
+        documentosFirmados_stub['operaciones'][1].Seleccionado = true;
+        documentosFirmados_stub['documentos'][1].Seleccionado = false;
+        misInversionesDocumentosCtrl.operacionesPendientes = documentosFirmados_stub['operaciones'];
+        misInversionesDocumentosCtrl.documentosPendientes = documentosFirmados_stub['documentos'];
+        
 
-            firmarOperacionesLoading = true;
-            this.firmarLoading = firmarOperacionesLoading || firmarDocumentosLoading;
+        spyOn(misInversionesDocumentosCtrl, 'actualizarDocumentosPendientes');
+        spyOn(misInversionesDocumentosCtrl, 'actualizarDocumentosFirmados');
 
-            this.dataService.postWebService(this.constantService.apiDocumentoURI + 'setFirmarOperacion', operacionFirmarInput)
-                .then((result: app.domain.IDocumentoFirmarResultado) => {
-                    var operacionFirmarResultado: app.domain.IDocumentoFirmarResultado = result;
-                    this.actualizarDocumentosPendientes();
-                    this.actualizarDocumentosFirmados();
-                })
-            .finally(() => { firmarOperacionesLoading = false; this.firmarLoading = firmarOperacionesLoading || firmarDocumentosLoading; });
-        }
-    }
+        misInversionesDocumentosCtrl.firmarDocumentos();
+        postWebService_deferred.resolve({ Documentos: documentosFirmados_stub['operaciones'] });
+        $rootScope.$digest();
 
-    var documentosSeleccionados: app.domain.IDocumento[] = this.$filter('filter')(this.documentosPendientes, { Seleccionado: true });
-    if (documentosSeleccionados) {
-        var documentoCodigo: string = documentosSeleccionados.map(function (documento) { return documento.Codigo; }).join();
-        if (documentoCodigo) {
-            var documentoFirmarInput: app.domain.IDocumentoFirmarInput = new app.domain.DocumentoFirmarInput(this.authService.usuario.Rut, documentoCodigo);
+        expect(misInversionesDocumentosCtrl.actualizarDocumentosPendientes).toHaveBeenCalledTimes(1);
+        expect(misInversionesDocumentosCtrl.actualizarDocumentosFirmados).toHaveBeenCalledTimes(1);
+    });
 
-            firmarDocumentosLoading = true;
-            this.firmarLoading = firmarOperacionesLoading || firmarDocumentosLoading;
+    it('Firmar documentos. Declaración verdadera sólo con documentos pendientes.', function () {
+        misInversionesDocumentosCtrl.declaracion = true;
+        documentosFirmados_stub['operaciones'][1].Seleccionado = false;
+        documentosFirmados_stub['documentos'][1].Seleccionado = true;
+        misInversionesDocumentosCtrl.operacionesPendientes = documentosFirmados_stub['operaciones'];
+        misInversionesDocumentosCtrl.documentosPendientes = documentosFirmados_stub['documentos'];        
 
-            this.dataService.postWebService(this.constantService.apiDocumentoURI + 'setFirmarDocumento', documentoFirmarInput)
-                .then((result: app.domain.IDocumentoFirmarResultado) => {
-                    var documentoFirmarResultado: app.domain.IDocumentoFirmarResultado = result;
-                    this.actualizarDocumentosPendientes();
-                    this.actualizarDocumentosFirmados();
-                })
-            .finally(() => { firmarDocumentosLoading = false; this.firmarLoading = firmarOperacionesLoading || firmarDocumentosLoading; });
-        }
-    }
-}
-}*/
+        spyOn(misInversionesDocumentosCtrl, 'actualizarDocumentosPendientes');
+        spyOn(misInversionesDocumentosCtrl, 'actualizarDocumentosFirmados');
+
+        misInversionesDocumentosCtrl.firmarDocumentos();
+        postWebService_deferred.resolve({ Documentos: documentosFirmados_stub['operaciones'] });
+        $rootScope.$digest();
+
+        expect(misInversionesDocumentosCtrl.firmarLoading).toBe(false);
+        expect(misInversionesDocumentosCtrl.actualizarDocumentosPendientes).toHaveBeenCalledTimes(1);
+        expect(misInversionesDocumentosCtrl.actualizarDocumentosFirmados).toHaveBeenCalledTimes(1);
+    });
+
+    it('Firmar documentos. Declaración no verdadera.', function () {
+        misInversionesDocumentosCtrl.declaracion = false;
+
+        spyOn(misInversionesDocumentosCtrl, 'actualizarDocumentosPendientes');
+        spyOn(misInversionesDocumentosCtrl, 'actualizarDocumentosFirmados');
+
+        expect(misInversionesDocumentosCtrl.actualizarDocumentosPendientes).not.toHaveBeenCalled();
+        expect(misInversionesDocumentosCtrl.actualizarDocumentosFirmados).not.toHaveBeenCalled();
     });
 
     it('Obtener input de documentos pendientes y llamar a metodo getDocumentosPendientes().', function () {
@@ -401,7 +407,7 @@ if (this.declaracion) {
         expect(misInversionesDocumentosCtrl.documentosPendientes[1].Seleccionado).toBe(false);
     });
 
-    it('Desactivar check 'Todas las operaciones'', function () {
+    it('Desactivar check todas las operaciones', function () {
         misInversionesDocumentosCtrl.todasOperaciones = true;
         misInversionesDocumentosCtrl.operacionesPendientes = documentosFirmados_stub['operaciones'];
         misInversionesDocumentosCtrl.opcionOperacionToggled();
@@ -409,7 +415,7 @@ if (this.declaracion) {
         expect(misInversionesDocumentosCtrl.todasOperaciones).toBe(false);
     });
 
-    it('Desactivar check 'Todos los documentos'', function () {
+    it('Desactivar check todos los documentos', function () {
         misInversionesDocumentosCtrl.todosDocumentos = true;
         misInversionesDocumentosCtrl.documentosPendientes = documentosFirmados_stub['documentos'];
         misInversionesDocumentosCtrl.opcionDocumentoToggled();
@@ -422,4 +428,59 @@ if (this.declaracion) {
 
         expect($uibModal.open).toHaveBeenCalled();
     });
+
+    it('Validar fechas. Fechas de DESDE y HASTA válidas.', function () {
+        misInversionesDocumentosCtrl.validarFechas();
+
+        expect(misInversionesDocumentosCtrl.errorFechas).toBe(null);
+    });
+
+    it('Validar fechas. Fecha DESDE es indefinida.', function () {
+        misInversionesDocumentosCtrl.fechaFirmadosInicio = undefined;
+        misInversionesDocumentosCtrl.validarFechas();
+
+        expect(misInversionesDocumentosCtrl.errorFechas).toBe('La fecha "desde" es inválida.');
+    });
+
+    it('Validar fechas. Fecha de HASTA es indefinida.', function () {
+        misInversionesDocumentosCtrl.fechaFirmadosFin = undefined;
+        misInversionesDocumentosCtrl.validarFechas();
+
+        expect(misInversionesDocumentosCtrl.errorFechas).toBe('La fecha "hasta" es inválida.');
+    });
+
+    it('Validar fechas. Fechas de DESDE y HASTA indefinidas.', function () {
+        misInversionesDocumentosCtrl.fechaFirmadosInicio = undefined;
+        misInversionesDocumentosCtrl.fechaFirmadosFin = undefined;
+        misInversionesDocumentosCtrl.validarFechas();
+
+        expect(misInversionesDocumentosCtrl.errorFechas).toBe('La fecha "desde" y la fecha "hasta" son inválidas.');
+    });
+
+    it('Validar fechas. Fecha de DESDE mayor a fecha de HASTA.', function () {
+        misInversionesDocumentosCtrl.fechaFirmadosInicio = new Date("2016-03-23");
+        misInversionesDocumentosCtrl.fechaFirmadosFin = new Date("2016-03-22");
+        misInversionesDocumentosCtrl.validarFechas();
+
+        expect(misInversionesDocumentosCtrl.errorFechas).toBe('La fecha "desde" es mayor a la fecha "hasta".');
+    });
+
+    /*
+    ----1
+
+    misInversionesDocumentosCtrl.fechaFirmadosInicio = undefined
+    ----2
+    misInversionesDocumentosCtrl.fechaFirmadosInicio = undefined
+    ----3
+    misInversionesDocumentosCtrl.fechaFirmadosInicio = undefined
+    misInversionesDocumentosCtrl.fechaFirmadosFin = undefined
+    ----4
+    misInversionesDocumentosCtrl.fechaFirmadosInicio = mayor a fin
+    misInversionesDocumentosCtrl.fechaFirmadosFin = menor a inicio
+    ----5
+    misInversionesDocumentosCtrl.fechaFirmadosInicio = undefined
+    misInversionesDocumentosCtrl.fechaFirmadosFin = undefined
+    expect(misInversionesDocumentosCtrl).toBe('La fecha \"desde\" es inválida')
+
+    */
 });

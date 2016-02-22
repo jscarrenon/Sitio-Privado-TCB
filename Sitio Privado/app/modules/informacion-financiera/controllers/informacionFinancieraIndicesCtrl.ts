@@ -30,7 +30,7 @@
 
         validarFecha(): void {
             if (this.fecha === undefined) {
-                this.errorFecha = 'La fecha es inválida';
+                this.errorFecha = 'La fecha es inválida.';
             }
             else {
                 this.errorFecha = null;

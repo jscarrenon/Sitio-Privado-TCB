@@ -30,7 +30,6 @@
     };
 
     beforeEach(inject(function (_$controller_, _$rootScope_, _$q_, _constantService_, _dataService_, _extrasService_) {
-
         $q = _$q_;
         $rootScope = _$rootScope_;
         constantService = _constantService_;
@@ -51,25 +50,34 @@
         postWebService_deferred.resolve(indices_stub);
         $rootScope.$digest();
         postWebService_deferred = $q.defer();
-
     }));
 
     it('Obtener indices.', function () {
-
         informacionFinancieraIndicesCtrl.getIndices(indices_input_stub);
         postWebService_deferred.resolve(indices_stub);
         $rootScope.$digest();
 
         expect(informacionFinancieraIndicesCtrl.indices).toBe(indices_stub);
-
     });
 
     it('Indices actualizados correctamente.', function () {
-
         var spy = spyOn(informacionFinancieraIndicesCtrl, 'getIndices');
         informacionFinancieraIndicesCtrl.actualizarIndices();
+
         expect(informacionFinancieraIndicesCtrl.indicesInput.xfecha).toBe(indices_input_stub.xfecha);
         expect(spy).toHaveBeenCalled();
+    });
 
+    it('Validar fecha. Fecha definida correctamente.', function () {
+        informacionFinancieraIndicesCtrl.validarFecha();
+
+        expect(informacionFinancieraIndicesCtrl.errorFecha).toBeDefined();
+    });
+
+    it('Validar fecha. Fecha indefinida', function () {
+        informacionFinancieraIndicesCtrl.fecha = undefined;
+        informacionFinancieraIndicesCtrl.validarFecha();
+
+        expect(informacionFinancieraIndicesCtrl.errorFecha).toBe('La fecha es inválida.');
     });
 });
