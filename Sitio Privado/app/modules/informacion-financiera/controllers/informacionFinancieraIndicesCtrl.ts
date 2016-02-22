@@ -5,6 +5,8 @@
         indices: app.domain.IIndices;
         getIndices(input: app.domain.IIndicesInput): void;
         loading: boolean;
+        errorFecha: string;
+        validarFecha(): void;
     }
 
     class InformacionFinancieraIndicesCtrl implements IInformacionFinancieraViewModel {
@@ -13,6 +15,7 @@
         indices: app.domain.IIndices;
         indicesInput: app.domain.IIndicesInput;
         loading: boolean;
+        errorFecha: string;
 
         static $inject = ['constantService', 'dataService', 'extrasService'];
         constructor(private constantService: app.common.services.ConstantService,
@@ -23,6 +26,15 @@
             this.fecha.setDate(this.fecha.getDate() - 1); //día anterior
 
             this.actualizarIndices();
+        }
+
+        validarFecha(): void {
+            if (this.fecha === undefined) {
+                this.errorFecha = 'La fecha es inválida';
+            }
+            else {
+                this.errorFecha = null;
+            }
         }
 
         getIndices(input: app.domain.IIndicesInput): void {

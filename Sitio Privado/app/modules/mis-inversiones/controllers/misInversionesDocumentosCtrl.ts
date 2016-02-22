@@ -34,6 +34,8 @@
         opcionOperacionToggled(): void;
         opcionDocumentoToggled(): void;
         confirmacion(): void;
+        errorFechas: string;
+        validarFechas(): void;
     }
 
     class MisInversionesDocumentosCtrl implements IMisInversionesDocumentosViewModel {
@@ -65,6 +67,7 @@
         pendientesLoading: boolean;
         firmadosLoading: boolean;
         firmarLoading: boolean;
+        errorFechas: string;
 
         static $inject = ['constantService', 'dataService', 'authService', 'extrasService', '$filter', '$uibModal'];
         constructor(private constantService: app.common.services.ConstantService,
@@ -79,6 +82,7 @@
             this.seleccionarSeccion(this.seccionId);
             this.configurarPaginacion();
 
+            this.errorFechas = null;
             this.fechaHoy = new Date();
             this.declaracion = false;
             this.todasOperaciones = false;
@@ -106,13 +110,35 @@
 
         configurarPaginacion(): void {
             this.operacionesPendientesPaginaActual = 1;
-            this.operacionesPendientesPorPagina = 10;
+            this.operacionesPendientesPorPagina = 15;
             this.documentosPendientesPaginaActual = 1;
-            this.documentosPendientesPorPagina = 10;
+            this.documentosPendientesPorPagina = 15;
             this.operacionesFirmadasPaginaActual = 1;
-            this.operacionesFirmadasPorPagina = 10;
+            this.operacionesFirmadasPorPagina = 15;
             this.documentosFirmadosPaginaActual = 1;
-            this.documentosFirmadosPorPagina = 10;
+            this.documentosFirmadosPorPagina = 15;
+        }
+
+        validarFechas(): void {
+            if (this.fechaFirmadosInicio === undefined || this.fechaFirmadosFin === undefined) {
+                if (this.fechaFirmadosInicio === undefined) {
+                    this.errorFechas = 'La fecha "desde" es inválida';
+                }
+                if (this.fechaFirmadosFin === undefined) {
+                    if (this.fechaFirmadosInicio === undefined) {
+                        this.errorFechas = 'La fecha "desde" y la fecha "hasta" son inválidas';
+                    }
+                    else {
+                        this.errorFechas = 'La fecha "hasta" es inválida';
+                    }
+                }
+            }
+            else if (this.fechaFirmadosInicio > this.fechaFirmadosFin) {
+                this.errorFechas = 'La fecha "desde" es mayor a la fecha hasta';
+            }
+            else {
+                this.errorFechas = null;
+            }
         }
 
         getDocumentosPendientes(input: app.domain.IDocumentosPendientesInput): void {
