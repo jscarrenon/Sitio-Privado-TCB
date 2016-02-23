@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using Sitio_Privado.Extras;
 using Sitio_Privado.Filters;
 using Sitio_Privado.Helpers;
 using Sitio_Privado.Models;
@@ -70,6 +71,16 @@ namespace Sitio_Privado.Controllers
             {
                 string responseBody = GetUserResponseBody(graphApiResponse.User);
                 response.Content = new StringContent(responseBody, Encoding.UTF8, "application/json");
+
+                tracer.Info(Request, ControllerContext.ControllerDescriptor.ControllerType.FullName, "Sending email");
+                //Sending email
+                Email email = new Email("NewUserMail");
+                email.UserEmail = graphUser.Email;
+                email.UserFullName = graphUser.DisplayName;
+                email.UserPassword = graphUser.TemporalPassword;
+                await email.SendAsync();
+
+                tracer.Info(Request, ControllerContext.ControllerDescriptor.ControllerType.FullName, "Email sent");
             }
             else
             {
