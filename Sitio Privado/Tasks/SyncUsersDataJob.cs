@@ -94,7 +94,7 @@ namespace Sitio_Privado.Tasks
             graphUser.City = user.City;
             graphUser.Bank = user.Bank;
             graphUser.CheckingAccount = user.CheckingAccount;
-            graphUser.TemporalPassword = user.TemporalPassword;
+            graphUser.TemporalPassword = PasswordGeneratorHelper.GeneratePassword();
             graphUser.UpdatedAt = DateTime.Now.ToString();
             return graphUser;
         }
