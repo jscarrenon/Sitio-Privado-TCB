@@ -1,5 +1,6 @@
 ﻿using NLog;
 using Quartz;
+using Sitio_Privado.Extras;
 using Sitio_Privado.Helpers;
 using Sitio_Privado.Models;
 using System;
@@ -49,6 +50,13 @@ namespace Sitio_Privado.Tasks
                     if(createResponse.StatusCode == System.Net.HttpStatusCode.Created)
                     {
                         logger.Info("User " + user.Rut + " created");
+                        logger.Info("Sending email");
+                        Email email = new Email("NewUserMail");
+                        email.UserEmail = graphUser.Email;
+                        email.UserFullName = graphUser.DisplayName;
+                        email.UserPassword = graphUser.TemporalPassword;
+                        await email.SendAsync();
+                        logger.Info("Email Sent");
                     }
                     else
                     {
@@ -94,7 +102,7 @@ namespace Sitio_Privado.Tasks
             graphUser.City = user.City;
             graphUser.Bank = user.Bank;
             graphUser.CheckingAccount = user.CheckingAccount;
-            graphUser.TemporalPassword = user.TemporalPassword;
+            graphUser.TemporalPassword = PasswordGeneratorHelper.GeneratePassword();
             graphUser.UpdatedAt = DateTime.Now.ToString();
             return graphUser;
         }
