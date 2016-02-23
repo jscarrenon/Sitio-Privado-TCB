@@ -73,11 +73,19 @@
         });
     }));
 
-    it('Obtener datos agente.', function () {
+    it('debería obtener los datos de agente..', function () {
         agenteCtrl.getAgente(agenteInput_stub);        
         postWebService_deferred.resolve(agente_stub);
         $rootScope.$digest();
 
-        expect(agenteCtrl.agente).toBe(agente_stub);
+        expect(agenteCtrl.agente.Codigo).toBe(0284);
+        expect(agenteCtrl.agente.Nombre).toBe('Agente de prueba');
+        expect(agenteCtrl.agente.Sucursal).toBe('Sucursal de prueba');
+        expect(agenteCtrl.agente.PathImg).toBe('/path/de/prueba/');
+        expect(agenteCtrl.agente.Email).toBe('adeprueba@tanner.cl');
+        expect(agenteCtrl.agente.Telefono).toBe('99000000');
+        expect(agenteCtrl.agente.FechaInicioAcreditacion).toBe('24 de noviembre 2015');
+        expect(agenteCtrl.agente.FechaExpiracionAcreditacion).toBe('24 de noviembre 2016');
+        expect(agenteCtrl.agente.Descriptor).toBe('Este es un agente de prueba');
     });
 });

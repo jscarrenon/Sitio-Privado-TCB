@@ -28,7 +28,7 @@
         });
     }));
 
-    it('Seleccionar sección 0.', function () {
+    it('debería seleccionar sección "nacionales.html" si seccionId es igual a 0.', function () {
         var seccionId = 0;
         misInversionesCtrl.seleccionarSeccion(seccionId);
 
@@ -36,7 +36,7 @@
         expect(misInversionesCtrl.seccionURI).toEqual('.build/html/modules/mis-inversiones/templates/nacionales.html');
     });
 
-    it('Seleccionar sección 2.', function () {
+    it('debería seleccionar sección "fondos-mutuos.html" si seccionId es igual a 2.', function () {
         var seccionId = 2;
         misInversionesCtrl.seleccionarSeccion(seccionId);
 
@@ -44,7 +44,7 @@
         expect(misInversionesCtrl.seccionURI).toEqual('.build/html/modules/mis-inversiones/templates/fondos-mutuos.html');
     });
 
-    it('Seleccionar sección 3.', function () {
+    it('debería seleccionar sección "estado-documentos.html" si seccionId es igual a 3.', function () {
         var seccionId = 3;
         misInversionesCtrl.seleccionarSeccion(seccionId);
 
@@ -52,7 +52,7 @@
         expect(misInversionesCtrl.seccionURI).toEqual('.build/html/modules/mis-inversiones/templates/estado-documentos.html');
     });
 
-    it('Seleccionar sección 4.', function () {
+    it('debería seleccionar sección "circularizacion.html" si seccionId es igual a 4.', function () {
         var seccionId = 4;
         misInversionesCtrl.seleccionarSeccion(seccionId);
 
@@ -60,7 +60,7 @@
         expect(misInversionesCtrl.seccionURI).toEqual('.build/html/modules/mis-inversiones/templates/circularizacion.html');
     });
 
-    it('Setear plantillas.', function () {
+    it('debería setear las plantillas html.', function () {
         misInversionesCtrl.setTemplates();
 
         expect(misInversionesCtrl.templates[0]).toBe('nacionales.html');

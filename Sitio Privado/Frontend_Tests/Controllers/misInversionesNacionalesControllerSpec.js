@@ -71,7 +71,7 @@
         });
     }));
 
-    it('Obtener balance.', function () {
+    it('debería obtener balance.', function () {
         misInversionesNacionalesCtrl.getBalance(balanceInput_stub);
         postWebService_deferred.resolve(balance_stub);
         $rootScope.$digest();
@@ -79,7 +79,7 @@
         expect(misInversionesNacionalesCtrl.balance).toBe(balance_stub);
     });
 
-    it('Obtener cartola.', function () {
+    it('debería obtener cartola.', function () {
         misInversionesNacionalesCtrl.getCartola(cartolaInput_stub);
         postWebService_deferred.resolve(cartola_stub);
         $rootScope.$digest();

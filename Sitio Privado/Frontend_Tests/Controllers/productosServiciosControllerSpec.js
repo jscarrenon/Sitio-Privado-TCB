@@ -61,7 +61,7 @@
         });
     }));
 
-    it('Obtener categorias Cliente', function () {
+    it('debería obtener categorias Cliente.', function () {
         var categoriaClienteInput_stub = { rut_cli: usuario_stub.Rut };
         var categoriaCliente_stub = {
             Identificador: 1,
@@ -81,7 +81,7 @@
         expect(productosServiciosCtrl.productosLoading).toBe(false);
     });
 
-    it('getProductos', function () {
+    it('debería obtener los productos.', function () {
 
         var categoria_stub = [
             {
@@ -137,7 +137,7 @@
         expect(productosServiciosCtrl.productos).toEqual([productos_stub[2]]);
     });
 
-    it('Realizar scroll automatico.', function () {
+    it('debería realizar scroll automático..', function () {
         var id_stub = 'div_container_a';
 
         productosServiciosCtrl.scrollTo(id_stub);
@@ -145,7 +145,7 @@
         expect(productosServiciosCtrl.$anchorScroll).toBeDefined();
     });
 
-    it('Setear imagenes.', function () {
+    it('debería setear imagenes.', function () {
         productosServiciosCtrl.setImagenes();
 
         expect(productosServiciosCtrl.imagenProducto['1']).toBe('moneda-ext');

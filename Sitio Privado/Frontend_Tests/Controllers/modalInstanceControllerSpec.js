@@ -16,14 +16,14 @@
         });
     }));
 
-    it('Cerrar al presionar aceptar', function () {
+    it('debería cerrar el modal al presionar aceptar', function () {
         spyOn(modalInstanceCtrl.$uibModalInstance, 'close').and.callThrough();
         modalInstanceCtrl.ok();
 
         expect(modalInstanceCtrl.$uibModalInstance.close).toHaveBeenCalled();
     });
 
-    it('Desechar el modal al cancelar.', function () {
+    it('debería desechar el modal al presionar cancelar.', function () {
         spyOn(modalInstanceCtrl.$uibModalInstance, 'dismiss').and.callThrough();
         modalInstanceCtrl.cancelar();
 

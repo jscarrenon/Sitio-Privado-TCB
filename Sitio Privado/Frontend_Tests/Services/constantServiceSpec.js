@@ -9,7 +9,7 @@
         constantService = _constantService_;
     }));
 
-    it('Constantes definidas correctamente.', function () {
+    it('debería definir las constantes correctamente.', function () {
         expect(constantService.mvcHomeURI).toEqual('/Home/');
         expect(constantService.mvcSignOutURI).toEqual('/Account/SignOut');
         expect(constantService.templateFooterURI).toEqual('.build/html/common/templates/footer.html');

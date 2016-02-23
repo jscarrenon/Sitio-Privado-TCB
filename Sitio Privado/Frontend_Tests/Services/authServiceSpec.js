@@ -51,7 +51,7 @@
         authService = _authService_;
     }));
 
-    it('Obtener usuario actual. Usuario autenticado.', function () {
+    it('debería obtener usuario actual. Usuario autenticado.', function () {
         authService.getUsuarioActual();
         getSingle_deferred.resolve(usuario_stub);
         $rootScope.$digest();
@@ -61,7 +61,7 @@
         expect(authService.autenticado).toEqual(usuario_stub.Autenticado);
     });
 
-    it('Obtener usuario actual. Usuario no autenticado.', function () {
+    it('no debería usuario actual. Usuario no autenticado.', function () {
         usuario_stub.Autenticado = false;
         authService.getUsuarioActual();
         getSingle_deferred.resolve(usuario_stub);
@@ -72,7 +72,7 @@
         expect(authService.circularizacionPendiente).toEqual(false);
     });
 
-    it('Cerrar sesión.', function () {
+    it('debería cerrar sesión exitosamente.', function () {
         spyOn(extrasService, 'abrirRuta').and.callFake(function () {
             return true;
         });
@@ -87,7 +87,7 @@
         expect(extrasService.abrirRuta).toHaveBeenCalled();
     });
 
-    it('Obtener circularización pendiente.', function () {
+    it('debería obtener circularización pendiente.', function () {
         authService.getCircularizacionPendiente();
         postWebService_deferred.resolve({ Resultado: true });
         $rootScope.$digest();
@@ -95,7 +95,7 @@
         expect(authService.circularizacionPendiente).toBe(true);
     });
 
-    it('Obtener circularización pendiente. (ninguna pendiente)', function () {
+    it('no debería obtener circularización pendiente. (ninguna pendiente)', function () {
         authService.getCircularizacionPendiente();
         postWebService_deferred.resolve({ Resultado: false });
         $rootScope.$digest();
@@ -103,7 +103,7 @@
         expect(authService.circularizacionPendiente).toBe(false);
     });
 
-    it('Obtener documentos pendientes.', function () {
+    it('debería obtener documentos pendientes.', function () {
         authService.getDocumentosPendientes();
         postWebService_deferred.resolve({ Resultado: 1 });
         $rootScope.$digest();
@@ -111,7 +111,7 @@
         expect(authService.documentosPendientes).toBeGreaterThan(0);
     });
 
-    it('Obtener documentos pendientes. (sin documentos pendientes)', function () {
+    it('no debería obtener documentos pendientes. (sin documentos pendientes)', function () {
         authService.getDocumentosPendientes();
         postWebService_deferred.resolve({ Resultado: 0 });
         $rootScope.$digest();

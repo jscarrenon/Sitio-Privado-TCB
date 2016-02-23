@@ -50,7 +50,7 @@
         });
     }));
 
-    it('Obtener categorias filtradas por descriptor y ordenadas por identificador.', function () {
+    it('debería obtener categorias filtradas por descriptor y ordenadas por identificador.', function () {
         inversionesCtrl.getCategorias();
         get_deferred.resolve(categorias_stub);
         $rootScope.$digest();

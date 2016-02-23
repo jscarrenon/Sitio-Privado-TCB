@@ -97,7 +97,7 @@
         });
     }));     
         
-    it('Arreglos de fondos mutuos correctamente definidos y asignados.', function () {
+    it('debería definir y asignar los arreglos de fondos mutuos correctamente.', function () {
         spyOn(fondosMutuosCtrl, 'getFondosMutuosTotal');
 
         fondosMutuosCtrl.getFondosMutuos(fondoMutuoInput_stub);
@@ -109,7 +109,7 @@
         expect(fondosMutuosCtrl.getFondosMutuosTotal).toHaveBeenCalled();
     });
 
-    it('Totales de fondos mutuos sumados correctamente.', function () {
+    it('debería sumar los totales de fondos mutuos correctamente.', function () {
         fondosMutuosCtrl.fondosMutuosRF = fondosMutuos_stub['fondosMutuosRF'];
         fondosMutuosCtrl.fondosMutuosRV = fondosMutuos_stub['fondosMutuosRV'];
         fondosMutuosCtrl.getFondosMutuosTotal();

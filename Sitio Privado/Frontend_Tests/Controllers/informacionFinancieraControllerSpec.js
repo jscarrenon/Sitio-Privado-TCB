@@ -94,7 +94,7 @@
         });
     }));
 
-    it('Seleccionar sección 0.', function () {
+    it('debería seleccionar sección 0 si la id es igual a 0.', function () {
         var id = 0;
 
         informacionFinancieraCtrl.seleccionarSeccion(id);
@@ -108,7 +108,7 @@
         expect(informacionFinancieraCtrl.seccionURI).toEqual('.build/html/modules/informacion-financiera/templates/estatutos.html');        
     });
 
-    it('Seleccionar sección 1.', function () {
+    it('debería seleccionar sección 1 si la id es igual a 1.', function () {
         var id = 1;
 
         informacionFinancieraCtrl.seleccionarSeccion(id);
@@ -122,7 +122,7 @@
         expect(informacionFinancieraCtrl.seccionURI).toEqual('.build/html/modules/informacion-financiera/templates/documentos-normativos.html');
     });
 
-    it('Seleccionar sección 2.', function () {
+    it('debería seleccionar sección 2 si la id es igual a 2.', function () {
         var id = 2;
 
         informacionFinancieraCtrl.seleccionarSeccion(id);
@@ -136,7 +136,7 @@
         expect(informacionFinancieraCtrl.seccionURI).toEqual('.build/html/modules/informacion-financiera/templates/servicios-custodia.html');
     });
 
-    it('Seleccionar sección 3.', function () {
+    it('debería seleccionar sección 3 si la id es igual a 3.', function () {
         var id = 3;
 
         informacionFinancieraCtrl.seleccionarSeccion(id);
@@ -150,7 +150,7 @@
         expect(informacionFinancieraCtrl.seccionURI).toEqual('.build/html/modules/informacion-financiera/templates/indices-liquidez.html');
     });
 
-    it('Seleccionar sección 4.', function () {
+    it('debería seleccionar sección 4 si la id es igual a 4.', function () {
         var id = 4;
 
         informacionFinancieraCtrl.seleccionarSeccion(id);
@@ -164,7 +164,7 @@
         expect(informacionFinancieraCtrl.seccionURI).toEqual('.build/html/modules/informacion-financiera/templates/comite-regulacion.html');
     });
 
-    it('Seleccionar sección 5.', function () {
+    it('debería seleccionar sección 5 si la id es igual a 5.', function () {
         var id = 5;
 
         informacionFinancieraCtrl.seleccionarSeccion(id);
@@ -179,7 +179,7 @@
     });
         
     
-    it('Seleccionar año (indice = 0).', function () {
+    it('debería seleccionar año (indice = 0).', function () {
         var index = 0;
 
         informacionFinancieraCtrl.container = container_stub;
@@ -189,7 +189,7 @@
         expect(informacionFinancieraCtrl.selectedYear).toBe(informacionFinancieraCtrl.container[index].Folders);
     });
     
-    it('Obtener contenedor de estatutos.', function () {
+    it('debería obtener contenedor de estatutos si input es igual a "estatutos".', function () {
         var input = 'estatutos';
 
         informacionFinancieraCtrl.getContainer(input);
@@ -199,7 +199,7 @@
         expect(informacionFinancieraCtrl.container).toBe(container_stub);
     });
     
-    it('Obtener contenedor de documentos normativos.', function () {
+    it('debería obtener contenedor de documentos normativos si input es igual a "documentos-normativos".', function () {
         var input = 'documentos-normativos';
 
         informacionFinancieraCtrl.getContainer(input);
@@ -210,7 +210,7 @@
         expect(informacionFinancieraCtrl.container).toBe(container_stub);
     });
 
-    it('Obtener contenedor de servicios de custodia.', function () {
+    it('debería obtener contenedor de servicios de custodia si input es igual a "servicios-custodia".', function () {
         var input = 'servicios-custodia';
 
         informacionFinancieraCtrl.getContainer(input);
@@ -220,7 +220,7 @@
         expect(informacionFinancieraCtrl.container).toBe(container_stub);
     });
 
-    it('Obtener contenedor de comité de regulación.', function () {
+    it('debería obtener contenedor de comité de regulación si input es igual a "comite-regulacion".', function () {
         var input = 'comite-regulacion';
 
         informacionFinancieraCtrl.getContainer(input);
@@ -230,7 +230,7 @@
         expect(informacionFinancieraCtrl.container).toBe(container_stub);
     });
 
-    it('Obtener contenedor de otros documentos.', function () {
+    it('debería obtener contenedor de otros documentos si input es igual a "otros-documentos".', function () {
         var input = 'otros-documentos';
 
         informacionFinancieraCtrl.getContainer(input);
@@ -240,7 +240,7 @@
         expect(informacionFinancieraCtrl.container).toBe(container_stub);
     });
     
-    it('Setear las plantillas.', function () {
+    it('debería setear las plantillas.', function () {
         informacionFinancieraCtrl.setTemplates();
 
         expect(informacionFinancieraCtrl.templates[0]).toBe('estatutos.html');
@@ -251,7 +251,7 @@
         expect(informacionFinancieraCtrl.templates[5]).toBe('otros-documentos.html');
     });
 
-    it('Setear nombres a contenedores.', function () {            
+    it('debería setear nombres a contenedores.', function () {
         informacionFinancieraCtrl.setContainerNames();
 
         expect(informacionFinancieraCtrl.containerNames[0]).toBe('estatutos');

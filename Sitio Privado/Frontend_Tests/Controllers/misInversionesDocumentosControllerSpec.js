@@ -162,7 +162,7 @@
         });
     }));
 
-    it('Seleccionar sección 0.', function () {
+    it('debería seleccionar sección "estado-documentos_pendientes.html" si id es igual a 0.', function () {
         var id = 0;
         misInversionesDocumentosCtrl.seleccionarSeccion(id);
 
@@ -170,7 +170,7 @@
         expect(misInversionesDocumentosCtrl.seccionURI).toBe('.build/html/modules/mis-inversiones/templates/estado-documentos_pendientes.html');
     });
 
-    it('Seleccionar sección 1.', function () {
+    it('debería seleccionar sección "estado-documentos_firmados.html" si id es igual a 1.', function () {
         var id = 1;
         misInversionesDocumentosCtrl.seleccionarSeccion(id);
 
@@ -178,14 +178,14 @@
         expect(misInversionesDocumentosCtrl.seccionURI).toBe('.build/html/modules/mis-inversiones/templates/estado-documentos_firmados.html');
     });
 
-    it('Setear plantillas.', function () {
+    it('debería setear las plantillas html.', function () {
         misInversionesDocumentosCtrl.setTemplates();
 
         expect(misInversionesDocumentosCtrl.templates[0]).toBe('estado-documentos_pendientes.html');
         expect(misInversionesDocumentosCtrl.templates[1]).toBe('estado-documentos_firmados.html');
     });
 
-    it('configurar constantes de paginación.', function () {
+    it('debería configurar constantes de paginación.', function () {
         misInversionesDocumentosCtrl.configurarPaginacion();
 
         expect(misInversionesDocumentosCtrl.operacionesPendientesPaginaActual).toBe(1);
@@ -198,7 +198,7 @@
         expect(misInversionesDocumentosCtrl.documentosFirmadosPorPagina).toBe(15);    
     });
 
-    it('Obtener documentos pendientes.', function () {
+    it('debería obtener documentos pendientes.', function () {
         misInversionesDocumentosCtrl.getDocumentosPendientes({ rut: usuario_stub.Rut });
         postWebService_deferred.resolve(documentosFirmados_stub);
         $rootScope.$digest();
@@ -207,7 +207,7 @@
         expect(misInversionesDocumentosCtrl.documentosPendientes).toEqual(documentosFirmados_stub['documentos']);
     });
 
-    it('Obtener documentos firmados.', function () {
+    it('debería obtener documentos firmados.', function () {
 
         misInversionesDocumentosCtrl.getDocumentosFirmados({ rut: usuario_stub.Rut });
         postWebService_deferred.resolve(documentosFirmados_stub);
@@ -217,7 +217,7 @@
         expect(misInversionesDocumentosCtrl.documentosFirmados).toEqual(documentosFirmados_stub['documentos']);
     });
 
-    it('Ver documento. Resultado verdadero.', function () {
+    it('debería ver documento. Resultado verdadero.', function () {
 
         var archivo_stub = {
             Codigo: '070',
@@ -249,7 +249,7 @@
         expect(archivo_stub.Leido).toBe('S');
     });
 
-    it('Ver documento. Resultado negativo.', function () {
+    it('debería ver documento. Resultado negativo.', function () {
 
         var archivo_stub = {
             Codigo: '070',
@@ -281,7 +281,7 @@
         expect(archivo_stub.Leido).toBe('N');
     });
 
-    it('Firmar documentos. Declaración verdadera con operaciones y documentos pendientes.', function () {
+    it('debería firmar documentos. Declaración verdadera con operaciones y documentos pendientes.', function () {
         misInversionesDocumentosCtrl.declaracion = true;
         misInversionesDocumentosCtrl.operacionesPendientes = documentosFirmados_stub['operaciones'];
         misInversionesDocumentosCtrl.documentosPendientes = documentosFirmados_stub['documentos'];
@@ -300,7 +300,7 @@
         expect(misInversionesDocumentosCtrl.actualizarDocumentosFirmados).toHaveBeenCalledTimes(2);
     });
 
-    it('Firmar documentos. Declaración verdadera sólo con operaciones pendientes.', function () {
+    it('debería firmar documentos. Declaración verdadera sólo con operaciones pendientes.', function () {
         misInversionesDocumentosCtrl.declaracion = true;
         documentosFirmados_stub['operaciones'][1].Seleccionado = true;
         documentosFirmados_stub['documentos'][1].Seleccionado = false;
@@ -319,7 +319,7 @@
         expect(misInversionesDocumentosCtrl.actualizarDocumentosFirmados).toHaveBeenCalledTimes(1);
     });
 
-    it('Firmar documentos. Declaración verdadera sólo con documentos pendientes.', function () {
+    it('debería firmar documentos. Declaración verdadera sólo con documentos pendientes.', function () {
         misInversionesDocumentosCtrl.declaracion = true;
         documentosFirmados_stub['operaciones'][1].Seleccionado = false;
         documentosFirmados_stub['documentos'][1].Seleccionado = true;
@@ -338,7 +338,7 @@
         expect(misInversionesDocumentosCtrl.actualizarDocumentosFirmados).toHaveBeenCalledTimes(1);
     });
 
-    it('Firmar documentos. Declaración no verdadera.', function () {
+    it('debería firmar documentos. Declaración no verdadera.', function () {
         misInversionesDocumentosCtrl.declaracion = false;
 
         spyOn(misInversionesDocumentosCtrl, 'actualizarDocumentosPendientes');
@@ -348,7 +348,7 @@
         expect(misInversionesDocumentosCtrl.actualizarDocumentosFirmados).not.toHaveBeenCalled();
     });
 
-    it('Obtener input de documentos pendientes y llamar a metodo getDocumentosPendientes().', function () {
+    it('debería obtener input de documentos pendientes y llamar a metodo getDocumentosPendientes().', function () {
         spyOn(misInversionesDocumentosCtrl, 'getDocumentosPendientes');
         misInversionesDocumentosCtrl.actualizarDocumentosPendientes();
 
@@ -356,7 +356,7 @@
         expect(misInversionesDocumentosCtrl.getDocumentosPendientes).toHaveBeenCalled();
     });
 
-    it('Obtener input de documentos firmados y llamar a metodo getDocumentosFirmados().', function () {
+    it('debería obtener input de documentos firmados y llamar a metodo getDocumentosFirmados().', function () {
         spyOn(misInversionesDocumentosCtrl, 'getDocumentosFirmados');
         misInversionesDocumentosCtrl.actualizarDocumentosFirmados();
 
@@ -366,8 +366,7 @@
         expect(misInversionesDocumentosCtrl.getDocumentosFirmados).toHaveBeenCalled();
     });
 
-    it('Seleccionar todas las operaciones pendientes.', function () {
-
+    it('debería seleccionar todas las operaciones pendientes.', function () {
         misInversionesDocumentosCtrl.todasOperaciones = true;
         misInversionesDocumentosCtrl.operacionesPendientes = documentosFirmados_stub['operaciones'];
         misInversionesDocumentosCtrl.toggleTodasOperaciones();
@@ -377,8 +376,7 @@
         expect(misInversionesDocumentosCtrl.operacionesPendientes[2].Seleccionado).toBe(true);
     });
 
-    it('Deseleccionar todas las operaciones pendientes.', function () {
-
+    it('debería deseleccionar todas las operaciones pendientes.', function () {
         misInversionesDocumentosCtrl.todasOperaciones = false;
         misInversionesDocumentosCtrl.operacionesPendientes = documentosFirmados_stub['operaciones'];
         misInversionesDocumentosCtrl.toggleTodasOperaciones();
@@ -388,8 +386,7 @@
         expect(misInversionesDocumentosCtrl.operacionesPendientes[2].Seleccionado).toBe(false);
     });
 
-    it('Seleccionar todos los documentos pendientes.', function () {
-
+    it('debería seleccionar todos los documentos pendientes.', function () {
         misInversionesDocumentosCtrl.todosDocumentos = true;
         misInversionesDocumentosCtrl.documentosPendientes = documentosFirmados_stub['documentos'];
         misInversionesDocumentosCtrl.toggleTodosDocumentos();
@@ -398,7 +395,7 @@
         expect(misInversionesDocumentosCtrl.documentosPendientes[1].Seleccionado).toBe(true);
     });
 
-    it('Deseleccionar todos los documentos pendientes.', function () {
+    it('debería deseleccionar todos los documentos pendientes.', function () {
         misInversionesDocumentosCtrl.todosDocumentos = false;
         misInversionesDocumentosCtrl.documentosPendientes = documentosFirmados_stub['documentos'];
         misInversionesDocumentosCtrl.toggleTodosDocumentos();
@@ -407,7 +404,7 @@
         expect(misInversionesDocumentosCtrl.documentosPendientes[1].Seleccionado).toBe(false);
     });
 
-    it('Desactivar check todas las operaciones', function () {
+    it('debería desactivar check todas las operaciones', function () {
         misInversionesDocumentosCtrl.todasOperaciones = true;
         misInversionesDocumentosCtrl.operacionesPendientes = documentosFirmados_stub['operaciones'];
         misInversionesDocumentosCtrl.opcionOperacionToggled();
@@ -415,7 +412,7 @@
         expect(misInversionesDocumentosCtrl.todasOperaciones).toBe(false);
     });
 
-    it('Desactivar check todos los documentos', function () {
+    it('debería desactivar check todos los documentos', function () {
         misInversionesDocumentosCtrl.todosDocumentos = true;
         misInversionesDocumentosCtrl.documentosPendientes = documentosFirmados_stub['documentos'];
         misInversionesDocumentosCtrl.opcionDocumentoToggled();
@@ -423,33 +420,33 @@
         expect(misInversionesDocumentosCtrl.todosDocumentos).toBe(false);
     });
 
-    it('Abrir modal de confirmación.', function () {
+    it('debería abrir modal de confirmación.', function () {
         misInversionesDocumentosCtrl.confirmacion();
 
         expect($uibModal.open).toHaveBeenCalled();
     });
 
-    it('Validar fechas. Fechas de DESDE y HASTA válidas.', function () {
+    it('debería validar fechas. Fechas de DESDE y HASTA válidas.', function () {
         misInversionesDocumentosCtrl.validarFechas();
 
         expect(misInversionesDocumentosCtrl.errorFechas).toBe(null);
     });
 
-    it('Validar fechas. Fecha DESDE es indefinida.', function () {
+    it('debería validar fechas. Fecha DESDE es indefinida.', function () {
         misInversionesDocumentosCtrl.fechaFirmadosInicio = undefined;
         misInversionesDocumentosCtrl.validarFechas();
 
         expect(misInversionesDocumentosCtrl.errorFechas).toBe('La fecha "desde" es inválida.');
     });
 
-    it('Validar fechas. Fecha de HASTA es indefinida.', function () {
+    it('debería validar fechas. Fecha de HASTA es indefinida.', function () {
         misInversionesDocumentosCtrl.fechaFirmadosFin = undefined;
         misInversionesDocumentosCtrl.validarFechas();
 
         expect(misInversionesDocumentosCtrl.errorFechas).toBe('La fecha "hasta" es inválida.');
     });
 
-    it('Validar fechas. Fechas de DESDE y HASTA indefinidas.', function () {
+    it('debería validar fechas. Fechas de DESDE y HASTA indefinidas.', function () {
         misInversionesDocumentosCtrl.fechaFirmadosInicio = undefined;
         misInversionesDocumentosCtrl.fechaFirmadosFin = undefined;
         misInversionesDocumentosCtrl.validarFechas();
@@ -457,30 +454,11 @@
         expect(misInversionesDocumentosCtrl.errorFechas).toBe('La fecha "desde" y la fecha "hasta" son inválidas.');
     });
 
-    it('Validar fechas. Fecha de DESDE mayor a fecha de HASTA.', function () {
+    it('debería validar fechas. Fecha de DESDE mayor a fecha de HASTA.', function () {
         misInversionesDocumentosCtrl.fechaFirmadosInicio = new Date("2016-03-23");
         misInversionesDocumentosCtrl.fechaFirmadosFin = new Date("2016-03-22");
         misInversionesDocumentosCtrl.validarFechas();
 
         expect(misInversionesDocumentosCtrl.errorFechas).toBe('La fecha "desde" es mayor a la fecha "hasta".');
     });
-
-    /*
-    ----1
-
-    misInversionesDocumentosCtrl.fechaFirmadosInicio = undefined
-    ----2
-    misInversionesDocumentosCtrl.fechaFirmadosInicio = undefined
-    ----3
-    misInversionesDocumentosCtrl.fechaFirmadosInicio = undefined
-    misInversionesDocumentosCtrl.fechaFirmadosFin = undefined
-    ----4
-    misInversionesDocumentosCtrl.fechaFirmadosInicio = mayor a fin
-    misInversionesDocumentosCtrl.fechaFirmadosFin = menor a inicio
-    ----5
-    misInversionesDocumentosCtrl.fechaFirmadosInicio = undefined
-    misInversionesDocumentosCtrl.fechaFirmadosFin = undefined
-    expect(misInversionesDocumentosCtrl).toBe('La fecha \"desde\" es inválida')
-
-    */
 });

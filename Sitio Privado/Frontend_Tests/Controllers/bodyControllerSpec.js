@@ -81,14 +81,14 @@
         });
     }));
 
-    it('Seleccionar sección 5.', function () {
+    it('debería asignar 5 a la constante "seccionId".', function () {
         var id = 5;
-
         bodyCtrl.seleccionarSeccion(id);
+
         expect(bodyCtrl.seccionId).toBe(id);
     });
 
-    it('Abrir modal circularización pendiente.', function () {
+    it('debería abrir modal circularización pendiente.', function () {
         authService.circularizacionPendiente = true;
         bodyCtrl.crearInstanciaModal('circularizacion');
 
@@ -97,7 +97,7 @@
         expect($uibModal.open).toHaveBeenCalled();
     });
 
-    it('Abrir modal documentos pendientes.', function () {
+    it('debería abrir modal documentos pendientes.', function () {
         authService.documentosPendientes = 2;
         bodyCtrl.crearInstanciaModal('documentos');
 
@@ -106,7 +106,7 @@
         expect($uibModal.open).toHaveBeenCalled();
     });
 
-    it('No abrir modal si parametro de entrada es distinto a circularizacion o documentos.', function () {
+    it('no debería abrir modal si parametro de entrada es distinto a circularizacion o documentos.', function () {
         bodyCtrl.crearInstanciaModal('otros');
 
         expect(authService.circularizacionPendiente).toBeDefined();
@@ -114,7 +114,7 @@
         expect($uibModal.open).not.toHaveBeenCalled();
     });
 
-    it('Abrir modal, circularizacionPendiente = false, documentosPendientes = 0.', function () {
+    it('debería abrir modal, circularizacionPendiente = false, documentosPendientes = 0.', function () {
         expect(authService.circularizacionPendiente).toBeDefined();
         expect(authService.documentosPendientes).toBeDefined();
         expect($uibModal.open).not.toHaveBeenCalled();

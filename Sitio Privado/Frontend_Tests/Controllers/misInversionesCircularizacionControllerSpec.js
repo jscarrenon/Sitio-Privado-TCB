@@ -59,7 +59,7 @@
             });
     }));
 
-    it('Seleccionar sección 0.', function () {
+    it('debería seleccionar sección "circularizacion_pendiente.html" si la id es igual a 0.', function () {
         var id = 0;
 
         misInversionesCircularizacionCtrl.seleccionarSeccion(id);
@@ -68,7 +68,7 @@
         expect(misInversionesCircularizacionCtrl.seccionURI).toEqual('.build/html/modules/mis-inversiones/templates/circularizacion_pendiente.html');
     });
 
-    it('Seleccionar sección 1.', function () {
+    it('debería seleccionar sección "circularizacion_anual.html" si la id es igual a 1.', function () {
         var id = 1;
         var getArchivoSpy = spyOn(misInversionesCircularizacionCtrl, 'getArchivo');
 
@@ -79,7 +79,7 @@
         expect(misInversionesCircularizacionCtrl.seccionURI).toEqual('.build/html/modules/mis-inversiones/templates/circularizacion_anual.html');
     });
 
-    it('Seleccionar sección 2.', function () {
+    it('debería seleccionar sección "circularizacion_aprobar.html" si la id es igual a 2.', function () {
         var id = 2;
 
         misInversionesCircularizacionCtrl.seleccionarSeccion(id);
@@ -88,7 +88,7 @@
         expect(misInversionesCircularizacionCtrl.seccionURI).toEqual('.build/html/modules/mis-inversiones/templates/circularizacion_aprobar.html');
     });
     
-    it('Setear las plantillas.', function () {
+    it('debería setear las plantillas html en el arreglo "templates".', function () {
         misInversionesCircularizacionCtrl.setTemplates();
 
         expect(misInversionesCircularizacionCtrl.templates[0]).toBe('circularizacion_pendiente.html');
@@ -96,7 +96,7 @@
         expect(misInversionesCircularizacionCtrl.templates[2]).toBe('circularizacion_aprobar.html');
     });
 
-    it('Obtener pendiente, resultado verdadero.', function () {
+    it('debería obtener que hay circularizaciones pendientes.', function () {
         var circularizacionPendienteInput_stub = { rut: usuario_stub.Rut, fecha: '25/05/2015' };
 
         misInversionesCircularizacionCtrl.getPendiente(circularizacionPendienteInput_stub);
@@ -106,7 +106,7 @@
         expect(misInversionesCircularizacionCtrl.pendienteResultado.Resultado).toBe(true);
     });
 
-    it('Obtener pendiente, resultado falso.', function () {        
+    it('no debería obtener que hay circularizaciones pendientes.', function () {
         var circularizacionPendienteInput_stub = { rut: usuario_stub.Rut, fecha: '25/05/2015' };
 
         misInversionesCircularizacionCtrl.getPendiente(circularizacionPendienteInput_stub);
@@ -117,7 +117,7 @@
     });
 
 
-    it('Obtener archivo.', function () {
+    it('debería obtener archivo.', function () {
         var circularizacionArchivoInput_stub = { rut: usuario_stub.Rut, fecha: '25/05/2015' };
         var circularizacionArchivo_stub = {
             UrlCartola: '/url/de/cartola/',
@@ -131,7 +131,7 @@
         expect(misInversionesCircularizacionCtrl.archivo).toEqual(circularizacionArchivo_stub);
     });
 
-    it('Setear circularización como leída.  Resultado verdadero.', function () {
+    it('debería setear circularización como leída.', function () {
         var circularizacionLeidaInput_stub = { rut: usuario_stub.Rut, fecha: '25/05/2015' };
 
         misInversionesCircularizacionCtrl.setLeida(circularizacionLeidaInput_stub);
@@ -141,7 +141,7 @@
         expect(misInversionesCircularizacionCtrl.leida).toBe(true);
     });
 
-    it('Setear circularización como leída. Resultado falso.', function () {
+    it('debería setear circularización como no leída.', function () {
         var circularizacionLeidaInput_stub = { rut: usuario_stub.Rut, fecha: '25/05/2015' };
 
         misInversionesCircularizacionCtrl.setLeida(circularizacionLeidaInput_stub);
@@ -152,7 +152,7 @@
         expect(misInversionesCircularizacionCtrl.leida).toBe(false);
     });
 
-    it('Setear circularización como respondida. Resultado verdadero.', function () {
+    it('debería setear circularización como respondida.', function () {
         var circularizacionRespondidaInput_stub = {
             rut_cli: usuario_stub.Rut,
             fecha: '25/05/2015',
@@ -172,7 +172,7 @@
         expect(misInversionesCircularizacionCtrl.getPendiente).toHaveBeenCalled();
     });
 
-    it('Setear circularización como respondida. Resultado falso.', function () {
+    it('debería setear circularización como no respondida.', function () {
         var circularizacionRespondidaInput_stub = {
             rut_cli: usuario_stub.Rut,
             fecha: '25/05/2015',
@@ -187,7 +187,7 @@
         expect(misInversionesCircularizacionCtrl.respondidaResultado).toEqual({ Resultado: false });
     });
 
-    it('Ver documento (Cartola). Documento abierto.', function () {        
+    it('debería ver documento (Cartola). Documento abierto.', function () {
         var TipoDocumento;
         (function (TipoDocumento) {
             TipoDocumento[TipoDocumento['Cartola'] = 0] = 'Cartola';
@@ -210,7 +210,7 @@
         expect(misInversionesCircularizacionCtrl.setLeida).toHaveBeenCalled();
     });
 
-    it('Ver documento (Circularización).', function () {
+    it('debería ver documento (Circularización).', function () {
         
         var TipoDocumento;
         (function (TipoDocumento) {
@@ -234,7 +234,7 @@
         expect(misInversionesCircularizacionCtrl.setLeida).toHaveBeenCalled();
     });
     
-    it('Responder.', function () {
+    it('debería marcar el documento como respondido.', function () {
         spyOn(misInversionesCircularizacionCtrl, 'setRespondida');
         misInversionesCircularizacionCtrl.responder();
 

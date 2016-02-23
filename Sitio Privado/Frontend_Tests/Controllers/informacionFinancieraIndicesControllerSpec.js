@@ -52,7 +52,7 @@
         postWebService_deferred = $q.defer();
     }));
 
-    it('Obtener indices.', function () {
+    it('debería obtener indices.', function () {
         informacionFinancieraIndicesCtrl.getIndices(indices_input_stub);
         postWebService_deferred.resolve(indices_stub);
         $rootScope.$digest();
@@ -60,7 +60,7 @@
         expect(informacionFinancieraIndicesCtrl.indices).toBe(indices_stub);
     });
 
-    it('Indices actualizados correctamente.', function () {
+    it('debería actualizar indices correctamente.', function () {
         var spy = spyOn(informacionFinancieraIndicesCtrl, 'getIndices');
         informacionFinancieraIndicesCtrl.actualizarIndices();
 
@@ -68,13 +68,13 @@
         expect(spy).toHaveBeenCalled();
     });
 
-    it('Validar fecha. Fecha definida correctamente.', function () {
+    it('debería validar fecha correctamente si la fehca está definida.', function () {
         informacionFinancieraIndicesCtrl.validarFecha();
 
         expect(informacionFinancieraIndicesCtrl.errorFecha).toBeDefined();
     });
 
-    it('Validar fecha. Fecha indefinida', function () {
+    it('no debería validar fecha si la fecha está indefinida', function () {
         informacionFinancieraIndicesCtrl.fecha = undefined;
         informacionFinancieraIndicesCtrl.validarFecha();
 
