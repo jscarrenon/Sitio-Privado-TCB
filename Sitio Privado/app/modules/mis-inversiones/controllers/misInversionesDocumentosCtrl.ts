@@ -36,6 +36,9 @@
         confirmacion(): void;
         errorFechas: string;
         validarFechas(): void;
+        operacionesSeleccionadas(): app.domain.IDocumento[];
+        documentosSeleccionados(): app.domain.IDocumento[];
+        haySeleccionados(): boolean;
     }
 
     class MisInversionesDocumentosCtrl implements IMisInversionesDocumentosViewModel {
@@ -169,13 +172,28 @@
                 });
         }
 
+        operacionesSeleccionadas(): app.domain.IDocumento[] {
+            return this.$filter('filter')(this.operacionesPendientes, { Seleccionado: true });
+        }
+
+        documentosSeleccionados(): app.domain.IDocumento[] {
+            return this.$filter('filter')(this.documentosPendientes, { Seleccionado: true });
+        }
+
+        haySeleccionados(): boolean {
+            if (this.operacionesSeleccionadas().length > 0 || this.documentosSeleccionados().length > 0) {
+                return true;
+            }
+            return false;
+        }
+
         firmarDocumentos(): void {
             var firmarOperacionesLoading: boolean = false;
             var firmarDocumentosLoading: boolean = false;
             this.firmarLoading = firmarOperacionesLoading || firmarDocumentosLoading;
 
             if (this.declaracion) {
-                var operacionesSeleccionadas: app.domain.IDocumento[] = this.$filter('filter')(this.operacionesPendientes, { Seleccionado: true });
+                var operacionesSeleccionadas: app.domain.IDocumento[] = this.operacionesSeleccionadas();
                 if (operacionesSeleccionadas) {
                     var operacionCodigo = operacionesSeleccionadas.map(function (documento) { return documento.Codigo; }).join();
                     if (operacionCodigo) {
@@ -194,7 +212,7 @@
                     }
                 }
 
-                var documentosSeleccionados: app.domain.IDocumento[] = this.$filter('filter')(this.documentosPendientes, { Seleccionado: true });
+                var documentosSeleccionados: app.domain.IDocumento[] = this.documentosSeleccionados();
                 if (documentosSeleccionados) {
                     var documentoCodigo: string = documentosSeleccionados.map(function (documento) { return documento.Codigo; }).join();
                     if (documentoCodigo) {

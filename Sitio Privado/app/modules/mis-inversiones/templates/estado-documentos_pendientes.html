@@ -73,7 +73,7 @@
             <uib-pagination ng-model="documentosCtrl.documentosPendientesPaginaActual" total-items="documentosCtrl.documentosPendientes.length" items-per-page="documentosCtrl.documentosPendientesPorPagina" boundary-links="true" template-url="pagination.html"></uib-pagination>
         </div>
 
-        <div class="sign-note" ng-show="!documentosCtrl.pendientesLoading">
+        <div class="sign-note" ng-show="!documentosCtrl.pendientesLoading && documentosCtrl.haySeleccionados()">
             <input type="checkbox" ng-model="documentosCtrl.declaracion">
             Declaro conocer y aceptar la(s) operacion(es) y/o contrato(s) seleccionado(s), los cuales fueron instruidos por mi persona a Tanner Corredores de Bolsa S.A., y que, en cumplimiento a lo establecido en los contratos vigentes, confirmo electrónicamente mi total aceptación sobre los términos y condiciones indicados en los mismos.<br />
             <button class="pop button green" ng-click="documentosCtrl.confirmacion()" ng-if="documentosCtrl.declaracion">Firmar</button>
