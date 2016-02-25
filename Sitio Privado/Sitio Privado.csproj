@@ -392,8 +392,7 @@
     </None>
     <TypeScriptCompile Include="app\common\controllers\modalInstanceCtrl.ts" />
     <TypeScriptCompile Include="app\common\directives\loadingDirective.ts" />
-    <TypeScriptCompile Include="app\common\typings\uglipop.ts" />
-	<Content Include="app\common\templates\footer.html" />
+    <Content Include="app\common\templates\footer.html" />
     <Content Include="app\common\templates\loading.html" />
     <Content Include="app\common\templates\pagination.html" />
     <Content Include="app\modules\home\templates\index.html" />
