@@ -92,7 +92,9 @@
       <HintPath>..\packages\Microsoft.Owin.Security.OpenIdConnect.3.0.1\lib\net45\Microsoft.Owin.Security.OpenIdConnect.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.WindowsAzure.ServiceRuntime, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.WindowsAzure.ServiceRuntime, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\..\Program Files\Microsoft SDKs\Windows Azure\.NET SDK\v2.1\ref\Microsoft.WindowsAzure.ServiceRuntime.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.WindowsAzure.Storage, Version=6.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WindowsAzure.Storage.6.2.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
       <Private>True</Private>
@@ -369,7 +371,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app\common\templates\footer.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -383,18 +384,18 @@
     </None>
     <TypeScriptCompile Include="app\common\controllers\modalInstanceCtrl.ts" />
     <TypeScriptCompile Include="app\common\directives\loadingDirective.ts" />
-    <TypeScriptCompile Include="app\common\typings\uglipop.ts" />
+    <Content Include="app\common\templates\footer.html" />
     <Content Include="app\common\templates\loading.html" />
     <Content Include="app\common\templates\pagination.html" />
     <Content Include="app\modules\home\templates\index.html" />
     <Content Include="app\modules\home\templates\mis-datos.html" />
     <Content Include="app\modules\informacion-financiera\templates\comite-regulacion.html" />
-    <Content Include="app\modules\informacion-financiera\templates\indices-liquidez.html" />
-    <Content Include="app\modules\informacion-financiera\templates\servicios-custodia.html" />
     <Content Include="app\modules\informacion-financiera\templates\documentos-normativos.html" />
     <Content Include="app\modules\informacion-financiera\templates\estatutos.html" />
     <Content Include="app\modules\informacion-financiera\templates\index.html" />
+    <Content Include="app\modules\informacion-financiera\templates\indices-liquidez.html" />
     <Content Include="app\modules\informacion-financiera\templates\otros-documentos.html" />
+    <Content Include="app\modules\informacion-financiera\templates\servicios-custodia.html" />
     <Content Include="app\modules\inversiones\templates\index.html" />
     <Content Include="app\modules\mis-inversiones\templates\circularizacion.html" />
     <Content Include="app\modules\mis-inversiones\templates\circularizacion_anual.html" />
@@ -410,12 +411,45 @@
     <Content Include="app\modules\mis-inversiones\templates\index.html" />
     <Content Include="app\modules\mis-inversiones\templates\nacionales.html" />
     <Content Include="app\modules\productos-servicios\templates\index.html" />
+    <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="Frontend_Tests\Controllers\productosServiciosControllerSpec.js" />
+    <Content Include="Frontend_Tests\Controllers\misInversionesDocumentosControllerSpec.js" />
+    <Content Include="Frontend_Tests\Controllers\modalInstanceControllerSpec.js" />
+    <Content Include="Scripts\extras\index.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Properties\PublishProfiles\kundertannerprivado - Web Deploy %282%29.pubxml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <TypeScriptCompile Include="app\common\controllers\modalInstanceCtrl.ts" />
+    <TypeScriptCompile Include="app\common\directives\loadingDirective.ts" />
+    <Content Include="app\common\templates\loading.html" />
+    <Content Include="app\common\templates\pagination.html" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="gulpfile.js" />
     <Content Include="package.json" />
     <Content Include=".bowerrc" />
     <Content Include="bower.json" />
+    <Content Include="Frontend_Tests\Controllers\inversionesControllerSpec.js" />
+    <Content Include="Frontend_Tests\Controllers\misInversionesNacionalesControllerSpec.js" />
+    <Content Include="Frontend_Tests\Controllers\agenteControllerSpec.js" />
+    <Content Include="Frontend_Tests\Services\authServiceSpec.js" />
+    <Content Include="Frontend_Tests\Controllers\bodyControllerSpec.js" />
+    <Content Include="Frontend_Tests\Services\constantServiceSpec.js" />
+    <Content Include="Frontend_Tests\Services\dataServiceSpec.js" />
+    <Content Include="Frontend_Tests\Services\extrasServiceSpec.js" />
+    <Content Include="Frontend_Tests\Controllers\homeControllerSpec.js" />
+    <Content Include="Frontend_Tests\Controllers\informacionFinancieraControllerSpec.js" />
+    <Content Include="Frontend_Tests\Controllers\informacionFinancieraIndicesControllerSpec.js" />
+    <Content Include="Frontend_Tests\Controllers\misInversionesCircularizacionControllerSpec.js" />
+    <Content Include="Frontend_Tests\Controllers\misInversionesControllerSpec.js" />
+    <Content Include="Frontend_Tests\Controllers\misInversionesFondosMutuosControllerSpec.js" />
     <Content Include="Resources\img\loader-1.gif" />
     <Content Include="Styles\bootstrap-custom.css" />
     <Content Include="Web References\CircularizacionCustodia\archivocli.datasource">
@@ -523,14 +557,14 @@
     <Content Include="Resources\img\prod_renta-fija-inter.jpg" />
     <Content Include="Resources\img\prod_renta-variable-internacional.jpg" />
     <Content Include="Resources\img\prod_renta-variable-nacional.jpg" />
-    <Content Include="Scripts\extras\index.js" />
+    <Content Include="Scripts\extras\jquery-1.12.0.js" />
     <Content Include="Scripts\extras\jquery.sticky.js" />
-    <Content Include="Scripts\extras\uglipop.min.js" />
     <Content Include="Styles\slicknav.css" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Content Include="Frontend_Tests\chutzpah.json" />
     <None Include="Web References\CartolaResumida\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -679,10 +713,10 @@
     <TypeScriptCompile Include="app\modules\informacion-financiera\controllers\informacionFinancieraIndicesCtrl.ts" />
     <TypeScriptCompile Include="app\modules\inversiones\controllers\inversionesCtrl.ts" />
     <TypeScriptCompile Include="app\modules\mis-inversiones\controllers\misInversionesCircularizacionCtrl.ts" />
+    <TypeScriptCompile Include="app\modules\mis-inversiones\controllers\misInversionesCtrl.ts" />
+    <TypeScriptCompile Include="app\modules\mis-inversiones\controllers\misInversionesDocumentosCtrl.ts" />
     <TypeScriptCompile Include="app\modules\mis-inversiones\controllers\misInversionesFondosMutuos.ts" />
     <TypeScriptCompile Include="app\modules\mis-inversiones\controllers\misInversionesNacionales.ts" />
-    <TypeScriptCompile Include="app\modules\mis-inversiones\controllers\misInversionesDocumentosCtrl.ts" />
-    <TypeScriptCompile Include="app\modules\mis-inversiones\controllers\misInversionesCtrl.ts" />
     <TypeScriptCompile Include="app\modules\productos-servicios\controllers\productosServiciosCtrl.ts" />
     <TypeScriptCompile Include="Scripts\typings\angular-ui-bootstrap\angular-ui-bootstrap.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-animate.d.ts" />
@@ -696,15 +730,16 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
-    <WebReferenceUrl Include="https://www.tannercliente.cl/wstsf/tann_cartola_resumida.asmx">
+    <WebReferenceUrl Include="http://172.17.1.12:8088/tann_cartola_resumida.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\CartolaResumida\</RelPath>
-      <UpdateFromURL>https://www.tannercliente.cl/wstsf/tann_cartola_resumida.asmx</UpdateFromURL>
+      <UpdateFromURL>http://172.17.1.12:8088/tann_cartola_resumida.asmx</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>
@@ -712,10 +747,10 @@
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
       <CachedSettingsPropName>Sitio_Privado_CartolaResumida_tann_cartola_resumida</CachedSettingsPropName>
     </WebReferenceUrl>
-    <WebReferenceUrl Include="https://www.tannercliente.cl/wstsf/tann_catsvc.asmx">
+    <WebReferenceUrl Include="http://172.17.1.12:8088/tann_catsvc.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\CategoriaInversionista\</RelPath>
-      <UpdateFromURL>https://www.tannercliente.cl/wstsf/tann_catsvc.asmx</UpdateFromURL>
+      <UpdateFromURL>http://172.17.1.12:8088/tann_catsvc.asmx</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>
@@ -723,10 +758,10 @@
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
       <CachedSettingsPropName>Sitio_Privado_CategoriaInversionista_tann_catsvc</CachedSettingsPropName>
     </WebReferenceUrl>
-    <WebReferenceUrl Include="https://www.tannercliente.cl/wstsf/tann_circularizacion.asmx">
+    <WebReferenceUrl Include="http://172.17.1.12:8088/tann_circularizacion.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\CircularizacionCustodia\</RelPath>
-      <UpdateFromURL>https://www.tannercliente.cl/wstsf/tann_circularizacion.asmx</UpdateFromURL>
+      <UpdateFromURL>http://172.17.1.12:8088/tann_circularizacion.asmx</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>
@@ -734,10 +769,10 @@
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
       <CachedSettingsPropName>Sitio_Privado_CircularizacionCustodia_tann_circularizacion</CachedSettingsPropName>
     </WebReferenceUrl>
-    <WebReferenceUrl Include="https://www.tannercliente.cl/wstsf/tann_documentos.asmx">
+    <WebReferenceUrl Include="http://172.17.1.12:8088/tann_documentos.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\DocumentosPendientesFirma\</RelPath>
-      <UpdateFromURL>https://www.tannercliente.cl/wstsf/tann_documentos.asmx</UpdateFromURL>
+      <UpdateFromURL>http://172.17.1.12:8088/tann_documentos.asmx</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>
@@ -745,10 +780,10 @@
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
       <CachedSettingsPropName>Sitio_Privado_DocumentosPendientesFirma_tann_documentos</CachedSettingsPropName>
     </WebReferenceUrl>
-    <WebReferenceUrl Include="https://www.tannercliente.cl/wstsf/tann_fondos_mutuos.asmx">
+    <WebReferenceUrl Include="http://172.17.1.12:8088/tann_fondos_mutuos.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\ConsultaSaldosFondosMutuos\</RelPath>
-      <UpdateFromURL>https://www.tannercliente.cl/wstsf/tann_fondos_mutuos.asmx</UpdateFromURL>
+      <UpdateFromURL>http://172.17.1.12:8088/tann_fondos_mutuos.asmx</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>
@@ -756,10 +791,10 @@
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
       <CachedSettingsPropName>Sitio_Privado_ConsultaSaldosFondosMutuos_tann_fondos_mutuos</CachedSettingsPropName>
     </WebReferenceUrl>
-    <WebReferenceUrl Include="https://www.tannercliente.cl/wstsf/tann_indicadores.asmx">
+    <WebReferenceUrl Include="http://172.17.1.12:8088/tann_indicadores.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\IndicesLiquidezSolvencia\</RelPath>
-      <UpdateFromURL>https://www.tannercliente.cl/wstsf/tann_indicadores.asmx</UpdateFromURL>
+      <UpdateFromURL>http://172.17.1.12:8088/tann_indicadores.asmx</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>
@@ -767,10 +802,10 @@
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
       <CachedSettingsPropName>Sitio_Privado_IndicesLiquidezSolvencia_tann_indicadores</CachedSettingsPropName>
     </WebReferenceUrl>
-    <WebReferenceUrl Include="https://www.tannercliente.cl/wstsf/tann_info_cliente.asmx">
+    <WebReferenceUrl Include="http://172.17.1.12:8088/tann_info_cliente.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\InformacionClienteAgente\</RelPath>
-      <UpdateFromURL>https://www.tannercliente.cl/wstsf/tann_info_cliente.asmx</UpdateFromURL>
+      <UpdateFromURL>http://172.17.1.12:8088/tann_info_cliente.asmx</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>

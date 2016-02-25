@@ -44,17 +44,14 @@
             private dataService: app.common.services.DataService,
             private authService: app.common.services.AuthService,
             private extrasService: app.common.services.ExtrasService) {
-
             this.setTemplates();
             this.seccionId = 0;
             this.seleccionarSeccion(this.seccionId);
-
             this.fecha = new Date(); //Temporal --KUNDER
             this.leida = false;
             this.respuestaInput = new app.domain.CircularizacionRespondidaInput(parseInt(this.extrasService.getRutParteEntera(this.authService.usuario.Rut)), this.extrasService.getFechaFormato(this.fecha), "S", null);
-
             this.pendienteInput = new app.domain.CircularizacionPendienteInput(parseInt(this.extrasService.getRutParteEntera(this.authService.usuario.Rut)), this.extrasService.getFechaFormato(this.fecha));
-            this.getPendiente(this.pendienteInput);
+            this.getPendiente(this.pendienteInput);                       
         }
 
         seleccionarSeccion(id: number): void {
@@ -121,7 +118,7 @@
 
             //Abrir documento
             if (tipoDocumento == TipoDocumento.Cartola && this.archivo.UrlCartola) {
-                this.extrasService.abrirRuta(this.archivo.UrlCartola);
+                this.extrasService.abrirRuta(this.archivo.UrlCartola, '_blank');
                 documentoAbierto = true;
             }
             else if (tipoDocumento == TipoDocumento.Circularizacion && this.archivo.UrlCircularizacion) {

@@ -18,7 +18,6 @@
         Rut: string;
         Periodo: string;
         Conceptos: ICartolaConcepto[];
-
     }
 
     export class Cartola extends app.domain.EntityBase implements ICartola {

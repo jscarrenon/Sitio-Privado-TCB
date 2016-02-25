@@ -121,24 +121,17 @@
 
         validarFechas(): void {
             if (this.fechaFirmadosInicio === undefined || this.fechaFirmadosFin === undefined) {
-                if (this.fechaFirmadosInicio === undefined) {
-                    this.errorFechas = 'La fecha "desde" es inválida';
-                }
-                if (this.fechaFirmadosFin === undefined) {
-                    if (this.fechaFirmadosInicio === undefined) {
-                        this.errorFechas = 'La fecha "desde" y la fecha "hasta" son inválidas';
-                    }
-                    else {
-                        this.errorFechas = 'La fecha "hasta" es inválida';
-                    }
-                }
+                if (this.fechaFirmadosInicio === undefined && this.fechaFirmadosFin === undefined)
+                    this.errorFechas = 'La fecha "desde" y la fecha "hasta" son inválidas.';
+                else if (this.fechaFirmadosInicio === undefined)
+                    this.errorFechas = 'La fecha "desde" es inválida.';
+                else
+                    this.errorFechas = 'La fecha "hasta" es inválida.';
             }
-            else if (this.fechaFirmadosInicio > this.fechaFirmadosFin) {
-                this.errorFechas = 'La fecha "desde" es mayor a la fecha hasta';
-            }
-            else {
+            else if (this.fechaFirmadosInicio > this.fechaFirmadosFin)
+                this.errorFechas = 'La fecha "desde" es mayor a la fecha "hasta".';
+            else
                 this.errorFechas = null;
-            }
         }
 
         getDocumentosPendientes(input: app.domain.IDocumentosPendientesInput): void {
@@ -190,7 +183,7 @@
 
                         firmarOperacionesLoading = true;
                         this.firmarLoading = firmarOperacionesLoading || firmarDocumentosLoading;
-
+                        
                         this.dataService.postWebService(this.constantService.apiDocumentoURI + 'setFirmarOperacion', operacionFirmarInput)
                             .then((result: app.domain.IDocumentoFirmarResultado) => {
                                 var operacionFirmarResultado: app.domain.IDocumentoFirmarResultado = result;
@@ -253,7 +246,7 @@
         confirmacion(): void {
 
             var modalInstance: ng.ui.bootstrap.IModalServiceInstance = this.$uibModal.open({
-                templateUrl: this.constantService.buildFolderURI + 'html/modules/mis-inversiones/templates/estado-documentos_confirmacion.html',
+                templateUrl: this.constantService.templateDocumentosConfirmacionModalURI,
                 controller: 'ModalInstanceCtrl as modal'
             });
 
