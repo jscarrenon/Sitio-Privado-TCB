@@ -780,7 +780,8 @@ div.one-col.home {
     line-height:19px;
     .fmedium();
     font-size:12.5px;
-    margin-top:25px;
+    margin-top:45px;
+    clear:both;
     .button {
         margin-top:20px;
         line-height: 12px;
@@ -1511,10 +1512,8 @@ div.one-col.home {
             }
             .call {
                 position:absolute;
-                top:auto;
-                right:auto;
-                left:106px;
-                bottom:22px;
+                right:25px;
+                top:25px;
             }
         }
     }
@@ -1628,6 +1627,10 @@ div.one-col.home {
     .col-rates {
         width:100%;
     }
+}
+
+@media only screen and (max-width: 360px) {
+
 }
 
 @media only screen and (max-width: 330px) {
@@ -1917,6 +1920,9 @@ label {
     position:absolute;
     top:0px;
     right:0px;
+    input[type="date"]{
+        width:118px !important;
+    }
 }
 
 input[type="date"] {
@@ -1993,6 +1999,7 @@ input[type="date"] {
     line-height: 19px;
     padding-top:30px;
     text-align:justify;
+    clear:both;
 }
 
 /* footer --------------------------------------- */
