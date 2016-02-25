@@ -8,7 +8,8 @@
     "angular-mocks": "1.4.9",
     "angular-bootstrap": "^1.1.2",
     "jasmine": "2.4.1",
-    "better-dateinput-polyfill": "1.5.2"
+    "better-dateinput-polyfill": "1.5.2",
+    "angular-rut": "1.0.1"
   },
   "resolutions": {
     "angular": "1.4.9"

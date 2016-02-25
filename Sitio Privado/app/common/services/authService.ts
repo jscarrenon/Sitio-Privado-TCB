@@ -30,7 +30,6 @@
             this.dataService.getSingle(this.constantService.mvcHomeURI + 'GetUsuarioActual').then((result: app.domain.IUsuario) => {
                 this.usuario = result;
                 if (this.usuario.Autenticado) {
-                    this.usuario.Rut = this.usuario.Rut.replace('-', '');
                     this.autenticado = true;
                     this.getCircularizacionPendiente();
                     this.getDocumentosPendientes();

@@ -32,6 +32,6 @@
     }
     Config.$inject = ['$routeProvider'];
 
-    var mainApp = angular.module('tannerPrivadoApp', ['ngRoute', 'ui.bootstrap']);
+    var mainApp = angular.module('tannerPrivadoApp', ['ngRoute', 'ui.bootstrap', 'platanus.rut']);
     mainApp.config(Config);
 }
