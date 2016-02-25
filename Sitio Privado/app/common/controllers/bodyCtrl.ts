@@ -43,11 +43,11 @@
 
             switch (objeto) {
                 case "circularizacion":
-                    urlPlantilla = 'app/mis-inversiones/circularizacion_pendiente_modal.html';
+                    urlPlantilla = this.constantService.templateCircularizacionModalURI;
                     ruta = '/mis-inversiones/circularizacion';
                     break;
                 case "documentos":
-                    urlPlantilla = 'app/mis-inversiones/estado-documentos_pendientes_modal.html';
+                    urlPlantilla = this.constantService.templateDocumentosPendientesModalURI;
                     ruta = '/mis-inversiones/estado-documentos';
                     break;
             };

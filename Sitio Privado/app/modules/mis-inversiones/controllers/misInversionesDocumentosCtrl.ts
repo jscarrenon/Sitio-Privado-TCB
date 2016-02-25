@@ -246,7 +246,7 @@
         confirmacion(): void {
 
             var modalInstance: ng.ui.bootstrap.IModalServiceInstance = this.$uibModal.open({
-                templateUrl: this.constantService.buildFolderURI + 'html/modules/mis-inversiones/templates/estado-documentos_confirmacion.html',
+                templateUrl: this.constantService.templateDocumentosConfirmacionModalURI,
                 controller: 'ModalInstanceCtrl as modal'
             });
 
