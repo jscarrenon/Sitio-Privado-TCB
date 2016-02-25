@@ -32,7 +32,7 @@ var paths = {
                 './app/modules/**/*.js'],
     stylesCss: ['./Styles/*.css'],
     stylesLess: ['./Styles/*.less'],
-    scripts: ['./Scripts/extras/jquery.sticky.js','./Scripts/extras/*.js'],
+    scripts: ['./Scripts/extras/jquery.sticky.js','./Scripts/extras/*.js','!./Scripts/extras/jquery-1.12.0.js'],
     bower_components: ['./bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
                         './bower_components/angular-i18n/angular-locale_es-cl.js',
                         './bower_components/angular-route/angular-route.js',

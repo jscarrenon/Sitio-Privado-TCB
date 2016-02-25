@@ -30,7 +30,7 @@
 
         validarFecha(): void {
             if (this.fecha === undefined) {
-                this.errorFecha = 'La fecha es inválida';
+                this.errorFecha = 'La fecha es inválida.';
             }
             else {
                 this.errorFecha = null;
@@ -47,7 +47,7 @@
         }
 
         actualizarIndices(): void {
-            this.indicesInput = new app.domain.IndicesInput(this.extrasService.getFechaFormato(this.fecha, "dd/mm/aaaa"));
+            this.indicesInput = new app.domain.IndicesInput(this.extrasService.getFechaFormato(this.fecha, "dd/mm/aaaa"));            
             this.getIndices(this.indicesInput);
         }
     }

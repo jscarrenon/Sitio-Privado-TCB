@@ -61,7 +61,6 @@
                     label: 'Información Financiera',
                     prependTo: '#sidemenu'
                 });
-
             }, 100);
         }
 

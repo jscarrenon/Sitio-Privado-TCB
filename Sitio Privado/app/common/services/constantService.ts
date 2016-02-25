@@ -7,6 +7,9 @@
         templateFooterURI: string;
         templatePaginationURI: string;
         templateLoadingURI: string;
+        templateCircularizacionModalURI: string;
+        templateDocumentosPendientesModalURI: string;
+        templateDocumentosConfirmacionModalURI: string;
         apiAgenteURI: string;
         apiFondosMutuosURI: string;
         apiCategoriaURI: string;
@@ -26,6 +29,9 @@
         templateFooterURI: string;
         templatePaginationURI: string;
         templateLoadingURI: string;
+        templateCircularizacionModalURI: string;
+        templateDocumentosPendientesModalURI: string;
+        templateDocumentosConfirmacionModalURI: string;
         apiAgenteURI: string;
         apiFondosMutuosURI: string;
         apiCategoriaURI: string;
@@ -44,6 +50,9 @@
             this.templateFooterURI = this.buildFolderURI + 'html/common/templates/footer.html';
             this.templatePaginationURI = this.buildFolderURI + 'html/common/templates/pagination.html';
             this.templateLoadingURI = this.buildFolderURI + 'html/common/templates/loading.html';
+            this.templateCircularizacionModalURI = this.buildFolderURI + 'html/modules/mis-inversiones/templates/circularizacion_pendiente_modal.html';
+            this.templateDocumentosPendientesModalURI = this.buildFolderURI + 'html/modules/mis-inversiones/templates/estado-documentos_pendientes_modal.html';
+            this.templateDocumentosConfirmacionModalURI = this.buildFolderURI + 'html/modules/mis-inversiones/templates/estado-documentos_confirmacion.html';
             this.apiAgenteURI = '/api/agente/';
             this.apiFondosMutuosURI = '/api/fondoMutuo/';
             this.apiCategoriaURI = '/api/categoria/';

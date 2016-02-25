@@ -2,10 +2,15 @@
   "name": "SitioPrivado",
   "private": true,
   "dependencies": {
-    "angular": "^1.4.7",
-    "angular-route": "~1.4.8",
-    "angular-i18n": "1.4.7",
-    "angular-bootstrap": "1.1.2",
+    "angular": "1.4.9",
+    "angular-route": "1.4.9",
+    "angular-i18n": "1.4.9",
+    "angular-mocks": "1.4.9",
+    "angular-bootstrap": "^1.1.2",
+    "jasmine": "2.4.1",
     "better-dateinput-polyfill": "1.5.2"
+  },
+  "resolutions": {
+    "angular": "1.4.9"
   }
 }

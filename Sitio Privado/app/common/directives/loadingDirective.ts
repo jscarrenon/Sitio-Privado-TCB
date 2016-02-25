@@ -15,10 +15,6 @@
             param: '=',
             extraClass: '='
         }
-
-        constructor(private constantService: app.common.services.ConstantService) {
-        }
-
         link = (scope: ILoadingDirectiveScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => {
 
             scope.isLoading = function () {
@@ -33,6 +29,9 @@
                 }
             });
 
+        }
+
+        constructor(private constantService: app.common.services.ConstantService) {
         }
 
         static factory(): ng.IDirectiveFactory {
