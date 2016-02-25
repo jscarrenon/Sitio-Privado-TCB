@@ -50,13 +50,6 @@ namespace Sitio_Privado.Tasks
                     if(createResponse.StatusCode == System.Net.HttpStatusCode.Created)
                     {
                         logger.Info("User " + user.Rut + " created");
-                        logger.Info("Sending email");
-                        Email email = new Email("NewUserMail");
-                        email.UserEmail = graphUser.Email;
-                        email.UserFullName = graphUser.DisplayName;
-                        email.UserPassword = graphUser.TemporalPassword;
-                        await email.SendAsync();
-                        logger.Info("Email Sent");
                     }
                     else
                     {
