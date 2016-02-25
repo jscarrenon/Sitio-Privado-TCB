@@ -47,14 +47,8 @@ namespace Sitio_Privado.Controllers
                 usuario.TelefonoParticular = response.User.HomePhone;
                 usuario.DireccionComercial = response.User.WorkAddress;
                 usuario.DireccionParticular = response.User.HomeAddress;
-                usuario.Rut = response.User.Rut;
+                usuario.Rut = response.User.Rut.Insert(response.User.Rut.Length - 1, "-");
             }
-        }
-        public JsonResult TestWebService()
-        {
-            Agente agente = new Agente(new AgenteInput() { _rut = "8411855-9", _sec = 31 });
-
-            return Json(agente, JsonRequestBehavior.AllowGet);
         }
     }
 }

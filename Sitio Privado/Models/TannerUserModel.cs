@@ -12,7 +12,7 @@ namespace Sitio_Privado.Models
         public string FullName { get; set; }
         public string RutID { get; set; }
         public string RutVD { get; set; }
-        public string Rut { get { return RutID + "-" + RutVD; } }
+        public string Rut { get { return RutID + RutVD; } }
         public string WorkAddress { get; set; }
         public string HomeAddress { get; set; }
         public string Country { get; set; }
