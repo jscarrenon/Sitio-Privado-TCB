@@ -9,5 +9,8 @@
     "angular-bootstrap": "^1.1.2",
     "jasmine": "2.4.1",
     "better-dateinput-polyfill": "1.5.2"
+  },
+  "resolutions": {
+    "angular": "^1.2.0"
   }
 }

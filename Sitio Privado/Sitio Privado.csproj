@@ -408,7 +408,6 @@
     </None>
     <TypeScriptCompile Include="app\common\controllers\modalInstanceCtrl.ts" />
     <TypeScriptCompile Include="app\common\directives\loadingDirective.ts" />
-    <TypeScriptCompile Include="app\common\typings\uglipop.ts" />
     <Content Include="app\common\templates\loading.html" />
     <Content Include="app\common\templates\pagination.html" />
     <Content Include="bower_components\angular-bootstrap\.gitignore" />
@@ -2085,7 +2084,6 @@
     <Content Include="Resources\img\prod_renta-variable-nacional.jpg" />
     <Content Include="Scripts\extras\jquery-1.12.0.js" />
     <Content Include="Scripts\extras\jquery.sticky.js" />
-    <Content Include="Scripts\extras\uglipop.min.js" />
     <Content Include="Styles\slicknav.css" />
     <Content Include="bower_components\angular-mocks\.bower.json" />
     <Content Include="bower_components\angular-mocks\bower.json" />
