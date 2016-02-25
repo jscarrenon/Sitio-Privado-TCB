@@ -39,6 +39,7 @@
         operacionesSeleccionadas(): app.domain.IDocumento[];
         documentosSeleccionados(): app.domain.IDocumento[];
         haySeleccionados(): boolean;
+        respuestaMensaje: string;
     }
 
     class MisInversionesDocumentosCtrl implements IMisInversionesDocumentosViewModel {
@@ -71,6 +72,7 @@
         firmadosLoading: boolean;
         firmarLoading: boolean;
         errorFechas: string;
+        respuestaMensaje: string;
 
         static $inject = ['constantService', 'dataService', 'authService', 'extrasService', '$filter', '$uibModal'];
         constructor(private constantService: app.common.services.ConstantService,
@@ -85,6 +87,7 @@
             this.seleccionarSeccion(this.seccionId);
             this.configurarPaginacion();
 
+            this.respuestaMensaje = null;
             this.errorFechas = null;
             this.fechaHoy = new Date();
             this.declaracion = false;
@@ -188,6 +191,7 @@
         }
 
         firmarDocumentos(): void {
+            this.respuestaMensaje = null;
             var firmarOperacionesLoading: boolean = false;
             var firmarDocumentosLoading: boolean = false;
             this.firmarLoading = firmarOperacionesLoading || firmarDocumentosLoading;
@@ -205,9 +209,11 @@
                         this.dataService.postWebService(this.constantService.apiDocumentoURI + 'setFirmarOperacion', operacionFirmarInput)
                             .then((result: app.domain.IDocumentoFirmarResultado) => {
                                 var operacionFirmarResultado: app.domain.IDocumentoFirmarResultado = result;
+                                this.respuestaMensaje = 'ok';
                                 this.actualizarDocumentosPendientes();
                                 this.actualizarDocumentosFirmados();
                             })
+                            .catch(() => this.respuestaMensaje = 'error')
                             .finally(() => { firmarOperacionesLoading = false; this.firmarLoading = firmarOperacionesLoading || firmarDocumentosLoading; });
                     }
                 }
@@ -224,9 +230,11 @@
                         this.dataService.postWebService(this.constantService.apiDocumentoURI + 'setFirmarDocumento', documentoFirmarInput)
                             .then((result: app.domain.IDocumentoFirmarResultado) => {
                                 var documentoFirmarResultado: app.domain.IDocumentoFirmarResultado = result;
+                                this.respuestaMensaje = 'ok';
                                 this.actualizarDocumentosPendientes();
                                 this.actualizarDocumentosFirmados();
                             })
+                            .catch(() => this.respuestaMensaje = 'error')
                             .finally(() => { firmarDocumentosLoading = false; this.firmarLoading = firmarOperacionesLoading || firmarDocumentosLoading; });
                     }
                 }

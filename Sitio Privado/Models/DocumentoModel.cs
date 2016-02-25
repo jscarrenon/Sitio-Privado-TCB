@@ -66,8 +66,8 @@ namespace Sitio_Privado.Models
             Producto = documento._producto;
             Tipo = documento._tipo;
             Folio = documento._folio;
-            Leido = documento._leido.Trim();
-            Firmado = documento._firmado.Trim();
+            Leido = documento._leido != null ? documento._leido.Trim() : documento._leido;
+            Firmado = documento._firmado != null ? documento._firmado.Trim() : documento._firmado;
             TipoFirma = "Web";
             FechaFirma = documento._fechafirm != null ? Converters.getFecha(documento._fechafirm).ToString("dd MMM yyyy") : "";
             Ruta = documento._ruta;
