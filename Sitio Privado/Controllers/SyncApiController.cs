@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using Sitio_Privado.Extras;
 using Sitio_Privado.Filters;
 using Sitio_Privado.Helpers;
 using Sitio_Privado.Models;
@@ -35,7 +36,6 @@ namespace Sitio_Privado.Controllers
         private static string EmailParam = "email";
         private static string CheckingAccountParam = "checking_account";
         private static string BankParam = "bank";
-        private static string TemporalPasswordParam = "temporal_password";
         private static string UpdatedAtParam = "updated_at";
         #endregion
 
@@ -71,6 +71,16 @@ namespace Sitio_Privado.Controllers
             {
                 string responseBody = GetUserResponseBody(graphApiResponse.User);
                 response.Content = new StringContent(responseBody, Encoding.UTF8, "application/json");
+
+                tracer.Info(Request, ControllerContext.ControllerDescriptor.ControllerType.FullName, "Sending email");
+                //Sending email
+                Email email = new Email("NewUserMail");
+                email.UserEmail = graphUser.Email;
+                email.UserFullName = graphUser.DisplayName;
+                email.UserPassword = graphUser.TemporalPassword;
+                await email.SendAsync();
+
+                tracer.Info(Request, ControllerContext.ControllerDescriptor.ControllerType.FullName, "Email sent");
             }
             else
             {
@@ -250,7 +260,8 @@ namespace Sitio_Privado.Controllers
             //Retrieve formatted values
             user.Name = GetTitleFormatString(content.GetValue(NameParam).ToString());
             user.Rut = content.GetValue(RutParam).ToString().Trim().ToUpper();
-            user.TemporalPassword = content.GetValue(TemporalPasswordParam).ToString().Trim();
+            user.Email = content.GetValue(EmailParam).ToString().Trim().ToLower();
+            user.TemporalPassword = PasswordGeneratorHelper.GeneratePassword();
 
             if (content.GetValue(SurnameParam) != null)
                 user.Surname = GetTitleFormatString(content.GetValue(SurnameParam).ToString());
@@ -273,9 +284,6 @@ namespace Sitio_Privado.Controllers
             if(content.GetValue(HomePhoneParam) != null)
                 user.HomePhone = content.GetValue(HomePhoneParam).ToString().Trim();
 
-            if (content.GetValue(EmailParam) != null)
-                user.Email = content.GetValue(EmailParam).ToString().Trim().ToLower();
-
             if (content.GetValue(CheckingAccountParam) != null)
                 user.CheckingAccount = content.GetValue(CheckingAccountParam).ToString().Trim();
 
@@ -293,8 +301,8 @@ namespace Sitio_Privado.Controllers
 
         private bool CheckNeededAttributesForCreatingUser(JObject requestBody)
         {
-            if (requestBody.GetValue(NameParam) == null || requestBody.GetValue(SurnameParam) == null ||
-                requestBody.GetValue(RutParam) == null || requestBody.GetValue(TemporalPasswordParam) == null)
+            if (requestBody.GetValue(NameParam) == null || requestBody.GetValue(RutParam) == null || 
+                requestBody.GetValue(EmailParam) == null)
                 return false;
             return true;
         }

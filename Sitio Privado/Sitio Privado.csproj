@@ -107,8 +107,16 @@
       <HintPath>..\packages\NLog.4.2.3\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Postal, Version=1.0.0.0, Culture=neutral, PublicKeyToken=45719375b8b4d528, processorArchitecture=MSIL">
+      <HintPath>..\packages\Postal.Mvc4.1.2.0\lib\net40\Postal.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Quartz, Version=2.3.3.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
       <HintPath>..\packages\Quartz.2.3.3\lib\net40\Quartz.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RazorEngine, Version=3.3.0.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
+      <HintPath>..\packages\RazorEngine.3.3.0\lib\net40\RazorEngine.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -250,6 +258,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CircularizacionController.cs" />
     <Compile Include="Controllers\IndicesController.cs" />
+    <Compile Include="Extras\Email.cs" />
     <Compile Include="Filters\NoCacheAttribute.cs" />
     <Compile Include="Filters\TokenAuthorizationFilterAttribute.cs" />
     <Compile Include="Extras\Converters.cs" />
@@ -301,6 +310,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\PasswordGeneratorHelper.cs" />
     <Compile Include="Helpers\TannerDatabaseHelper.cs" />
     <Compile Include="Models\AzureFolder.cs" />
     <Compile Include="Models\AzureBlob.cs" />
@@ -366,7 +376,26 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app\common\templates\footer.html" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Properties\PublishProfiles\kundertannerprivado - Web Deploy %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\tannerdes - Web Deploy.pubxml" />
+    <Content Include="Views\Emails\_ViewStart.cshtml" />
+    <Content Include="Views\Emails\Web.config" />
+    <Content Include="Views\Emails\NewUserMail.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <TypeScriptCompile Include="app\common\controllers\modalInstanceCtrl.ts" />
+    <TypeScriptCompile Include="app\common\directives\loadingDirective.ts" />
+    <TypeScriptCompile Include="app\common\typings\uglipop.ts" />
+	<Content Include="app\common\templates\footer.html" />
+    <Content Include="app\common\templates\loading.html" />
+    <Content Include="app\common\templates\pagination.html" />
     <Content Include="app\modules\home\templates\index.html" />
     <Content Include="app\modules\home\templates\mis-datos.html" />
     <Content Include="app\modules\informacion-financiera\templates\comite-regulacion.html" />
