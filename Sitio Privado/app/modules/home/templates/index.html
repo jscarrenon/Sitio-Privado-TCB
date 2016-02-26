@@ -77,7 +77,7 @@
                                 Sucursal: {{agenteCtrl.agente.Sucursal}}
                             </div>
                         </div>
-                        <div class="button blue call"><a href="tel:{{agenteCtrl.agente.Telefono}}" class="clink">Llamar</a></div>
+                        <div class="button blue call" ng-show="agenteCtrl.agente.Telefono"><a href="tel:{{agenteCtrl.agente.Telefono}}" class="clink">Llamar</a></div>
                     </div>
                     <div id="clear"></div>
                 </div>
