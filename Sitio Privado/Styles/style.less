@@ -780,7 +780,8 @@ div.one-col.home {
     line-height:19px;
     .fmedium();
     font-size:12.5px;
-    margin-top:25px;
+    margin-top:45px;
+    clear:both;
     .button {
         margin-top:20px;
         line-height: 12px;
@@ -1511,10 +1512,8 @@ div.one-col.home {
             }
             .call {
                 position:absolute;
-                top:auto;
-                right:auto;
-                left:106px;
-                bottom:22px;
+                right:25px;
+                top:25px;
             }
         }
     }
@@ -1630,6 +1629,10 @@ div.one-col.home {
     }
 }
 
+@media only screen and (max-width: 360px) {
+
+}
+
 @media only screen and (max-width: 330px) {
     .home {
         .content-box {
@@ -1706,14 +1709,6 @@ div.one-col.home {
         padding-left:6%;
         position:relative;
         box-shadow: 0px 0px 5px 0px rgba(198,198,198,0.50);
-    }
-    .error {
-        width: 100%;
-        clear: both;
-        height: 20px;
-        position: absolute;
-        top: 40px;
-        font-size: 11.5px;
     }
 }
 
@@ -1925,6 +1920,9 @@ label {
     position:absolute;
     top:0px;
     right:0px;
+    input[type="date"]{
+        width:118px !important;
+    }
 }
 
 input[type="date"] {
@@ -2001,6 +1999,7 @@ input[type="date"] {
     line-height: 19px;
     padding-top:30px;
     text-align:justify;
+    clear:both;
 }
 
 /* footer --------------------------------------- */
@@ -2456,6 +2455,8 @@ input[type="date"] {
     .modal4 {height:275px;}
 }
 
+/* loading spinner -------------------------- */
+
 .loading-spinner{
     width:32px;
     height:32px;
@@ -2472,6 +2473,33 @@ input[type="date"] {
     margin-bottom:45px;
 }
 
+/* calendar polyfill -------------------------- */
+
 .btr-dateinput-calendar table td:nth-child(1) {
     font-family:Helvetica Neue,Helvetica,Arial,sans-serif;
+}
+
+/* scrollbar mobile -------------------------- */
+
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+::-webkit-scrollbar:vertical {
+    width: 12px;
+}
+
+::-webkit-scrollbar:horizontal {
+    height: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, .5);
+    border-radius: 10px;
+    border: 2px solid #ffffff;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: #ffffff;
 }
