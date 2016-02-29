@@ -253,6 +253,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CircularizacionController.cs" />
+    <Compile Include="Controllers\CustomController.cs" />
     <Compile Include="Controllers\IndicesController.cs" />
     <Compile Include="Filters\NoCacheAttribute.cs" />
     <Compile Include="Filters\TokenAuthorizationFilterAttribute.cs" />
