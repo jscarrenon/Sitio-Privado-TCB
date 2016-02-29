@@ -211,6 +211,12 @@ namespace Sitio_Privado.Controllers
 
             GraphUserModel user = new GraphUserModel();
 
+            if(content.GetValue(NameParam) != null)
+                user.Name = GetTitleFormatString(content.GetValue(NameParam).ToString());
+
+            if(content.GetValue(SurnameParam) != null)
+                user.Surname = GetTitleFormatString(content.GetValue(SurnameParam).ToString());
+
             if (content.GetValue(WorkAddressParam) != null)
                 user.WorkAddress = GetTitleFormatString(content.GetValue(WorkAddressParam).ToString());
 

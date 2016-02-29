@@ -270,17 +270,17 @@ namespace Sitio_Privado.Helpers
 
             //General information
             json.Add(GivenNameParamKey, graphUser.Name);
-            if(graphUser.Surname != null && graphUser.Surname != "") json.Add(SurnameParamKey, graphUser.Surname);
-            json.Add(RutParamKey, graphUser.Rut);
-            json.Add(WorkAddressParamKey, graphUser.WorkAddress);
-            json.Add(HomeAddressParamKey, graphUser.HomeAddress);
-            json.Add(CountryParamKey, graphUser.Country);
-            json.Add(CityParamKey, graphUser.City);
-            json.Add(WorkPhoneParamKey, graphUser.WorkPhone);
-            json.Add(HomePhoneParamKey, graphUser.HomePhone);
             json.Add(EmailParamKey, graphUser.Email);
-            json.Add(CheckingAccountParamKey, graphUser.CheckingAccount);
-            json.Add(BankParamKey, graphUser.Bank);
+            json.Add(RutParamKey, graphUser.Rut);
+            if (graphUser.Surname != null && graphUser.Surname != "") json.Add(SurnameParamKey, graphUser.Surname);
+            if (graphUser.WorkAddress != null && graphUser.WorkAddress != "") json.Add(WorkAddressParamKey, graphUser.WorkAddress);
+            if (graphUser.HomeAddress != null && graphUser.HomeAddress != "") json.Add(HomeAddressParamKey, graphUser.HomeAddress);
+            if (graphUser.Country != null && graphUser.Country != "") json.Add(CountryParamKey, graphUser.Country);
+            if (graphUser.City != null && graphUser.City != "") json.Add(CityParamKey, graphUser.City);
+            if (graphUser.WorkPhone != null && graphUser.WorkPhone != "") json.Add(WorkPhoneParamKey, graphUser.WorkPhone);
+            if (graphUser.HomePhone != null && graphUser.HomePhone != "") json.Add(HomePhoneParamKey, graphUser.HomePhone);
+            if (graphUser.CheckingAccount != null && graphUser.CheckingAccount != "") json.Add(CheckingAccountParamKey, graphUser.CheckingAccount);
+            if (graphUser.Bank != null && graphUser.Bank != "") json.Add(BankParamKey, graphUser.Bank);
             json.Add(DisplayNameParamKey, graphUser.DisplayName);
             json.Add(UpdatedAtParamKey, graphUser.UpdatedAt);
 
@@ -316,31 +316,37 @@ namespace Sitio_Privado.Helpers
         {
             JObject json = new JObject();
 
-            if (graphUser.WorkAddress != null)
+            if (graphUser.Name != null && graphUser.Name != "")
+                json.Add(GivenNameParamKey, graphUser.Name);
+
+            if (graphUser.Surname != null && graphUser.Surname != "")
+                json.Add(SurnameParamKey, graphUser.Surname);
+
+            if (graphUser.WorkAddress != null && graphUser.WorkAddress != "")
                 json.Add(WorkAddressParamKey, graphUser.WorkAddress);
 
-            if (graphUser.HomeAddress != null)
+            if (graphUser.HomeAddress != null && graphUser.HomeAddress != "")
                 json.Add(HomeAddressParamKey, graphUser.HomeAddress);
 
-            if (graphUser.Country != null)
+            if (graphUser.Country != null && graphUser.Country != "")
                 json.Add(CountryParamKey, graphUser.Country);
 
-            if (graphUser.City != null)
+            if (graphUser.City != null && graphUser.City != "")
                 json.Add(CityParamKey, graphUser.City);
 
-            if (graphUser.WorkPhone != null)
+            if (graphUser.WorkPhone != null && graphUser.WorkPhone != "")
                 json.Add(WorkPhoneParamKey, graphUser.WorkPhone);
 
-            if (graphUser.HomePhone != null)
+            if (graphUser.HomePhone != null && graphUser.HomePhone != "")
                 json.Add(HomePhoneParamKey, graphUser.HomePhone);
 
-            if (graphUser.Email != null)
+            if (graphUser.Email != null && graphUser.Email != "")
                 json.Add(EmailParamKey, graphUser.Email);
 
-            if (graphUser.CheckingAccount != null)
+            if (graphUser.CheckingAccount != null && graphUser.CheckingAccount != "")
                 json.Add(CheckingAccountParamKey, graphUser.CheckingAccount);
 
-            if (graphUser.Bank != null)
+            if (graphUser.Bank != null && graphUser.Bank != "")
                 json.Add(BankParamKey, graphUser.Bank);
 
             //If email is updated, then set sign-in options again.
