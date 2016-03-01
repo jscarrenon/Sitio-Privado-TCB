@@ -171,6 +171,28 @@ namespace Sitio_Privado.Helpers
             return response;
         }
 
+        public async Task<GraphApiResponseInfo> DeleteUserByObjectId(string objectId)
+        {
+            HttpResponseMessage graphResponse = await SendGraphDeleteRequest(UsersApiPath + "/" + objectId);
+
+            //Set response
+            GraphApiResponseInfo response = new GraphApiResponseInfo();
+            response.StatusCode = graphResponse.StatusCode;
+            JObject bodyResponse = (JObject)await graphResponse.Content.ReadAsAsync(typeof(JObject));
+
+            //TODO: update codes
+            if (graphResponse.StatusCode == HttpStatusCode.BadGateway)
+            {
+                response.Message = bodyResponse.GetValue("message").ToString();
+            }
+            else if(!graphResponse.IsSuccessStatusCode)
+            {
+                response.Message = bodyResponse.GetValue("odata.error").Value<JToken>("message").Value<string>("value");
+            }
+
+            return response;
+        }
+
         private async Task<HttpResponseMessage> SendGraphPostRequest(string api, string json)
         {
             // NOTE: This client uses ADAL v2, not ADAL v4
@@ -194,6 +216,36 @@ namespace Sitio_Privado.Helpers
                 content.Add("message", "There was an unexpected error when performing the operation in B2C server");
                 graphApiResponse.Content = new StringContent(content.ToString(), Encoding.UTF8, "application/json");
             }
+            return graphApiResponse;
+        }
+
+        private async Task<HttpResponseMessage> SendGraphDeleteRequest(string api)
+        {
+            // First, use ADAL to acquire a token using the app's identity (the credential)
+            // The first parameter is the resource we want an access_token for; in this case, the Graph API.
+            AuthenticationResult result = authContext.AcquireToken("https://graph.windows.net", credential);
+
+            // For B2C user managment, be sure to use the beta Graph API version.
+            HttpClient http = new HttpClient();
+            string url = "https://graph.windows.net/" + Tenant + api + "?" + "api-version=beta";
+
+            // Append the access token for the Graph API to the Authorization header of the request, using the Bearer scheme.
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, url);
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", result.AccessToken);
+            HttpResponseMessage graphApiResponse;
+
+            try
+            {
+                graphApiResponse = await http.SendAsync(request);
+            }
+            catch (Exception)
+            {
+                graphApiResponse = new HttpResponseMessage();
+                graphApiResponse.StatusCode = HttpStatusCode.BadGateway;
+                JObject content = new JObject();
+                content.Add("message", "There was an unexpected error when performing the operation in B2C server");
+            }
+
             return graphApiResponse;
         }
 
@@ -223,7 +275,6 @@ namespace Sitio_Privado.Helpers
             catch (Exception)
             {
                 graphApiResponse = new HttpResponseMessage();
-                graphApiResponse = new HttpResponseMessage();
                 graphApiResponse.StatusCode = HttpStatusCode.BadGateway;
                 JObject content = new JObject();
                 content.Add("message", "There was an unexpected error when performing the operation in B2C server");
@@ -250,7 +301,6 @@ namespace Sitio_Privado.Helpers
             }
             catch (Exception)
             {
-                graphApiResponse = new HttpResponseMessage();
                 graphApiResponse = new HttpResponseMessage();
                 graphApiResponse.StatusCode = HttpStatusCode.BadGateway;
                 JObject content = new JObject();

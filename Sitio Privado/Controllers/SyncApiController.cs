@@ -148,6 +148,59 @@ namespace Sitio_Privado.Controllers
             return response;
         }
 
+        [HttpDelete]
+        public async Task<HttpResponseMessage> DeleteUser(string id)
+        {
+            //Read request's parameters
+            JObject requestContent = (JObject)await Request.Content.ReadAsAsync(typeof(JObject));
+            tracer.Info(Request, this.ControllerContext.ControllerDescriptor.ControllerType.FullName,
+                "Rut: {0}", new string[] { id });
+
+            HttpResponseMessage response = new HttpResponseMessage();
+
+            if (id == null || id.Length <= 0)
+            {
+                response.StatusCode = HttpStatusCode.BadRequest;
+                string errorMessage = GenerateJsonErrorMessage("Rut param was not provided");
+                response.Content = new StringContent(errorMessage, Encoding.UTF8, "application/json");
+                tracer.Info(Request, ControllerContext.ControllerDescriptor.ControllerType.FullName, "Completed with {0}, Content:\n{1}",
+                    new string[] { response.StatusCode.ToString(), await response.Content.ReadAsStringAsync() });
+                return response;
+            }
+
+            //Format Rut
+            id = id.Trim().ToUpper();
+            //Get user
+            GraphApiResponseInfo getGraphResponse = await syncApiHelper.GetUserByRut(id);
+
+            if (getGraphResponse.User == null)
+            {
+                response.StatusCode = HttpStatusCode.NotFound;
+                string errorMessage = GenerateJsonErrorMessage(getGraphResponse.Message);
+                response.Content = new StringContent(errorMessage, Encoding.UTF8, "application/json");
+                tracer.Info(Request, ControllerContext.ControllerDescriptor.ControllerType.FullName, "Completed with {0}, Content:\n{1}",
+                    new string[] { response.StatusCode.ToString(), await response.Content.ReadAsStringAsync() });
+                return response;
+            }
+            string userGraphId = getGraphResponse.User.ObjectId;
+            GraphApiResponseInfo graphResponse = await syncApiHelper.DeleteUserByObjectId(userGraphId);
+            response.StatusCode = graphResponse.StatusCode;
+
+            if (graphResponse.StatusCode == HttpStatusCode.NoContent)
+            {
+                tracer.Info(Request, this.ControllerContext.ControllerDescriptor.ControllerType.FullName,
+                    "Completed with {0}", new string[] { response.StatusCode.ToString() });
+            }
+            else
+            {
+                string errorMessage = GenerateJsonErrorMessage(getGraphResponse.Message);
+                response.Content = new StringContent(errorMessage, Encoding.UTF8, "application/json");
+                tracer.Info(Request, ControllerContext.ControllerDescriptor.ControllerType.FullName, "Completed with {0}, Content:\n{1}",
+                     new string[] { response.StatusCode.ToString(), await response.Content.ReadAsStringAsync() });
+            }
+            return response;
+        }
+
         [HttpGet]
         public async Task<HttpResponseMessage> GetUser(string id)
         {
