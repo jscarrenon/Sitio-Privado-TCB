@@ -1916,12 +1916,11 @@ label {
 }
 
 .filter.date.indices {
-    width:auto !important;
-    position:absolute;
+    width:290px !important;
     top:0px;
     right:0px;
     input[type="date"]{
-        width:118px !important;
+        width:117px !important;
     }
 }
 
@@ -1978,14 +1977,24 @@ input[type="date"] {
 /* input responsive --------------------------------------- */
 
 @media only screen and (max-width: 560px) {
-    .filter.date {
-        display:none;
+    .filter.date.estado-documentos {
+        height:80px;
+        width:100%;
+        margin-bottom:10px;
+        .error{
+            margin-top:34px;
+            width:80%;
+        }
     }
     .filter.date.indices {
         display:block;
         position:relative;
         margin-top:15px;
-        margin-bottom:10px;
+        margin-bottom:15px;
+        float:left;
+        .date-field{
+            margin-left:0px;
+        }
     }
 }
 
@@ -2494,12 +2503,12 @@ input[type="date"] {
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, .5);
+    background-color: @gris_medio;
     border-radius: 10px;
-    border: 2px solid #ffffff;
+    border: 2px solid@gris_fondo;
 }
 
 ::-webkit-scrollbar-track {
     border-radius: 10px;
-    background-color: #ffffff;
+    background-color: @gris_fondo;
 }
