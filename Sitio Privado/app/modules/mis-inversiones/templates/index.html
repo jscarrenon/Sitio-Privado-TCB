@@ -24,7 +24,7 @@
                     Estado de Documentos
                 </a>
             </li>
-            <li class="circularizacion" ng-class="{'active':ctrl.seccionId == 4}">
+            <li class="circularizacion" ng-class="{'active':ctrl.seccionId == 4}" ng-if="ctrl.authService.circularizacionPendiente">
                 <a href="#/mis-inversiones/circularizacion" class="clink">
                     Circularización
                 </a>
