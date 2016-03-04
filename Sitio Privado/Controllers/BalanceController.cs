@@ -5,17 +5,19 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Sitio_Privado.Models;
+using System.Threading.Tasks;
 
 namespace Sitio_Privado.Controllers
 {
-    public class BalanceController : ApiController
+    public class BalanceController : ApiBaseController
     {
         [HttpPost]
-        public IHttpActionResult GetSingle([FromBody]BalanceInput input)
+        public async Task<IHttpActionResult> GetSingle([FromBody]BalanceInput input)
         {
             try
             {
-                Balance balance = new Balance(input);
+                var usuario = await GetUsuarioActual();
+                Balance balance = new Balance(input, usuario);
                 return Ok(balance);
             }
             catch (Exception e)

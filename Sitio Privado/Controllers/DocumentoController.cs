@@ -6,18 +6,21 @@ using System.Net.Http;
 using System.Web.Http;
 using Sitio_Privado.Models;
 using Sitio_Privado.DocumentosPendientesFirma;
+using System.Threading.Tasks;
+using Sitio_Privado.Extras;
 
 namespace Sitio_Privado.Controllers
 {
-    public class DocumentoController : ApiController
+    public class DocumentoController : ApiBaseController
     {
         [HttpPost]
-        public IHttpActionResult GetListPendientes([FromBody]DocumentosPendientesInput input)
+        public async Task<IHttpActionResult> GetListPendientes([FromBody]DocumentosPendientesInput input)
         {
             try
             {
+                var usuario = await GetUsuarioActual();
                 tann_documentos webService = new tann_documentos();
-                _operacion[] operaciones = webService.cns_operacion_pendiente(input.rut);
+                _operacion[] operaciones = webService.cns_operacion_pendiente(Converters.getRutParteEntera(usuario.Rut));
 
                 List<Documento> listaOperaciones = new List<Documento>();
                 foreach (_operacion operacion in operaciones.Where(x => x._tipo == "Operacion"))
@@ -43,12 +46,13 @@ namespace Sitio_Privado.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult GetListFirmados([FromBody]DocumentosFirmadosInput input)
+        public async Task<IHttpActionResult> GetListFirmados([FromBody]DocumentosFirmadosInput input)
         {
             try
             {
+                var usuario = await GetUsuarioActual();
                 tann_documentos webService = new tann_documentos();
-                _operacion[] operaciones = webService.cns_operacion_firmada(input.rut, input.fechaIni, input.fechaFin);
+                _operacion[] operaciones = webService.cns_operacion_firmada(Converters.getRutParteEntera(usuario.Rut), input.fechaIni, input.fechaFin);
 
                 List<Documento> listaOperaciones = new List<Documento>();
                 foreach (_operacion operacion in operaciones.Where(x => x._tipo == "Operacion"))
@@ -74,11 +78,12 @@ namespace Sitio_Privado.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult SetLeido([FromBody]DocumentoLeidoInput input)
+        public async Task<IHttpActionResult> SetLeido([FromBody]DocumentoLeidoInput input)
         {
             try
             {
-                DocumentoLeidoResultado resultado = new DocumentoLeidoResultado(input);
+                var usuario = await GetUsuarioActual();
+                DocumentoLeidoResultado resultado = new DocumentoLeidoResultado(input, usuario);
 
                 return Ok(resultado);
             }
@@ -89,11 +94,12 @@ namespace Sitio_Privado.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult SetFirmarDocumento([FromBody]DocumentoFirmarInput input)
+        public async Task<IHttpActionResult> SetFirmarDocumento([FromBody]DocumentoFirmarInput input)
         {
             try
             {
-                DocumentoFirmarResultado resultado = new DocumentoFirmarResultado(input);
+                var usuario = await GetUsuarioActual();
+                DocumentoFirmarResultado resultado = new DocumentoFirmarResultado(input, usuario);
 
                 return Ok(resultado);
             }
@@ -105,11 +111,12 @@ namespace Sitio_Privado.Controllers
 
 
         [HttpPost]
-        public IHttpActionResult SetFirmarOperacion([FromBody]OperacionFirmarInput input)
+        public async Task<IHttpActionResult> SetFirmarOperacion([FromBody]OperacionFirmarInput input)
         {
             try
             {
-                DocumentoFirmarResultado resultado = new DocumentoFirmarResultado(input);
+                var usuario = await GetUsuarioActual();
+                DocumentoFirmarResultado resultado = new DocumentoFirmarResultado(input, usuario);
 
                 return Ok(resultado);
             }
@@ -120,11 +127,12 @@ namespace Sitio_Privado.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult GetCantidadPendientes([FromBody]DocumentosPendientesCantidadInput input)
+        public async Task<IHttpActionResult> GetCantidadPendientes([FromBody]DocumentosPendientesCantidadInput input)
         {
             try
             {
-                DocumentosPendientesCantidadResultado resultado = new DocumentosPendientesCantidadResultado(input);
+                var usuario = await GetUsuarioActual();
+                DocumentosPendientesCantidadResultado resultado = new DocumentosPendientesCantidadResultado(input, usuario);
 
                 return Ok(resultado);
             }

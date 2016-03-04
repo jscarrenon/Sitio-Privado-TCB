@@ -27,7 +27,7 @@
             private extrasService: app.common.services.ExtrasService,
             private $routeParams: app.misInversiones.IMisInversionesRouteParams) {
 
-            this.fondosMutuosInput = new app.domain.FondoMutuoInput(parseInt(this.extrasService.getRutParteEntera(this.authService.usuario.Rut)));
+            this.fondosMutuosInput = new app.domain.FondoMutuoInput();
             this.getFondosMutuos(this.fondosMutuosInput);
         }
 

@@ -18,7 +18,7 @@
             private dataService: app.common.services.DataService,
             private authService: app.common.services.AuthService) {
 
-            this.agenteInput = new app.domain.AgenteInput(this.authService.usuario.Rut, 0);
+            this.agenteInput = new app.domain.AgenteInput();
             this.getAgente(this.agenteInput);
         }
 

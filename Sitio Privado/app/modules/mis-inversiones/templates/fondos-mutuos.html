@@ -2,8 +2,8 @@
     <div id="header">
         <div class="in">
             <div class="head">
-                <div class="title">Fondos Mutuos y APV</div>
-                <div class="subtitle"></div>
+                <div class="title">Fondos Mutuos y APV | Custodia Principal AGF</div>
+                <div class="subtitle">La información respecto a los fondos de cantidad y valor de cuotas es proporcionada directamente por Principal Administradora General de Fondos S.A. Para acceder a un mayor detalle, por favor contacte a su Ejecutivo de Inversiones o ingrese directamente a Principal AGFC.</div>
             </div>
         </div>
     </div>
@@ -30,13 +30,13 @@
                             <td>{{fondoMutuo.Tipo}}</td>
                             <td>{{fondoMutuo.CtaPisys}}</td>
                             <td>{{fondoMutuo.Csbis}}</td>
-                            <td class="number">{{fondoMutuo.ValorCuota|currency}}</td>
-                            <td class="number">{{fondoMutuo.SaldoCuota|currency}}</td>
-                            <td class="number">{{fondoMutuo.Pesos|currency}}</td>
+                            <td class="number">{{fondoMutuo.ValorCuota|number:2}}</td>
+                            <td class="number">{{fondoMutuo.SaldoCuota|number:2}}</td>
+                            <td class="number">{{fondoMutuo.Pesos|number:2}}</td>
                         </tr>
                         <tr class="total">
                             <td colspan="6">Total Fondos Mutuos Renta Fija</td>
-                            <td class="number">{{fondosMutuosCtrl.fondosMutuosRFTotal|currency}}</td>
+                            <td class="number">{{fondosMutuosCtrl.fondosMutuosRFTotal|number:2}}</td>
                         </tr>
                     </table>
                 </div>
@@ -62,13 +62,13 @@
                             <td>{{fondoMutuo.Tipo}}</td>
                             <td>{{fondoMutuo.CtaPisys}}</td>
                             <td>{{fondoMutuo.Csbis}}</td>
-                            <td class="number">{{fondoMutuo.ValorCuota|currency}}</td>
-                            <td class="number">{{fondoMutuo.SaldoCuota|currency}}</td>
-                            <td class="number">{{fondoMutuo.Pesos|currency}}</td>
+                            <td class="number">{{fondoMutuo.ValorCuota|number:2}}</td>
+                            <td class="number">{{fondoMutuo.SaldoCuota|number:2}}</td>
+                            <td class="number">{{fondoMutuo.Pesos|number:2}}</td>
                         </tr>
                         <tr class="total">
                             <td colspan="6">Total Fondos Mutuos Renta Variable</td>
-                            <td class="number">{{fondosMutuosCtrl.fondosMutuosRVTotal|currency}}</td>
+                            <td class="number">{{fondosMutuosCtrl.fondosMutuosRVTotal|number:2}}</td>
                         </tr>
                     </table>
                 </div>
