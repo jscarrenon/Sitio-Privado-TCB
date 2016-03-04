@@ -17,8 +17,7 @@ namespace Sitio_Privado.Controllers
             try
             {
                 Usuario usuario = await this.GetUsuarioActual();
-                input._rut = usuario.Rut;
-                Agente agente = new Agente(input);
+                Agente agente = new Agente(input, usuario);
                 return Ok(agente);
             }
             catch(Exception e)

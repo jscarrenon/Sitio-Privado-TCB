@@ -8,8 +8,6 @@ namespace Sitio_Privado.Models
 {
     public class AgenteInput
     {
-        public string _rut { get; set; }
-        public short _sec { get; set; }
     }
 
     public class Agente
@@ -26,10 +24,10 @@ namespace Sitio_Privado.Models
 
         public Agente() { }
 
-        public Agente(AgenteInput input)
+        public Agente(AgenteInput input, Usuario usuario)
         {
             tann_info_cliente webService = new tann_info_cliente();
-            _agente agente = webService.cli_info_agente(input._rut, input._sec);
+            _agente agente = webService.cli_info_agente(usuario.Rut, 0);
             Codigo = agente._codigo;
             Nombre = agente._nombre;
             Sucursal = agente._sucursal;
