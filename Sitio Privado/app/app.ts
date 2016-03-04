@@ -31,8 +31,8 @@
 
             AnalyticsProvider.setAccount('UA-74691120-1')
                 .trackUrlParams(true)
-                .setPageEvent('$stateChangeSuccess');
-                //.setDomainName('https://tannerdes.azurewebsites.net');
+                .setPageEvent('$stateChangeSuccess')
+                .setDomainName('tannerdes.azurewebsites.net');
         }
 
 
