@@ -34,5 +34,15 @@ namespace Sitio_Privado.Extras
             return "";
         }
 
+        /// <summary>
+        /// Retorna la parte entera de un rut (antes del guión) como entero
+        /// </summary>
+        /// <param name="rut">Rut en formato "12345678-9"</param>
+        /// <returns>Int con parte entera del rut</returns>
+        public static int getRutParteEnteraInt(string rut)
+        {
+            return Convert.ToInt32(getRutParteEntera(rut));
+        }
+
     }
 }
