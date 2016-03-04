@@ -29,7 +29,7 @@
                 })
                 .otherwise({ redirectTo: '/' });
 
-            AnalyticsProvider.setAccount('UA-74691120-1')
+            AnalyticsProvider.setAccount('UA-73610006-1')
                 .trackUrlParams(true)
                 .setPageEvent('$stateChangeSuccess')
                 .setDomainName('tannerdes.azurewebsites.net');
