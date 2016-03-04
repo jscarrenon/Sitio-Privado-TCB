@@ -38,6 +38,7 @@ namespace Sitio_Privado.Models
         {
             Codigo = titulo._code;
             Descriptor = titulo._descriptor;
+            Conceptos = new List<CartolaConcepto>();
         }
     }
 
