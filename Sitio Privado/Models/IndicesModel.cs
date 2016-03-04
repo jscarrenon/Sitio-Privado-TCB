@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Sitio_Privado.IndicesLiquidezSolvencia;
+using Sitio_Privado.Extras;
 
 namespace Sitio_Privado.Models
 {
@@ -49,35 +50,10 @@ namespace Sitio_Privado.Models
             PatrimonioDepurado = indices._patdep;
             FechaConsulta = indices._fecha;
 
-            LiquidezGeneral = GetVeces(ActivosSieteDias, PasivosSieteDias);
-            LiquidezIntermediacion = GetVeces(ActivosIntermediacion, AcreedoresIntermediacion);
-            RazonEndeudamiento = GetVeces(TotalPasivosExigibles, PatrimonioLiquido);
-            RazonCoberturaPatrimonial = GetPorcentaje(MontoCoberturaPatrimonial, PatrimonioLiquido);
-        }
-
-        private static double GetPorcentaje(double numerador, double denominador)
-        {
-            double resultado = 0;
-
-            if(denominador != 0)
-            {
-                resultado = GetVeces(numerador, denominador);
-                resultado = resultado * 100;
-            }
-
-            return resultado;
-        }
-
-        private static double GetVeces(double numerador, double denominador)
-        {
-            double resultado = 0;
-
-            if (denominador != 0)
-            {
-                resultado = numerador / denominador;
-            }
-
-            return resultado;
+            LiquidezGeneral = Utils.GetVeces(ActivosSieteDias, PasivosSieteDias);
+            LiquidezIntermediacion = Utils.GetVeces(ActivosIntermediacion, AcreedoresIntermediacion);
+            RazonEndeudamiento = Utils.GetVeces(TotalPasivosExigibles, PatrimonioLiquido);
+            RazonCoberturaPatrimonial = Utils.GetPorcentaje(MontoCoberturaPatrimonial, PatrimonioLiquido);
         }
     }
 }

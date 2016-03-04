@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Sitio_Privado.CartolaResumida;
+using Sitio_Privado.Extras;
 
 namespace Sitio_Privado.Models
 {
@@ -22,7 +23,6 @@ namespace Sitio_Privado.Models
         {
             Concepto = item.concepto;
             Valor = item._valor;
-            //Porcentaje = item._porcentaje;
         }
     }
 
@@ -64,9 +64,18 @@ namespace Sitio_Privado.Models
                 Rut = cartolaAlt._rutcli;
                 Periodo = cartolaAlt._periodo;
 
+                double totalConceptos = 0;
+
                 foreach(_itemcartola item in cartolaAlt.conceptos)
-                {                    
-                    cartolaTitulo.Conceptos.Add(new CartolaConcepto(item));
+                {
+                    CartolaConcepto cartolaConcepto = new CartolaConcepto(item);
+                    totalConceptos += cartolaConcepto.Valor;
+                    cartolaTitulo.Conceptos.Add(cartolaConcepto);
+                }
+
+                foreach(CartolaConcepto cartolaConcepto in cartolaTitulo.Conceptos)
+                {
+                    cartolaConcepto.Porcentaje = Utils.GetPorcentaje(cartolaConcepto.Valor, totalConceptos);
                 }
 
                 Titulos.Add(cartolaTitulo);
