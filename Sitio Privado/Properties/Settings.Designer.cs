@@ -76,7 +76,7 @@ namespace Sitio_Privado.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://www.tannercliente.cl/wstsf/tann_cartola_resumida.asmx")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://172.17.1.12:8088/tann_cartola_resumida.asmx")]
         public string Sitio_Privado_CartolaResumida_tann_cartola_resumida {
             get {
                 return ((string)(this["Sitio_Privado_CartolaResumida_tann_cartola_resumida"]));

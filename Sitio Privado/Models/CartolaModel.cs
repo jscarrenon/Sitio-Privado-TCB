@@ -18,16 +18,30 @@ namespace Sitio_Privado.Models
 
         public CartolaConcepto() { }
 
-        public CartolaConcepto(_itemcartola item)
+        public CartolaConcepto(_cartola_alt item)
         {
-            Concepto = item.concepto;
+            Concepto = item;
             Valor = item._valor;
             Porcentaje = item._porcentaje;
         }
     }
 
+    public class CartolaTitulo
+    {
+        public int Codigo { get; set; }
+        public string Descriptor { get; set; }
+
+        public CartolaTitulo() { }
+        public CartolaTitulo(_titulo titulo)
+        {
+            Codigo = titulo._code;
+            Descriptor = titulo._descriptor;
+        }
+    }
+
     public class Cartola
     {
+        List<CartolaTitulo> Titulos { get; set; }
         public string Rut { get; set; }
         public string Periodo { get; set; }
         public List<CartolaConcepto> Conceptos { get; set; }
@@ -37,11 +51,22 @@ namespace Sitio_Privado.Models
         public Cartola(CartolaInput input, Usuario usuario)
         {
             tann_cartola_resumida webService = new tann_cartola_resumida();
-            _cartola_alt cartola = webService.cns_total_general(usuario.Rut);
-            Rut = cartola._rutcli;
-            Periodo = cartola._periodo;
-            Conceptos = new List<CartolaConcepto>();
+            _titulos titulosWeb = webService.cns_titulos_cartola();
+            Rut = usuario.Rut;
+            foreach (_titulo tituloWeb in titulosWeb._listitulos)
+            {
+                Titulos.Add(new CartolaTitulo(tituloWeb));
+            }
+            foreach(CartolaTitulo titulo in Titulos)
+            {
+                var concepto = webService._cart_selector(Rut, titulo.Codigo);
+                CartolaConcepto(concepto);
+            }
+            //_cartola_alt cartola = webService.cns_total_general(u);
 
+            Periodo = DateTime.Today.ToString("dd-MM-yyyy");
+            Conceptos = new List<CartolaConcepto>();
+            webService._cart_selector
             foreach(_itemcartola item in cartola.conceptos)
             {
                 Conceptos.Add(new CartolaConcepto(item));

@@ -377,6 +377,9 @@
     </Content>
     <None Include="Properties\PublishProfiles\kundertannerprivado - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\tannerdes - Web Deploy.pubxml" />
+    <Content Include="Web References\CartolaResumida\_titulos.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -725,10 +728,10 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
-    <WebReferenceUrl Include="https://www.tannercliente.cl/wstsf/tann_cartola_resumida.asmx">
+    <WebReferenceUrl Include="http://172.17.1.12:8088/tann_cartola_resumida.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\CartolaResumida\</RelPath>
-      <UpdateFromURL>https://www.tannercliente.cl/wstsf/tann_cartola_resumida.asmx</UpdateFromURL>
+      <UpdateFromURL>http://172.17.1.12:8088/tann_cartola_resumida.asmx</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>
