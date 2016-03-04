@@ -161,7 +161,7 @@
         }
 
         verDocumento(documento: app.domain.IDocumento): void {
-            var documentoLeidoInput: app.domain.IDocumentoLeidoInput = new app.domain.DocumentoLeidoInput(this.extrasService.getRutParteEntera(this.authService.usuario.Rut), documento.Codigo);
+            var documentoLeidoInput: app.domain.IDocumentoLeidoInput = new app.domain.DocumentoLeidoInput(documento.Codigo);
 
             //Abrir documento
             this.extrasService.abrirRuta(documento.Ruta);
@@ -201,7 +201,7 @@
                 if (operacionesSeleccionadas) {
                     var operacionCodigo = operacionesSeleccionadas.map(function (documento) { return documento.Codigo; }).join();
                     if (operacionCodigo) {
-                        var operacionFirmarInput: app.domain.IOperacionFirmarInput = new app.domain.OperacionFirmarInput(this.authService.usuario.Rut, operacionCodigo);
+                        var operacionFirmarInput: app.domain.IOperacionFirmarInput = new app.domain.OperacionFirmarInput(operacionCodigo);
 
                         firmarOperacionesLoading = true;
                         this.firmarLoading = firmarOperacionesLoading || firmarDocumentosLoading;
@@ -222,7 +222,7 @@
                 if (documentosSeleccionados) {
                     var documentoCodigo: string = documentosSeleccionados.map(function (documento) { return documento.Codigo; }).join();
                     if (documentoCodigo) {
-                        var documentoFirmarInput: app.domain.IDocumentoFirmarInput = new app.domain.DocumentoFirmarInput(this.authService.usuario.Rut, documentoCodigo);
+                        var documentoFirmarInput: app.domain.IDocumentoFirmarInput = new app.domain.DocumentoFirmarInput(documentoCodigo);
 
                         firmarDocumentosLoading = true;
                         this.firmarLoading = firmarOperacionesLoading || firmarDocumentosLoading;
@@ -242,12 +242,12 @@
         }
 
         actualizarDocumentosPendientes(): void {
-            this.documentosPendientesInput = new app.domain.DocumentosPendientesInput(this.extrasService.getRutParteEntera(this.authService.usuario.Rut));
+            this.documentosPendientesInput = new app.domain.DocumentosPendientesInput();
             this.getDocumentosPendientes(this.documentosPendientesInput);
         }
 
         actualizarDocumentosFirmados(): void {
-            this.documentosFirmadosInput = new app.domain.DocumentosFirmadosInput(this.extrasService.getRutParteEntera(this.authService.usuario.Rut), this.extrasService.getFechaFormato(this.fechaFirmadosInicio), this.extrasService.getFechaFormato(this.fechaFirmadosFin));
+            this.documentosFirmadosInput = new app.domain.DocumentosFirmadosInput(this.extrasService.getFechaFormato(this.fechaFirmadosInicio), this.extrasService.getFechaFormato(this.fechaFirmadosFin));
             this.getDocumentosFirmados(this.documentosFirmadosInput);
         }
 

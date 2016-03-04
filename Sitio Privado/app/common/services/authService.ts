@@ -60,7 +60,7 @@
         }
 
         getDocumentosPendientes(): void {
-            var input: app.domain.IDocumentosPendientesCantidadInput = new app.domain.DocumentosPendientesCantidadInput(this.extrasService.getRutParteEntera(this.usuario.Rut));
+            var input: app.domain.IDocumentosPendientesCantidadInput = new app.domain.DocumentosPendientesCantidadInput();
             this.dataService.postWebService(this.constantService.apiDocumentoURI + 'getCantidadPendientes', input)
                 .then((result: app.domain.IDocumentosPendientesCantidadResultado) => {
                     this.documentosPendientes = result.Resultado;
