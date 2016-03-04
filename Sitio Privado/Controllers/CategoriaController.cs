@@ -55,7 +55,7 @@ namespace Sitio_Privado.Controllers
             try
             {
                 var usuario = await GetUsuarioActual();
-                Categoria categoria = new Categoria(input);
+                Categoria categoria = new Categoria(input, usuario);
                 return Ok(categoria);
             }
             catch (Exception e)
