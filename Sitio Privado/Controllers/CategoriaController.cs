@@ -6,10 +6,11 @@ using System.Net.Http;
 using System.Web.Http;
 using Sitio_Privado.Models.CategoriaInversionista;
 using Sitio_Privado.CategoriaInversionista;
+using System.Threading.Tasks;
 
 namespace Sitio_Privado.Controllers
 {
-    public class CategoriaController : ApiController
+    public class CategoriaController : ApiBaseController
     {
         [HttpGet]
         public IHttpActionResult GetList()
@@ -34,10 +35,11 @@ namespace Sitio_Privado.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult GetSingle([FromBody]CategoriaInput input)
+        public async Task<IHttpActionResult> GetSingle([FromBody]CategoriaInput input)
         {
             try
             {
+                var usuario = await GetUsuarioActual();
                 Categoria categoria = new Categoria(input);
                 return Ok(categoria);
             }
@@ -48,10 +50,11 @@ namespace Sitio_Privado.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult GetSingleCliente([FromBody]CategoriaClienteInput input)
+        public async Task<IHttpActionResult> GetSingleCliente([FromBody]CategoriaClienteInput input)
         {
             try
             {
+                var usuario = await GetUsuarioActual();
                 Categoria categoria = new Categoria(input);
                 return Ok(categoria);
             }

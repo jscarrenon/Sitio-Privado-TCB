@@ -16,7 +16,7 @@ namespace Sitio_Privado.Controllers
         {
             try
             {
-                Usuario usuario = await this.GetUsuarioActual();
+                Usuario usuario = await GetUsuarioActual();
                 Agente agente = new Agente(input, usuario);
                 return Ok(agente);
             }
