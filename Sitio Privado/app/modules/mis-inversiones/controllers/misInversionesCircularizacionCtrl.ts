@@ -49,8 +49,8 @@
             this.seleccionarSeccion(this.seccionId);
             this.fecha = new Date(); //Temporal --KUNDER
             this.leida = false;
-            this.respuestaInput = new app.domain.CircularizacionRespondidaInput(parseInt(this.extrasService.getRutParteEntera(this.authService.usuario.Rut)), this.extrasService.getFechaFormato(this.fecha), "S", null);
-            this.pendienteInput = new app.domain.CircularizacionPendienteInput(parseInt(this.extrasService.getRutParteEntera(this.authService.usuario.Rut)), this.extrasService.getFechaFormato(this.fecha));
+            this.respuestaInput = new app.domain.CircularizacionRespondidaInput(this.extrasService.getFechaFormato(this.fecha), "S", null);
+            this.pendienteInput = new app.domain.CircularizacionPendienteInput(this.extrasService.getFechaFormato(this.fecha));
             this.getPendiente(this.pendienteInput);                       
         }
 
@@ -58,7 +58,7 @@
             this.seccionId = id;
 
             if (this.seccionId == 1) {
-                var archivoInput: app.domain.ICircularizacionArchivoInput = new app.domain.CircularizacionArchivoInput(this.authService.usuario.Rut, this.extrasService.getFechaFormato(this.fecha));
+                var archivoInput: app.domain.ICircularizacionArchivoInput = new app.domain.CircularizacionArchivoInput(this.extrasService.getFechaFormato(this.fecha));
                 this.getArchivo(archivoInput);
             }
 
@@ -127,7 +127,7 @@
             }
 
             if (documentoAbierto) {
-                var leidaInput: app.domain.ICircularizacionLeidaInput = new app.domain.CircularizacionLeidaInput(parseInt(this.extrasService.getRutParteEntera(this.authService.usuario.Rut)), this.extrasService.getFechaFormato(this.fecha));
+                var leidaInput: app.domain.ICircularizacionLeidaInput = new app.domain.CircularizacionLeidaInput(this.extrasService.getFechaFormato(this.fecha));
                 this.setLeida(leidaInput);
             }
         }

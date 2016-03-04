@@ -18,7 +18,7 @@ namespace Sitio_Privado.Controllers
             try
             {
                 var usuario = await GetUsuarioActual();
-                CircularizacionProcesoResultado proceso = new CircularizacionProcesoResultado(input);
+                CircularizacionProcesoResultado proceso = new CircularizacionProcesoResultado(input, usuario);
                 return Ok(proceso);
             }
             catch (Exception e)
@@ -33,7 +33,7 @@ namespace Sitio_Privado.Controllers
             try
             {
                 var usuario = await GetUsuarioActual();
-                CircularizacionArchivo archivo = new CircularizacionArchivo(input);
+                CircularizacionArchivo archivo = new CircularizacionArchivo(input, usuario);
                 return Ok(archivo);
             }
             catch (Exception e)
@@ -48,7 +48,7 @@ namespace Sitio_Privado.Controllers
             try
             {
                 var usuario = await GetUsuarioActual();
-                CircularizacionProcesoResultado proceso = new CircularizacionProcesoResultado(input);
+                CircularizacionProcesoResultado proceso = new CircularizacionProcesoResultado(input, usuario);
                 return Ok(proceso);
             }
             catch (Exception e)
@@ -63,7 +63,7 @@ namespace Sitio_Privado.Controllers
             try
             {
                 var usuario = await GetUsuarioActual();
-                CircularizacionProcesoResultado proceso = new CircularizacionProcesoResultado(input);
+                CircularizacionProcesoResultado proceso = new CircularizacionProcesoResultado(input, usuario);
                 return Ok(proceso);
             }
             catch (Exception e)
