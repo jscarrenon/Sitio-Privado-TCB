@@ -10,14 +10,15 @@
 
         seccionId: number;
         
-        static $inject = ['constantService', 'dataService', 'authService', 'extrasService','$scope', '$uibModal', '$location'];
+        static $inject = ['constantService', 'dataService', 'authService', 'extrasService','$scope', '$uibModal', '$location','Analytics'];
         constructor(private constantService: app.common.services.ConstantService,
             private dataService: app.common.services.DataService,
             private authService: app.common.services.AuthService,
             private extrasService: app.common.services.ExtrasService,
             private $scope: ng.IScope,
             private $uibModal: ng.ui.bootstrap.IModalService,
-            private $location: ng.ILocationService) {
+            private $location: ng.ILocationService,
+            private Analytics: ng.google.analytics.AnalyticsService) {
 
             this.seccionId = 0;
             this.seleccionarSeccion(this.seccionId);            
@@ -30,7 +31,10 @@
                 (newValue: number, oldValue: number) => {
                     if ((newValue != oldValue) && newValue > 0)
                         this.crearInstanciaModal("documentos");
-                });            
+                });    
+            this.$scope.$on('$routeChangeSuccess', (event: any) => {
+                Analytics.trackPage(Analytics.getUrl());
+            });
         }
         
         seleccionarSeccion(id: number): void {
