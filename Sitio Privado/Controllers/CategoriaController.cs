@@ -35,11 +35,10 @@ namespace Sitio_Privado.Controllers
         }
 
         [HttpPost]
-        public async Task<IHttpActionResult> GetSingle([FromBody]CategoriaInput input)
+        public IHttpActionResult GetSingle([FromBody]CategoriaInput input)
         {
             try
             {
-                var usuario = await GetUsuarioActual();
                 Categoria categoria = new Categoria(input);
                 return Ok(categoria);
             }
