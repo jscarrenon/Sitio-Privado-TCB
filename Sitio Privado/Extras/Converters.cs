@@ -18,5 +18,21 @@ namespace Sitio_Privado.Extras
             return DateTime.ParseExact(fecha, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
         }
 
+        /// <summary>
+        /// Retorna la parte entera de un rut (antes del guión)
+        /// </summary>
+        /// <param name="rut">Rut en formato "12345678-9"</param>
+        /// <returns>String con parte entera del rut</returns>
+        public static string getRutParteEntera(string rut)
+        {
+            if (!string.IsNullOrEmpty(rut)) {
+                int index = rut.IndexOf('-');
+                if (index != -1) {
+                    return rut.Substring(0, index);
+                }
+            }
+            return "";
+        }
+
     }
 }
