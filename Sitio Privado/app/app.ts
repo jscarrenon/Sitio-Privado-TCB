@@ -1,6 +1,6 @@
 ﻿module app {
     class Config {
-        constructor($routeProvider: ng.route.IRouteProvider) {
+        constructor($routeProvider: ng.route.IRouteProvider, AnalyticsProvider:ng.google.analytics.AnalyticsProvider) {
             var buildFolderURI: string = ".build/";
             $routeProvider
                 .when("/", {
@@ -28,10 +28,17 @@
                     controller: "ProductosServiciosCtrl as ctrl"
                 })
                 .otherwise({ redirectTo: '/' });
-        }
-    }
-    Config.$inject = ['$routeProvider'];
 
-    var mainApp = angular.module('tannerPrivadoApp', ['ngRoute', 'ui.bootstrap', 'platanus.rut']);
+            AnalyticsProvider.setAccount('UA-73610006-1')
+                .trackUrlParams(true)
+                .setPageEvent('$stateChangeSuccess')
+                .setDomainName('tannerdes.azurewebsites.net');
+        }
+
+
+    }
+    Config.$inject = ['$routeProvider','AnalyticsProvider'];
+
+    var mainApp = angular.module('tannerPrivadoApp', ['ngRoute', 'ui.bootstrap', 'platanus.rut', 'angular-google-analytics']);
     mainApp.config(Config);
 }

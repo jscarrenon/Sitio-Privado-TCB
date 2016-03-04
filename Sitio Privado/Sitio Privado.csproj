@@ -416,10 +416,6 @@
     <Content Include="Frontend_Tests\Controllers\misInversionesDocumentosControllerSpec.js" />
     <Content Include="Frontend_Tests\Controllers\modalInstanceControllerSpec.js" />
     <Content Include="Scripts\extras\index.js" />
-    <TypeScriptCompile Include="app\common\controllers\modalInstanceCtrl.ts" />
-    <TypeScriptCompile Include="app\common\directives\loadingDirective.ts" />
-    <Content Include="app\common\templates\loading.html" />
-    <Content Include="app\common\templates\pagination.html" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="gulpfile.js" />
@@ -708,6 +704,8 @@
     <TypeScriptCompile Include="app\modules\mis-inversiones\controllers\misInversionesFondosMutuos.ts" />
     <TypeScriptCompile Include="app\modules\mis-inversiones\controllers\misInversionesNacionales.ts" />
     <TypeScriptCompile Include="app\modules\productos-servicios\controllers\productosServiciosCtrl.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angular-google-analytics\angular-google-analytics-service.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angular-google-analytics\angular-google-analytics.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angular-ui-bootstrap\angular-ui-bootstrap.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-animate.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-cookies.d.ts" />
