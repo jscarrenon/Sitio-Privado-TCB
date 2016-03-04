@@ -29,7 +29,7 @@
             private $anchorScroll: ng.IAnchorScrollService) {
 
             this.setImagenes();
-            this.categoriaClienteInput = new app.domain.CategoriaClienteInput(parseInt(this.extrasService.getRutParteEntera(this.authService.usuario.Rut)));
+            this.categoriaClienteInput = new app.domain.CategoriaClienteInput();
             this.getCategoriaCliente(this.categoriaClienteInput);
         }
 

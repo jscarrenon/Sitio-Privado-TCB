@@ -8,7 +8,6 @@ namespace Sitio_Privado.Models
 {
     public class CartolaInput
     {
-        public string _rut { get; set; }
     }
 
     public class CartolaConcepto
@@ -35,10 +34,10 @@ namespace Sitio_Privado.Models
 
         public Cartola() { }
 
-        public Cartola(CartolaInput input)
+        public Cartola(CartolaInput input, Usuario usuario)
         {
             tann_cartola_resumida webService = new tann_cartola_resumida();
-            _cartola_alt cartola = webService.cns_total_general(input._rut);
+            _cartola_alt cartola = webService.cns_total_general(usuario.Rut);
             Rut = cartola._rutcli;
             Periodo = cartola._periodo;
             Conceptos = new List<CartolaConcepto>();

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Sitio_Privado.CategoriaInversionista;
+using Sitio_Privado.Extras;
 
 namespace Sitio_Privado.Models.CategoriaInversionista
 {
@@ -10,7 +11,6 @@ namespace Sitio_Privado.Models.CategoriaInversionista
 
     public class CategoriaClienteInput
     {
-        public int rut_cli { get; set; }
     }
 
     public class Categoria
@@ -57,10 +57,10 @@ namespace Sitio_Privado.Models.CategoriaInversionista
             }            
         }
 
-        public Categoria(CategoriaClienteInput input)
+        public Categoria(CategoriaClienteInput input, Usuario usuario)
         {
             tann_catsvc webService = new tann_catsvc();
-            _categoria categoria = webService.tann_cns_cat_cli(input.rut_cli);
+            _categoria categoria = webService.tann_cns_cat_cli(Converters.getRutParteEnteraInt(usuario.Rut));
             Identificador = categoria.identificador;
             Descriptor = categoria.descriptor;
             Comentario = categoria.comentario;

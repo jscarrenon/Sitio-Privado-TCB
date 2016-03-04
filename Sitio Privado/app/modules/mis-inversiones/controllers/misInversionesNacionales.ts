@@ -25,10 +25,10 @@
             private authService: app.common.services.AuthService,
             private extrasService: app.common.services.ExtrasService) {
 
-            this.balanceInput = new app.domain.BalanceInput(this.authService.usuario.Rut);
+            this.balanceInput = new app.domain.BalanceInput();
             this.getBalance(this.balanceInput);
 
-            this.cartolaInput = new app.domain.CartolaInput(this.authService.usuario.Rut);
+            this.cartolaInput = new app.domain.CartolaInput();
             this.getCartola(this.cartolaInput);
         }
 

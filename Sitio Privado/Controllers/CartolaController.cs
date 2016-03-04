@@ -17,7 +17,7 @@ namespace Sitio_Privado.Controllers
             try
             {
                 var usuario = await GetUsuarioActual();
-                Cartola cartola = new Cartola(input);
+                Cartola cartola = new Cartola(input, usuario);
                 return Ok(cartola);
             }
             catch (Exception e)
