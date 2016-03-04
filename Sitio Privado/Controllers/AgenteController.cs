@@ -5,16 +5,19 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Sitio_Privado.Models;
+using System.Threading.Tasks;
 
 namespace Sitio_Privado.Controllers
 {
-    public class AgenteController : ApiController
+    public class AgenteController : ApiBaseController
     {
         [HttpPost]
-        public IHttpActionResult GetSingle([FromBody]AgenteInput input)
+        public async Task<IHttpActionResult> GetSingle([FromBody]AgenteInput input)
         {
             try
             {
+                Usuario usuario = await this.GetUsuarioActual();
+                input._rut = usuario.Rut;
                 Agente agente = new Agente(input);
                 return Ok(agente);
             }
