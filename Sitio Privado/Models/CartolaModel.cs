@@ -18,11 +18,11 @@ namespace Sitio_Privado.Models
 
         public CartolaConcepto() { }
 
-        public CartolaConcepto(_cartola_alt item)
+        public CartolaConcepto(_itemcartola item)
         {
-            Concepto = item;
+            Concepto = item.concepto;
             Valor = item._valor;
-            Porcentaje = item._porcentaje;
+            //Porcentaje = item._porcentaje;
         }
     }
 
@@ -30,8 +30,10 @@ namespace Sitio_Privado.Models
     {
         public int Codigo { get; set; }
         public string Descriptor { get; set; }
+        public List<CartolaConcepto> Conceptos { get; set; }
 
         public CartolaTitulo() { }
+
         public CartolaTitulo(_titulo titulo)
         {
             Codigo = titulo._code;
@@ -41,35 +43,40 @@ namespace Sitio_Privado.Models
 
     public class Cartola
     {
-        List<CartolaTitulo> Titulos { get; set; }
         public string Rut { get; set; }
         public string Periodo { get; set; }
-        public List<CartolaConcepto> Conceptos { get; set; }
+        public List<CartolaTitulo> Titulos { get; set; }
 
         public Cartola() { }
 
         public Cartola(CartolaInput input, Usuario usuario)
         {
             tann_cartola_resumida webService = new tann_cartola_resumida();
-            _titulos titulosWeb = webService.cns_titulos_cartola();
-            Rut = usuario.Rut;
-            foreach (_titulo tituloWeb in titulosWeb._listitulos)
-            {
-                Titulos.Add(new CartolaTitulo(tituloWeb));
-            }
-            foreach(CartolaTitulo titulo in Titulos)
-            {
-                var concepto = webService._cart_selector(Rut, titulo.Codigo);
-                CartolaConcepto(concepto);
-            }
-            //_cartola_alt cartola = webService.cns_total_general(u);
+            _titulos titulosWebService = webService.cns_titulos_cartola();
 
-            Periodo = DateTime.Today.ToString("dd-MM-yyyy");
-            Conceptos = new List<CartolaConcepto>();
-            webService._cart_selector
-            foreach(_itemcartola item in cartola.conceptos)
+            foreach (_titulo tituloWebService in titulosWebService._listitulos)
             {
-                Conceptos.Add(new CartolaConcepto(item));
+                CartolaTitulo cartolaTitulo = new CartolaTitulo(tituloWebService);
+
+                _cartola_alt cartolaAlt = webService._cart_selector(usuario.Rut, cartolaTitulo.Codigo);
+
+                Rut = cartolaAlt._rutcli;
+                Periodo = cartolaAlt._periodo;
+
+                foreach(_itemcartola item in cartolaAlt.conceptos)
+                {                    
+                    cartolaTitulo.Conceptos.Add(new CartolaConcepto(item));
+                }
+
+                Titulos.Add(cartolaTitulo);
+            }
+
+            if (string.IsNullOrEmpty(Rut)) {
+                Rut = usuario.Rut;
+            }
+
+            if (string.IsNullOrEmpty(Periodo)) {
+                Periodo = DateTime.Today.ToString("dd-MM-yyyy");
             }
         }
     }
