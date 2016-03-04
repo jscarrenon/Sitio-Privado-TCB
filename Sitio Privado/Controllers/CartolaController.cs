@@ -5,16 +5,18 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Sitio_Privado.Models;
+using System.Threading.Tasks;
 
 namespace Sitio_Privado.Controllers
 {
-    public class CartolaController : ApiController
+    public class CartolaController : ApiBaseController
     {
         [HttpPost]
-        public IHttpActionResult GetSingle([FromBody]CartolaInput input)
+        public async Task<IHttpActionResult> GetSingle([FromBody]CartolaInput input)
         {
             try
             {
+                var usuario = await GetUsuarioActual();
                 Cartola cartola = new Cartola(input);
                 return Ok(cartola);
             }
