@@ -17,7 +17,7 @@ namespace Sitio_Privado.Controllers
             try
             {
                 var usuario = await GetUsuarioActual();
-                Balance balance = new Balance(input);
+                Balance balance = new Balance(input, usuario);
                 return Ok(balance);
             }
             catch (Exception e)

@@ -8,7 +8,6 @@ namespace Sitio_Privado.Models
 {
     public class FondoMutuoInput
     {
-        public int rut_cli { get; set; }
     }
 
     public class FondoMutuo
