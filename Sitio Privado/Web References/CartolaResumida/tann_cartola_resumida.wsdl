@@ -86,6 +86,9 @@
   <wsdl:message name="_cart_selectorSoapOut">
     <wsdl:part name="parameters" element="tns:_cart_selectorResponse" />
   </wsdl:message>
+  <wsdl:message name="_cart_selectorAuthentication">
+    <wsdl:part name="Authentication" element="tns:Authentication" />
+  </wsdl:message>
   <wsdl:portType name="tann_cartola_resumidaSoap">
     <wsdl:operation name="cns_titulos_cartola">
       <wsdl:input message="tns:cns_titulos_cartolaSoapIn" />
@@ -112,6 +115,7 @@
       <soap:operation soapAction="http://servicios.tanner.cl/cartolaresumida/_cart_selector" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
+        <soap:header message="tns:_cart_selectorAuthentication" part="Authentication" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap:body use="literal" />
@@ -134,6 +138,7 @@
       <soap12:operation soapAction="http://servicios.tanner.cl/cartolaresumida/_cart_selector" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
+        <soap12:header message="tns:_cart_selectorAuthentication" part="Authentication" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap12:body use="literal" />
@@ -142,10 +147,10 @@
   </wsdl:binding>
   <wsdl:service name="tann_cartola_resumida">
     <wsdl:port name="tann_cartola_resumidaSoap" binding="tns:tann_cartola_resumidaSoap">
-      <soap:address location="http://172.17.1.12:8088/tann_cartola_resumida.asmx" />
+      <soap:address location="https://www.tannercliente.cl/wstsf/tann_cartola_resumida.asmx" />
     </wsdl:port>
     <wsdl:port name="tann_cartola_resumidaSoap12" binding="tns:tann_cartola_resumidaSoap12">
-      <soap12:address location="http://172.17.1.12:8088/tann_cartola_resumida.asmx" />
+      <soap12:address location="https://www.tannercliente.cl/wstsf/tann_cartola_resumida.asmx" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

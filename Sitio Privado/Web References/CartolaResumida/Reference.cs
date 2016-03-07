@@ -118,6 +118,7 @@ namespace Sitio_Privado.CartolaResumida {
         }
         
         /// <remarks/>
+        [System.Web.Services.Protocols.SoapHeaderAttribute("AuthenticationValue")]
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://servicios.tanner.cl/cartolaresumida/_cart_selector", RequestNamespace="http://servicios.tanner.cl/cartolaresumida", ResponseNamespace="http://servicios.tanner.cl/cartolaresumida", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         public _cartola_alt _cart_selector(string _rut, int _selector) {
             object[] results = this.Invoke("_cart_selector", new object[] {

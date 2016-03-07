@@ -18,7 +18,7 @@
       <Value Profile="(Default)">https://www.tannercliente.cl/wstsf/tann_documentos.asmx</Value>
     </Setting>
     <Setting Name="Sitio_Privado_CartolaResumida_tann_cartola_resumida" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">http://172.17.1.12:8088/tann_cartola_resumida.asmx</Value>
+      <Value Profile="(Default)">https://www.tannercliente.cl/wstsf/tann_cartola_resumida.asmx</Value>
     </Setting>
     <Setting Name="Sitio_Privado_CircularizacionCustodia_tann_circularizacion" Type="(Web Service URL)" Scope="Application">
       <Value Profile="(Default)">https://www.tannercliente.cl/wstsf/tann_circularizacion.asmx</Value>

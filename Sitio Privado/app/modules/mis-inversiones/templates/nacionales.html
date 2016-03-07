@@ -30,7 +30,7 @@
                             </tr>
                         </thead>
                         <tbody ng-repeat="titulo in nacionalesCtrl.cartola.Titulos">
-                            <tr class="sub-item" ng-repeat="concepto in titulo.Conceptos">
+                            <tr ng-repeat="concepto in titulo.Conceptos" ng-class="{'sub-item':!$last, 'total':$last}">
                                 <td>{{concepto.Concepto}}</td>
                                 <td class="number">{{concepto.Valor|currency}}</td>
                                 <td class="number">{{concepto.Porcentaje|number}}%</td>
