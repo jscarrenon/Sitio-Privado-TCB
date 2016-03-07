@@ -373,6 +373,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\img\favicon.ico" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
