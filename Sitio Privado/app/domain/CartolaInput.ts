@@ -7,4 +7,14 @@
             super();
         }
     }
+
+    export interface ICartolaTituloInput {
+        _selector: number;
+    }
+
+    export class CartolaTituloInput extends app.domain.InputBase implements ICartolaTituloInput {
+        constructor(public _selector: number) {
+            super();
+        }
+    }
 }

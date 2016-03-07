@@ -12,6 +12,11 @@ namespace Sitio_Privado.Models
     {
     }
 
+    public class CartolaTituloInput
+    {
+        public int _selector { get; set; }
+    }
+
     public class CartolaConcepto
     {
         public string Concepto { get; set; }
@@ -64,53 +69,7 @@ namespace Sitio_Privado.Models
 
             foreach (_titulo tituloWebService in titulosWebService._listitulos)
             {
-                CartolaTitulo cartolaTitulo = new CartolaTitulo(tituloWebService);
-
-                _cartola_alt cartolaAlt = webService._cart_selector(usuario.Rut, cartolaTitulo.Codigo);
-
-                Rut = cartolaAlt._rutcli;
-                Periodo = cartolaAlt._periodo;
-
-                CartolaConcepto ultimoCartolaConcepto = new CartolaConcepto();
-
-                if (cartolaAlt.conceptos.Length > 0)
-                {
-                    ultimoCartolaConcepto = new CartolaConcepto(cartolaAlt.conceptos.Last<_itemcartola>());
-                    ultimoCartolaConcepto.Porcentaje = 100;
-                }
-
-                bool todosCeros = true;
-
-                for(int i=0; i < cartolaAlt.conceptos.Length - 1; i++)
-                {
-                    _itemcartola item = cartolaAlt.conceptos[i];
-
-                    if(item._valor != 0) { todosCeros = false; }
-
-                    CartolaConcepto cartolaConcepto = new CartolaConcepto(item);
-                    cartolaConcepto.Porcentaje = Utils.GetPorcentaje(cartolaConcepto.Valor, ultimoCartolaConcepto.Valor);
-                    cartolaTitulo.Conceptos.Add(cartolaConcepto);
-                }
-
-                if (todosCeros)
-                {
-                    foreach(CartolaConcepto cartolaConcepto in cartolaTitulo.Conceptos)
-                    {
-                        cartolaConcepto.Porcentaje = Utils.GetPorcentaje(1,cartolaTitulo.Conceptos.Count);
-                    }
-                }
-
-                cartolaTitulo.Conceptos.Add(ultimoCartolaConcepto);
-
-                Titulos.Add(cartolaTitulo);
-            }
-
-            if (string.IsNullOrEmpty(Rut)) {
-                Rut = usuario.Rut;
-            }
-
-            if (string.IsNullOrEmpty(Periodo)) {
-                Periodo = DateTime.Today.ToString("dd-MM-yyyy");
+                Titulos.Add(new CartolaTitulo(tituloWebService) { });
             }
         }
     }

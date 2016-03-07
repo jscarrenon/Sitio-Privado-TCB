@@ -7,6 +7,8 @@
         cartola: app.domain.ICartola;
         getCartola(input: app.domain.ICartolaInput): void;
         cartolaLoading: boolean;
+        getConceptosTitulo(titulo: app.domain.ICartolaTitulo, loadingIndex: number): void;
+        cartolaTitulosLoadings: boolean[];
     }
 
     class MisInversionesNacionalesCtrl implements IMisInversionesNacionalesViewModel {
@@ -17,13 +19,15 @@
         cartola: app.domain.ICartola;
         cartolaInput: app.domain.ICartolaInput;
         cartolaLoading: boolean;
-
+        cartolaTitulosLoadings: boolean[];
 
         static $inject = ['constantService', 'dataService', 'authService', 'extrasService'];
         constructor(private constantService: app.common.services.ConstantService,
             private dataService: app.common.services.DataService,
             private authService: app.common.services.AuthService,
             private extrasService: app.common.services.ExtrasService) {
+
+            this.cartolaTitulosLoadings = [];
 
             this.balanceInput = new app.domain.BalanceInput();
             this.getBalance(this.balanceInput);
@@ -46,8 +50,19 @@
             this.dataService.postWebService(this.constantService.apiCartolaURI + 'getSingle', input)
                 .then((result: app.domain.ICartola) => {
                     this.cartola = result;
+                    this.cartola.Titulos.forEach(() => this.cartolaTitulosLoadings.push(false));
                 })
                 .finally(() => this.cartolaLoading = false);
+        }
+
+        getConceptosTitulo(titulo: app.domain.ICartolaTitulo, loadingIndex: number): void {
+            this.cartolaTitulosLoadings[loadingIndex] = true;
+            var input: app.domain.ICartolaTituloInput = new app.domain.CartolaTituloInput(titulo.Codigo);
+            this.dataService.postWebService(this.constantService.apiCartolaURI + 'getConceptosTitulo', input)
+                .then((result: app.domain.ICartolaConcepto[]) => {
+                    titulo.Conceptos = result;
+                })
+                .finally(() => this.cartolaTitulosLoadings[loadingIndex] = false);
         }
     }
     angular.module('tannerPrivadoApp')
