@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using Sitio_Privado.CartolaResumida;
 using Sitio_Privado.Extras;
+using System.Configuration;
 
 namespace Sitio_Privado.Models
 {
@@ -44,6 +45,9 @@ namespace Sitio_Privado.Models
 
     public class Cartola
     {
+        private string authUsername = ConfigurationManager.AppSettings["ws:username"];
+        private string authPassword = ConfigurationManager.AppSettings["ws:password"];
+
         public string Rut { get; set; }
         public string Periodo { get; set; }
         public List<CartolaTitulo> Titulos { get; set; }
@@ -53,6 +57,7 @@ namespace Sitio_Privado.Models
         public Cartola(CartolaInput input, Usuario usuario)
         {
             tann_cartola_resumida webService = new tann_cartola_resumida();
+            webService.AuthenticationValue = new Authentication{ UserName = authUsername, Password = authPassword };
             _titulos titulosWebService = webService.cns_titulos_cartola();
 
             foreach (_titulo tituloWebService in titulosWebService._listitulos)
