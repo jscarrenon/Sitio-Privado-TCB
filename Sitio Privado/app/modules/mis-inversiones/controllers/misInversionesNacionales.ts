@@ -7,6 +7,8 @@
         cartola: app.domain.ICartola;
         getCartola(input: app.domain.ICartolaInput): void;
         cartolaLoading: boolean;
+        getConceptosTitulo(titulo: app.domain.ICartolaTitulo, loadingIndex: number): void;
+        cartolaTitulosLoadings: boolean[];
     }
 
     class MisInversionesNacionalesCtrl implements IMisInversionesNacionalesViewModel {
@@ -17,13 +19,16 @@
         cartola: app.domain.ICartola;
         cartolaInput: app.domain.ICartolaInput;
         cartolaLoading: boolean;
+        cartolaTitulosLoadings: boolean[];
 
-
-        static $inject = ['constantService', 'dataService', 'authService', 'extrasService'];
+        static $inject = ['constantService', 'dataService', 'authService', 'extrasService', '$scope'];
         constructor(private constantService: app.common.services.ConstantService,
             private dataService: app.common.services.DataService,
             private authService: app.common.services.AuthService,
-            private extrasService: app.common.services.ExtrasService) {
+            private extrasService: app.common.services.ExtrasService,
+            private $scope: ng.IScope) {
+
+            this.cartolaTitulosLoadings = [];
 
             this.balanceInput = new app.domain.BalanceInput();
             this.getBalance(this.balanceInput);
@@ -46,8 +51,24 @@
             this.dataService.postWebService(this.constantService.apiCartolaURI + 'getSingle', input)
                 .then((result: app.domain.ICartola) => {
                     this.cartola = result;
+                    this.cartola.Titulos.forEach((value: app.domain.ICartolaTitulo) => { this.cartolaTitulosLoadings.push(false); value.DatosCargados = false; });
                 })
                 .finally(() => this.cartolaLoading = false);
+        }
+
+        getConceptosTitulo(titulo: app.domain.ICartolaTitulo, loadingIndex: number): void {
+            if (!titulo.DatosCargados) {
+                this.cartolaTitulosLoadings[loadingIndex] = true;
+                var input: app.domain.ICartolaTituloInput = new app.domain.CartolaTituloInput(titulo.Codigo);
+                this.dataService.postWebService(this.constantService.apiCartolaURI + 'getConceptosTitulo', input)
+                    .then((result: app.domain.ICartolaConceptosTituloResultado) => {
+                        titulo.Conceptos = result.Conceptos;
+                        titulo.Rut = result.Rut;
+                        titulo.Periodo = result.Periodo;
+                        titulo.DatosCargados = true;
+                    })
+                    .finally(() => this.cartolaTitulosLoadings[loadingIndex] = false);
+            }
         }
     }
     angular.module('tannerPrivadoApp')
