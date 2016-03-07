@@ -61,8 +61,10 @@
                 this.cartolaTitulosLoadings[loadingIndex] = true;
                 var input: app.domain.ICartolaTituloInput = new app.domain.CartolaTituloInput(titulo.Codigo);
                 this.dataService.postWebService(this.constantService.apiCartolaURI + 'getConceptosTitulo', input)
-                    .then((result: app.domain.ICartolaConcepto[]) => {
-                        titulo.Conceptos = result;
+                    .then((result: app.domain.ICartolaConceptosTituloResultado) => {
+                        titulo.Conceptos = result.Conceptos;
+                        titulo.Rut = result.Rut;
+                        titulo.Periodo = result.Periodo;
                         titulo.DatosCargados = true;
                     })
                     .finally(() => this.cartolaTitulosLoadings[loadingIndex] = false);

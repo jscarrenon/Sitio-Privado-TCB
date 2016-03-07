@@ -39,12 +39,17 @@ namespace Sitio_Privado.Controllers
             {
                 var usuario = await GetUsuarioActual();
 
+                CartolaConceptosTituloResultado resultado = new CartolaConceptosTituloResultado();
+
                 List<CartolaConcepto> conceptos = new List<CartolaConcepto>();
 
                 tann_cartola_resumida webService = new tann_cartola_resumida();
                 webService.AuthenticationValue = new Authentication { UserName = authUsername, Password = authPassword };
 
                 _cartola_alt cartolaAlt = webService._cart_selector(usuario.Rut, input._selector);
+
+                resultado.Rut = cartolaAlt._rutcli;
+                resultado.Periodo = cartolaAlt._periodo;
 
                 CartolaConcepto ultimoCartolaConcepto = new CartolaConcepto();
 
@@ -77,7 +82,9 @@ namespace Sitio_Privado.Controllers
 
                 conceptos.Add(ultimoCartolaConcepto);
 
-                return Ok(conceptos);
+                resultado.Conceptos = conceptos;
+
+                return Ok(resultado);
             }
             catch (Exception e)
             {

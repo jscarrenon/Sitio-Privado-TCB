@@ -36,6 +36,8 @@ namespace Sitio_Privado.Models
     {
         public int Codigo { get; set; }
         public string Descriptor { get; set; }
+        public string Rut { get; set; }
+        public string Periodo { get; set; }
         public List<CartolaConcepto> Conceptos { get; set; }
 
         public CartolaTitulo() { }
@@ -48,13 +50,20 @@ namespace Sitio_Privado.Models
         }
     }
 
+    public class CartolaConceptosTituloResultado
+    {
+        public string Rut { get; set; }
+        public string Periodo { get; set; }
+        public List<CartolaConcepto> Conceptos { get; set; }
+
+        public CartolaConceptosTituloResultado() { }
+    }
+
     public class Cartola
     {
         private string authUsername = ConfigurationManager.AppSettings["ws:username"];
         private string authPassword = ConfigurationManager.AppSettings["ws:password"];
 
-        public string Rut { get; set; }
-        public string Periodo { get; set; }
         public List<CartolaTitulo> Titulos { get; set; }
 
         public Cartola() { Titulos = new List<CartolaTitulo>(); }
