@@ -18,6 +18,7 @@
         Codigo: number;
         Descriptor: string;
         Conceptos: ICartolaConcepto[];
+        DatosCargados?: boolean;
     }
 
     export class CartolaTitulo extends app.domain.EntityBase implements ICartolaTitulo {

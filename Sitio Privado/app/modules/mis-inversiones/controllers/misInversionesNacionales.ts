@@ -21,11 +21,12 @@
         cartolaLoading: boolean;
         cartolaTitulosLoadings: boolean[];
 
-        static $inject = ['constantService', 'dataService', 'authService', 'extrasService'];
+        static $inject = ['constantService', 'dataService', 'authService', 'extrasService', '$scope'];
         constructor(private constantService: app.common.services.ConstantService,
             private dataService: app.common.services.DataService,
             private authService: app.common.services.AuthService,
-            private extrasService: app.common.services.ExtrasService) {
+            private extrasService: app.common.services.ExtrasService,
+            private $scope: ng.IScope) {
 
             this.cartolaTitulosLoadings = [];
 
@@ -50,19 +51,22 @@
             this.dataService.postWebService(this.constantService.apiCartolaURI + 'getSingle', input)
                 .then((result: app.domain.ICartola) => {
                     this.cartola = result;
-                    this.cartola.Titulos.forEach(() => this.cartolaTitulosLoadings.push(false));
+                    this.cartola.Titulos.forEach((value: app.domain.ICartolaTitulo) => { this.cartolaTitulosLoadings.push(false); value.DatosCargados = false; });
                 })
                 .finally(() => this.cartolaLoading = false);
         }
 
         getConceptosTitulo(titulo: app.domain.ICartolaTitulo, loadingIndex: number): void {
-            this.cartolaTitulosLoadings[loadingIndex] = true;
-            var input: app.domain.ICartolaTituloInput = new app.domain.CartolaTituloInput(titulo.Codigo);
-            this.dataService.postWebService(this.constantService.apiCartolaURI + 'getConceptosTitulo', input)
-                .then((result: app.domain.ICartolaConcepto[]) => {
-                    titulo.Conceptos = result;
-                })
-                .finally(() => this.cartolaTitulosLoadings[loadingIndex] = false);
+            if (!titulo.DatosCargados) {
+                this.cartolaTitulosLoadings[loadingIndex] = true;
+                var input: app.domain.ICartolaTituloInput = new app.domain.CartolaTituloInput(titulo.Codigo);
+                this.dataService.postWebService(this.constantService.apiCartolaURI + 'getConceptosTitulo', input)
+                    .then((result: app.domain.ICartolaConcepto[]) => {
+                        titulo.Conceptos = result;
+                        titulo.DatosCargados = true;
+                    })
+                    .finally(() => this.cartolaTitulosLoadings[loadingIndex] = false);
+            }
         }
     }
     angular.module('tannerPrivadoApp')
