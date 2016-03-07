@@ -40,6 +40,7 @@ html, body {height:100%;width:100%;}
 @gris_azul_muy_oscuro: #2D2F3A;
 
 @gris_claro: #A6A6B6;
+@gris_claro_tabla: #C5D0DA; /* totales tabla */
 @gris_medio: #6C717E; /* menu lateral - titulos y subtitulos */
 @gris_medio_oscuro: #57585B; /* textos */
 
@@ -1824,7 +1825,10 @@ tr:hover td {
 
 tr.total {
     .fmedium() !important;
-    td {border-top:1px solid @gris_borde !important;}
+    td {
+        border-bottom:1px solid @gris_borde !important;
+        background-color: @gris_claro_tabla;
+    }
 }
 
 table td:nth-child(1) {.fmedium();}

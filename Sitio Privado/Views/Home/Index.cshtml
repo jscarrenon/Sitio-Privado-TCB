@@ -36,37 +36,39 @@
     <!-- templates:js -->
     <script src="/.build/js/templates.js"></script>
     <!-- endinject -->
+
+    <link rel="icon" href=".build/img/favicon.ico" />
+
 </head>
 <body ng-controller="BodyCtrl as bodyCtrl">
 
-    <div ng-if="bodyCtrl.authService.autenticado">
+    <div id="prebar" ng-if="bodyCtrl.authService.autenticado">
+        <div class="user"><a href="#/mis-datos" class="clink" ng-click="bodyCtrl.seleccionarSeccion(-1)">{{ bodyCtrl.authService.usuario.NombreCompleto }} | Mis Datos</a></div>
+        <div class="logout"><a href="" ng-click="bodyCtrl.authService.cerrarSesion()">Cerrar Sesión</a></div>
+    </div>
 
-        <div id="prebar" ng-if="bodyCtrl.authService.autenticado">
-            <div class="user"><a href="#/mis-datos" class="clink" ng-click="bodyCtrl.seleccionarSeccion(-1)">{{ bodyCtrl.authService.usuario.NombreCompleto }} | Mis Datos</a></div>
-            <div class="logout"><a href="" ng-click="bodyCtrl.authService.cerrarSesion()">Cerrar Sesión</a></div>
-        </div>
-
-        <div id="bar">
-            <div class="in">
-                <div class="logo"><a href="#/" class="clink" ng-click="bodyCtrl.seleccionarSeccion(0)"></a></div>
-                <div class="menubar">
-                    <div class="menuitem"><a href="#/mis-inversiones" class="clink" ng-click="bodyCtrl.seleccionarSeccion(1)">Mis Inversiones</a></div>
-                    <div class="menuitem"><a href="#/productos-servicios" class="clink" ng-click="bodyCtrl.seleccionarSeccion(2)">Productos y Servicios</a></div>
-                    <div class="menuitem"><a href="#/informacion-financiera" class="clink" ng-click="bodyCtrl.seleccionarSeccion(3)">Información Financiera</a></div>
-                    <div class="menuitem"><a href="#/inversiones" class="clink" ng-click="bodyCtrl.seleccionarSeccion(4)">Inversión a su Medida</a></div>
-                </div>
+    <div id="bar">
+        <div class="in" ng-if="bodyCtrl.authService.autenticado">
+            <div class="logo"><a href="#/" class="clink" ng-click="bodyCtrl.seleccionarSeccion(0)"></a></div>
+            <div class="menubar">
+                <div class="menuitem"><a href="#/mis-inversiones" class="clink" ng-click="bodyCtrl.seleccionarSeccion(1)">Mis Inversiones</a></div>
+                <div class="menuitem"><a href="#/productos-servicios" class="clink" ng-click="bodyCtrl.seleccionarSeccion(2)">Productos y Servicios</a></div>
+                <div class="menuitem"><a href="#/informacion-financiera" class="clink" ng-click="bodyCtrl.seleccionarSeccion(3)">Información Financiera</a></div>
+                <div class="menuitem"><a href="#/inversiones" class="clink" ng-click="bodyCtrl.seleccionarSeccion(4)">Inversión a su Medida</a></div>
             </div>
         </div>
+    </div>
 
-        <div id="bar_mobile">
-            <div class="in">
-                <div class="logo"></div>
-                <div class="user"><a href="#/mis-datos" class="clink" ng-click="bodyCtrl.seleccionarSeccion(-1)"></a></div>
-                <div class="logout"><a href="" class="clink" ng-click="bodyCtrl.authService.cerrarSesion()"></a></div>
-            </div>
+    <div id="bar_mobile">
+        <div class="in">
+            <div class="logo"></div>
+            <div class="user"><a href="#/mis-datos" class="clink" ng-click="bodyCtrl.seleccionarSeccion(-1)"></a></div>
+            <div class="logout"><a href="" class="clink" ng-click="bodyCtrl.authService.cerrarSesion()"></a></div>
         </div>
+    </div>
 
-        <div id="tabbar">
+    <div id="tabbar">
+        <div ng-if="bodyCtrl.authService.autenticado">
             <div class="tab home" ng-class="{'active':bodyCtrl.seccionId == 0}">
                 <a href="#/" class="clink" ng-click="bodyCtrl.seleccionarSeccion(0)"></a>
             </div>
@@ -83,8 +85,9 @@
                 <a href="#/inversiones" class="clink" ng-click="bodyCtrl.seleccionarSeccion(4)"></a>
             </div>
         </div>
-
-        <ng-view></ng-view>
     </div>
+
+    <ng-view ng-if="bodyCtrl.authService.autenticado"></ng-view>
+
 </body>
 </html>

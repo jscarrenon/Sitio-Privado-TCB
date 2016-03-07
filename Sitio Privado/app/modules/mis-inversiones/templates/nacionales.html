@@ -22,16 +22,20 @@
                 <div id="cont-table">
                     <loading param="nacionalesCtrl.cartolaLoading"></loading>
                     <table class="balance" ng-show="!nacionalesCtrl.cartolaLoading">
-                        <tr>
-                            <th></th>
-                            <th class="number">Saldo en Pesos</th>
-                            <th class="number">Porcentaje de Cartera</th>
-                        </tr>
-                        <tr class="sub-item" ng-repeat="concepto in nacionalesCtrl.cartola.Conceptos">
-                            <td>{{concepto.Concepto}}</td>
-                            <td class="number">{{concepto.Valor|currency}}</td>
-                            <td class="number">{{concepto.Porcentaje|number}}%</td>
-                        </tr>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th class="number">Saldo en Pesos</th>
+                                <th class="number">Porcentaje de Cartera</th>
+                            </tr>
+                        </thead>
+                        <tbody ng-repeat="titulo in nacionalesCtrl.cartola.Titulos">
+                            <tr ng-repeat="concepto in titulo.Conceptos" ng-class="{'sub-item':!$last, 'total':$last}">
+                                <td>{{concepto.Concepto}}</td>
+                                <td class="number">{{concepto.Valor|currency}}</td>
+                                <td class="number">{{concepto.Porcentaje|number}}%</td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
 

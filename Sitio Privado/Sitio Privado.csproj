@@ -255,6 +255,7 @@
     <Compile Include="Controllers\ApiBaseController.cs" />
     <Compile Include="Controllers\CircularizacionController.cs" />
     <Compile Include="Controllers\IndicesController.cs" />
+    <Compile Include="Extras\Utils.cs" />
     <Compile Include="Filters\NoCacheAttribute.cs" />
     <Compile Include="Filters\TokenAuthorizationFilterAttribute.cs" />
     <Compile Include="Extras\Converters.cs" />
@@ -372,11 +373,20 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Web References\CartolaResumida\tann_cartola_resumida.disco" />
+    <Content Include="Resources\img\favicon.ico" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
     <None Include="Properties\PublishProfiles\kundertannerprivado - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\tannerdes - Web Deploy.pubxml" />
+    <None Include="Web References\CartolaResumida\tann_cartola_resumida.wsdl" />
+    <Content Include="Web References\CartolaResumida\_cartola_alt.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <Content Include="Web References\CartolaResumida\_titulos.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -440,9 +450,6 @@
     <Content Include="Resources\img\loader-1.gif" />
     <Content Include="Styles\bootstrap-custom.css" />
     <Content Include="Web References\CircularizacionCustodia\archivocli.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </Content>
-    <Content Include="Web References\CartolaResumida\_cartola_alt.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\kundertannerprivado - Web Deploy.pubxml" />
@@ -556,7 +563,6 @@
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Web References\CartolaResumida\tann_cartola_resumida.wsdl" />
     <None Include="Web References\CategoriaInversionista\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -567,7 +573,6 @@
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Web References\CartolaResumida\tann_cartola_resumida.disco" />
     <Content Include="Web References\ConsultaSaldosFondosMutuos\saldo_ffmm.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>

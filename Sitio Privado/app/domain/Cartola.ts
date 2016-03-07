@@ -14,16 +14,31 @@
         }
     }
 
+    export interface ICartolaTitulo {
+        Codigo: number;
+        Descriptor: string;
+        Conceptos: ICartolaConcepto[];
+    }
+
+    export class CartolaTitulo extends app.domain.EntityBase implements ICartolaTitulo {
+        constructor(public Codigo: number,
+            public Descriptor: string,
+            public Conceptos: ICartolaConcepto[]) {
+
+            super();
+        }
+    }
+
     export interface ICartola {
         Rut: string;
         Periodo: string;
-        Conceptos: ICartolaConcepto[];
+        Titulos: ICartolaTitulo[];
     }
 
     export class Cartola extends app.domain.EntityBase implements ICartola {
         constructor(public Rut: string,
             public Periodo: string,
-            public Conceptos: ICartolaConcepto[]) {
+            public Titulos: ICartolaTitulo[]) {
 
             super();
         }
