@@ -374,6 +374,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Web References\CartolaResumida\tann_cartola_resumida.disco" />
+    <Content Include="Resources\img\favicon.ico" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
