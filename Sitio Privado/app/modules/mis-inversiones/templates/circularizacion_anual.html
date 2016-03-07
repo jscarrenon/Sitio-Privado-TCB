@@ -1,0 +1,33 @@
+﻿<div class="one-col">
+
+    <div class="section-title">Circularización Anual de Custodia {{circularizacionCtrl.fecha|date:'y'}}</div>
+
+    <div class="full-text">
+        <p>Estimado Cliente,</p>
+        <p>En cumplimiento a lo dispuesto en la Circular 1962 de la Superintendencia de Valores y Seguros (SVS), le solicitamos que por favor revise el informe de saldos que de acuerdo a nuestros registros se encuentran depositados a su nombre en custodia y/o garantía de Tanner Corredores de Bolsa S.A. al día {{circularizacionCtrl.fecha|date:'longDate'}}.</p>
+        <loading param="circularizacionCtrl.archivoLoading"></loading>
+        <div class="one-doc" ng-if="circularizacionCtrl.archivo.UrlCartola" ng-show="!circularizacionCtrl.archivoLoading">
+            <div class="name">Estado Mensual de Movimientos y Saldos al {{circularizacionCtrl.fecha|date:'longDate'}}</div>
+            <div class="download"><a href="" class="clink" ng-click="circularizacionCtrl.verDocumento(0)"></a></div>
+        </div>
+        <div class="one-doc" ng-if="circularizacionCtrl.archivo.UrlCircularizacion" ng-show="!circularizacionCtrl.archivoLoading">
+            <div class="name">Detalle de Saldos Mantenidos en acciones y/u otros instrumentos al {{circularizacionCtrl.fecha|date:'longDate'}}</div>
+            <div class="download"><a href="" class="clink" ng-click="circularizacionCtrl.verDocumento(1)"></a></div>
+        </div>
+        <p>Por favor, confirme los informes y comuníquenos su aceptación o rechazo, a través de este mismo medio, seleccionando la opción Continuar.</p>
+        <p>Agradecemos su pronta respuesta, y le recordamos que ante cualquier consulta de este proceso no dude en contactarse con su Ejecutivo Comercial.</p>
+        <p>Atentamente,</p>
+        <img src="../.build/img/img_firma.png" />
+        <p>
+            Nombre Apellido Apellido<br />
+            Gerente General.
+        </p>
+
+        <div class="button green" ng-show="!circularizacionCtrl.archivoLoading"><a href="" ng-click="circularizacionCtrl.seleccionarSeccion(2)">Continuar</a></div>
+    </div>
+
+    <div class="legal">
+        La información sobre los saldos presentados más arriba corresponde exclusivamente a aquellos clientes titulares directos, en Principal Administradores General de Fondos S.A. La información sobre los saldos presentados más arriba corresponde exclusivamente a aquellos clientes titulares directos, en Principal Administradores General de Fondos S.A. La información sobre los saldos presentados más arriba corresponde exclusivamente a aquellos clientes titulares directos, en Principal Administradores General de Fondos S.A.
+    </div>
+
+</div><!--end one-col -->

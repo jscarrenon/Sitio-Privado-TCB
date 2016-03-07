@@ -1,0 +1,38 @@
+﻿<div id="container">
+    <div id="header">
+        <div class="in">
+            <div class="head">
+                <div class="title">Estatutos</div>
+                <div class="subtitle"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="content">
+        <div class="in">
+            <loading param="ctrl.loading"></loading>
+            <div class="one-col documents" ng-show="!ctrl.loading">
+                <div ng-repeat="folder in ctrl.container">
+                    <div class="section-title">
+                        {{folder.Name}}
+                    </div>
+                    <div class="wrap-docs">
+                        <div class="one-doc" ng-repeat="blob in folder.Blobs">
+                            <div class="name">{{blob.Name}}</div>
+                            <div class="download">
+                                <a ng-href="{{blob.Url}}" class="clink" target="_blank"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!--end one-col -->
+            <div id="clear"></div>
+
+            <ng-include src="ctrl.constantService.templateFooterURI"></ng-include>
+
+        </div><!--end in-->
+    </div><!--end content-->
+
+</div><!--end container-->
+
+<div id="clear"></div>

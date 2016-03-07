@@ -21,6 +21,8 @@ build/
 bld/
 [Bb]in/
 [Oo]bj/
+[Cc]ontent/
+[Pp]ackages/
 
 # Visual Studo 2015 cache/options directory
 .vs/
@@ -129,7 +131,7 @@ publish/
 # Publish Web Output
 *.[Pp]ublish.xml
 *.azurePubxml
-# TODO: Comment the next line if you want to checkin your web deploy settings 
+# TODO: Comment the next line if you want to checkin your web deploy settings
 # but database connection strings (with potential passwords) will be unencrypted
 *.pubxml
 *.publishproj
@@ -193,4 +195,14 @@ FakesAssemblies/
 *.plg
 
 # Visual Studio 6 workspace options file
-*.opt
+*.opt`
+
+*.DS_Store
+
+# TypeScript
+.build/
+*/app/**/*.js
+*/app/**/*.js.map
+
+# LogFiles
+[Ll]ogs/

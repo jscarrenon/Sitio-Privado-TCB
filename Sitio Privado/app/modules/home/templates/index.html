@@ -1,0 +1,92 @@
+﻿<div id="container-full">
+
+    <div id="header">
+        <div class="in">
+            <div class="head">
+                <div class="title">Hola, {{ bodyCtrl.authService.usuario.NombreCompleto }}</div>
+                <div class="subtitle">Bienvenido(a) a Tanner Clientes, lo invitamos a revisar sus inversiones y crecer con nosotros.</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="content">
+        <div class="in">
+
+            <div class="one-col home">
+                <div class="section-title">Destacados</div>
+
+                <div class="content-box white-box">
+                    <div class="img inversiones"></div>
+                    <div class="text">
+                        <div class="title">Inversión a su medida</div>
+                        <div class="description">Productos de inversión de acuerdo a cada perfil</div>
+                        <div class="button blue"><a href="#/inversiones" class="clink" ng-click="bodyCtrl.seleccionarSeccion(4)">Ver</a></div>
+                    </div>
+                </div>
+                <div class="content-box white-box">
+                    <div class="img productos"></div>
+                    <div class="text">
+                        <div class="title">Productos y Servicios</div>
+                        <div class="description">Productos y Servicios para su horizonte de inversión y perfil de riesgo.</div>
+                        <div class="button blue"><a href="#/productos-servicios" class="clink" ng-click="bodyCtrl.seleccionarSeccion(2)">Ver</a></div>
+                    </div>
+                </div>
+                <div class="content-box white-box">
+                    <div class="img indicadores"></div>
+                    <div class="text">
+                        <div class="title">Indicadores Económicos</div>
+                        <div class="description">Revise el mercado global</div>
+                        <div class="button blue"><a href="#" class="clink">Ir </a></div>
+                    </div>
+                </div>
+            </div><!--end home destacados-->
+
+            <div class="two-col home">
+                <div class="section-title">Acceso Rápido</div>
+
+                <div class="go-to white-box">
+                    <div class="cartola-resumen"><a href="#/mis-inversiones" class="clink" ng-click="bodyCtrl.seleccionarSeccion(1)">Cartola Resumen</a></div>
+                </div>
+                <div class="go-to white-box">
+                    <div class="estado-docs"><a href="#/mis-inversiones/estado-documentos" class="clink" ng-click="bodyCtrl.seleccionarSeccion(1)">Estado de Documentos</a></div>
+                </div>
+                <div class="go-to white-box">
+                    <div class="hechos-esenciales"><a href="http://www.bolsadesantiago.com/labolsa/Paginas/Hechos-Esenciales.aspx" target="_blank" class="clink">Hechos Esenciales<img src="../.build/img/icon_external-link.png" class="external-link" /></a></div>
+                </div>
+                <div class="go-to white-box">
+                    <div class="mis-datos"><a href="#/mis-datos" class="clink" ng-click="bodyCtrl.seleccionarSeccion(-1)">Mis Datos</a></div>
+                </div>
+
+            </div><!--end home acceso rapido-->
+
+            <div class="three-col home" ng-controller="AgenteCtrl as agenteCtrl">
+                <div class="section-title">Ejecutivo de Inversiones</div>
+
+                <div class="executive white-box">
+                    <loading param="agenteCtrl.loading" extra-class="'top1'"></loading>
+                    <div ng-show="!agenteCtrl.loading">
+                        <div class="photo" ng-style="{'background-image':'url({{agenteCtrl.agente.PathImg}})'}"></div>
+                        <div class="text">
+                            <div class="name">{{agenteCtrl.agente.Nombre}}</div>
+                            <div class="contact">
+                                Tel: {{agenteCtrl.agente.Telefono}}<br />
+                                E-mail: <a href="mailto:{{agenteCtrl.agente.Email}}">{{agenteCtrl.agente.Email}}</a>
+                            </div>
+                            <div class="info">
+                                Fecha de acreditación: {{agenteCtrl.agente.FechaInicioAcreditacion}}<br />
+                                Sucursal: {{agenteCtrl.agente.Sucursal}}
+                            </div>
+                        </div>
+                        <div class="button blue call" ng-show="agenteCtrl.agente.Telefono"><a href="tel:{{agenteCtrl.agente.Telefono}}" class="clink">Llamar</a></div>
+                    </div>
+                    <div id="clear"></div>
+                </div>
+            </div>
+            <div id="clear"></div>
+
+            <ng-include src="ctrl.constantService.templateFooterURI"></ng-include>
+
+        </div><!--end in-->
+    </div><!--end content-->
+
+</div><!--end container-full-->

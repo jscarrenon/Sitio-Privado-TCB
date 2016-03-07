@@ -1,0 +1,93 @@
+﻿<div id="container-full">
+
+    <div id="header">
+        <div class="in">
+            <div class="head">
+                <div class="title">Mis Datos</div>
+                <div class="subtitle"></div>
+            </div>
+        </div>
+    </div>
+    <div id="content">
+        <div class="in">
+
+            <div class="two-col">
+
+                <div class="user-info white-box">
+                    <div class="info-col">
+                        <div class="info-input">
+                            Nombre / Razón Social
+                            <input type="text" value="{{bodyCtrl.authService.usuario.NombreCompleto}}" disabled>
+                        </div>
+                        <div class="info-input">
+                            RUT
+                            <input type="text" value="{{bodyCtrl.authService.usuario.Rut|rut}}" disabled>
+                        </div>
+                        <div class="info-input">
+                            Dirección Comercial
+                            <input type="text" value="{{bodyCtrl.authService.usuario.DireccionComercial}}" disabled>
+                        </div>
+                        <div class="info-input">
+                            Dirección Particular
+                            <input type="text" value="{{bodyCtrl.authService.usuario.DireccionParticular}}" disabled>
+                        </div>
+                        <div class="info-input">
+                            Ciudad y País
+                            <input type="text" value="{{bodyCtrl.authService.usuario.CiudadPais}}" disabled>
+                        </div>
+                    </div>
+                    <div class="info-col">
+                        <div class="info-input">
+                            Teléfono Comercial
+                            <input type="text" value="{{bodyCtrl.authService.usuario.TelefonoComercial}}" disabled>
+                        </div>
+                        <div class="info-input">
+                            Teléfono Particular
+                            <input type="text" value="{{bodyCtrl.authService.usuario.TelefonoParticular}}" disabled>
+                        </div>
+                        <div class="info-input">
+                            E-mail
+                            <input type="text" value="{{bodyCtrl.authService.usuario.Email}}" disabled>
+                        </div>
+                        <div class="info-input">
+                            Nº Cuenta Corriente
+                            <input type="text" value="{{bodyCtrl.authService.usuario.CuentaCorriente}}" disabled>
+                        </div>
+                        <div class="info-input">
+                            Banco
+                            <input type="text" value="{{bodyCtrl.authService.usuario.Banco}}" disabled>
+                        </div>
+                    </div>
+                    <div class="edit-note">Si necesita cambiar su información contacte a su Ejecutivo de Inversiones.</div>
+                </div>
+
+            </div><!--end two-col-->
+
+            <div class="three-col home" ng-controller="AgenteCtrl as agenteCtrl">
+                <div class="executive white-box">
+                    <loading param="agenteCtrl.loading"></loading>
+                    <div ng-show="!agenteCtrl.loading">
+                        <div class="photo" ng-style="{'background-image':'url({{agenteCtrl.agente.PathImg}})'}"></div>
+                        <div class="text">
+                            <div class="name">{{agenteCtrl.agente.Nombre}}</div>
+                            <div class="contact">
+                                Tel: {{agenteCtrl.agente.Telefono}}<br />
+                                E-mail: <a href="mailto:{{agenteCtrl.agente.Email}}">{{agenteCtrl.agente.Email}}</a>
+                            </div>
+                            <div class="info">
+                                Fecha de acreditación: {{agenteCtrl.agente.FechaInicioAcreditacion}}<br />
+                                Sucursal: {{agenteCtrl.agente.Sucursal}}
+                            </div>
+                        </div>
+                        <div class="button blue call" ng-show="agenteCtrl.agente.Telefono"><a href="tel:{{agenteCtrl.agente.Telefono}}" class="clink">Llamar</a></div>
+                    </div>
+                    <div id="clear"></div>
+                </div>
+            </div>
+            <div id="clear"></div>
+
+            <ng-include src="ctrl.constantService.templateFooterURI"></ng-include>
+
+        </div><!--end in-->
+    </div><!--end content-->
+</div><!--end container-full-->

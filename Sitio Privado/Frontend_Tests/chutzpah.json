@@ -1,0 +1,51 @@
+﻿{
+  "References": [
+    { "Path": "../Scripts/extras/jquery-1.12.0.js" },
+    { "Path": "../bower_components/angular/angular.js" },
+    { "Path": "../bower_components/angular-mocks/angular-mocks.js" },
+    { "Path": "../bower_components/angular-route/angular-route.js" },
+    { "Path": "../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js" },
+    { "Path": "../bower_components/jasmine/lib/jasmine-core/jasmine.js" },
+    { "Path": "../.build/spa/domain.js" },
+    { "Path": "../.build/spa/app.js" },
+    { "Path": "../app/app.js" },
+    {
+      "Path": "../app/common/controllers",
+      "Includes": [ "*.js" ]
+    },
+    {
+      "Path": "../app/common/services",
+      "Includes": [ "*.js" ]
+    },
+    {
+      "Path": "../app/modules/home/controllers/",
+      "Includes": [ "*.js" ]
+    },
+    {
+      "Path": "../app/modules/informacion-financiera/controllers/",
+      "Includes": [ "*.js" ]
+    },
+    {
+      "Path": "../app/modules/inversiones/controllers/",
+      "Includes": [ "*.js" ]
+    },
+    {
+      "Path": "../app/modules/mis-inversiones/controllers/",
+      "Includes": [ "*.js" ]
+    },
+    {
+      "Path": "../app/modules/productos-servicios/controllers/",
+      "Includes": [ "*.js" ]
+    }
+  ],
+  "Tests": [
+    {
+      "Path": "./Controllers/",
+      "Includes": [ "*Spec.js" ]
+    },
+    {
+      "Path": "./Services/",
+      "Includes": [ "*Spec.js" ]
+    }
+  ]
+}

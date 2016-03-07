@@ -1,0 +1,132 @@
+﻿<div id="container">
+    <div id="header">
+        <div class="in">
+            <div class="head">
+                <div class="title">Índices de Liquidez y Solvencia Patrimonial</div>
+                <div class="subtitle"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="content" ng-controller="InformacionFinancieraIndicesCtrl as indicesCtrl">
+        <div class="in">
+
+            <div class="filter date indices">
+                <div class="date-field">
+                    Información al: <input type="date" step="1" ng-model="indicesCtrl.fecha" data-format="dd-MM-yyyy" ng-change="indicesCtrl.validarFecha()" required>
+                </div>
+                <div class="apply-filter pag-button" ng-show="indicesCtrl.errorFecha == null"><a href="" class="clink" ng-click="indicesCtrl.actualizarIndices()"></a></div>
+                <div class="error" ng-show="indicesCtrl.errorFecha">
+                    {{indicesCtrl.errorFecha}}
+                </div>
+            </div>
+
+            <loading param="indicesCtrl.loading"></loading>
+
+            <div class="one-col" ng-show="!indicesCtrl.loading">
+
+                <div class="section-title">Empresa</div>
+                <div class="col-tannersa">
+                    <div class="name">Razón Social:</div>
+                    <div class="info">{{indicesCtrl.indices.DescriptorTCB}}</div>
+                    <div class="name">R.U.T.:</div>
+                    <div class="info">{{indicesCtrl.indices.RutTCB}}</div>
+                    <div class="name">Información al:</div>
+                    <div class="info">{{indicesCtrl.indices.FechaConsulta}}</div>
+                    <div class="name">Patrimonio depurado:</div>
+                    <div class="info">M$ {{indicesCtrl.indices.PatrimonioDepurado|number}}</div>
+                </div>
+
+                <div class="section-title">Índices de Liquidez y Solvencia</div>
+
+                <div class="col-rates">
+                    <div class="rate white-box">
+                        <div class="title">Liquidez general</div>
+                        <div id="cont-table">
+                            <table class="rates">
+                                <tr>
+                                    <td>Activos disponibles y realizables hasta 7 días</td>
+                                    <td>=M$</td>
+                                    <td><div class="one-rate">{{indicesCtrl.indices.ActivosSieteDias|number}}</div></td>
+                                    <td rowspan="2">{{indicesCtrl.indices.LiquidezGeneral|number:2}} veces</td>
+                                </tr>
+                                <tr>
+                                    <td>Pasivos exigibles hasta 7 días</td>
+                                    <td>=M$</td>
+                                    <td><div class="one-rate">{{indicesCtrl.indices.PasivosSieteDias|number}}</div></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="rate white-box">
+                        <div class="title">Liquidez por intermediación</div>
+                        <div id="cont-table">
+                            <table class="rates">
+                                <tr>
+                                    <td>Activos disponibles más deudores por intermediación</td>
+                                    <td>=M$</td>
+                                    <td><div class="one-rate">{{indicesCtrl.indices.ActivosIntermediacion|number}}</div></td>
+                                    <td rowspan="2">{{indicesCtrl.indices.LiquidezIntermediacion|number:2}} veces</td>
+                                </tr>
+                                <tr>
+                                    <td>Acreedores por intermediación</td>
+                                    <td>=M$</td>
+                                    <td><div class="one-rate">{{indicesCtrl.indices.AcreedoresIntermediacion|number}}</div></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-rates">
+                    <div class="rate white-box">
+                        <div class="title">Razón de endeudamiento</div>
+                        <div id="cont-table">
+                            <table class="rates">
+                                <tr>
+                                    <td>Total pasivos exigibles</td>
+                                    <td>=M$</td>
+                                    <td><div class="one-rate">{{indicesCtrl.indices.TotalPasivosExigibles|number}}</div></td>
+                                    <td rowspan="2">{{indicesCtrl.indices.RazonEndeudamiento|number:2}} veces</td>
+                                </tr>
+                                <tr>
+                                    <td>Patrimonio líquido</td>
+                                    <td>=M$</td>
+                                    <td><div class="one-rate">{{indicesCtrl.indices.PatrimonioLiquido|number}}</div></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="rate white-box">
+                        <div class="title">Razón de cobertura patrimonial</div>
+                        <div id="cont-table">
+                            <table class="rates">
+                                <tr>
+                                    <td>Monto cobertura patrimonial</td>
+                                    <td>=M$</td>
+                                    <td><div class="one-rate">{{indicesCtrl.indices.MontoCoberturaPatrimonial|number}}</div></td>
+                                    <td rowspan="2">{{indicesCtrl.indices.RazonCoberturaPatrimonial|number:2}}%</td>
+                                </tr>
+                                <tr>
+                                    <td>Patrimonio líquido</td>
+                                    <td>=M$</td>
+                                    <td><div class="one-rate">{{indicesCtrl.indices.PatrimonioLiquido|number}}</div></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="legal"></div>
+
+            </div><!--end one-col -->
+            <div id="clear"></div>
+
+            <ng-include src="ctrl.constantService.templateFooterURI"></ng-include>
+
+        </div><!--end in-->
+    </div><!--end content-->
+
+</div><!--end container-->
+
+<div id="clear"></div>

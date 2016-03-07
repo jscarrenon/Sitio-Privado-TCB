@@ -1,0 +1,51 @@
+﻿<div id="container-full">
+    <div id="header">
+        <div class="in">
+            <div class="head">
+                <div class="title">
+                    Productos y Servicios
+                </div>
+                <div class="subtitle">
+                    Su categoría de inversionista es {{ctrl.categoriaCliente.Descriptor}}.
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="content">
+        <div class="in">
+            <div class="col-left products">
+                <loading param="ctrl.categoriaClienteLoading" extra-class="'bottom1'"></loading>
+                <div class="profile-products white-box" ng-show="!ctrl.categoriaClienteLoading">
+                    <div class="title">Perfil {{ctrl.categoriaCliente.Descriptor}}</div>
+                    Usted puede acceder a los siguientes productos y servicios:
+                    <ul>
+                        <li ng-repeat="producto in ctrl.categoriaCliente.Productos">
+                            <a href="" ng-click="ctrl.scrollTo('prod' + producto.Identificador)">{{producto.Descriptor}}</a>
+                        </li>
+                    </ul>
+                    <div class="go-to-inversiones"><a href="#/inversiones" class="clink">Conozca nuestros perfiles de inversión</a></div>
+                </div>
+            </div>
+        <div class="col-right products">
+            <loading param="ctrl.productosLoading"></loading>
+            <div ng-repeat="producto in ctrl.productos" ng-show="!ctrl.productosLoading">
+                <div id="prod{{producto.Identificador}}" class="one-product white-box">
+                    <div class="img {{ctrl.imagenProducto[producto.Identificador]}}"></div>
+                    <div class="text">
+                        <div class="title">{{producto.Descriptor}}</div>
+                        <div class="description">
+                            <p>{{producto.Comentario}}</p>
+                            <p>
+                                <strong>Riesgo: </strong>
+                                {{producto.Riesgo}}
+                            </p>
+                        </div>
+                    </div>
+                    <div id="clear"></div>
+                </div>
+            </div>
+        </div>
+        <ng-include src="ctrl.constantService.templateFooterURI"></ng-include>
+        </div><!--end in-->
+    </div><!--end content-->
+</div><!--end container-full-->

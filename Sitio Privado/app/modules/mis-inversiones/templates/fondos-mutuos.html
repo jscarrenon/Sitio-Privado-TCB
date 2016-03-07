@@ -1,0 +1,90 @@
+﻿<div id="container">
+    <div id="header">
+        <div class="in">
+            <div class="head">
+                <div class="title">Fondos Mutuos y APV | Custodia Principal AGF</div>
+                <div class="subtitle">La información respecto a los fondos de cantidad y valor de cuotas es proporcionada directamente por Principal Administradora General de Fondos S.A. Para acceder a un mayor detalle, por favor contacte a su Ejecutivo de Inversiones o ingrese directamente a Principal AGFC.</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="content">
+        <div class="in">
+
+            <div class="one-col" ng-controller="MisInversionesFondosMutuosCtrl as fondosMutuosCtrl">
+                <div class="section-title">Saldos Fondos Mutuos de Renta Fija</div>
+                <div id="cont-table">
+                    <loading param="fondosMutuosCtrl.loading"></loading>
+                    <table class="balance" ng-show="!fondosMutuosCtrl.loading">
+                        <tr>
+                            <th>Fondo</th>
+                            <th>Tipo Fondo</th>
+                            <th>Cuenta</th>
+                            <th>Condición Tributaria</th>
+                            <th class="number">Valor Cuotas</th>
+                            <th class="number">Saldo en Cuotas</th>
+                            <th class="number">Saldo en Pesos</th>
+                        </tr>
+                        <tr ng-repeat="fondoMutuo in fondosMutuosCtrl.fondosMutuosRF">
+                            <td>{{fondoMutuo.Descripcion}}</td>
+                            <td>{{fondoMutuo.Tipo}}</td>
+                            <td>{{fondoMutuo.CtaPisys}}</td>
+                            <td>{{fondoMutuo.Csbis}}</td>
+                            <td class="number">{{fondoMutuo.ValorCuota|number:2}}</td>
+                            <td class="number">{{fondoMutuo.SaldoCuota|number:2}}</td>
+                            <td class="number">{{fondoMutuo.Pesos|number:2}}</td>
+                        </tr>
+                        <tr class="total">
+                            <td colspan="6">Total Fondos Mutuos Renta Fija</td>
+                            <td class="number">{{fondosMutuosCtrl.fondosMutuosRFTotal|number:2}}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="sep-table"></div>
+
+                <div class="section-title">Saldos Fondos Mutuos de Renta Variable</div>
+
+                <div id="cont-table">
+                    <loading param="fondosMutuosCtrl.loading"></loading>
+                    <table class="balance" ng-show="!fondosMutuosCtrl.loading">
+                        <tr>
+                            <th>Fondo</th>
+                            <th>Tipo Fondo</th>
+                            <th>Cuenta</th>
+                            <th>Condición Tributaria</th>
+                            <th class="number">Valor Cuotas</th>
+                            <th class="number">Saldo en Cuotas</th>
+                            <th class="number">Saldo en Pesos</th>
+                        </tr>
+                        <tr ng-repeat="fondoMutuo in fondosMutuosCtrl.fondosMutuosRV">
+                            <td>{{fondoMutuo.Descripcion}}</td>
+                            <td>{{fondoMutuo.Tipo}}</td>
+                            <td>{{fondoMutuo.CtaPisys}}</td>
+                            <td>{{fondoMutuo.Csbis}}</td>
+                            <td class="number">{{fondoMutuo.ValorCuota|number:2}}</td>
+                            <td class="number">{{fondoMutuo.SaldoCuota|number:2}}</td>
+                            <td class="number">{{fondoMutuo.Pesos|number:2}}</td>
+                        </tr>
+                        <tr class="total">
+                            <td colspan="6">Total Fondos Mutuos Renta Variable</td>
+                            <td class="number">{{fondosMutuosCtrl.fondosMutuosRVTotal|number:2}}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="legal">
+                    La información sobre los saldos presentados más arriba corresponde exclusivamente a aquellos clientes titulares directos, en Principal Administradores General de Fondos S.A., de cuotas de fondos mutuos administrados por esta, y no aquellas que son custodiadas en Tanner Corredores de Bolsa. Para consultar los saldos respecto estas últimas, le solicitamos por favor acceder a Inversiones Nacionales.
+                </div>
+
+            </div><!--end one-col -->
+            <div id="clear"></div>
+
+            <ng-include src="ctrl.constantService.templateFooterURI"></ng-include>
+
+        </div><!--end in-->
+    </div><!--end content-->
+
+</div><!--end container-->
+
+<div id="clear"></div>

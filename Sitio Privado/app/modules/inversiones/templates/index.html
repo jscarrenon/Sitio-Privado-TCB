@@ -1,0 +1,40 @@
+﻿<div id="container-full">
+
+    <div id="header">
+        <div class="in">
+            <div class="head">
+                <div class="title">Inversión a su Medida</div>
+                <div class="subtitle">Conozca nuestros perfiles de inversión.</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="content">
+        <div class="in">
+
+            <loading param="ctrl.loading"></loading>
+            <div class="investment-profiles" ng-show="!ctrl.loading">
+
+                <div class="one-profile white-box" ng-repeat="categoria in ctrl.categorias">
+                    <div class="img {{categoria.Descriptor.toLowerCase()}}"></div>
+                    <div class="text">
+                        <div class="title">Perfil {{categoria.Descriptor}}</div>
+                        {{categoria.Comentario}}
+                        <ul>
+                            <li ng-repeat="producto in categoria.Productos">
+                                {{producto.Descriptor}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="clear"></div>
+
+            <ng-include src="ctrl.constantService.templateFooterURI"></ng-include>
+
+        </div><!--end in-->
+    </div><!--end content-->
+
+</div><!--end container-full-->
