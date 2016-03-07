@@ -1,0 +1,24 @@
+﻿<div class="one-col">
+
+    <div class="section-title">Circularización Anual de Custodia {{circularizacionCtrl.fecha|date:'y'}}</div>
+
+    <loading param="circularizacionCtrl.respondidaLoading"></loading>
+
+    <div class="full-text" ng-show="!circularizacionCtrl.respondidaLoading">
+        <p>De mi/nuestra consideración:</p>
+        <p>En respuesta a lo solicitado por ustedes, les manifiesto lo siguiente:</p>
+        <p><input type="radio" value="S" ng-model="circularizacionCtrl.respuestaInput.respuesta">Mi conformidad con los saldos en custodia y/o garantía que ustedes informaron como mantenidos al {{circularizacionCtrl.fecha|date:'longDate'}}.</p>
+        <p><input type="radio" value="N" ng-model="circularizacionCtrl.respuestaInput.respuesta">Mi rechazo con los saldos en custodia y/o garantía que ustedes informaron como mantenidos al {{circularizacionCtrl.fecha|date:'longDate'}}.</p>
+        <div class="comments" ng-if="circularizacionCtrl.respuestaInput.respuesta == 'N'">
+            Observaciones en caso de discrepar con el saldo en custodia/garantía:
+            <textarea name="comment" placeholder="Ingresar observaciones" ng-model="circularizacionCtrl.respuestaInput.comentario"></textarea>
+        </div>
+
+        <div class="button green"><a href="" ng-click="circularizacionCtrl.responder()">Enviar</a></div>
+    </div>
+
+    <div class="legal">
+        La información sobre los saldos presentados más arriba corresponde exclusivamente a aquellos clientes titulares directos, en Principal Administradores General de Fondos S.A. La información sobre los saldos presentados más arriba corresponde exclusivamente a aquellos clientes titulares directos, en Principal Administradores General de Fondos S.A. La información sobre los saldos presentados más arriba corresponde exclusivamente a aquellos clientes titulares directos, en Principal Administradores General de Fondos S.A.
+    </div>
+
+</div><!--end one-col -->

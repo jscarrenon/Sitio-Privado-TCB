@@ -1,0 +1,82 @@
+﻿<div class="filter date estado-documentos">
+    <div class="date-field">
+        Desde: <input type="date" step="1" ng-model="documentosCtrl.fechaFirmadosInicio" data-format="dd-MM-yyyy" ng-change="documentosCtrl.validarFechas()" required>
+    </div>
+    <div class="date-field">
+        Hasta: <input type="date" step="2" ng-model="documentosCtrl.fechaFirmadosFin" data-format="dd-MM-yyyy" ng-change="documentosCtrl.validarFechas()" required>
+    </div>
+    <div class="apply-filter pag-button" ng-show="documentosCtrl.errorFechas == null"><a href="" class="clink" ng-click="documentosCtrl.actualizarDocumentosFirmados()"></a></div>
+    <div class="error" ng-show="documentosCtrl.errorFechas">
+        {{documentosCtrl.errorFechas}}
+    </div>
+</div>
+
+<div class="one-col">
+
+    <div class="section-title">Operaciones Firmadas</div>
+
+    <div id="cont-table">
+        <loading param="documentosCtrl.firmadosLoading"></loading>
+        <table class="balance" ng-show="!documentosCtrl.firmadosLoading">
+            <tr>
+                <th>Producto</th>
+                <th>Nº Folio</th>
+                <th>Fecha de Operación</th>
+                <th>Tipo de Firma</th>
+                <th>Fecha de Firma</th>
+                <th>Documento</th>
+            </tr>
+            <tr ng-repeat="documento in documentosCtrl.operacionesFirmadas.slice(((documentosCtrl.operacionesFirmadasPaginaActual-1)*documentosCtrl.operacionesFirmadasPorPagina), ((documentosCtrl.operacionesFirmadasPaginaActual)*documentosCtrl.operacionesFirmadasPorPagina))">
+                <td>{{documento.Producto}}</td>
+                <td>{{documento.Folio}}</td>
+                <td>{{documento.FechaCreacion}}</td>
+                <td>{{documento.TipoFirma}}</td>
+                <td>{{documento.FechaFirma}}</td>
+                <td><a href="" ng-click="documentosCtrl.verDocumento(documento)">Ver Documento</a></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="table-tools" ng-show="!documentosCtrl.firmadosLoading">
+        <uib-pagination ng-model="documentosCtrl.operacionesFirmadasPaginaActual" total-items="documentosCtrl.operacionesFirmadas.length" items-per-page="documentosCtrl.operacionesFirmadasPorPagina" boundary-links="true" template-url="pagination.html"></uib-pagination>
+    </div>
+
+
+    <div class="sep-table"></div>
+
+    <div class="section-title">Documentos Firmados</div>
+
+    <div id="cont-table">
+        <loading param="documentosCtrl.firmadosLoading"></loading>
+        <table class="balance" ng-show="!documentosCtrl.firmadosLoading">
+            <tr>
+                <th>Producto</th>
+                <th>Tipo de Documento</th>
+                <th>Nº Folio</th>
+                <th>Fecha de Operación</th>
+                <th>Tipo de Firma</th>
+                <th>Fecha de Firma</th>
+                <th>Documento</th>
+            </tr>
+            <tr ng-repeat="documento in documentosCtrl.documentosFirmados.slice(((documentosCtrl.documentosFirmadosPaginaActual-1)*documentosCtrl.documentosFirmadosPorPagina), ((documentosCtrl.documentosFirmadosPaginaActual)*documentosCtrl.documentosFirmadosPorPagina))">
+                <td>{{documento.Producto}}</td>
+                <td>{{documento.Tipo}}</td>
+                <td>{{documento.Folio}}</td>
+                <td>{{documento.FechaCreacion}}</td>
+                <td>{{documento.TipoFirma}}</td>
+                <td>{{documento.FechaFirma}}</td>
+                <td><a href="" ng-click="documentosCtrl.verDocumento(documento)">Ver Documento</a></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="table-tools" ng-show="!documentosCtrl.firmadosLoading">
+        <uib-pagination ng-model="documentosCtrl.documentosFirmadosPaginaActual" total-items="documentosCtrl.documentosFirmados.length" items-per-page="documentosCtrl.documentosFirmadosPorPagina" boundary-links="true" template-url="pagination.html"></uib-pagination>
+    </div>
+
+    <div class="legal">
+        La información sobre los saldos presentados más arriba corresponde exclusivamente a aquellos clientes titulares directos, en Principal Administradores General de Fondos S.A.
+    </div>
+
+</div><!--end one-col -->
+

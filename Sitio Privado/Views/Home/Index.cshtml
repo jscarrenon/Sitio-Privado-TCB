@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html ng-app="tannerPrivadoApp" lang="es">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>TannerClientes / Home</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:600,700' rel='stylesheet' type='text/css'>
+    <meta name="viewport" content="width=device-width">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+    <!-- stylesLess:css -->
+    <link rel="stylesheet" href="/.build/css/stylesLess.css">
+    <!-- endinject -->
+    <!-- stylesCss:css -->
+    <link rel="stylesheet" href="/.build/css/stylesCss.css">
+    <!-- endinject -->
+    <!-- extras:js -->
+    <script src="/.build/js/extras.js"></script>
+    <!-- endinject -->
+    <!--[if IE]>
+    <script src="/.build/js/better-dom-legacy.js"></script>
+    <![endif]-->
+    <!-- better-dom:js -->
+    <script src="/.build/js/better-dom.js"></script>
+    <script src="/.build/js/better-i18n-plugin.js"></script>
+    <script src="/.build/js/better-dateinput-polyfill.js"></script>
+    <script src="/.build/js/better-dateinput-polyfill.es.js"></script>
+    <!-- endinject -->
+    <!-- vendors:js -->
+    <script src="/.build/vendors/vendors.js"></script>
+    <!-- endinject -->
+    <!-- domain:js -->
+    <script src="/.build/spa/domain.js"></script>
+    <!-- endinject -->
+    <!-- app:js -->
+    <script src="/.build/spa/app.js"></script>
+    <!-- endinject -->
+    <!-- templates:js -->
+    <script src="/.build/js/templates.js"></script>
+    <!-- endinject -->
+
+    <link rel="icon" href=".build/img/favicon.ico" />
+
+</head>
+<body ng-controller="BodyCtrl as bodyCtrl">
+
+    <div id="prebar" ng-if="bodyCtrl.authService.autenticado">
+        <div class="user"><a href="#/mis-datos" class="clink" ng-click="bodyCtrl.seleccionarSeccion(-1)">{{ bodyCtrl.authService.usuario.NombreCompleto }} | Mis Datos</a></div>
+        <div class="logout"><a href="" ng-click="bodyCtrl.authService.cerrarSesion()">Cerrar Sesión</a></div>
+    </div>
+
+    <div id="bar">
+        <div class="in" ng-if="bodyCtrl.authService.autenticado">
+            <div class="logo"><a href="#/" class="clink" ng-click="bodyCtrl.seleccionarSeccion(0)"></a></div>
+            <div class="menubar">
+                <div class="menuitem"><a href="#/mis-inversiones" class="clink" ng-click="bodyCtrl.seleccionarSeccion(1)">Mis Inversiones</a></div>
+                <div class="menuitem"><a href="#/productos-servicios" class="clink" ng-click="bodyCtrl.seleccionarSeccion(2)">Productos y Servicios</a></div>
+                <div class="menuitem"><a href="#/informacion-financiera" class="clink" ng-click="bodyCtrl.seleccionarSeccion(3)">Información Financiera</a></div>
+                <div class="menuitem"><a href="#/inversiones" class="clink" ng-click="bodyCtrl.seleccionarSeccion(4)">Inversión a su Medida</a></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="bar_mobile">
+        <div class="in">
+            <div class="logo"></div>
+            <div class="user"><a href="#/mis-datos" class="clink" ng-click="bodyCtrl.seleccionarSeccion(-1)"></a></div>
+            <div class="logout"><a href="" class="clink" ng-click="bodyCtrl.authService.cerrarSesion()"></a></div>
+        </div>
+    </div>
+
+    <div id="tabbar">
+        <div ng-if="bodyCtrl.authService.autenticado">
+            <div class="tab home" ng-class="{'active':bodyCtrl.seccionId == 0}">
+                <a href="#/" class="clink" ng-click="bodyCtrl.seleccionarSeccion(0)"></a>
+            </div>
+            <div class="tab mis-inversiones" ng-class="{'active':bodyCtrl.seccionId == 1}">
+                <a href="#/mis-inversiones" class="clink" ng-click="bodyCtrl.seleccionarSeccion(1)"></a>
+            </div>
+            <div class="tab productos" ng-class="{'active':bodyCtrl.seccionId == 2}">
+                <a href="#/productos-servicios" class="clink" ng-click="bodyCtrl.seleccionarSeccion(2)"></a>
+            </div>
+            <div class="tab info" ng-class="{'active':bodyCtrl.seccionId == 3}">
+                <a href="#/informacion-financiera" class="clink" ng-click="bodyCtrl.seleccionarSeccion(3)"></a>
+            </div>
+            <div class="tab inversiones" ng-class="{'active':bodyCtrl.seccionId == 4}">
+                <a href="#/inversiones" class="clink" ng-click="bodyCtrl.seleccionarSeccion(4)"></a>
+            </div>
+        </div>
+    </div>
+
+    <ng-view ng-if="bodyCtrl.authService.autenticado"></ng-view>
+
+</body>
+</html>

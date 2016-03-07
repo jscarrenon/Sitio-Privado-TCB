@@ -1,0 +1,47 @@
+﻿<div id="wrap">
+
+    <div id="sidemenu">
+        <div class="title">Información Financiera</div>
+        <ul id="menu2">
+            <li class="estatutos" ng-class="{'active':ctrl.seccionId == 0}">
+                <a href="#/informacion-financiera/estatutos" class="clink">
+                    Estatutos
+                </a>
+            </li>
+            <li class="normativos" ng-class="{'active':ctrl.seccionId == 1}">
+                <a href="#/informacion-financiera/documentos-normativos" class="clink">
+                    Documentos Normativos
+                </a>
+            </li>
+            <li class="custodia" ng-class="{'active':ctrl.seccionId == 2}">
+                <a href="#/informacion-financiera/servicios-custodia" class="clink">
+                    Servicios de Custodia
+                </a>
+            </li>   
+            <li class="indices" ng-class="{'active':ctrl.seccionId == 3}">
+                <a href="#/informacion-financiera/indices-liquidez" class="clink">
+                    Índices de Liquidez
+                </a>
+            </li>
+            <li class="hechos-esenciales">
+                <a href="http://www.bolsadesantiago.com/labolsa/Paginas/Hechos-Esenciales.aspx" target="_blank">
+                    Hechos Esenciales
+                    <img src="../.build/img/icon_external-link.png" class="external-link" />
+                </a>
+            </li>
+            <li class="comite-regulacion" ng-class="{'active':ctrl.seccionId == 4}">
+                <a href="#/informacion-financiera/comite-regulacion" class="clink">
+                    Comité de Regulación
+                </a>
+            </li>
+            <li class="otros-docs" ng-class="{'active':ctrl.seccionId == 5}">
+                <a href="#/informacion-financiera/otros-documentos" class="clink">
+                    Otros Documentos
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <ng-include src="ctrl.seccionURI"></ng-include>
+
+</div><!--end wrap-->

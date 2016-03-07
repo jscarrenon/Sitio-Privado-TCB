@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://servicios.tanner/ffmm" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://servicios.tanner/ffmm" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://servicios.tanner/ffmm">
+      <s:element name="cn_saldo_ffmm_rv">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="rut" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="cn_saldo_ffmm_rvResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="cn_saldo_ffmm_rvResult" type="tns:ArrayOfSaldo_ffmm" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfSaldo_ffmm">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="saldo_ffmm" nillable="true" type="tns:saldo_ffmm" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="saldo_ffmm">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="descripcion" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="tipo" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="cta_pisys" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="valor_cuota" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="saldo_cuota" type="s:decimal" />
+          <s:element minOccurs="0" maxOccurs="1" name="renta" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="csbis" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="pesos" type="s:decimal" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="cn_saldo_ffmm_rf">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="rut" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="cn_saldo_ffmm_rfResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="cn_saldo_ffmm_rfResult" type="tns:ArrayOfSaldo_ffmm" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="cn_saldo_ffmm_rvSoapIn">
+    <wsdl:part name="parameters" element="tns:cn_saldo_ffmm_rv" />
+  </wsdl:message>
+  <wsdl:message name="cn_saldo_ffmm_rvSoapOut">
+    <wsdl:part name="parameters" element="tns:cn_saldo_ffmm_rvResponse" />
+  </wsdl:message>
+  <wsdl:message name="cn_saldo_ffmm_rfSoapIn">
+    <wsdl:part name="parameters" element="tns:cn_saldo_ffmm_rf" />
+  </wsdl:message>
+  <wsdl:message name="cn_saldo_ffmm_rfSoapOut">
+    <wsdl:part name="parameters" element="tns:cn_saldo_ffmm_rfResponse" />
+  </wsdl:message>
+  <wsdl:portType name="tann_fondos_mutuosSoap">
+    <wsdl:operation name="cn_saldo_ffmm_rv">
+      <wsdl:input message="tns:cn_saldo_ffmm_rvSoapIn" />
+      <wsdl:output message="tns:cn_saldo_ffmm_rvSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="cn_saldo_ffmm_rf">
+      <wsdl:input message="tns:cn_saldo_ffmm_rfSoapIn" />
+      <wsdl:output message="tns:cn_saldo_ffmm_rfSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="tann_fondos_mutuosSoap" type="tns:tann_fondos_mutuosSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="cn_saldo_ffmm_rv">
+      <soap:operation soapAction="http://servicios.tanner/ffmm/cn_saldo_ffmm_rv" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cn_saldo_ffmm_rf">
+      <soap:operation soapAction="http://servicios.tanner/ffmm/cn_saldo_ffmm_rf" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="tann_fondos_mutuosSoap12" type="tns:tann_fondos_mutuosSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="cn_saldo_ffmm_rv">
+      <soap12:operation soapAction="http://servicios.tanner/ffmm/cn_saldo_ffmm_rv" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cn_saldo_ffmm_rf">
+      <soap12:operation soapAction="http://servicios.tanner/ffmm/cn_saldo_ffmm_rf" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="tann_fondos_mutuos">
+    <wsdl:port name="tann_fondos_mutuosSoap" binding="tns:tann_fondos_mutuosSoap">
+      <soap:address location="https://www.tannercliente.cl/wstsf/tann_fondos_mutuos.asmx" />
+    </wsdl:port>
+    <wsdl:port name="tann_fondos_mutuosSoap12" binding="tns:tann_fondos_mutuosSoap12">
+      <soap12:address location="https://www.tannercliente.cl/wstsf/tann_fondos_mutuos.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,25 @@
+﻿<div id="container">
+    <div id="header">
+        <div class="in">
+            <div class="head">
+                <div class="title">Circularización</div>
+                <div class="subtitle"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="content" ng-controller="MisInversionesCircularizacionCtrl as circularizacionCtrl">
+        <div class="in">
+
+            <ng-include src="circularizacionCtrl.seccionURI"></ng-include>
+            
+            <div id="clear"></div>
+
+            <ng-include src="ctrl.constantService.templateFooterURI"></ng-include>
+
+        </div><!--end in-->
+    </div><!--end content-->
+
+</div><!--end container-->
+
+<div id="clear"></div>

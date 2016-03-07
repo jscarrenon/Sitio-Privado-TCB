@@ -1,0 +1,18 @@
+{
+  "name": "SitioPrivado",
+  "private": true,
+  "dependencies": {
+    "angular": "1.4.9",
+    "angular-route": "1.4.9",
+    "angular-i18n": "1.4.9",
+    "angular-mocks": "1.4.9",
+    "angular-bootstrap": "^1.1.2",
+    "jasmine": "2.4.1",
+    "better-dateinput-polyfill": "1.5.2",
+    "angular-rut": "1.0.1",
+    "angular-google-analytics": "1.1.6"
+  },
+  "resolutions": {
+    "angular": "1.4.9"
+  }
+}

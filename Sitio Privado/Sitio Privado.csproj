@@ -1,0 +1,853 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8FC36CB2-2352-4594-9014-00167F50B662}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Sitio_Privado</RootNamespace>
+    <AssemblyName>Sitio Privado</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>1.7</TypeScriptToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <FilesToIncludeForPublish>OnlyFilesToRunTheApp</FilesToIncludeForPublish>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Common.Logging, Version=3.0.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.3.0.0\lib\net40\Common.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Common.Logging.Core, Version=3.0.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.Core.3.0.0\lib\net40\Common.Logging.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Data.Edm, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Edm.5.6.4\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.OData.5.6.4\lib\net40\Microsoft.Data.OData.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.Services.Client, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Services.Client.5.6.4\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory, Version=2.19.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.2.19.208020213\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms, Version=2.19.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.2.19.208020213\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Protocol.Extensions, Version=1.0.2.33, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Protocol.Extensions.1.0.2.206221351\lib\net45\Microsoft.IdentityModel.Protocol.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OpenIdConnect, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OpenIdConnect.3.0.1\lib\net45\Microsoft.Owin.Security.OpenIdConnect.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.ServiceRuntime, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\..\Program Files\Microsoft SDKs\Windows Azure\.NET SDK\v2.1\ref\Microsoft.WindowsAzure.ServiceRuntime.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=6.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.Storage.6.2.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.2.3\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Quartz, Version=2.3.3.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Quartz.2.3.3\lib\net40\Quartz.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RazorEngine, Version=3.3.0.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
+      <HintPath>..\packages\RazorEngine.3.3.0\lib\net40\RazorEngine.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=4.0.20622.1351, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.4.0.2.206221351\lib\net45\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Spatial, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Spatial.5.6.4\lib\net40\System.Spatial.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.3.0.1\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.3.0.1\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter">
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.3.0.1\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ApiBaseController.cs" />
+    <Compile Include="Controllers\CircularizacionController.cs" />
+    <Compile Include="Controllers\IndicesController.cs" />
+    <Compile Include="Extras\Utils.cs" />
+    <Compile Include="Filters\NoCacheAttribute.cs" />
+    <Compile Include="Filters\TokenAuthorizationFilterAttribute.cs" />
+    <Compile Include="Extras\Converters.cs" />
+    <Compile Include="Extras\NLogger.cs" />
+    <Compile Include="Helpers\AzureStorageHelper.cs" />
+    <Compile Include="Controllers\BlobsController.cs" />
+    <Compile Include="Controllers\ContainersController.cs" />
+    <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
+    <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
+    <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />
+    <Compile Include="Areas\HelpPage\HelpPageAreaRegistration.cs" />
+    <Compile Include="Areas\HelpPage\HelpPageConfigurationExtensions.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\CollectionModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ComplexTypeModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\DictionaryModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\EnumTypeModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\EnumValueDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\IModelDocumentationProvider.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\KeyValuePairModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelDescriptionGenerator.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelNameAttribute.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelNameHelper.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ParameterAnnotation.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ParameterDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\SimpleTypeModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\Models\HelpPageApiModel.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\HelpPageSampleGenerator.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\HelpPageSampleKey.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\ImageSample.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\InvalidSample.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\ObjectGenerator.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
+    <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CartolaController.cs" />
+    <Compile Include="Controllers\BalanceController.cs" />
+    <Compile Include="Controllers\DocumentoController.cs" />
+    <Compile Include="Controllers\ProductoController.cs" />
+    <Compile Include="Controllers\CategoriaController.cs" />
+    <Compile Include="Controllers\AgenteController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\FondoMutuoController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SyncApiController.cs" />
+    <Compile Include="Helpers\GraphApiClientHelper.cs" />
+    <Compile Include="Extras\BaseViewPage.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\PasswordGeneratorHelper.cs" />
+    <Compile Include="Helpers\TannerDatabaseHelper.cs" />
+    <Compile Include="Models\AzureFolder.cs" />
+    <Compile Include="Models\AzureBlob.cs" />
+    <Compile Include="Helpers\GraphApiResponseInfo.cs" />
+    <Compile Include="Models\CircularizacionModel.cs" />
+    <Compile Include="Models\IndicesModel.cs" />
+    <Compile Include="Models\DocumentoModel.cs" />
+    <Compile Include="Models\CartolaModel.cs" />
+    <Compile Include="Models\BalanceModel.cs" />
+    <Compile Include="Models\AgenteModel.cs" />
+    <Compile Include="Models\FondoMutuoModel.cs" />
+    <Compile Include="Models\GraphUserModel.cs" />
+    <Compile Include="Models\CategoriaInversionista\ProductoModel.cs" />
+    <Compile Include="Models\CategoriaInversionista\CategoriaModel.cs" />
+    <Compile Include="Models\TannerUserModel.cs" />
+    <Compile Include="Models\UsuarioModels.cs" />
+    <Compile Include="PolicyAuthHelpers\HttpDocumentRetriever.cs" />
+    <Compile Include="PolicyAuthHelpers\PolicyAuthorize.cs" />
+    <Compile Include="PolicyAuthHelpers\PolicyConfigurationManager.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Startup.cs" />
+    <Compile Include="Tasks\SyncUsersDataJob.cs" />
+    <Compile Include="Tasks\SyncUsersDataJobScheduler.cs" />
+    <Compile Include="Web References\CartolaResumida\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\CategoriaInversionista\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\CircularizacionCustodia\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\ConsultaSaldosFondosMutuos\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\DocumentosPendientesFirma\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\IndicesLiquidezSolvencia\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\InformacionClienteAgente\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Web References\CartolaResumida\tann_cartola_resumida.disco" />
+    <Content Include="Resources\img\favicon.ico" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Properties\PublishProfiles\kundertannerprivado - Web Deploy %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\tannerdes - Web Deploy.pubxml" />
+    <None Include="Web References\CartolaResumida\tann_cartola_resumida.wsdl" />
+    <Content Include="Web References\CartolaResumida\_cartola_alt.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <Content Include="Web References\CartolaResumida\_titulos.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <Content Include="app\common\templates\footer.html" />
+    <Content Include="app\common\templates\loading.html" />
+    <Content Include="app\common\templates\pagination.html" />
+    <Content Include="app\modules\home\templates\index.html" />
+    <Content Include="app\modules\home\templates\mis-datos.html" />
+    <Content Include="app\modules\informacion-financiera\templates\comite-regulacion.html" />
+    <Content Include="app\modules\informacion-financiera\templates\documentos-normativos.html" />
+    <Content Include="app\modules\informacion-financiera\templates\estatutos.html" />
+    <Content Include="app\modules\informacion-financiera\templates\index.html" />
+    <Content Include="app\modules\informacion-financiera\templates\indices-liquidez.html" />
+    <Content Include="app\modules\informacion-financiera\templates\otros-documentos.html" />
+    <Content Include="app\modules\informacion-financiera\templates\servicios-custodia.html" />
+    <Content Include="app\modules\inversiones\templates\index.html" />
+    <Content Include="app\modules\mis-inversiones\templates\circularizacion.html" />
+    <Content Include="app\modules\mis-inversiones\templates\circularizacion_anual.html" />
+    <Content Include="app\modules\mis-inversiones\templates\circularizacion_aprobar.html" />
+    <Content Include="app\modules\mis-inversiones\templates\circularizacion_pendiente.html" />
+    <Content Include="app\modules\mis-inversiones\templates\circularizacion_pendiente_modal.html" />
+    <Content Include="app\modules\mis-inversiones\templates\estado-documentos.html" />
+    <Content Include="app\modules\mis-inversiones\templates\estado-documentos_confirmacion.html" />
+    <Content Include="app\modules\mis-inversiones\templates\estado-documentos_firmados.html" />
+    <Content Include="app\modules\mis-inversiones\templates\estado-documentos_pendientes.html" />
+    <Content Include="app\modules\mis-inversiones\templates\estado-documentos_pendientes_modal.html" />
+    <Content Include="app\modules\mis-inversiones\templates\fondos-mutuos.html" />
+    <Content Include="app\modules\mis-inversiones\templates\index.html" />
+    <Content Include="app\modules\mis-inversiones\templates\nacionales.html" />
+    <Content Include="app\modules\productos-servicios\templates\index.html" />
+    <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="Frontend_Tests\Controllers\productosServiciosControllerSpec.js" />
+    <Content Include="Frontend_Tests\Controllers\misInversionesDocumentosControllerSpec.js" />
+    <Content Include="Frontend_Tests\Controllers\modalInstanceControllerSpec.js" />
+    <Content Include="Scripts\extras\index.js" />
+    <TypeScriptCompile Include="app\common\controllers\modalInstanceCtrl.ts" />
+    <TypeScriptCompile Include="app\common\directives\loadingDirective.ts" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="gulpfile.js" />
+    <Content Include="package.json" />
+    <Content Include=".bowerrc" />
+    <Content Include="bower.json" />
+    <Content Include="Frontend_Tests\Controllers\inversionesControllerSpec.js" />
+    <Content Include="Frontend_Tests\Controllers\misInversionesNacionalesControllerSpec.js" />
+    <Content Include="Frontend_Tests\Controllers\agenteControllerSpec.js" />
+    <Content Include="Frontend_Tests\Services\authServiceSpec.js" />
+    <Content Include="Frontend_Tests\Controllers\bodyControllerSpec.js" />
+    <Content Include="Frontend_Tests\Services\constantServiceSpec.js" />
+    <Content Include="Frontend_Tests\Services\dataServiceSpec.js" />
+    <Content Include="Frontend_Tests\Services\extrasServiceSpec.js" />
+    <Content Include="Frontend_Tests\Controllers\homeControllerSpec.js" />
+    <Content Include="Frontend_Tests\Controllers\informacionFinancieraControllerSpec.js" />
+    <Content Include="Frontend_Tests\Controllers\informacionFinancieraIndicesControllerSpec.js" />
+    <Content Include="Frontend_Tests\Controllers\misInversionesCircularizacionControllerSpec.js" />
+    <Content Include="Frontend_Tests\Controllers\misInversionesControllerSpec.js" />
+    <Content Include="Frontend_Tests\Controllers\misInversionesFondosMutuosControllerSpec.js" />
+    <Content Include="Resources\img\loader-1.gif" />
+    <Content Include="Styles\bootstrap-custom.css" />
+    <Content Include="Web References\CircularizacionCustodia\archivocli.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <None Include="Properties\PublishProfiles\kundertannerprivado - Web Deploy.pubxml" />
+    <None Include="Web References\CircularizacionCustodia\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\CircularizacionCustodia\tann_circularizacion.disco" />
+    <Content Include="Resources\fonts\Gotham-Medium.svg" />
+    <Content Include="Resources\fonts\GothamBold.svg" />
+    <Content Include="Resources\fonts\GothamBook.svg" />
+    <Content Include="Resources\img\home_indicadores.jpg" />
+    <Content Include="Resources\img\home_inversiones.jpg" />
+    <Content Include="Resources\img\home_productos.jpg" />
+    <Content Include="Resources\img\icon_arrow-down.png" />
+    <Content Include="Resources\img\icon_arrow-down2.png" />
+    <Content Include="Resources\img\icon_backhome.png" />
+    <Content Include="Resources\img\icon_circularizacion.png" />
+    <Content Include="Resources\img\icon_circularizacionh.png" />
+    <Content Include="Resources\img\icon_close-modal.png" />
+    <Content Include="Resources\img\icon_comite.png" />
+    <Content Include="Resources\img\icon_comiteh.png" />
+    <Content Include="Resources\img\icon_custodia.png" />
+    <Content Include="Resources\img\icon_custodiah.png" />
+    <Content Include="Resources\img\icon_docs-normativos.png" />
+    <Content Include="Resources\img\icon_docs-normativos_gris.png" />
+    <Content Include="Resources\img\icon_download.png" />
+    <Content Include="Resources\img\icon_estado-documentos.png" />
+    <Content Include="Resources\img\icon_estado-documentosh.png" />
+    <Content Include="Resources\img\icon_estatutos.png" />
+    <Content Include="Resources\img\icon_estatutosh.png" />
+    <Content Include="Resources\img\icon_external-link-white.png" />
+    <Content Include="Resources\img\icon_external-link.png" />
+    <Content Include="Resources\img\icon_filter.png" />
+    <Content Include="Resources\img\icon_fondos-mutuos.png" />
+    <Content Include="Resources\img\icon_fondos-mutuosh.png" />
+    <Content Include="Resources\img\icon_fondos-privados.png" />
+    <Content Include="Resources\img\icon_fondos-privadosh.png" />
+    <Content Include="Resources\img\icon_go-back.png" />
+    <Content Include="Resources\img\icon_hechos-esenciales.png" />
+    <Content Include="Resources\img\icon_indices.png" />
+    <Content Include="Resources\img\icon_indicesh.png" />
+    <Content Include="Resources\img\icon_inv-internacionales.png" />
+    <Content Include="Resources\img\icon_inv-nacionales.png" />
+    <Content Include="Resources\img\icon_inv-nacionalesh.png" />
+    <Content Include="Resources\img\icon_li-arrow.png" />
+    <Content Include="Resources\img\icon_link.png" />
+    <Content Include="Resources\img\icon_lock.png" />
+    <Content Include="Resources\img\icon_logout.png" />
+    <Content Include="Resources\img\icon_mis-datos.png" />
+    <Content Include="Resources\img\icon_miteh.png" />
+    <Content Include="Resources\img\icon_mobile_home.png" />
+    <Content Include="Resources\img\icon_mobile_info.png" />
+    <Content Include="Resources\img\icon_mobile_inversion.png" />
+    <Content Include="Resources\img\icon_mobile_inversiones.png" />
+    <Content Include="Resources\img\icon_mobile_logout.png" />
+    <Content Include="Resources\img\icon_mobile_prod.png" />
+    <Content Include="Resources\img\icon_mobile_productos.png" />
+    <Content Include="Resources\img\icon_mobile_target.png" />
+    <Content Include="Resources\img\icon_mobile_user.png" />
+    <Content Include="Resources\img\icon_next.png" />
+    <Content Include="Resources\img\icon_next2.png" />
+    <Content Include="Resources\img\icon_normativosh.png" />
+    <Content Include="Resources\img\icon_otros-docs.png" />
+    <Content Include="Resources\img\icon_otros-docsh.png" />
+    <Content Include="Resources\img\icon_otros-docs_gris.png" />
+    <Content Include="Resources\img\icon_pdf.png" />
+    <Content Include="Resources\img\icon_prev.png" />
+    <Content Include="Resources\img\icon_prev2.png" />
+    <Content Include="Resources\img\icon_ready.png" />
+    <Content Include="Resources\img\icon_status-error.png" />
+    <Content Include="Resources\img\icon_status-ok.png" />
+    <Content Include="Resources\img\icon_triangle.png" />
+    <Content Include="Resources\img\icon_user.png" />
+    <Content Include="Resources\img\img_firma.png" />
+    <Content Include="Resources\img\img_login1.jpg" />
+    <Content Include="Resources\img\img_login2.jpg" />
+    <Content Include="Resources\img\img_pagresivo.jpg" />
+    <Content Include="Resources\img\img_pconservador.jpg" />
+    <Content Include="Resources\img\img_pmoderado.jpg" />
+    <Content Include="Resources\img\login_logo.png" />
+    <Content Include="Resources\img\logo_mobile_tannerclientes.png" />
+    <Content Include="Resources\img\logo_mobile_tannerclientes2.png" />
+    <Content Include="Resources\img\logo_tannerclientes.png" />
+    <Content Include="Resources\img\prod_admin-cartera.jpg" />
+    <Content Include="Resources\img\prod_ahorro-previsional.jpg" />
+    <Content Include="Resources\img\prod_distribucion-fm.jpg" />
+    <Content Include="Resources\img\prod_irf.jpg" />
+    <Content Include="Resources\img\prod_moneda-ext.jpg" />
+    <Content Include="Resources\img\prod_operaciones-prestamo.jpg" />
+    <Content Include="Resources\img\prod_operaciones-simultaneas.jpg" />
+    <Content Include="Resources\img\prod_pactos.jpg" />
+    <Content Include="Resources\img\prod_renta-fija-inter.jpg" />
+    <Content Include="Resources\img\prod_renta-variable-internacional.jpg" />
+    <Content Include="Resources\img\prod_renta-variable-nacional.jpg" />
+    <Content Include="Scripts\extras\jquery-1.12.0.js" />
+    <Content Include="Scripts\extras\jquery.sticky.js" />
+    <Content Include="Styles\slicknav.css" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Frontend_Tests\chutzpah.json" />
+    <None Include="Web References\CartolaResumida\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\CategoriaInversionista\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\CategoriaInversionista\tann_catsvc.disco" />
+    <None Include="Web References\CircularizacionCustodia\tann_circularizacion.wsdl" />
+    <None Include="Web References\ConsultaSaldosFondosMutuos\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="Web References\ConsultaSaldosFondosMutuos\saldo_ffmm.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <None Include="Web References\ConsultaSaldosFondosMutuos\tann_fondos_mutuos.disco" />
+    <None Include="Web References\DocumentosPendientesFirma\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\DocumentosPendientesFirma\tann_documentos.wsdl" />
+    <Content Include="Web References\DocumentosPendientesFirma\_operacion.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <None Include="Web References\IndicesLiquidezSolvencia\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\IndicesLiquidezSolvencia\tann_indicadores.disco" />
+    <None Include="Web References\CategoriaInversionista\tann_catsvc.wsdl" />
+    <Content Include="Web References\CategoriaInversionista\_categoria.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <Content Include="Web References\CategoriaInversionista\_producto.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <None Include="Web References\ConsultaSaldosFondosMutuos\tann_fondos_mutuos.wsdl" />
+    <None Include="Web References\IndicesLiquidezSolvencia\tann_indicadores.wsdl" />
+    <None Include="Web References\DocumentosPendientesFirma\tann_documentos.disco" />
+    <Content Include="Web References\IndicesLiquidezSolvencia\_indicadores.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <None Include="Web References\InformacionClienteAgente\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\InformacionClienteAgente\tann_info_cliente.disco" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <None Include="Web References\InformacionClienteAgente\tann_info_cliente.wsdl" />
+    <Content Include="Web References\InformacionClienteAgente\_agente.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+    <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Web.config" />
+    <Content Include="Areas\HelpPage\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\ResourceModel.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\Index.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\TextSample.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\SimpleTypeModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\Samples.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\Parameters.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ModelDescriptionLink.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\KeyValuePairModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\InvalidSample.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ImageSample.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\HelpPageApiModel.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\EnumTypeModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\DictionaryModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ComplexTypeModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <None Include="job_scheduling_data_2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Project_Readme.html" />
+    <Content Include="Styles\style.less" />
+    <Content Include="Resources\fonts\Gotham-Medium.eot" />
+    <Content Include="Resources\fonts\Gotham-Medium.ttf" />
+    <Content Include="Resources\fonts\Gotham-Medium.woff" />
+    <Content Include="Resources\fonts\GothamBold.eot" />
+    <Content Include="Resources\fonts\GothamBold.ttf" />
+    <Content Include="Resources\fonts\GothamBold.woff" />
+    <Content Include="Resources\fonts\GothamBook.eot" />
+    <Content Include="Resources\fonts\GothamBook.otf" />
+    <Content Include="Resources\fonts\GothamBook.ttf" />
+    <Content Include="Resources\fonts\GothamBook.woff" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="app\app.ts" />
+    <TypeScriptCompile Include="app\common\controllers\agenteCtrl.ts" />
+    <TypeScriptCompile Include="app\common\controllers\bodyCtrl.ts" />
+    <TypeScriptCompile Include="app\common\interfaces\ISeccion.ts" />
+    <TypeScriptCompile Include="app\common\services\extrasService.ts" />
+    <TypeScriptCompile Include="app\common\services\authService.ts" />
+    <TypeScriptCompile Include="app\common\services\constantService.ts" />
+    <TypeScriptCompile Include="app\common\services\dataService.ts" />
+    <TypeScriptCompile Include="app\common\typings\slicknav.ts" />
+    <TypeScriptCompile Include="app\domain\CircularizacionInput.ts" />
+    <TypeScriptCompile Include="app\domain\CircularizacionArchivo.ts" />
+    <TypeScriptCompile Include="app\domain\CircularizacionProcesoResultado.ts" />
+    <TypeScriptCompile Include="app\domain\DocumentoFirmarResultado.ts" />
+    <TypeScriptCompile Include="app\domain\DocumentosPendientesCantidadResultado.ts" />
+    <TypeScriptCompile Include="app\domain\Indices.ts" />
+    <TypeScriptCompile Include="app\domain\IndicesInput.ts" />
+    <TypeScriptCompile Include="app\domain\DocumentoLeidoResultado.ts" />
+    <TypeScriptCompile Include="app\domain\Documento.ts" />
+    <TypeScriptCompile Include="app\domain\DocumentosInput.ts" />
+    <TypeScriptCompile Include="app\domain\AzureBlob.ts" />
+    <TypeScriptCompile Include="app\domain\AzureFolder.ts" />
+    <TypeScriptCompile Include="app\domain\Cartola.ts" />
+    <TypeScriptCompile Include="app\domain\CartolaInput.ts" />
+    <TypeScriptCompile Include="app\domain\Balance.ts" />
+    <TypeScriptCompile Include="app\domain\BalanceInput.ts" />
+    <TypeScriptCompile Include="app\domain\Categoria.ts" />
+    <TypeScriptCompile Include="app\domain\CategoriaClienteInput.ts" />
+    <TypeScriptCompile Include="app\domain\ProductoInput.ts" />
+    <TypeScriptCompile Include="app\domain\CategoriaInput.ts" />
+    <TypeScriptCompile Include="app\domain\AgenteInput.ts" />
+    <TypeScriptCompile Include="app\domain\FondoMutuo.ts" />
+    <TypeScriptCompile Include="app\domain\FondoMutuoInput.ts" />
+    <TypeScriptCompile Include="app\domain\IInput.ts" />
+    <TypeScriptCompile Include="app\domain\IEntity.ts" />
+    <TypeScriptCompile Include="app\domain\Agente.ts" />
+    <TypeScriptCompile Include="app\domain\Producto.ts" />
+    <TypeScriptCompile Include="app\domain\Usuario.ts" />
+    <TypeScriptCompile Include="app\modules\home\controllers\homeCtrl.ts" />
+    <TypeScriptCompile Include="app\modules\informacion-financiera\controllers\informacionFinancieraCtrl.ts" />
+    <TypeScriptCompile Include="app\modules\informacion-financiera\controllers\informacionFinancieraIndicesCtrl.ts" />
+    <TypeScriptCompile Include="app\modules\inversiones\controllers\inversionesCtrl.ts" />
+    <TypeScriptCompile Include="app\modules\mis-inversiones\controllers\misInversionesCircularizacionCtrl.ts" />
+    <TypeScriptCompile Include="app\modules\mis-inversiones\controllers\misInversionesCtrl.ts" />
+    <TypeScriptCompile Include="app\modules\mis-inversiones\controllers\misInversionesDocumentosCtrl.ts" />
+    <TypeScriptCompile Include="app\modules\mis-inversiones\controllers\misInversionesFondosMutuos.ts" />
+    <TypeScriptCompile Include="app\modules\mis-inversiones\controllers\misInversionesNacionales.ts" />
+    <TypeScriptCompile Include="app\modules\productos-servicios\controllers\productosServiciosCtrl.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angular-google-analytics\angular-google-analytics-service.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angular-google-analytics\angular-google-analytics.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angular-ui-bootstrap\angular-ui-bootstrap.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angularjs\angular-animate.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angularjs\angular-cookies.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angularjs\angular-mocks.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angularjs\angular-resource.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angularjs\angular-route.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angularjs\angular-sanitize.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angularjs\angular.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="https://www.tannercliente.cl/wstsf/tann_cartola_resumida.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\CartolaResumida\</RelPath>
+      <UpdateFromURL>https://www.tannercliente.cl/wstsf/tann_cartola_resumida.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Sitio_Privado_CartolaResumida_tann_cartola_resumida</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="https://www.tannercliente.cl/wstsf/tann_catsvc.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\CategoriaInversionista\</RelPath>
+      <UpdateFromURL>https://www.tannercliente.cl/wstsf/tann_catsvc.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Sitio_Privado_CategoriaInversionista_tann_catsvc</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="https://www.tannercliente.cl/wstsf/tann_circularizacion.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\CircularizacionCustodia\</RelPath>
+      <UpdateFromURL>https://www.tannercliente.cl/wstsf/tann_circularizacion.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Sitio_Privado_CircularizacionCustodia_tann_circularizacion</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="https://www.tannercliente.cl/wstsf/tann_documentos.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\DocumentosPendientesFirma\</RelPath>
+      <UpdateFromURL>https://www.tannercliente.cl/wstsf/tann_documentos.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Sitio_Privado_DocumentosPendientesFirma_tann_documentos</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="https://www.tannercliente.cl/wstsf/tann_fondos_mutuos.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\ConsultaSaldosFondosMutuos\</RelPath>
+      <UpdateFromURL>https://www.tannercliente.cl/wstsf/tann_fondos_mutuos.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Sitio_Privado_ConsultaSaldosFondosMutuos_tann_fondos_mutuos</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="https://www.tannercliente.cl/wstsf/tann_indicadores.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\IndicesLiquidezSolvencia\</RelPath>
+      <UpdateFromURL>https://www.tannercliente.cl/wstsf/tann_indicadores.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Sitio_Privado_IndicesLiquidezSolvencia_tann_indicadores</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="https://www.tannercliente.cl/wstsf/tann_info_cliente.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\InformacionClienteAgente\</RelPath>
+      <UpdateFromURL>https://www.tannercliente.cl/wstsf/tann_info_cliente.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Sitio_Privado_InformacionClienteAgente_tann_info_cliente</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>63495</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:63495/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>
