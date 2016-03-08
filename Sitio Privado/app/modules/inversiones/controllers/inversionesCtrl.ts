@@ -12,11 +12,16 @@
         imagenes: {};
         loading: boolean;
 
-        static $inject = ['constantService', 'dataService'];
+        static $inject = ['constantService', 'dataService', '$anchorScroll'];
         constructor(private constantService: app.common.services.ConstantService,
-            private dataService: app.common.services.DataService) {
+            private dataService: app.common.services.DataService,
+            private $anchorScroll: ng.IAnchorScrollService) {
 
             this.getCategorias();
+        }
+
+        scrollTo(id: string): void {
+            this.$anchorScroll(id);
         }
 
         getCategorias(): void {
