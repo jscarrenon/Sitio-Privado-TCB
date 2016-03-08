@@ -21,7 +21,10 @@
                
                     <loading param="nacionalesCtrl.cartolaLoading"></loading>
                     <uib-accordion close-others="false" ng-repeat="titulo in nacionalesCtrl.cartola.Titulos" ng-show="!nacionalesCtrl.cartolaLoading">
-                        <uib-accordion-group heading="{{titulo.Descriptor}} {{ titulo.Periodo ? '(al ' + titulo.Periodo + ')' : '' }}" ng-click="nacionalesCtrl.getConceptosTitulo(titulo,$index)">
+                        <uib-accordion-group class="accordion-box" ng-click="nacionalesCtrl.getConceptosTitulo(titulo,$index)" is-open="status.isOpen[$index]">
+                            <uib-accordion-heading>
+                                {{titulo.Descriptor}} {{ status.isOpen[$index] && titulo.Periodo ? '(al ' + titulo.Periodo + ')' : '' }} <i class="material-icons">{{status.isOpen[$index]? 'keyboard_arrow_down' : 'keyboard_arrow_right'}}</i>
+                            </uib-accordion-heading>
                             <div id="cont-table">
                                 <loading param="nacionalesCtrl.cartolaTitulosLoadings[$index]"></loading>
                                 <table class="balance" ng-show="!nacionalesCtrl.cartolaTitulosLoadings[$index]">
@@ -35,13 +38,13 @@
                                     <tbody>
                                         <tr ng-repeat="concepto in titulo.Conceptos" ng-class="{'sub-item':!$last, 'total':$last}">
                                             <td>{{concepto.Concepto}}</td>
-                                            <td class="number">{{concepto.Valor|currency}}</td>
+                                            <td class="number">{{concepto.Valor|number:2}}</td>
                                             <td class="number">{{concepto.Porcentaje|number}}%</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                        </uib-accordion-group>                        
+                        </uib-accordion-group>                     
                     </uib-accordion>
                 
                 <div class="legal">
