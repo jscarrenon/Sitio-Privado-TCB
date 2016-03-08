@@ -35,7 +35,7 @@
                                     <tbody>
                                         <tr ng-repeat="concepto in titulo.Conceptos" ng-class="{'sub-item':!$last, 'total':$last}">
                                             <td>{{concepto.Concepto}}</td>
-                                            <td class="number">{{concepto.Valor|currency}}</td>
+                                            <td class="number">{{concepto.Valor|number:2}}</td>
                                             <td class="number">{{concepto.Porcentaje|number}}%</td>
                                         </tr>
                                     </tbody>
