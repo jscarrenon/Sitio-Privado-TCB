@@ -43,13 +43,13 @@
 </head>
 <body ng-controller="BodyCtrl as bodyCtrl">
 
-    <div id="prebar" ng-if="bodyCtrl.authService.autenticado">
+    <div id="prebar">
         <div class="user"><a href="#/mis-datos" class="clink" ng-click="bodyCtrl.seleccionarSeccion(-1)">{{ bodyCtrl.authService.usuario.NombreCompleto }} | Mis Datos</a></div>
         <div class="logout"><a href="" ng-click="bodyCtrl.authService.cerrarSesion()">Cerrar Sesión</a></div>
     </div>
 
     <div id="bar">
-        <div class="in" ng-if="bodyCtrl.authService.autenticado">
+        <div class="in">
             <div class="logo"><a href="#/" class="clink" ng-click="bodyCtrl.seleccionarSeccion(0)"></a></div>
             <div class="menubar">
                 <div class="menuitem"><a href="#/mis-inversiones" class="clink" ng-click="bodyCtrl.seleccionarSeccion(1)">Mis Inversiones</a></div>
@@ -62,29 +62,27 @@
 
     <div id="bar_mobile">
         <div class="in">
-            <div class="logo"></div>
+            <div class="logo"><a href="#/" class="clink" ng-click="bodyCtrl.seleccionarSeccion(0)"></a></div>
             <div class="user"><a href="#/mis-datos" class="clink" ng-click="bodyCtrl.seleccionarSeccion(-1)"></a></div>
             <div class="logout"><a href="" class="clink" ng-click="bodyCtrl.authService.cerrarSesion()"></a></div>
         </div>
     </div>
 
     <div id="tabbar">
-        <div ng-if="bodyCtrl.authService.autenticado">
-            <div class="tab home" ng-class="{'active':bodyCtrl.seccionId == 0}">
-                <a href="#/" class="clink" ng-click="bodyCtrl.seleccionarSeccion(0)"></a>
-            </div>
-            <div class="tab mis-inversiones" ng-class="{'active':bodyCtrl.seccionId == 1}">
-                <a href="#/mis-inversiones" class="clink" ng-click="bodyCtrl.seleccionarSeccion(1)"></a>
-            </div>
-            <div class="tab productos" ng-class="{'active':bodyCtrl.seccionId == 2}">
-                <a href="#/productos-servicios" class="clink" ng-click="bodyCtrl.seleccionarSeccion(2)"></a>
-            </div>
-            <div class="tab info" ng-class="{'active':bodyCtrl.seccionId == 3}">
-                <a href="#/informacion-financiera" class="clink" ng-click="bodyCtrl.seleccionarSeccion(3)"></a>
-            </div>
-            <div class="tab inversiones" ng-class="{'active':bodyCtrl.seccionId == 4}">
-                <a href="#/inversiones" class="clink" ng-click="bodyCtrl.seleccionarSeccion(4)"></a>
-            </div>
+        <div class="tab home" ng-class="{'active':bodyCtrl.seccionId == 0}">
+            <a href="#/" class="clink" ng-click="bodyCtrl.seleccionarSeccion(0)"></a>
+        </div>
+        <div class="tab mis-inversiones" ng-class="{'active':bodyCtrl.seccionId == 1}">
+            <a href="#/mis-inversiones" class="clink" ng-click="bodyCtrl.seleccionarSeccion(1)"></a>
+        </div>
+        <div class="tab productos" ng-class="{'active':bodyCtrl.seccionId == 2}">
+            <a href="#/productos-servicios" class="clink" ng-click="bodyCtrl.seleccionarSeccion(2)"></a>
+        </div>
+        <div class="tab info" ng-class="{'active':bodyCtrl.seccionId == 3}">
+            <a href="#/informacion-financiera" class="clink" ng-click="bodyCtrl.seleccionarSeccion(3)"></a>
+        </div>
+        <div class="tab inversiones" ng-class="{'active':bodyCtrl.seccionId == 4}">
+            <a href="#/inversiones" class="clink" ng-click="bodyCtrl.seleccionarSeccion(4)"></a>
         </div>
     </div>
 
