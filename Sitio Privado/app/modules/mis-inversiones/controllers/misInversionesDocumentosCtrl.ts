@@ -94,6 +94,11 @@
             this.todasOperaciones = false;
             this.todosDocumentos = false;
 
+            this.operacionesPendientes = [];
+            this.documentosPendientes = [];
+            this.operacionesFirmadas = [];
+            this.documentosFirmados = [];
+
             this.actualizarDocumentosPendientes();
 
             this.fechaFirmadosFin = new Date();
