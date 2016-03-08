@@ -32,7 +32,7 @@
             AnalyticsProvider.setAccount('UA-73610006-1')
                 .trackUrlParams(true)
                 .setPageEvent('$stateChangeSuccess')
-                .setDomainName('tannerdes.azurewebsites.net');
+                .setDomainName('tannerclientesprod.azurewebsites.net');
         }
 
 

@@ -619,6 +619,7 @@ input[type=submit] {border:0px;}
 
 .white-box {
     background-color:@blanco;
+    overflow:auto;
     .border-square();
     box-shadow: 0 1px 1px rgba(0,0,0,0.02), 0 1px 2px rgba(0,0,0,0.02);
     &:hover {box-shadow: 0 3px 4px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.05);}
@@ -1041,6 +1042,9 @@ div.one-col.home {
             margin-right:20px;
             border:1px solid @gris_fondo;
         }
+        .img.conservador {background:@gris_fondo2 url('../img/img_pconservador.jpg') no-repeat center center;background-size: cover;}
+        .img.moderado {background:@gris_fondo2 url('../img/img_pmoderado.jpg') no-repeat center center;background-size: cover;}
+        .img.agresivo {background:@gris_fondo2 url('../img/img_pagresivo.jpg') no-repeat center center;background-size: cover;}
         .renta-nacional {background: url('../img/prod_renta-variable-nacional.jpg') center center;}
         .renta-internacional {background: url('../img/prod_renta-variable-internacional.jpg') center center;}
         .operaciones-simultaneas {background: url('../img/prod_operaciones-simultaneas.jpg') center right;}
@@ -1055,6 +1059,17 @@ div.one-col.home {
         .text {
             width:77%;
             float:left;
+            ul {
+                margin-top:25px;
+                li {
+                    .fmedium();
+                    color:@gris_medio_oscuro;
+                    line-height: 16px;
+                    background: url('../img/icon_li-arrow.png') no-repeat 0px 3px;
+                    padding-left: 20px;
+                    padding-bottom:15px;
+                }
+            }
             .title {
                 font-size:16px;
                 .fmedium();
