@@ -6,17 +6,19 @@ using System.Net.Http;
 using System.Web.Http;
 using Sitio_Privado.Models;
 using Sitio_Privado.CircularizacionCustodia;
+using System.Threading.Tasks;
 
 namespace Sitio_Privado.Controllers
 {
-    public class CircularizacionController : ApiController
+    public class CircularizacionController : ApiBaseController
     {
         [HttpPost]
-        public IHttpActionResult GetPendiente([FromBody]CircularizacionPendienteInput input)
+        public async Task<IHttpActionResult> GetPendiente([FromBody]CircularizacionPendienteInput input)
         {
             try
             {
-                CircularizacionProcesoResultado proceso = new CircularizacionProcesoResultado(input);
+                var usuario = await GetUsuarioActual();
+                CircularizacionProcesoResultado proceso = new CircularizacionProcesoResultado(input, usuario);
                 return Ok(proceso);
             }
             catch (Exception e)
@@ -26,11 +28,12 @@ namespace Sitio_Privado.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult GetArchivo([FromBody]CircularizacionArchivoInput input)
+        public async Task<IHttpActionResult> GetArchivo([FromBody]CircularizacionArchivoInput input)
         {
             try
             {
-                CircularizacionArchivo archivo = new CircularizacionArchivo(input);
+                var usuario = await GetUsuarioActual();
+                CircularizacionArchivo archivo = new CircularizacionArchivo(input, usuario);
                 return Ok(archivo);
             }
             catch (Exception e)
@@ -40,11 +43,12 @@ namespace Sitio_Privado.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult SetLeida([FromBody]CircularizacionLeidaInput input)
+        public async Task<IHttpActionResult> SetLeida([FromBody]CircularizacionLeidaInput input)
         {
             try
             {
-                CircularizacionProcesoResultado proceso = new CircularizacionProcesoResultado(input);
+                var usuario = await GetUsuarioActual();
+                CircularizacionProcesoResultado proceso = new CircularizacionProcesoResultado(input, usuario);
                 return Ok(proceso);
             }
             catch (Exception e)
@@ -54,11 +58,12 @@ namespace Sitio_Privado.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult SetRespondida([FromBody]CircularizacionRespondidaInput input)
+        public async Task<IHttpActionResult> SetRespondida([FromBody]CircularizacionRespondidaInput input)
         {
             try
             {
-                CircularizacionProcesoResultado proceso = new CircularizacionProcesoResultado(input);
+                var usuario = await GetUsuarioActual();
+                CircularizacionProcesoResultado proceso = new CircularizacionProcesoResultado(input, usuario);
                 return Ok(proceso);
             }
             catch (Exception e)

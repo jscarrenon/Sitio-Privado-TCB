@@ -171,6 +171,28 @@ namespace Sitio_Privado.Helpers
             return response;
         }
 
+        public async Task<GraphApiResponseInfo> DeleteUserByObjectId(string objectId)
+        {
+            HttpResponseMessage graphResponse = await SendGraphDeleteRequest(UsersApiPath + "/" + objectId);
+
+            //Set response
+            GraphApiResponseInfo response = new GraphApiResponseInfo();
+            response.StatusCode = graphResponse.StatusCode;
+            JObject bodyResponse = (JObject)await graphResponse.Content.ReadAsAsync(typeof(JObject));
+
+            //TODO: update codes
+            if (graphResponse.StatusCode == HttpStatusCode.BadGateway)
+            {
+                response.Message = bodyResponse.GetValue("message").ToString();
+            }
+            else if(!graphResponse.IsSuccessStatusCode)
+            {
+                response.Message = bodyResponse.GetValue("odata.error").Value<JToken>("message").Value<string>("value");
+            }
+
+            return response;
+        }
+
         private async Task<HttpResponseMessage> SendGraphPostRequest(string api, string json)
         {
             // NOTE: This client uses ADAL v2, not ADAL v4
@@ -194,6 +216,36 @@ namespace Sitio_Privado.Helpers
                 content.Add("message", "There was an unexpected error when performing the operation in B2C server");
                 graphApiResponse.Content = new StringContent(content.ToString(), Encoding.UTF8, "application/json");
             }
+            return graphApiResponse;
+        }
+
+        private async Task<HttpResponseMessage> SendGraphDeleteRequest(string api)
+        {
+            // First, use ADAL to acquire a token using the app's identity (the credential)
+            // The first parameter is the resource we want an access_token for; in this case, the Graph API.
+            AuthenticationResult result = authContext.AcquireToken("https://graph.windows.net", credential);
+
+            // For B2C user managment, be sure to use the beta Graph API version.
+            HttpClient http = new HttpClient();
+            string url = "https://graph.windows.net/" + Tenant + api + "?" + "api-version=beta";
+
+            // Append the access token for the Graph API to the Authorization header of the request, using the Bearer scheme.
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, url);
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", result.AccessToken);
+            HttpResponseMessage graphApiResponse;
+
+            try
+            {
+                graphApiResponse = await http.SendAsync(request);
+            }
+            catch (Exception)
+            {
+                graphApiResponse = new HttpResponseMessage();
+                graphApiResponse.StatusCode = HttpStatusCode.BadGateway;
+                JObject content = new JObject();
+                content.Add("message", "There was an unexpected error when performing the operation in B2C server");
+            }
+
             return graphApiResponse;
         }
 
@@ -223,7 +275,6 @@ namespace Sitio_Privado.Helpers
             catch (Exception)
             {
                 graphApiResponse = new HttpResponseMessage();
-                graphApiResponse = new HttpResponseMessage();
                 graphApiResponse.StatusCode = HttpStatusCode.BadGateway;
                 JObject content = new JObject();
                 content.Add("message", "There was an unexpected error when performing the operation in B2C server");
@@ -251,7 +302,6 @@ namespace Sitio_Privado.Helpers
             catch (Exception)
             {
                 graphApiResponse = new HttpResponseMessage();
-                graphApiResponse = new HttpResponseMessage();
                 graphApiResponse.StatusCode = HttpStatusCode.BadGateway;
                 JObject content = new JObject();
                 content.Add("message", "There was an unexpected error when performing the operation in B2C server");
@@ -270,17 +320,17 @@ namespace Sitio_Privado.Helpers
 
             //General information
             json.Add(GivenNameParamKey, graphUser.Name);
-            if(graphUser.Surname != null && graphUser.Surname != "") json.Add(SurnameParamKey, graphUser.Surname);
-            json.Add(RutParamKey, graphUser.Rut);
-            json.Add(WorkAddressParamKey, graphUser.WorkAddress);
-            json.Add(HomeAddressParamKey, graphUser.HomeAddress);
-            json.Add(CountryParamKey, graphUser.Country);
-            json.Add(CityParamKey, graphUser.City);
-            json.Add(WorkPhoneParamKey, graphUser.WorkPhone);
-            json.Add(HomePhoneParamKey, graphUser.HomePhone);
             json.Add(EmailParamKey, graphUser.Email);
-            json.Add(CheckingAccountParamKey, graphUser.CheckingAccount);
-            json.Add(BankParamKey, graphUser.Bank);
+            json.Add(RutParamKey, graphUser.Rut);
+            if (graphUser.Surname != null && graphUser.Surname != "") json.Add(SurnameParamKey, graphUser.Surname);
+            if (graphUser.WorkAddress != null && graphUser.WorkAddress != "") json.Add(WorkAddressParamKey, graphUser.WorkAddress);
+            if (graphUser.HomeAddress != null && graphUser.HomeAddress != "") json.Add(HomeAddressParamKey, graphUser.HomeAddress);
+            if (graphUser.Country != null && graphUser.Country != "") json.Add(CountryParamKey, graphUser.Country);
+            if (graphUser.City != null && graphUser.City != "") json.Add(CityParamKey, graphUser.City);
+            if (graphUser.WorkPhone != null && graphUser.WorkPhone != "") json.Add(WorkPhoneParamKey, graphUser.WorkPhone);
+            if (graphUser.HomePhone != null && graphUser.HomePhone != "") json.Add(HomePhoneParamKey, graphUser.HomePhone);
+            if (graphUser.CheckingAccount != null && graphUser.CheckingAccount != "") json.Add(CheckingAccountParamKey, graphUser.CheckingAccount);
+            if (graphUser.Bank != null && graphUser.Bank != "") json.Add(BankParamKey, graphUser.Bank);
             json.Add(DisplayNameParamKey, graphUser.DisplayName);
             json.Add(UpdatedAtParamKey, graphUser.UpdatedAt);
 
@@ -316,31 +366,37 @@ namespace Sitio_Privado.Helpers
         {
             JObject json = new JObject();
 
-            if (graphUser.WorkAddress != null)
+            if (graphUser.Name != null && graphUser.Name != "")
+                json.Add(GivenNameParamKey, graphUser.Name);
+
+            if (graphUser.Surname != null && graphUser.Surname != "")
+                json.Add(SurnameParamKey, graphUser.Surname);
+
+            if (graphUser.WorkAddress != null && graphUser.WorkAddress != "")
                 json.Add(WorkAddressParamKey, graphUser.WorkAddress);
 
-            if (graphUser.HomeAddress != null)
+            if (graphUser.HomeAddress != null && graphUser.HomeAddress != "")
                 json.Add(HomeAddressParamKey, graphUser.HomeAddress);
 
-            if (graphUser.Country != null)
+            if (graphUser.Country != null && graphUser.Country != "")
                 json.Add(CountryParamKey, graphUser.Country);
 
-            if (graphUser.City != null)
+            if (graphUser.City != null && graphUser.City != "")
                 json.Add(CityParamKey, graphUser.City);
 
-            if (graphUser.WorkPhone != null)
+            if (graphUser.WorkPhone != null && graphUser.WorkPhone != "")
                 json.Add(WorkPhoneParamKey, graphUser.WorkPhone);
 
-            if (graphUser.HomePhone != null)
+            if (graphUser.HomePhone != null && graphUser.HomePhone != "")
                 json.Add(HomePhoneParamKey, graphUser.HomePhone);
 
-            if (graphUser.Email != null)
+            if (graphUser.Email != null && graphUser.Email != "")
                 json.Add(EmailParamKey, graphUser.Email);
 
-            if (graphUser.CheckingAccount != null)
+            if (graphUser.CheckingAccount != null && graphUser.CheckingAccount != "")
                 json.Add(CheckingAccountParamKey, graphUser.CheckingAccount);
 
-            if (graphUser.Bank != null)
+            if (graphUser.Bank != null && graphUser.Bank != "")
                 json.Add(BankParamKey, graphUser.Bank);
 
             //If email is updated, then set sign-in options again.

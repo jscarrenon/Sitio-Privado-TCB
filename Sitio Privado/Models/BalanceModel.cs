@@ -8,7 +8,6 @@ namespace Sitio_Privado.Models
 {
     public class BalanceInput
     {
-        public string rut { get; set; }
     }
 
     public class Balance
@@ -17,10 +16,10 @@ namespace Sitio_Privado.Models
 
         public Balance() { }
 
-        public Balance(BalanceInput input)
+        public Balance(BalanceInput input, Usuario usuario)
         {
             tann_info_cliente webService = new tann_info_cliente();
-            string enlace = webService.cli_itoken(input.rut);
+            string enlace = webService.cli_itoken(usuario.Rut);
             Enlace = enlace;
         }
     }

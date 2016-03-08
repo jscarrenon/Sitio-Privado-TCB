@@ -17,24 +17,33 @@
             </div>
 
             <div class="one-col">
-                <div class="section-title">Mi Cuenta de Inversiones (al {{nacionalesCtrl.cartola.Periodo}})</div>
-
-                <div id="cont-table">
+                <div class="section-title">Mi Cuenta de Inversiones</div>
+               
                     <loading param="nacionalesCtrl.cartolaLoading"></loading>
-                    <table class="balance" ng-show="!nacionalesCtrl.cartolaLoading">
-                        <tr>
-                            <th></th>
-                            <th class="number">Saldo en Pesos</th>
-                            <th class="number">Porcentaje de Cartera</th>
-                        </tr>
-                        <tr class="sub-item" ng-repeat="concepto in nacionalesCtrl.cartola.Conceptos">
-                            <td>{{concepto.Concepto}}</td>
-                            <td class="number">{{concepto.Valor|currency}}</td>
-                            <td class="number">{{concepto.Porcentaje|number}}%</td>
-                        </tr>
-                    </table>
-                </div>
-
+                    <uib-accordion close-others="false" ng-repeat="titulo in nacionalesCtrl.cartola.Titulos" ng-show="!nacionalesCtrl.cartolaLoading">
+                        <uib-accordion-group heading="{{titulo.Descriptor}} {{ titulo.Periodo ? '(al ' + titulo.Periodo + ')' : '' }}" ng-click="nacionalesCtrl.getConceptosTitulo(titulo,$index)">
+                            <div id="cont-table">
+                                <loading param="nacionalesCtrl.cartolaTitulosLoadings[$index]"></loading>
+                                <table class="balance" ng-show="!nacionalesCtrl.cartolaTitulosLoadings[$index]">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th class="number">Saldo en Pesos</th>
+                                            <th class="number">Porcentaje de Cartera</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="concepto in titulo.Conceptos" ng-class="{'sub-item':!$last, 'total':$last}">
+                                            <td>{{concepto.Concepto}}</td>
+                                            <td class="number">{{concepto.Valor|currency}}</td>
+                                            <td class="number">{{concepto.Porcentaje|number}}%</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </uib-accordion-group>                        
+                    </uib-accordion>
+                
                 <div class="legal">
                     La información sobre los saldos presentados más arriba corresponde exclusivamente a aquellos clientes titulares directos, en Principal Administradores General de Fondos S.A., de cuotas de fondos mutuos administrados por esta, y no aquellas que son custodiadas en Tanner Corredores de Bolsa. Para consultar los saldos respecto estas últimas, le solicitamos por favor acceder a Inversiones Nacionales.
                 </div>

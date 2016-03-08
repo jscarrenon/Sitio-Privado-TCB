@@ -9,31 +9,26 @@ namespace Sitio_Privado.Models
 {
     public class DocumentosPendientesInput
     {
-        public string rut { get; set; }
     }
 
     public class DocumentosFirmadosInput
     {
-        public string rut { get; set; }
         public string fechaIni { get; set; } //dd-mm-YYYY
         public string fechaFin { get; set; } //dd-mm-YYYY
     }
 
     public class DocumentoLeidoInput
     {
-        public string rut { get; set; }
         public string codigo { get; set; }
     }
 
     public class DocumentoFirmarInput
     {
-        public string rut { get; set; }
         public string codigo { get; set; }
     }
 
     public class OperacionFirmarInput
     {
-        public string rut { get; set; }
         public string codigo { get; set; }
     }
 
@@ -82,10 +77,10 @@ namespace Sitio_Privado.Models
     {
         public bool Resultado { get; set; }
 
-        public DocumentoLeidoResultado(DocumentoLeidoInput input)
+        public DocumentoLeidoResultado(DocumentoLeidoInput input, Usuario usuario)
         {
             tann_documentos webService = new tann_documentos();
-            bool resultado = webService.cns_documento_leido(input.rut, input.codigo);
+            bool resultado = webService.cns_documento_leido(Converters.getRutParteEntera(usuario.Rut), input.codigo);
             Resultado = resultado;
         }
     }
@@ -94,10 +89,10 @@ namespace Sitio_Privado.Models
     {
         public List<Documento> Documentos { get; set; }
 
-        public DocumentoFirmarResultado(DocumentoFirmarInput input)
+        public DocumentoFirmarResultado(DocumentoFirmarInput input, Usuario usuario)
         {
             tann_documentos webService = new tann_documentos();
-            _operacion[] documentos = webService.cns_firmar_documento(input.rut, input.codigo);
+            _operacion[] documentos = webService.cns_firmar_documento(usuario.Rut, input.codigo);
             Documentos = new List<Documento>();
 
             foreach(_operacion documento in documentos)
@@ -106,10 +101,10 @@ namespace Sitio_Privado.Models
             }
         }
 
-        public DocumentoFirmarResultado(OperacionFirmarInput input)
+        public DocumentoFirmarResultado(OperacionFirmarInput input, Usuario usuario)
         {
             tann_documentos webService = new tann_documentos();
-            _operacion[] documentos = webService.cns_firmar_contrato(input.rut, input.codigo);
+            _operacion[] documentos = webService.cns_firmar_contrato(usuario.Rut, input.codigo);
             Documentos = new List<Documento>();
 
             foreach (_operacion documento in documentos)
@@ -123,10 +118,10 @@ namespace Sitio_Privado.Models
     {
         public int Resultado { get; set; }
 
-        public DocumentosPendientesCantidadResultado(DocumentosPendientesCantidadInput input)
+        public DocumentosPendientesCantidadResultado(DocumentosPendientesCantidadInput input, Usuario usuario)
         {
             tann_documentos webService = new tann_documentos();
-            int resultado = webService.cns_operaciones_pendientes(input.rut);
+            int resultado = webService.cns_operaciones_pendientes(Converters.getRutParteEntera(usuario.Rut));
             Resultado = resultado;
         }
     }

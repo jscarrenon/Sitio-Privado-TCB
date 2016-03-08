@@ -52,7 +52,7 @@
 
         getCircularizacionPendiente(): void {
             var fecha: Date = new Date(); // Temporal --KUNDER
-            var input: app.domain.ICircularizacionPendienteInput = new app.domain.CircularizacionPendienteInput(parseInt(this.extrasService.getRutParteEntera(this.usuario.Rut)), this.extrasService.getFechaFormato(fecha));
+            var input: app.domain.ICircularizacionPendienteInput = new app.domain.CircularizacionPendienteInput(this.extrasService.getFechaFormato(fecha));
             this.dataService.postWebService(this.constantService.apiCircularizacionURI + 'getPendiente', input)
                 .then((result: app.domain.ICircularizacionProcesoResultado) => {
                     this.circularizacionPendiente = result.Resultado;
@@ -60,7 +60,7 @@
         }
 
         getDocumentosPendientes(): void {
-            var input: app.domain.IDocumentosPendientesCantidadInput = new app.domain.DocumentosPendientesCantidadInput(this.extrasService.getRutParteEntera(this.usuario.Rut));
+            var input: app.domain.IDocumentosPendientesCantidadInput = new app.domain.DocumentosPendientesCantidadInput();
             this.dataService.postWebService(this.constantService.apiDocumentoURI + 'getCantidadPendientes', input)
                 .then((result: app.domain.IDocumentosPendientesCantidadResultado) => {
                     this.documentosPendientes = result.Resultado;

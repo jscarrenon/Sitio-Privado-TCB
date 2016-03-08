@@ -6,10 +6,11 @@ using System.Net.Http;
 using System.Web.Http;
 using Sitio_Privado.Models.CategoriaInversionista;
 using Sitio_Privado.CategoriaInversionista;
+using System.Threading.Tasks;
 
 namespace Sitio_Privado.Controllers
 {
-    public class ProductoController : ApiController
+    public class ProductoController : ApiBaseController
     {
         [HttpGet]
         public IHttpActionResult GetList()
@@ -34,10 +35,11 @@ namespace Sitio_Privado.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult GetSingle([FromBody]ProductoInput input)
+        public async Task<IHttpActionResult> GetSingle([FromBody]ProductoInput input)
         {
             try
             {
+                var usuario = await GetUsuarioActual();
                 Producto producto = new Producto(input);
                 return Ok(producto);
             }
