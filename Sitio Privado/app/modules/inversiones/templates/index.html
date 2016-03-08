@@ -11,25 +11,39 @@
 
     <div id="content">
         <div class="in">
-
-            <loading param="ctrl.loading"></loading>
-            <div class="investment-profiles" ng-show="!ctrl.loading">
-
-                <div class="one-profile white-box" ng-repeat="categoria in ctrl.categorias">
-                    <div class="img {{categoria.Descriptor.toLowerCase()}}"></div>
-                    <div class="text">
-                        <div class="title">Perfil {{categoria.Descriptor}}</div>
-                        {{categoria.Comentario}}
-                        <ul>
-                            <li ng-repeat="producto in categoria.Productos">
-                                {{producto.Descriptor}}
-                            </li>
-                        </ul>
+            <div class="col-left products">
+                <loading param="ctrl.loading"></loading>
+                <div class="profile-products white-box" ng-show="!ctrl.loading">
+                    <div class="title">Perfiles</div>
+                    Estos son nuestros perfiles de inversión:
+                    <ul>
+                        <li ng-repeat="categoria in ctrl.categorias">
+                            <a href="" ng-click="ctrl.scrollTo('cat' + categoria.Descriptor)">{{categoria.Descriptor}}</a>
+                        </li>
+                    </ul>
+                    <div class="go-to-inversiones"><a href="#/productos-servicios" class="clink">Conozca sus Productos</a></div>
+                </div>
+            </div>
+            
+            <div class="col-right products">
+                <loading param="ctrl.loading"></loading>
+                <div ng-repeat="categoria in ctrl.categorias" ng-show="!ctrl.loading">
+                    <div id="cat{{categoria.Descriptor}}" class="one-product white-box">
+                        <div class="img {{categoria.Descriptor.toLowerCase()}}"></div>
+                        <div class="text">
+                            <div class="title">Perfil {{categoria.Descriptor}}</div>
+                            <div class="description">
+                                <p>{{categoria.Comentario}}</p>
+                                <ul>
+                                    <li ng-repeat="producto in categoria.Productos">
+                                        {{producto.Descriptor}}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
             </div>
-
             <div id="clear"></div>
 
             <ng-include src="ctrl.constantService.templateFooterURI"></ng-include>
