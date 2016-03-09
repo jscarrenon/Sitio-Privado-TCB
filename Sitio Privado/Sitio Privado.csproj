@@ -430,8 +430,8 @@
     <Content Include="app\modules\home\templates\index.html" />
     <Content Include="app\modules\home\templates\mis-datos.html" />
     <Content Include="app\modules\informacion-financiera\templates\comite-regulacion.html" />
-    <Content Include="app\modules\informacion-financiera\templates\documentos-normativos.html" />
-    <Content Include="app\modules\informacion-financiera\templates\estatutos.html" />
+    <Content Include="app\modules\informacion-financiera\templates\estados-financieros.html" />
+    <Content Include="app\modules\informacion-financiera\templates\politicas-procedimientos.html" />
     <Content Include="app\modules\informacion-financiera\templates\index.html" />
     <Content Include="app\modules\informacion-financiera\templates\indices-liquidez.html" />
     <Content Include="app\modules\informacion-financiera\templates\otros-documentos.html" />
@@ -511,13 +511,13 @@
     <Content Include="Resources\img\icon_comiteh.png" />
     <Content Include="Resources\img\icon_custodia.png" />
     <Content Include="Resources\img\icon_custodiah.png" />
-    <Content Include="Resources\img\icon_docs-normativos.png" />
+    <Content Include="Resources\img\icon_estados-financieros.png" />
     <Content Include="Resources\img\icon_docs-normativos_gris.png" />
     <Content Include="Resources\img\icon_download.png" />
     <Content Include="Resources\img\icon_estado-documentos.png" />
     <Content Include="Resources\img\icon_estado-documentosh.png" />
-    <Content Include="Resources\img\icon_estatutos.png" />
-    <Content Include="Resources\img\icon_estatutosh.png" />
+    <Content Include="Resources\img\icon_politicas-procedimientos.png" />
+    <Content Include="Resources\img\icon_politicas-procedimientosh.png" />
     <Content Include="Resources\img\icon_external-link-white.png" />
     <Content Include="Resources\img\icon_external-link.png" />
     <Content Include="Resources\img\icon_filter.png" />
@@ -549,7 +549,7 @@
     <Content Include="Resources\img\icon_mobile_user.png" />
     <Content Include="Resources\img\icon_next.png" />
     <Content Include="Resources\img\icon_next2.png" />
-    <Content Include="Resources\img\icon_normativosh.png" />
+    <Content Include="Resources\img\icon_estados-financierosh.png" />
     <Content Include="Resources\img\icon_otros-docs.png" />
     <Content Include="Resources\img\icon_otros-docsh.png" />
     <Content Include="Resources\img\icon_otros-docs_gris.png" />

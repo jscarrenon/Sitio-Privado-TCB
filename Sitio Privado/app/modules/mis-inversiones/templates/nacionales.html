@@ -13,7 +13,7 @@
 
             <div class="areas">
                 <div class="one-area"><a href="" class="clink active">Cartola Resumen</a></div>
-                <div class="one-area"><a href="{{nacionalesCtrl.balance.Enlace}}" target="_blank" class="clink">Balance<img src="../.build/img/icon_external-link.png" class="external-link" /></a></div>
+                <div class="one-area"><a href="{{nacionalesCtrl.balance.Enlace}}" target="_blank" class="clink">Acceso Cuenta de Inversiones<img src="../.build/img/icon_external-link.png" class="external-link" /></a></div>
             </div>
 
             <div class="one-col">
@@ -32,15 +32,13 @@
                                         <tr>
                                             <th></th>
                                             <th class="number">Saldo en Pesos</th>
-                                            <th class="number">Porcentaje de Cartera</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="concepto in titulo.Conceptos" ng-class="{'sub-item':!$last, 'total':$last}">
                                             <td>{{concepto.Concepto}}</td>
                                             <td class="number">{{concepto.Valor|number:2}}</td>
-                                            <td class="number">{{concepto.Porcentaje|number}}%</td>
-                                        </tr>
+                                       </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -48,7 +46,7 @@
                     </uib-accordion>
                 
                 <div class="legal">
-                    La información sobre los saldos presentados más arriba corresponde exclusivamente a aquellos clientes titulares directos, en Principal Administradores General de Fondos S.A., de cuotas de fondos mutuos administrados por esta, y no aquellas que son custodiadas en Tanner Corredores de Bolsa. Para consultar los saldos respecto estas últimas, le solicitamos por favor acceder a Inversiones Nacionales.
+                    Los saldos presentados en este resumen corresponden a información provisoria, por lo que puede variar o ser rectificada en cualquier momento de acuerdo a las operaciones en curso. Para mayor detalle ingrese a su cuenta de Inversiones.
                 </div>
 
             </div><!--end one-col -->
