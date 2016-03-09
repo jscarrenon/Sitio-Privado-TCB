@@ -1937,12 +1937,15 @@ label {
 }
 
 .filter.date.indices {
-    width:299px !important;
-    top:0px;
-    right:0px;
+    width:299px;
+    float: right;
     input[type="date"]{
         width:127px !important;
     }
+}
+
+.filter.date.indices .date-field {
+    text-align: right;
 }
 
 input[type="date"] {
@@ -2006,6 +2009,10 @@ input[type="date"] {
             margin-top:34px;
             width:80%;
         }
+        .date-field{
+            width:70%;
+            text-align:right;
+        }
     }
     .filter.date.indices {
         display:block;
@@ -2013,8 +2020,10 @@ input[type="date"] {
         margin-top:15px;
         margin-bottom:15px;
         float:left;
+        width:100% !important;
         .date-field{
             margin-left:0px;
+            width:83%;
         }
     }
 }
