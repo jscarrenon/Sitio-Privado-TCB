@@ -33,7 +33,7 @@
             this.seccionId = 0;
 
             if (this.$routeParams.seccion) {
-                if (this.$routeParams.seccion == 'estatutos') {
+                if (this.$routeParams.seccion == 'politicas-procedimientos') {
                     this.seccionId = 0;
                 }
                 else if (this.$routeParams.seccion == 'documentos-normativos') {
@@ -102,7 +102,7 @@
 
         setTemplates(): void {
             this.templates = [];
-            this.templates[0] = "estatutos.html";
+            this.templates[0] = "politicas-procedimientos.html";
             this.templates[1] = "documentos-normativos.html";
             this.templates[2] = "servicios-custodia.html";
             this.templates[3] = "indices-liquidez.html";
