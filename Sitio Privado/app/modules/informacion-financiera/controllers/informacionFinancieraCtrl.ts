@@ -33,10 +33,10 @@
             this.seccionId = 0;
 
             if (this.$routeParams.seccion) {
-                if (this.$routeParams.seccion == 'estatutos') {
+                if (this.$routeParams.seccion == 'politicas-procedimientos') {
                     this.seccionId = 0;
                 }
-                else if (this.$routeParams.seccion == 'documentos-normativos') {
+                else if (this.$routeParams.seccion == 'estados-financieros') {
                     this.seccionId = 1;
                 }
                 else if (this.$routeParams.seccion == 'servicios-custodia') {
@@ -84,7 +84,7 @@
             this.loading = true;
             this.dataService.get(this.constantService.apiBlobsURI + 'getContainer?name=' + input)
                 .then((result: app.domain.AzureFolder[]) => {
-                    if (input == 'documentos-normativos') {
+                    if (input == 'estados-financieros') {
                         result.sort((a, b) => this.sortYears(a, b));
                         if (result[0] != undefined) {
                             this.selectedYear = result[0].Folders;
@@ -102,8 +102,8 @@
 
         setTemplates(): void {
             this.templates = [];
-            this.templates[0] = "estatutos.html";
-            this.templates[1] = "documentos-normativos.html";
+            this.templates[0] = "politicas-procedimientos.html";
+            this.templates[1] = "estados-financieros.html";
             this.templates[2] = "servicios-custodia.html";
             this.templates[3] = "indices-liquidez.html";
             this.templates[4] = "comite-regulacion.html";
@@ -113,7 +113,7 @@
         setContainerNames(): void {
             this.containerNames = {};
             this.containerNames[0] = 'estatutos';
-            this.containerNames[1] = 'documentos-normativos';
+            this.containerNames[1] = 'estados-financieros';
             this.containerNames[2] = 'servicios-custodia';
             this.containerNames[5] = 'otros-documentos';
         }
