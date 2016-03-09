@@ -32,15 +32,13 @@
                                         <tr>
                                             <th></th>
                                             <th class="number">Saldo en Pesos</th>
-                                            <th class="number">Porcentaje de Cartera</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="concepto in titulo.Conceptos" ng-class="{'sub-item':!$last, 'total':$last}">
                                             <td>{{concepto.Concepto}}</td>
                                             <td class="number">{{concepto.Valor|number:2}}</td>
-                                            <td class="number">{{concepto.Porcentaje|number}}%</td>
-                                        </tr>
+                                       </tr>
                                     </tbody>
                                 </table>
                             </div>
