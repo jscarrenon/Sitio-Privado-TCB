@@ -119,7 +119,7 @@
         expect(informacionFinancieraCtrl.seccionId).toBe(id);
         expect(informacionFinancieraCtrl.selectedYearIndex).toBe(0);
         expect(informacionFinancieraCtrl.selectedYear).toEqual(container_stub[0].Folders);
-        expect(informacionFinancieraCtrl.seccionURI).toEqual('.build/html/modules/informacion-financiera/templates/documentos-normativos.html');
+        expect(informacionFinancieraCtrl.seccionURI).toEqual('.build/html/modules/informacion-financiera/templates/estados-financieros.html');
     });
 
     it('debería seleccionar sección 2 si la id es igual a 2.', function () {
@@ -199,8 +199,8 @@
         expect(informacionFinancieraCtrl.container).toBe(container_stub);
     });
     
-    it('debería obtener contenedor de documentos normativos si input es igual a "documentos-normativos".', function () {
-        var input = 'documentos-normativos';
+    it('debería obtener contenedor de estados financieros si input es igual a "estados-financieros".', function () {
+        var input = 'estados-financieros';
 
         informacionFinancieraCtrl.getContainer(input);
         get_deferred.resolve(container_stub);
@@ -244,7 +244,7 @@
         informacionFinancieraCtrl.setTemplates();
 
         expect(informacionFinancieraCtrl.templates[0]).toBe('politicas-procedimientos.html');
-        expect(informacionFinancieraCtrl.templates[1]).toBe('documentos-normativos.html');
+        expect(informacionFinancieraCtrl.templates[1]).toBe('estados-financieros.html');
         expect(informacionFinancieraCtrl.templates[2]).toBe('servicios-custodia.html');
         expect(informacionFinancieraCtrl.templates[3]).toBe('indices-liquidez.html');
         expect(informacionFinancieraCtrl.templates[4]).toBe('comite-regulacion.html');
@@ -255,7 +255,7 @@
         informacionFinancieraCtrl.setContainerNames();
 
         expect(informacionFinancieraCtrl.containerNames[0]).toBe('politicas-procedimientos');
-        expect(informacionFinancieraCtrl.containerNames[1]).toBe('documentos-normativos');
+        expect(informacionFinancieraCtrl.containerNames[1]).toBe('estados-financieros');
         expect(informacionFinancieraCtrl.containerNames[2]).toBe('servicios-custodia');
         expect(informacionFinancieraCtrl.containerNames[5]).toBe('otros-documentos');
     });
