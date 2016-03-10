@@ -23,7 +23,7 @@
                     <uib-accordion close-others="false" ng-repeat="titulo in nacionalesCtrl.cartola.Titulos" ng-show="!nacionalesCtrl.cartolaLoading">
                         <uib-accordion-group class="accordion-box" ng-click="nacionalesCtrl.getConceptosTitulo(titulo,$index)" is-open="status.isOpen[$index]">
                             <uib-accordion-heading>
-                                {{titulo.Descriptor}} {{ status.isOpen[$index] && titulo.Periodo ? '(al ' + titulo.Periodo + ')' : '' }} <i class="material-icons">{{status.isOpen[$index]? 'keyboard_arrow_down' : 'keyboard_arrow_right'}}</i>
+                                {{titulo.Descriptor}} {{ status.isOpen[$index] && titulo.Periodo ? '(al ' + titulo.Periodo + ')' : '' }} <i class="material-icons">{{status.isOpen[$index]? '&#xE313;' : '&#xE315;'}}</i>
                             </uib-accordion-heading>
                             <div id="cont-table">
                                 <loading param="nacionalesCtrl.cartolaTitulosLoadings[$index]"></loading>
