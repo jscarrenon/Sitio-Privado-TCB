@@ -45,6 +45,8 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div class="legal no-padding" ng-if="titulo.Descriptor == 'Renta Variable' && nacionalesCtrl.tieneSimultaneas">Operaciones Simultáneas: Monto valorizado a precio de mercado, si desea consultar el monto a plazo comprometido acceda al detalle disponible en su cuenta de inversiones.</div>
+                        <div class="legal no-padding" ng-if="titulo.Descriptor == 'Renta Fija' && nacionalesCtrl.tienePactos">Operaciones Pactos: Monto valorizado a precio de mercado, si desea consultar el monto a plazo comprometido acceda al detalle disponible en su cuenta de inversiones.</div>
                     </uib-accordion-group>
                 </uib-accordion>
 
