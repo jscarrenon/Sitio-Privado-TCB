@@ -9,6 +9,8 @@
         cartolaLoading: boolean;
         getConceptosTitulo(titulo: app.domain.ICartolaTitulo, loadingIndex: number): void;
         cartolaTitulosLoadings: boolean[];
+        tieneSimultaneas: boolean;
+        tienePactos: boolean;
     }
 
     class MisInversionesNacionalesCtrl implements IMisInversionesNacionalesViewModel {
@@ -20,6 +22,8 @@
         cartolaInput: app.domain.ICartolaInput;
         cartolaLoading: boolean;
         cartolaTitulosLoadings: boolean[];
+        tieneSimultaneas: boolean;
+        tienePactos: boolean;
 
         static $inject = ['constantService', 'dataService', 'authService', 'extrasService', '$scope'];
         constructor(private constantService: app.common.services.ConstantService,
@@ -66,6 +70,16 @@
                         titulo.Rut = result.Rut;
                         titulo.Periodo = result.Periodo;
                         titulo.DatosCargados = true;
+                        if (titulo.Descriptor == 'Renta Variable') {
+                            if (!titulo.Conceptos.every((value: app.domain.ICartolaConcepto) => { return value.Concepto != 'Operaciones Simultaneas'; })) {
+                                this.tieneSimultaneas = true;
+                            };
+                        }
+                        else if (titulo.Descriptor == 'Renta Fija') {
+                            if (!titulo.Conceptos.every((value: app.domain.ICartolaConcepto) => { return value.Concepto != 'Operaciones Pactos'; })) {
+                                this.tienePactos = true;
+                            };
+                        }
                     })
                     .finally(() => this.cartolaTitulosLoadings[loadingIndex] = false);
             }
