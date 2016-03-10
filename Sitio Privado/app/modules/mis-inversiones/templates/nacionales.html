@@ -13,38 +13,41 @@
 
             <div class="areas">
                 <div class="one-area"><a href="" class="clink active">Cartola Resumen</a></div>
-                <div class="one-area"><a href="{{nacionalesCtrl.balance.Enlace}}" target="_blank" class="clink">Acceso Cuenta de Inversiones<img src="../.build/img/icon_external-link.png" class="external-link" /></a></div>
+                <div class="one-area">
+                    <loading param="nacionalesCtrl.balanceLoading" extra-class="'small'"></loading>
+                    <a href="{{nacionalesCtrl.balance.Enlace}}" target="_blank" class="clink" ng-show="!nacionalesCtrl.balanceLoading">Acceso Cuenta de Inversiones<img src="../.build/img/icon_external-link.png" class="external-link" /></a>
+                </div>
             </div>
 
             <div class="one-col">
                 <div class="section-title">Mi Cuenta de Inversiones</div>
-               
-                    <loading param="nacionalesCtrl.cartolaLoading"></loading>
-                    <uib-accordion close-others="false" ng-repeat="titulo in nacionalesCtrl.cartola.Titulos" ng-show="!nacionalesCtrl.cartolaLoading">
-                        <uib-accordion-group class="accordion-box" ng-click="nacionalesCtrl.getConceptosTitulo(titulo,$index)" is-open="status.isOpen[$index]">
-                            <uib-accordion-heading>
-                                {{titulo.Descriptor}} {{ status.isOpen[$index] && titulo.Periodo ? '(al ' + titulo.Periodo + ')' : '' }} <i class="material-icons">{{status.isOpen[$index]? 'keyboard_arrow_down' : 'keyboard_arrow_right'}}</i>
-                            </uib-accordion-heading>
-                            <div id="cont-table">
-                                <loading param="nacionalesCtrl.cartolaTitulosLoadings[$index]"></loading>
-                                <table class="balance" ng-show="!nacionalesCtrl.cartolaTitulosLoadings[$index]">
-                                    <thead>
-                                        <tr>
-                                            <th></th>
-                                            <th class="number">Saldo en Pesos</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="concepto in titulo.Conceptos" ng-class="{'sub-item':!$last, 'total':$last}">
-                                            <td>{{concepto.Concepto}}</td>
-                                            <td class="number">{{concepto.Valor|number:2}}</td>
-                                       </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </uib-accordion-group>                     
-                    </uib-accordion>
-                
+
+                <loading param="nacionalesCtrl.cartolaLoading"></loading>
+                <uib-accordion close-others="false" ng-repeat="titulo in nacionalesCtrl.cartola.Titulos" ng-show="!nacionalesCtrl.cartolaLoading">
+                    <uib-accordion-group class="accordion-box" ng-click="nacionalesCtrl.getConceptosTitulo(titulo,$index)" is-open="status.isOpen[$index]">
+                        <uib-accordion-heading>
+                            {{titulo.Descriptor}} {{ status.isOpen[$index] && titulo.Periodo ? '(al ' + titulo.Periodo + ')' : '' }} <i class="material-icons">{{status.isOpen[$index]? 'keyboard_arrow_down' : 'keyboard_arrow_right'}}</i>
+                        </uib-accordion-heading>
+                        <div id="cont-table">
+                            <loading param="nacionalesCtrl.cartolaTitulosLoadings[$index]"></loading>
+                            <table class="balance" ng-show="!nacionalesCtrl.cartolaTitulosLoadings[$index]">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th class="number">Saldo en Pesos</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="concepto in titulo.Conceptos" ng-class="{'sub-item':!$last, 'total':$last}">
+                                        <td>{{concepto.Concepto}}</td>
+                                        <td class="number">{{concepto.Valor|number:2}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </uib-accordion-group>
+                </uib-accordion>
+
                 <div class="legal">
                     Los saldos presentados en este resumen corresponden a información provisoria, por lo que puede variar o ser rectificada en cualquier momento de acuerdo a las operaciones en curso. Para mayor detalle ingrese a su cuenta de Inversiones.
                 </div>
