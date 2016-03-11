@@ -423,6 +423,7 @@
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
     <Content Include="app\common\templates\footer.html" />
     <Content Include="app\common\templates\loading.html" />
