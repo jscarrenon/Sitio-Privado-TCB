@@ -53,6 +53,32 @@
     </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.0.1011, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.0\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.DependencyCollector, Version=1.2.3.246, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.1.2.3\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.PerfCounterCollector, Version=1.2.3.246, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.1.2.3\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.ServerTelemetryChannel, Version=1.2.3.246, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.1.2.3\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.Web, Version=1.2.3.246, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.1.2.3\lib\net45\Microsoft.AI.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.WindowsServer, Version=1.2.3.246, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.1.2.3\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights, Version=1.2.3.490, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.1.2.3\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -391,6 +417,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Web References\CartolaResumida\tann_cartola_resumida.disco" />
     <Content Include="Resources\img\favicon.ico" />
     <Content Include="Web.config">
@@ -410,6 +439,7 @@
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
     <Content Include="app\common\templates\footer.html" />
     <Content Include="app\common\templates\loading.html" />
@@ -417,8 +447,8 @@
     <Content Include="app\modules\home\templates\index.html" />
     <Content Include="app\modules\home\templates\mis-datos.html" />
     <Content Include="app\modules\informacion-financiera\templates\comite-regulacion.html" />
-    <Content Include="app\modules\informacion-financiera\templates\documentos-normativos.html" />
-    <Content Include="app\modules\informacion-financiera\templates\estatutos.html" />
+    <Content Include="app\modules\informacion-financiera\templates\estados-financieros.html" />
+    <Content Include="app\modules\informacion-financiera\templates\politicas-procedimientos.html" />
     <Content Include="app\modules\informacion-financiera\templates\index.html" />
     <Content Include="app\modules\informacion-financiera\templates\indices-liquidez.html" />
     <Content Include="app\modules\informacion-financiera\templates\otros-documentos.html" />
@@ -498,13 +528,13 @@
     <Content Include="Resources\img\icon_comiteh.png" />
     <Content Include="Resources\img\icon_custodia.png" />
     <Content Include="Resources\img\icon_custodiah.png" />
-    <Content Include="Resources\img\icon_docs-normativos.png" />
+    <Content Include="Resources\img\icon_estados-financieros.png" />
     <Content Include="Resources\img\icon_docs-normativos_gris.png" />
     <Content Include="Resources\img\icon_download.png" />
     <Content Include="Resources\img\icon_estado-documentos.png" />
     <Content Include="Resources\img\icon_estado-documentosh.png" />
-    <Content Include="Resources\img\icon_estatutos.png" />
-    <Content Include="Resources\img\icon_estatutosh.png" />
+    <Content Include="Resources\img\icon_politicas-procedimientos.png" />
+    <Content Include="Resources\img\icon_politicas-procedimientosh.png" />
     <Content Include="Resources\img\icon_external-link-white.png" />
     <Content Include="Resources\img\icon_external-link.png" />
     <Content Include="Resources\img\icon_filter.png" />
@@ -536,7 +566,7 @@
     <Content Include="Resources\img\icon_mobile_user.png" />
     <Content Include="Resources\img\icon_next.png" />
     <Content Include="Resources\img\icon_next2.png" />
-    <Content Include="Resources\img\icon_normativosh.png" />
+    <Content Include="Resources\img\icon_estados-financierosh.png" />
     <Content Include="Resources\img\icon_otros-docs.png" />
     <Content Include="Resources\img\icon_otros-docsh.png" />
     <Content Include="Resources\img\icon_otros-docs_gris.png" />

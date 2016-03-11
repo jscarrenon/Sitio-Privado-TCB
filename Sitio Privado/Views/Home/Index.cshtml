@@ -38,17 +38,20 @@
     <!-- endinject -->
 
     <link rel="icon" href=".build/img/favicon.ico" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <script type="text/javascript">  var appInsights=window.appInsights||function(config){    function r(config){t[config]=function(){var i=arguments;t.queue.push(function(){t[config].apply(t,i)})}}var t={config:config},u=document,e=window,o="script",s=u.createElement(o),i,f;for(s.src=config.url||"//az416426.vo.msecnd.net/scripts/a/ai.0.js",u.getElementsByTagName(o)[0].parentNode.appendChild(s),t.cookie=u.cookie,t.queue=[],i=["Event","Exception","Metric","PageView","Trace"];i.length;)r("track"+i.pop());return r("setAuthenticatedUserContext"),r("clearAuthenticatedUserContext"),config.disableExceptionTracking||(i="onerror",r("_"+i),f=e[i],e[i]=function(config,r,u,e,o){var s=f&&f(config,r,u,e,o);return s!==!0&&t["_"+i](config,r,u,e,o),s}),t    }({        instrumentationKey:"bbf416ca-6238-427a-82ed-be8dc8c3d9b2"    });           window.appInsights=appInsights;    appInsights.trackPageView();</script>
 
 </head>
 <body ng-controller="BodyCtrl as bodyCtrl">
 
-    <div id="prebar" ng-if="bodyCtrl.authService.autenticado">
+    <div id="prebar">
         <div class="user"><a href="#/mis-datos" class="clink" ng-click="bodyCtrl.seleccionarSeccion(-1)">{{ bodyCtrl.authService.usuario.NombreCompleto }} | Mis Datos</a></div>
         <div class="logout"><a href="" ng-click="bodyCtrl.authService.cerrarSesion()">Cerrar Sesión</a></div>
     </div>
 
     <div id="bar">
-        <div class="in" ng-if="bodyCtrl.authService.autenticado">
+        <div class="in">
             <div class="logo"><a href="#/" class="clink" ng-click="bodyCtrl.seleccionarSeccion(0)"></a></div>
             <div class="menubar">
                 <div class="menuitem"><a href="#/mis-inversiones" class="clink" ng-click="bodyCtrl.seleccionarSeccion(1)">Mis Inversiones</a></div>
@@ -61,29 +64,27 @@
 
     <div id="bar_mobile">
         <div class="in">
-            <div class="logo"></div>
+            <div class="logo"><a href="#/" class="clink" ng-click="bodyCtrl.seleccionarSeccion(0)"></a></div>
             <div class="user"><a href="#/mis-datos" class="clink" ng-click="bodyCtrl.seleccionarSeccion(-1)"></a></div>
             <div class="logout"><a href="" class="clink" ng-click="bodyCtrl.authService.cerrarSesion()"></a></div>
         </div>
     </div>
 
     <div id="tabbar">
-        <div ng-if="bodyCtrl.authService.autenticado">
-            <div class="tab home" ng-class="{'active':bodyCtrl.seccionId == 0}">
-                <a href="#/" class="clink" ng-click="bodyCtrl.seleccionarSeccion(0)"></a>
-            </div>
-            <div class="tab mis-inversiones" ng-class="{'active':bodyCtrl.seccionId == 1}">
-                <a href="#/mis-inversiones" class="clink" ng-click="bodyCtrl.seleccionarSeccion(1)"></a>
-            </div>
-            <div class="tab productos" ng-class="{'active':bodyCtrl.seccionId == 2}">
-                <a href="#/productos-servicios" class="clink" ng-click="bodyCtrl.seleccionarSeccion(2)"></a>
-            </div>
-            <div class="tab info" ng-class="{'active':bodyCtrl.seccionId == 3}">
-                <a href="#/informacion-financiera" class="clink" ng-click="bodyCtrl.seleccionarSeccion(3)"></a>
-            </div>
-            <div class="tab inversiones" ng-class="{'active':bodyCtrl.seccionId == 4}">
-                <a href="#/inversiones" class="clink" ng-click="bodyCtrl.seleccionarSeccion(4)"></a>
-            </div>
+        <div class="tab home" ng-class="{'active':bodyCtrl.seccionId == 0}">
+            <a href="#/" class="clink" ng-click="bodyCtrl.seleccionarSeccion(0)"></a>
+        </div>
+        <div class="tab mis-inversiones" ng-class="{'active':bodyCtrl.seccionId == 1}">
+            <a href="#/mis-inversiones" class="clink" ng-click="bodyCtrl.seleccionarSeccion(1)"></a>
+        </div>
+        <div class="tab productos" ng-class="{'active':bodyCtrl.seccionId == 2}">
+            <a href="#/productos-servicios" class="clink" ng-click="bodyCtrl.seleccionarSeccion(2)"></a>
+        </div>
+        <div class="tab info" ng-class="{'active':bodyCtrl.seccionId == 3}">
+            <a href="#/informacion-financiera" class="clink" ng-click="bodyCtrl.seleccionarSeccion(3)"></a>
+        </div>
+        <div class="tab inversiones" ng-class="{'active':bodyCtrl.seccionId == 4}">
+            <a href="#/inversiones" class="clink" ng-click="bodyCtrl.seleccionarSeccion(4)"></a>
         </div>
     </div>
 

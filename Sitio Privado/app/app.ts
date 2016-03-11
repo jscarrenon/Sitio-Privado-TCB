@@ -29,10 +29,10 @@
                 })
                 .otherwise({ redirectTo: '/' });
 
-            AnalyticsProvider.setAccount('UA-73610006-1')
+            AnalyticsProvider.setAccount('UA-73610006-2')
                 .trackUrlParams(true)
                 .setPageEvent('$stateChangeSuccess')
-                .setDomainName('tannerdes.azurewebsites.net');
+                .setDomainName('accesoclientes.tanner.cl');
         }
 
 

@@ -104,7 +104,7 @@ namespace Sitio_Privado.Models
         public DocumentoFirmarResultado(OperacionFirmarInput input, Usuario usuario)
         {
             tann_documentos webService = new tann_documentos();
-            _operacion[] documentos = webService.cns_firmar_contrato(usuario.Rut, input.codigo);
+            _operacion[] documentos = webService.cns_firmar_contrato(Converters.getRutParteEntera(usuario.Rut), input.codigo);
             Documentos = new List<Documento>();
 
             foreach (_operacion documento in documentos)

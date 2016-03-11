@@ -29,7 +29,7 @@ namespace Sitio_Privado.Tasks
                     .StartingDailyAt(TimeOfDay.HourAndMinuteOfDay(ExecutionHour, ExecutionMinutes)))
                     .Build();
 
-            //scheduler.ScheduleJob(job, trigger);
+            scheduler.ScheduleJob(job, trigger);
         }
     }
 }

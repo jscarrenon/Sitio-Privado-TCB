@@ -3,7 +3,7 @@
         Desde: <input type="date" step="1" ng-model="documentosCtrl.fechaFirmadosInicio" data-format="dd-MM-yyyy" ng-change="documentosCtrl.validarFechas()" required>
     </div>
     <div class="date-field">
-        Hasta: <input type="date" step="2" ng-model="documentosCtrl.fechaFirmadosFin" data-format="dd-MM-yyyy" ng-change="documentosCtrl.validarFechas()" required>
+        Hasta:&nbsp;<input type="date" step="2" ng-model="documentosCtrl.fechaFirmadosFin" data-format="dd-MM-yyyy" ng-change="documentosCtrl.validarFechas()" required>
     </div>
     <div class="apply-filter pag-button" ng-show="documentosCtrl.errorFechas == null"><a href="" class="clink" ng-click="documentosCtrl.actualizarDocumentosFirmados()"></a></div>
     <div class="error" ng-show="documentosCtrl.errorFechas">
@@ -72,10 +72,6 @@
 
     <div class="table-tools" ng-show="!documentosCtrl.firmadosLoading">
         <uib-pagination ng-model="documentosCtrl.documentosFirmadosPaginaActual" total-items="documentosCtrl.documentosFirmados.length" items-per-page="documentosCtrl.documentosFirmadosPorPagina" boundary-links="true" template-url="pagination.html"></uib-pagination>
-    </div>
-
-    <div class="legal">
-        La información sobre los saldos presentados más arriba corresponde exclusivamente a aquellos clientes titulares directos, en Principal Administradores General de Fondos S.A.
     </div>
 
 </div><!--end one-col -->
