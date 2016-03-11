@@ -75,6 +75,20 @@
             this.imagenProducto["11"] = "moneda-ext";
             this.imagenProducto["12"] = "renta-internacional";
             this.imagenProducto["13"] = "admin-cartera";
+            this.imagenProducto["15"] = "operaciones-prestamo";
+            this.imagenProducto["16"] = "moneda-ext";
+            this.imagenProducto["17"] = "irf";
+            this.imagenProducto["18"] = "distribucion-fm";
+            this.imagenProducto["19"] = "operaciones-prestamo";
+            this.imagenProducto["20"] = "renta-internacional";
+            this.imagenProducto["21"] = "pactos";
+            this.imagenProducto["22"] = "operaciones-prestamo";
+            this.imagenProducto["23"] = "distribucion-fm";
+            this.imagenProducto["24"] = "operaciones-simultaneas";
+            this.imagenProducto["25"] = "operaciones-simultaneas";
+            this.imagenProducto["26"] = "operaciones-prestamo";
+            this.imagenProducto["27"] = "moneda-ext";
+            this.imagenProducto["28"] = "admin-cartera";
         }
     }
     angular.module('tannerPrivadoApp')
