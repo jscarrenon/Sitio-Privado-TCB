@@ -112,7 +112,7 @@
 
         setContainerNames(): void {
             this.containerNames = {};
-            this.containerNames[0] = 'estatutos';
+            this.containerNames[0] = 'politicas-procedimientos';
             this.containerNames[1] = 'estados-financieros';
             this.containerNames[2] = 'servicios-custodia';
             this.containerNames[5] = 'otros-documentos';
