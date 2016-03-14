@@ -7,22 +7,67 @@
 <!DOCTYPE html>
 
 <html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Login</title>
-</head>
-<body>
-    LogIn
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>TannerClientes / Login</title>
+        <link rel="stylesheet" type="text/css" href="/.build/css/stylesCss.css" />
+        <link rel="stylesheet" type="text/css" href="/.build/css/stylesLess.css" />
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:600,700' rel='stylesheet' type='text/css'>
+        <meta name="viewport" content="width=device-width">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+        <script type="text/javascript" src="/.build/vendors/vendors.js"></script>
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-        @Html.EditorForModel()
-
-        <p>
-            <button type="submit">Log In</button>
-        </p>
-
-    }
-</body>
+        <script>
+        $(document).ready(function(){
+            $('.show').click(function(){
+            $('.password-recover').toggle()
+            });
+        });
+        </script>
+    </head>
+    <body>
+        <div class="login">
+            <div class="top">
+                <div class="logo"></div>
+                <div class="tannercl">
+                    <a href="http://www.tanner.cl" target="_blank">Volver a tanner.cl</a>
+                </div>
+            </div>
+            <div class="log white-box">
+                <div class="img">
+                    <div class="slogan">Hacemos realidad los sueños de crecer</div>
+                </div>
+                <div class="user-login">
+                    <div class="safe">Acceso Seguro</div>
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="input-field">
+                            RUT (Ej: 12123123-K)
+                            @Html.EditorFor(model => model.Rut)
+                        </div>
+                        <div class="input-field">
+                            Contraseña
+                            <div class="no-password">
+                                <a class="show" href="#">Recuperar contraseña</a> 
+                            </div>
+                            @Html.EditorFor(model => model.Password)
+                        </div>
+                        <input type="submit" value="Ingresar" class="button green">
+                    }
+                    <div class="password-recover">
+                        <div class="go-back">
+                            <a class="show" href="#">Volver</a></div>
+                        <p>Ingrese su RUT y su contraseña será enviada al correo asignado previamente.</p>
+                        <div class="input-field">
+                            RUT (Ej: 12123123-K)
+                            <input type="text" placeholder="Ingrese su RUT">
+                        </div>
+                        <input type="submit" value="Enviar Contraseña" class="button green">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>
+
