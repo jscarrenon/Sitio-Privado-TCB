@@ -64,6 +64,10 @@ namespace Sitio_Privado.Controllers
 
             var identity = new ClaimsIdentity(DefaultAuthenticationTypes.ApplicationCookie);
             identity.AddClaim(new Claim("http://schemas.microsoft.com/identity/claims/objectidentifier", token.Oid));
+            identity.AddClaim(new Claim(ClaimTypes.GivenName, token.Names));
+            identity.AddClaim(new Claim(ClaimTypes.Surname, token.Surnames));
+            identity.AddClaim(new Claim("country", token.Country));
+            identity.AddClaim(new Claim("city", token.City));
             var ctx = Request.GetOwinContext();
             var authManager = ctx.Authentication;
             authManager.SignIn(identity);
