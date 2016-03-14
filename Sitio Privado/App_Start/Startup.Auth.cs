@@ -39,7 +39,7 @@ namespace Sitio_Privado
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new Microsoft.Owin.PathString("/custom/login")
+                LoginPath = new Microsoft.Owin.PathString("/Account/SignIn")
             });
             
             /*

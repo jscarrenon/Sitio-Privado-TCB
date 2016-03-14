@@ -302,7 +302,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ApiBaseController.cs" />
     <Compile Include="Controllers\CircularizacionController.cs" />
-    <Compile Include="Controllers\CustomController.cs" />
     <Compile Include="Controllers\IndicesController.cs" />
     <Compile Include="Extras\IdToken.cs" />
     <Compile Include="Extras\Utils.cs" />
@@ -427,7 +426,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Views\Custom\Login.cshtml" />
+    <Content Include="Views\Account\SignIn.cshtml" />
     <None Include="Web References\CartolaResumida\tann_cartola_resumida.disco" />
     <Content Include="Resources\img\favicon.ico" />
     <Content Include="Web.config">
