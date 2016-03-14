@@ -11,8 +11,5 @@
     "better-dateinput-polyfill": "1.5.2",
     "angular-rut": "1.0.1",
     "angular-google-analytics": "1.1.6"
-  },
-  "resolutions": {
-    "angular": "1.4.9"
   }
 }

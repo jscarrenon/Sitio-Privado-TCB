@@ -1,0 +1,28 @@
+﻿@model Sitio_Privado.Models.LoginModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+</head>
+<body>
+    LogIn
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.EditorForModel()
+
+        <p>
+            <button type="submit">Log In</button>
+        </p>
+
+    }
+</body>
+</html>

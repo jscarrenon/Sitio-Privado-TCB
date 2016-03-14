@@ -9,14 +9,44 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using System.Web.Http;
 using HtmlAgilityPack;
+using System.Web.Mvc;
+using Sitio_Privado.Models;
+using Sitio_Privado.Extras;
+using System.Security.Claims;
+using Microsoft.AspNet.Identity;
 
 namespace Sitio_Privado.Controllers
 {
-    [OverrideAuthorization]
-    public class CustomController : ApiController
+    [AllowAnonymous]
+    public class CustomController : Controller
     {
+        [HttpGet]
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Login(LoginModel model)
+        {
+            if(!ModelState.IsValid)
+                return View(model);
+
+            IdToken token = await GetToken(model);
+            if (token == null)
+                return null;
+
+            var identity = new ClaimsIdentity(DefaultAuthenticationTypes.ApplicationCookie);
+            identity.AddClaim(new Claim("http://schemas.microsoft.com/identity/claims/objectidentifier", token.Oid));
+            var ctx = Request.GetOwinContext();
+            var authManager = ctx.Authentication;
+            authManager.SignIn(identity);
+
+            return RedirectToAction("Index", "Home");
+        }
+
         private CookieContainer container = new CookieContainer();
 
         private async Task<HttpWebResponse> InitialLoginPageRequest(HttpWebRequest request)
@@ -42,8 +72,7 @@ namespace Sitio_Privado.Controllers
             return html.DocumentNode;
         }
 
-        [HttpGet]
-        public async Task<HttpResponseMessage> Test()
+        private async Task<IdToken> GetToken(LoginModel model)
         {
             Uri azureLoginPageUri = GetInitialLoginUri();
             HttpWebRequest azureLoginPageRequest = HttpWebRequest.CreateHttp(azureLoginPageUri);
@@ -52,7 +81,7 @@ namespace Sitio_Privado.Controllers
             azureLoginPageCookies.Add(azureLoginPageResponse.Cookies);
             HtmlNode html = GetScrappedDoc(azureLoginPageResponse);
 
-            HttpRequestMessage tokenRequest = GetTokenRequestMessage(html);
+            HttpRequestMessage tokenRequest = GetTokenRequestMessage(html, model);
 
             var baseAddress = new Uri("https://login.microsoftonline.com");
             CookieContainer cookieContainer = new CookieContainer();
@@ -64,17 +93,23 @@ namespace Sitio_Privado.Controllers
                     var result = await client.SendAsync(tokenRequest);
                     string content = await result.Content.ReadAsStringAsync();
 
-                    HttpRequestMessage finalRequest = new HttpRequestMessage(HttpMethod.Get, result.RequestMessage.RequestUri.AbsoluteUri);
-                    var finalResult = await client.SendAsync(finalRequest);
+                    HtmlDocument htmlDoc = new HtmlDocument();
+                    var encoding = ASCIIEncoding.ASCII;
+                    using (var reader = new System.IO.StreamReader(await result.Content.ReadAsStreamAsync(), encoding))
+                    {
+                        string responseText = reader.ReadToEnd();
+                        htmlDoc.LoadHtml(responseText);
+                    }
+                    HtmlNode htmlNode = htmlDoc.DocumentNode;
 
+                    string id_token = htmlNode.CssSelect("input[name=id_token]").First().GetAttributeValue("value");
+                    IdToken parsedToken = new IdToken(id_token);
+                    return parsedToken;
                 }
             }
-
-
-            return new HttpResponseMessage();
         }
 
-        private HttpRequestMessage GetTokenRequestMessage(HtmlNode html)
+        private HttpRequestMessage GetTokenRequestMessage(HtmlNode html, LoginModel model)
         {
 
             var keyValues = new List<KeyValuePair<string, string>>();
@@ -90,8 +125,8 @@ namespace Sitio_Privado.Controllers
             keyValues.Add(new KeyValuePair<string, string>("i16", "768"));
             keyValues.Add(new KeyValuePair<string, string>("i20", ""));
             keyValues.Add(new KeyValuePair<string, string>("idsbho", "1"));
-            keyValues.Add(new KeyValuePair<string, string>("login", "181163631"));
-            keyValues.Add(new KeyValuePair<string, string>("passwd", "Kunder2016"));
+            keyValues.Add(new KeyValuePair<string, string>("login", model.Rut));
+            keyValues.Add(new KeyValuePair<string, string>("passwd", model.Password));
             keyValues.Add(new KeyValuePair<string, string>("sso", ""));
             keyValues.Add(new KeyValuePair<string, string>("type", "11"));
             keyValues.Add(new KeyValuePair<string, string>("uiver", "1"));

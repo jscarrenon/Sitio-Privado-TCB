@@ -12,6 +12,7 @@ using Sitio_Privado.Policies;
 using System.Security.Claims;
 using Sitio_Privado.Models;
 using System.Web.Http;
+using Microsoft.AspNet.Identity;
 
 namespace Sitio_Privado.Controllers
 {
@@ -36,17 +37,23 @@ namespace Sitio_Privado.Controllers
             }
         }
 
-        public void SignOut()
+        public ActionResult SignOut()
         {
             // To sign out the user, you should issue an OpenIDConnect sign out request using the last policy that the user executed.
             // This is as easy as looking up the current value of the ACR claim, adding it to the AuthenticationProperties, and making an OWIN SignOut call.
 
-            HttpContext.GetOwinContext().Authentication.SignOut(
+            /*HttpContext.GetOwinContext().Authentication.SignOut(
                 new AuthenticationProperties(
                     new Dictionary<string, string>
                     {
                         {Startup.PolicyKey, ClaimsPrincipal.Current.FindFirst(Startup.AcrClaimType).Value}
-                    }), OpenIdConnectAuthenticationDefaults.AuthenticationType, CookieAuthenticationDefaults.AuthenticationType);
+                    }), OpenIdConnectAuthenticationDefaults.AuthenticationType, CookieAuthenticationDefaults.AuthenticationType);*/
+
+            var ctx = Request.GetOwinContext();
+            var authManager = ctx.Authentication;
+
+            authManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            return RedirectToAction("Login", "Custom");
         }
     }
 }
