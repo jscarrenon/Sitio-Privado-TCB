@@ -1,5 +1,6 @@
 ﻿using Microsoft.IdentityModel.Protocols;
 using Newtonsoft.Json.Linq;
+using NLog;
 using Sitio_Privado.Helpers;
 using Sitio_Privado.Models;
 using System;
@@ -18,6 +19,7 @@ namespace Sitio_Privado.Controllers
     {
         private static string ObjectIdClaim = "http://schemas.microsoft.com/identity/claims/objectidentifier";
         GraphApiClientHelper graphApiHelper = new GraphApiClientHelper();
+        private Logger logger = LogManager.GetLogger("B2CLog");
 
         public ActionResult Index()
         {
@@ -28,6 +30,11 @@ namespace Sitio_Privado.Controllers
         {
             var usuario = this.Usuario;
             await SetUserExtendedAttributes(usuario);
+            if (usuario != null && usuario.Autenticado)
+            {
+                logger.Info("New connection => Rut: " + usuario.Rut + "; Email: " + 
+                    usuario.Email + "; IP: " + Request.ServerVariables["REMOTE_ADDR"] + ";");
+            }
             return Json(new UsuarioDTO(usuario), JsonRequestBehavior.AllowGet);
         }
 
