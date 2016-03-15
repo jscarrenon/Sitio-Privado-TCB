@@ -113,8 +113,9 @@ namespace Sitio_Privado.Controllers
             var baseAddress = new Uri("https://login.microsoftonline.com");
             CookieContainer cookieContainer = new CookieContainer();
             cookieContainer.Add(azureLoginPageCookies);
-            using (var handler = new HttpClientHandler() { CookieContainer = cookieContainer })
+            using (var handler = new WebRequestHandler() { CookieContainer = cookieContainer })
             {
+                handler.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => { return true; };
                 using (var client = new HttpClient(handler) { BaseAddress = baseAddress })
                 {
                     //Send request
@@ -182,9 +183,9 @@ namespace Sitio_Privado.Controllers
             UriBuilder builder = new UriBuilder("https://login.microsoftonline.com/kundertannerprivado.onmicrosoft.com/oauth2/v2.0/authorize");
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["client_id"] = "cf6f8deb-1db9-47c7-a870-d78973dacfd8";
-            parameters["response_type"] = "code";
-            parameters["redirect_uri"] = "https://google.cl";
-            parameters["response_mode"] = "query";
+            parameters["response_type"] = "id_token";
+            parameters["redirect_uri"] = "https://privado.tanner.kunder.cl";
+            parameters["response_mode"] = "form_post";
             parameters["scope"] = "openid";
             parameters["p"] = "b2c_1_signin";
             builder.Query = parameters.ToString();
