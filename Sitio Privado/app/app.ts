@@ -1,6 +1,8 @@
 ﻿module app {
     class Config {
-        constructor($routeProvider: ng.route.IRouteProvider, AnalyticsProvider:ng.google.analytics.AnalyticsProvider) {
+        constructor($routeProvider: ng.route.IRouteProvider,
+            AnalyticsProvider: ng.google.analytics.AnalyticsProvider,
+            $httpProvider: ng.IHttpProvider) {
             var buildFolderURI: string = ".build/";
             $routeProvider
                 .when("/", {
@@ -33,11 +35,29 @@
                 .trackUrlParams(true)
                 .setPageEvent('$stateChangeSuccess')
                 .setDomainName('accesoclientes.tanner.cl');
+
+            $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+            $httpProvider.interceptors.push(['$q', '$injector', '$window', '$location',
+                function ($q, $injector, $window, $location) {
+                    return {
+                        request: function (config) {
+                            return config || $q.when(config);
+                        },
+                        responseError: function (response) {
+                            if (response.status === 401) {
+                                $window.location.reload();
+                            }
+                            return $q.reject(response);
+                        }
+                    };
+                }
+            ]);
         }
 
 
     }
-    Config.$inject = ['$routeProvider','AnalyticsProvider'];
+    Config.$inject = ['$routeProvider','AnalyticsProvider','$httpProvider'];
 
     var mainApp = angular.module('tannerPrivadoApp', ['ngRoute', 'ui.bootstrap', 'platanus.rut', 'angular-google-analytics']);
     mainApp.config(Config);
