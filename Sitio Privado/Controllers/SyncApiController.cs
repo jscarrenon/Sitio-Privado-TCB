@@ -61,25 +61,37 @@ namespace Sitio_Privado.Controllers
                     new string[] { response.StatusCode.ToString(), await response.Content.ReadAsStringAsync() });
                 return response;
             }
-             //Create user
+ 
+            //Create user
             GraphUserModel graphUser = GetGraphUserCreateRequest(requestBody);
-            GraphApiResponseInfo graphApiResponse = await syncApiHelper.CreateUser(graphUser);
 
-            //Read result and set response
-            response.StatusCode = graphApiResponse.StatusCode;
-            if (graphApiResponse.StatusCode == HttpStatusCode.Created)
+            GraphApiResponseInfo getUserResponse = await syncApiHelper.GetUserByRut(graphUser.Rut);
+            if (!(getUserResponse.StatusCode == HttpStatusCode.OK))
             {
-                string responseBody = GetUserResponseBody(graphApiResponse.User);
-                response.Content = new StringContent(responseBody, Encoding.UTF8, "application/json");
+                GraphApiResponseInfo graphApiResponse = await syncApiHelper.CreateUser(graphUser);
+
+                //Read result and set response
+                response.StatusCode = graphApiResponse.StatusCode;
+                if (graphApiResponse.StatusCode == HttpStatusCode.Created)
+                {
+                    string responseBody = GetUserResponseBody(graphApiResponse.User);
+                    response.Content = new StringContent(responseBody, Encoding.UTF8, "application/json");
+                }
+                else
+                {
+                    string errorMessage = GenerateJsonErrorMessage(graphApiResponse.Message);
+                    response.Content = new StringContent(errorMessage, Encoding.UTF8, "application/json");
+                }
             }
             else
             {
-                string errorMessage = GenerateJsonErrorMessage(graphApiResponse.Message);
+                string errorMessage = GenerateJsonErrorMessage("Another object with the same value for property rut already exists.");
                 response.Content = new StringContent(errorMessage, Encoding.UTF8, "application/json");
             }
 
             tracer.Info(Request, ControllerContext.ControllerDescriptor.ControllerType.FullName, "Completed with {0}, Content:\n{1}",
-                 new string[] { response.StatusCode.ToString(), await response.Content.ReadAsStringAsync() });
+                     new string[] { response.StatusCode.ToString(), await response.Content.ReadAsStringAsync() });
+
             return response;
         }
 
@@ -140,7 +152,7 @@ namespace Sitio_Privado.Controllers
             }
             else
             {
-                string errorMessage = GenerateJsonErrorMessage(getGraphResponse.Message);
+                string errorMessage = GenerateJsonErrorMessage(graphResponse.Message);
                 response.Content = new StringContent(errorMessage, Encoding.UTF8, "application/json");
                 tracer.Info(Request, ControllerContext.ControllerDescriptor.ControllerType.FullName, "Completed with {0}, Content:\n{1}",
                      new string[] { response.StatusCode.ToString(), await response.Content.ReadAsStringAsync() });
