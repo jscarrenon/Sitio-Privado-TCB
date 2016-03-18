@@ -77,7 +77,9 @@ namespace Sitio_Privado.Helpers
 
             if (!graphResponse.IsSuccessStatusCode)
             {
-                response.Message = "Could not find any object matching that Rut";
+                response.StatusCode = graphResponse.StatusCode;
+                JObject bodyResponse = (JObject)await graphResponse.Content.ReadAsAsync(typeof(JObject));
+                response.Message = bodyResponse.GetValue("odata.error").Value<JToken>("message").Value<string>("value").Replace("alternativeSignInNamesInfo", "email");
             }
 
             return response;
@@ -102,7 +104,7 @@ namespace Sitio_Privado.Helpers
             }
             else
             {
-                response.Message = bodyResponse.GetValue("odata.error").Value<JToken>("message").Value<string>("value").Replace("alternativeSignInNamesInfo", "rut");
+                response.Message = bodyResponse.GetValue("odata.error").Value<JToken>("message").Value<string>("value").Replace("alternativeSignInNamesInfo", "email");
             }
             return response;
         }
