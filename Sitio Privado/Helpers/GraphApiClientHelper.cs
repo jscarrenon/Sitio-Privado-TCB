@@ -85,9 +85,10 @@ namespace Sitio_Privado.Helpers
             return response;
         }
 
-        public async Task<GraphApiResponseInfo> CreateUser(GraphUserModel graphUser)
+        public async Task<GraphApiResponseInfo> CreateUser(GraphUserModel graphUser, bool randomEmail)
         {
-            string json = GetCreateUserRequestBody(graphUser);
+            string json = GetCreateUserRequestBody(graphUser, randomEmail);
+
             HttpResponseMessage graphResponse = await SendGraphPostRequest(UsersApiPath, json);
 
             GraphApiResponseInfo response = new GraphApiResponseInfo();
@@ -105,6 +106,10 @@ namespace Sitio_Privado.Helpers
             else
             {
                 response.Message = bodyResponse.GetValue("odata.error").Value<JToken>("message").Value<string>("value").Replace("alternativeSignInNamesInfo", "email");
+                if (response.Message.Contains("email"))
+                {
+                    response = await CreateUser(graphUser, true);
+                }
             }
             return response;
         }
@@ -312,7 +317,7 @@ namespace Sitio_Privado.Helpers
             return graphApiResponse;
         }
 
-        private string GetCreateUserRequestBody(GraphUserModel graphUser)
+        private string GetCreateUserRequestBody(GraphUserModel graphUser, bool randomEmail)
         {
             JObject json = new JObject();
             //Fixed parameters
@@ -350,12 +355,22 @@ namespace Sitio_Privado.Helpers
             JArray signInAlternativesArray = new JArray();
             signInAlternativesArray.Add(signInAlternative);
 
-            if(graphUser.Email != null && graphUser.Email != "")
+            if (randomEmail)
             {
                 JObject signInAlternativeEmail = new JObject();
                 signInAlternativeEmail.Add(SignInTypeParamKey, "emailAddress");
-                signInAlternativeEmail.Add(SignInValueParamKey, graphUser.Email);
+                signInAlternativeEmail.Add(SignInValueParamKey, graphUser.Rut + "@clientetanner.cl");
                 signInAlternativesArray.Add(signInAlternativeEmail);
+            }
+            else
+            {
+                if (graphUser.Email != null && graphUser.Email != "")
+                {
+                    JObject signInAlternativeEmail = new JObject();
+                    signInAlternativeEmail.Add(SignInTypeParamKey, "emailAddress");
+                    signInAlternativeEmail.Add(SignInValueParamKey, graphUser.Email);
+                    signInAlternativesArray.Add(signInAlternativeEmail);
+                }
             }
 
             json.Add(SignInAlternativesParamKey, signInAlternativesArray);

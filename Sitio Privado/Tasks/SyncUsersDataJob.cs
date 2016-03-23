@@ -46,7 +46,7 @@ namespace Sitio_Privado.Tasks
                     //Create User
                     logger.Info("User " + user.Rut + " not found. Creating user");
                     GraphUserModel graphUser = GetGraphUserModel(user);
-                    GraphApiResponseInfo createResponse = await graphClient.CreateUser(graphUser);
+                    GraphApiResponseInfo createResponse = await graphClient.CreateUser(graphUser, false);
                     if(createResponse.StatusCode == System.Net.HttpStatusCode.Created)
                     {
                         logger.Info("User " + user.Rut + " created");

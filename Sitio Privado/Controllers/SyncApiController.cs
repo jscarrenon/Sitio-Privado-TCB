@@ -69,7 +69,7 @@ namespace Sitio_Privado.Controllers
             GraphApiResponseInfo getUserResponse = await syncApiHelper.GetUserByRut(graphUser.Rut);
             if (!(getUserResponse.StatusCode == HttpStatusCode.OK))
             {
-                GraphApiResponseInfo graphApiResponse = await syncApiHelper.CreateUser(graphUser);
+                GraphApiResponseInfo graphApiResponse = await syncApiHelper.CreateUser(graphUser, false);
 
                 //Read result and set response
                 response.StatusCode = graphApiResponse.StatusCode;
