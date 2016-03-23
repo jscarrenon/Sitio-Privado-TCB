@@ -67,10 +67,10 @@ namespace Sitio_Privado.Helpers
             this.credential = new ClientCredential(ClientId, ClientSecret);
         }
 
-        public async Task<GraphApiResponseInfo> UpdateUser(string id, GraphUserModel user)
+        public async Task<GraphApiResponseInfo> UpdateUser(string id, GraphUserModel user, bool randomEmail)
         {
             string path = UsersApiPath + "/" + id;
-            string json = GetUpdateUserRequestBody(user);
+            string json = GetUpdateUserRequestBody(user, randomEmail);
             HttpResponseMessage graphResponse = await SendGraphPatchRequest(path, json);
             GraphApiResponseInfo response = new GraphApiResponseInfo();
             response.StatusCode = graphResponse.StatusCode;
@@ -80,6 +80,11 @@ namespace Sitio_Privado.Helpers
                 response.StatusCode = graphResponse.StatusCode;
                 JObject bodyResponse = (JObject)await graphResponse.Content.ReadAsAsync(typeof(JObject));
                 response.Message = bodyResponse.GetValue("odata.error").Value<JToken>("message").Value<string>("value").Replace("alternativeSignInNamesInfo", "email");
+
+                if (response.Message.Contains("email"))
+                {
+                    response = await UpdateUser(id, user, true);
+                }
             }
 
             return response;
@@ -379,7 +384,7 @@ namespace Sitio_Privado.Helpers
             return json.ToString();
         }
 
-        private string GetUpdateUserRequestBody(GraphUserModel graphUser)
+        private string GetUpdateUserRequestBody(GraphUserModel graphUser, bool randomEmail)
         {
             JObject json = new JObject();
 
@@ -416,8 +421,7 @@ namespace Sitio_Privado.Helpers
             if (graphUser.Bank != null && graphUser.Bank != "")
                 json.Add(BankParamKey, graphUser.Bank);
 
-            //If email is updated, then set sign-in options again.
-            if (graphUser.Email != null && graphUser.Email != "")
+            if (randomEmail)
             {
                 JArray signInAlternativesArray = new JArray();
 
@@ -428,11 +432,32 @@ namespace Sitio_Privado.Helpers
 
                 JObject signInAlternativeEmail = new JObject();
                 signInAlternativeEmail.Add(SignInTypeParamKey, "emailAddress");
-                signInAlternativeEmail.Add(SignInValueParamKey, graphUser.Email);
+                signInAlternativeEmail.Add(SignInValueParamKey, graphUser.Rut + "@clientestanner.cl");
                 signInAlternativesArray.Add(signInAlternativeEmail);
 
                 json.Add(SignInAlternativesParamKey, signInAlternativesArray);
             }
+            else
+            {
+                //If email is updated, then set sign-in options again.
+                if (graphUser.Email != null && graphUser.Email != "")
+                {
+                    JArray signInAlternativesArray = new JArray();
+
+                    JObject signInAlternative = new JObject();
+                    signInAlternative.Add(SignInTypeParamKey, "userName");
+                    signInAlternative.Add(SignInValueParamKey, graphUser.Rut);
+                    signInAlternativesArray.Add(signInAlternative);
+
+                    JObject signInAlternativeEmail = new JObject();
+                    signInAlternativeEmail.Add(SignInTypeParamKey, "emailAddress");
+                    signInAlternativeEmail.Add(SignInValueParamKey, graphUser.Email);
+                    signInAlternativesArray.Add(signInAlternativeEmail);
+
+                    json.Add(SignInAlternativesParamKey, signInAlternativesArray);
+                }
+            }
+           
 
             json.Add(UpdatedAtParamKey, graphUser.UpdatedAt);
 

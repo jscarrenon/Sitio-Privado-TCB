@@ -143,7 +143,7 @@ namespace Sitio_Privado.Controllers
             //Assign rut in case that email is modified
             requestUser.Rut = id;
             string userGraphId = getGraphResponse.User.ObjectId;
-            GraphApiResponseInfo graphResponse = await syncApiHelper.UpdateUser(userGraphId, requestUser);
+            GraphApiResponseInfo graphResponse = await syncApiHelper.UpdateUser(userGraphId, requestUser, false);
             response.StatusCode = graphResponse.StatusCode;
 
             if (graphResponse.StatusCode == HttpStatusCode.NoContent)
