@@ -461,6 +461,20 @@ namespace Sitio_Privado.Helpers
             if (body.GetValue(UpdatedAtParamKey) != null)
                 user.UpdatedAt = body.GetValue(UpdatedAtParamKey).ToString();
 
+            {
+                JArray jArray = (JArray)body.GetValue(SignInAlternativesParamKey);
+                foreach(var token in jArray)
+                {
+                    JObject signInInfo = (JObject)token;
+                    if (signInInfo.GetValue(SignInTypeParamKey).ToString() == "emailAddress")
+                    {
+                        user.CanResetPassword = signInInfo.GetValue("value").ToString() == user.Email;
+                        break;
+                    }
+                }
+               
+            }
+
             user.ObjectId = body.GetValue("objectId").ToString();
 
             return user;

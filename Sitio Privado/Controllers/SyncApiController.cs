@@ -37,6 +37,7 @@ namespace Sitio_Privado.Controllers
         private static string CheckingAccountParam = "checking_account";
         private static string BankParam = "bank";
         private static string UpdatedAtParam = "updated_at";
+        private static string CanResetPasswordParam = "can_reset_password";
         #endregion
 
         private GraphApiClientHelper syncApiHelper = new GraphApiClientHelper();
@@ -266,6 +267,7 @@ namespace Sitio_Privado.Controllers
             response.Add(CheckingAccountParam, user.CheckingAccount);
             response.Add(BankParam, user.Bank);
             response.Add(UpdatedAtParam, user.UpdatedAt);
+            response.Add(CanResetPasswordParam, user.CanResetPassword);
             return response.ToString();
         }
 
