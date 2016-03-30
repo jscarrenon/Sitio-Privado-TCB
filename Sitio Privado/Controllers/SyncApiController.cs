@@ -37,6 +37,7 @@ namespace Sitio_Privado.Controllers
         private static string CheckingAccountParam = "checking_account";
         private static string BankParam = "bank";
         private static string UpdatedAtParam = "updated_at";
+        private static string CanResetPasswordParam = "can_reset_password";
         #endregion
 
         private GraphApiClientHelper syncApiHelper = new GraphApiClientHelper();
@@ -68,7 +69,7 @@ namespace Sitio_Privado.Controllers
             GraphApiResponseInfo getUserResponse = await syncApiHelper.GetUserByRut(graphUser.Rut);
             if (!(getUserResponse.StatusCode == HttpStatusCode.OK))
             {
-                GraphApiResponseInfo graphApiResponse = await syncApiHelper.CreateUser(graphUser);
+                GraphApiResponseInfo graphApiResponse = await syncApiHelper.CreateUser(graphUser, false);
 
                 //Read result and set response
                 response.StatusCode = graphApiResponse.StatusCode;
@@ -142,7 +143,7 @@ namespace Sitio_Privado.Controllers
             //Assign rut in case that email is modified
             requestUser.Rut = id;
             string userGraphId = getGraphResponse.User.ObjectId;
-            GraphApiResponseInfo graphResponse = await syncApiHelper.UpdateUser(userGraphId, requestUser);
+            GraphApiResponseInfo graphResponse = await syncApiHelper.UpdateUser(userGraphId, requestUser, false);
             response.StatusCode = graphResponse.StatusCode;
 
             if (graphResponse.StatusCode == HttpStatusCode.NoContent)
@@ -266,6 +267,7 @@ namespace Sitio_Privado.Controllers
             response.Add(CheckingAccountParam, user.CheckingAccount);
             response.Add(BankParam, user.Bank);
             response.Add(UpdatedAtParam, user.UpdatedAt);
+            response.Add(CanResetPasswordParam, user.CanResetPassword);
             return response.ToString();
         }
 
