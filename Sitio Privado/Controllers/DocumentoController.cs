@@ -98,11 +98,10 @@ namespace Sitio_Privado.Controllers
         {
             try
             {
-                /*var usuario = await GetUsuarioActual();
+                var usuario = await GetUsuarioActual();
                 DocumentoFirmarResultado resultado = new DocumentoFirmarResultado(input, usuario);
 
-                return Ok(resultado);*/
-                return Ok();
+                return Ok(resultado);
             }
             catch (Exception e)
             {
@@ -116,11 +115,10 @@ namespace Sitio_Privado.Controllers
         {
             try
             {
-                /*var usuario = await GetUsuarioActual();
+                var usuario = await GetUsuarioActual();
                 DocumentoFirmarResultado resultado = new DocumentoFirmarResultado(input, usuario);
 
-                return Ok(resultado);*/
-                return Ok();
+                return Ok(resultado);
             }
             catch (Exception e)
             {
