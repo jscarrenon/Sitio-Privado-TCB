@@ -39,7 +39,6 @@
         operacionesSeleccionadas(): app.domain.IDocumento[];
         documentosSeleccionados(): app.domain.IDocumento[];
         haySeleccionados(): boolean;
-        respuestaMensaje: string;
     }
 
     class MisInversionesDocumentosCtrl implements IMisInversionesDocumentosViewModel {
