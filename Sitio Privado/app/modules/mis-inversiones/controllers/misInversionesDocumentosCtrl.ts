@@ -196,6 +196,12 @@
         }
 
         firmarDocumentos(): void {
+
+            var modalInstance: ng.ui.bootstrap.IModalServiceInstance = this.$uibModal.open({
+                templateUrl: this.constantService.templateDocumentosRespuestaModalURI,
+                controller: 'ModalInstanceCtrl as modal'
+            });
+
             this.respuestaMensaje = null;
             var firmarOperacionesLoading: boolean = false;
             var firmarDocumentosLoading: boolean = false;
@@ -215,6 +221,7 @@
                             .then((result: app.domain.IDocumentoFirmarResultado) => {
                                 var operacionFirmarResultado: app.domain.IDocumentoFirmarResultado = result;
                                 this.respuestaMensaje = 'ok';
+                                this.seleccionarSeccion(1);
                                 this.actualizarDocumentosPendientes();
                                 this.actualizarDocumentosFirmados();
                             })
@@ -236,6 +243,7 @@
                             .then((result: app.domain.IDocumentoFirmarResultado) => {
                                 var documentoFirmarResultado: app.domain.IDocumentoFirmarResultado = result;
                                 this.respuestaMensaje = 'ok';
+                                this.seleccionarSeccion(1);
                                 this.actualizarDocumentosPendientes();
                                 this.actualizarDocumentosFirmados();
                             })
