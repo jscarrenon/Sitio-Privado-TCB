@@ -8,11 +8,15 @@ using Sitio_Privado.Models;
 using Sitio_Privado.DocumentosPendientesFirma;
 using System.Threading.Tasks;
 using Sitio_Privado.Extras;
+using NLog;
+using System.Web;
 
 namespace Sitio_Privado.Controllers
 {
     public class DocumentoController : ApiBaseController
     {
+        private static Logger logger = LogManager.GetLogger("FirmasLog");
+
         [HttpPost]
         public async Task<IHttpActionResult> GetListPendientes([FromBody]DocumentosPendientesInput input)
         {
@@ -101,6 +105,11 @@ namespace Sitio_Privado.Controllers
                 var usuario = await GetUsuarioActual();
                 DocumentoFirmarResultado resultado = new DocumentoFirmarResultado(input, usuario);
 
+                foreach(Documento documento in resultado.Documentos)
+                {
+                    logger.Info("Documento => Código: " + documento.Codigo + "; Hora: " + DateTime.Now.ToShortTimeString() + "; Fecha: " + DateTime.Now.ToShortDateString() + "; Rut: " + usuario.Rut + "; E-mail: " + usuario.Email + "; IP: " + HttpContext.Current.Request.UserHostAddress);
+                }
+
                 return Ok(resultado);
             }
             catch (Exception e)
@@ -117,6 +126,11 @@ namespace Sitio_Privado.Controllers
             {
                 var usuario = await GetUsuarioActual();
                 DocumentoFirmarResultado resultado = new DocumentoFirmarResultado(input, usuario);
+
+                foreach (Documento operacion in resultado.Documentos)
+                {
+                    logger.Info("Operación => Código: " + operacion.Codigo + "; Hora: " + DateTime.Now.ToShortTimeString() + "; Fecha: " + DateTime.Now.ToShortDateString() + "; Rut: " + usuario.Rut + "; E-mail: " + usuario.Email + "; IP: " + HttpContext.Current.Request.UserHostAddress);
+                }
 
                 return Ok(resultado);
             }
