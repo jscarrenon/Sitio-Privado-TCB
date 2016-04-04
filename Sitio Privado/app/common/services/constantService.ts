@@ -10,6 +10,7 @@
         templateCircularizacionModalURI: string;
         templateDocumentosPendientesModalURI: string;
         templateDocumentosConfirmacionModalURI: string;
+        templateDocumentosRespuestaModalURI: string;
         apiAgenteURI: string;
         apiFondosMutuosURI: string;
         apiCategoriaURI: string;
@@ -32,6 +33,7 @@
         templateCircularizacionModalURI: string;
         templateDocumentosPendientesModalURI: string;
         templateDocumentosConfirmacionModalURI: string;
+        templateDocumentosRespuestaModalURI: string;
         apiAgenteURI: string;
         apiFondosMutuosURI: string;
         apiCategoriaURI: string;
@@ -53,6 +55,7 @@
             this.templateCircularizacionModalURI = this.buildFolderURI + 'html/modules/mis-inversiones/templates/circularizacion_pendiente_modal.html';
             this.templateDocumentosPendientesModalURI = this.buildFolderURI + 'html/modules/mis-inversiones/templates/estado-documentos_pendientes_modal.html';
             this.templateDocumentosConfirmacionModalURI = this.buildFolderURI + 'html/modules/mis-inversiones/templates/estado-documentos_confirmacion.html';
+            this.templateDocumentosRespuestaModalURI = this.buildFolderURI + 'html/modules/mis-inversiones/templates/estado-documentos_respuesta.html';
             this.apiAgenteURI = '/api/agente/';
             this.apiFondosMutuosURI = '/api/fondoMutuo/';
             this.apiCategoriaURI = '/api/categoria/';
