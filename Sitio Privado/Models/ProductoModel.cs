@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Sitio_Privado.CategoriaInversionista;
 
-namespace Sitio_Privado.Models.CategoriaInversionista
+namespace Sitio_Privado.Models
 {
     public class ProductoInput
     {

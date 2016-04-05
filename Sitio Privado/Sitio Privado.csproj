@@ -337,8 +337,8 @@
     </Compile>
     <Compile Include="Helpers\PasswordGeneratorHelper.cs" />
     <Compile Include="Helpers\TannerDatabaseHelper.cs" />
-    <Compile Include="Models\AzureFolder.cs" />
-    <Compile Include="Models\AzureBlob.cs" />
+    <Compile Include="Models\AzureFolderModel.cs" />
+    <Compile Include="Models\AzureBlobModel.cs" />
     <Compile Include="Helpers\GraphApiResponseInfo.cs" />
     <Compile Include="Models\CircularizacionModel.cs" />
     <Compile Include="Models\IndicesModel.cs" />
@@ -348,10 +348,10 @@
     <Compile Include="Models\AgenteModel.cs" />
     <Compile Include="Models\FondoMutuoModel.cs" />
     <Compile Include="Models\GraphUserModel.cs" />
-    <Compile Include="Models\CategoriaInversionista\ProductoModel.cs" />
-    <Compile Include="Models\CategoriaInversionista\CategoriaModel.cs" />
+    <Compile Include="Models\ProductoModel.cs" />
+    <Compile Include="Models\CategoriaModel.cs" />
     <Compile Include="Models\TannerUserModel.cs" />
-    <Compile Include="Models\UsuarioModels.cs" />
+    <Compile Include="Models\UsuarioModel.cs" />
     <Compile Include="PolicyAuthHelpers\HttpDocumentRetriever.cs" />
     <Compile Include="PolicyAuthHelpers\PolicyAuthorize.cs" />
     <Compile Include="PolicyAuthHelpers\PolicyConfigurationManager.cs" />
