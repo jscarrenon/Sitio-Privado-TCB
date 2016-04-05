@@ -27,7 +27,7 @@ namespace Sitio_Privado.Controllers
             CloudBlobContainer container = azureStorageHelper.GetContainerReferenceByName(name);
             if (container.Exists())
             {
-                List<AzureFolder> folders = new List<AzureFolder>();
+                List<AzureFolderModel> folders = new List<AzureFolderModel>();
                 IEnumerable<IListBlobItem> blobs = container.ListBlobs(null, true, BlobListingDetails.All);
                 blobs = blobs.OrderBy(item => item.Uri.LocalPath);
 
@@ -35,9 +35,9 @@ namespace Sitio_Privado.Controllers
                 {
                     string[] foldersNameFromPath = item.Parent.Prefix.Split(new char[]{ '/' }, StringSplitOptions.RemoveEmptyEntries);
 
-                    AzureFolder leaf = GetFolderStructure(folders, foldersNameFromPath);
+                    AzureFolderModel leaf = GetFolderStructure(folders, foldersNameFromPath);
 
-                    AzureBlob blob = GetBlobFromUri(item.Uri.AbsoluteUri);
+                    AzureBlobModel blob = GetBlobFromUri(item.Uri.AbsoluteUri);
                     leaf.Blobs.Add(blob);
                 }
 
@@ -47,17 +47,17 @@ namespace Sitio_Privado.Controllers
             return NotFound();
         }
 
-        private AzureFolder GetFolderStructure(List<AzureFolder> folders, string[] foldersPath)
+        private AzureFolderModel GetFolderStructure(List<AzureFolderModel> folders, string[] foldersPath)
         {
-            List<AzureFolder> parentFolders = folders;
-            AzureFolder parent = null;
+            List<AzureFolderModel> parentFolders = folders;
+            AzureFolderModel parent = null;
             foreach (var folderName in foldersPath)
             {
-                AzureFolder folder = null;
-                IEnumerable<AzureFolder> tempFolders = parentFolders.Where(f => f.Name == folderName);
+                AzureFolderModel folder = null;
+                IEnumerable<AzureFolderModel> tempFolders = parentFolders.Where(f => f.Name == folderName);
                 if (tempFolders.Count() <= 0)
                 {
-                    folder = new AzureFolder(folderName);
+                    folder = new AzureFolderModel(folderName);
                     parentFolders.Add(folder);
                 }
                 else
@@ -71,7 +71,7 @@ namespace Sitio_Privado.Controllers
             return parent;
         }
 
-        private AzureBlob GetBlobFromUri(string absoluteUri) {
+        private AzureBlobModel GetBlobFromUri(string absoluteUri) {
             //Get the blob.
             CloudBlockBlob blockBlob = new CloudBlockBlob(new Uri(absoluteUri));
 
@@ -86,7 +86,7 @@ namespace Sitio_Privado.Controllers
             string blobName = Regex.Replace(Path.GetFileNameWithoutExtension(blockBlob.Name), "[^a-zA-Z0-9\u00C0-\u017F]", " ", RegexOptions.Compiled);
             blobName = blobName.Substring(0, 1).ToUpper() + blobName.Substring(1).ToLower();
 
-            AzureBlob blob = new AzureBlob { Name = blobName, Url = url };
+            AzureBlobModel blob = new AzureBlobModel { Name = blobName, Url = url };
 
             return blob;
         }
