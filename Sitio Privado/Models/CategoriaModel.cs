@@ -2,7 +2,7 @@
 using Sitio_Privado.CategoriaInversionista;
 using Sitio_Privado.Extras;
 
-namespace Sitio_Privado.Models.CategoriaInversionista
+namespace Sitio_Privado.Models
 {
     public class CategoriaInput
     {
