@@ -121,8 +121,9 @@ namespace Sitio_Privado.Models
         public DocumentosPendientesCantidadResultado(DocumentosPendientesCantidadInput input, Usuario usuario)
         {
             tann_documentos webService = new tann_documentos();
-            int resultado = webService.cns_operaciones_pendientes(Converters.getRutParteEntera(usuario.Rut));
-            Resultado = resultado;
+            int resultadoOperaciones = webService.cns_operaciones_pendientes(Converters.getRutParteEntera(usuario.Rut));
+            int resultadoDocumentos = webService.cns_documentos_pendientes(Converters.getRutParteEntera(usuario.Rut));
+            Resultado = resultadoOperaciones + resultadoDocumentos;
         }
     }
 }
