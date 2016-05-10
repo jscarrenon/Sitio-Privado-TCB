@@ -23,15 +23,17 @@ namespace Sitio_Privado.Controllers
                 _operacion[] operaciones = webService.cns_operacion_pendiente(Converters.getRutParteEntera(usuario.Rut));
 
                 List<Documento> listaOperaciones = new List<Documento>();
-                foreach (_operacion operacion in operaciones.Where(x => x._tipo == "Operacion"))
+                foreach (_operacion operacion in operaciones)
                 {
                     listaOperaciones.Add(new Documento(operacion));
                 }
+
+                _documento[] documentos = webService.cns_contrato_pendiente(Converters.getRutParteEntera(usuario.Rut));
                 
                 List<Documento> listaDocumentos = new List<Documento>();
-                foreach (_operacion operacion in operaciones.Where(x => x._tipo == "Documento"))
+                foreach (_documento documento in documentos)
                 {
-                    listaDocumentos.Add(new Documento(operacion));
+                    listaDocumentos.Add(new Documento(documento));
                 }
 
                 Dictionary<string, List<Documento>> documentosDictionary = new Dictionary<string, List<Documento>>();
