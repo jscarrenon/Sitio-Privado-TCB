@@ -71,6 +71,23 @@ namespace Sitio_Privado.Models
             FechaCreacion = documento._fechacre != null ? Converters.getFecha(documento._fechacre).ToString("dd MMM yyyy") : "";
             Seleccionado = false;
         }
+
+        public Documento(_documento documento)
+        {
+            Codigo = documento._code;
+            Producto = documento._producto;
+            Tipo = documento._tipo;
+            Folio = documento._folio;
+            Leido = documento._leido != null ? documento._leido.Trim() : documento._leido;
+            Firmado = documento._firmado != null ? documento._firmado.Trim() : documento._firmado;
+            TipoFirma = "Web";
+            FechaFirma = documento._fechafirm != null ? Converters.getFecha(documento._fechafirm).ToString("dd MMM yyyy") : "";
+            Ruta = documento._ruta;
+            NombreCliente = documento._nombrecli;
+            RutaFirmado = documento._results;
+            FechaCreacion = documento._fechacre != null ? Converters.getFecha(documento._fechacre).ToString("dd MMM yyyy") : "";
+            Seleccionado = false;
+        }
     }
 
     public class DocumentoLeidoResultado
@@ -92,7 +109,7 @@ namespace Sitio_Privado.Models
         public DocumentoFirmarResultado(DocumentoFirmarInput input, Usuario usuario)
         {
             tann_documentos webService = new tann_documentos();
-            _operacion[] documentos = webService.cns_firmar_documento(usuario.Rut, input.codigo);
+            _operacion[] documentos = webService.cns_firmar_documento(Converters.getRutParteEntera(usuario.Rut), input.codigo);
             Documentos = new List<Documento>();
 
             foreach(_operacion documento in documentos)
@@ -121,8 +138,9 @@ namespace Sitio_Privado.Models
         public DocumentosPendientesCantidadResultado(DocumentosPendientesCantidadInput input, Usuario usuario)
         {
             tann_documentos webService = new tann_documentos();
-            int resultado = webService.cns_operaciones_pendientes(Converters.getRutParteEntera(usuario.Rut));
-            Resultado = resultado;
+            int resultadoOperaciones = webService.cns_operaciones_pendientes(Converters.getRutParteEntera(usuario.Rut));
+            int resultadoDocumentos = webService.cns_documentos_pendientes(Converters.getRutParteEntera(usuario.Rut));
+            Resultado = resultadoOperaciones + resultadoDocumentos;
         }
     }
 }
