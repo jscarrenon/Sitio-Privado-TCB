@@ -71,6 +71,23 @@ namespace Sitio_Privado.Models
             FechaCreacion = documento._fechacre != null ? Converters.getFecha(documento._fechacre).ToString("dd MMM yyyy") : "";
             Seleccionado = false;
         }
+
+        public Documento(_documento documento)
+        {
+            Codigo = documento._code;
+            Producto = documento._producto;
+            Tipo = documento._tipo;
+            Folio = documento._folio;
+            Leido = documento._leido != null ? documento._leido.Trim() : documento._leido;
+            Firmado = documento._firmado != null ? documento._firmado.Trim() : documento._firmado;
+            TipoFirma = "Web";
+            FechaFirma = documento._fechafirm != null ? Converters.getFecha(documento._fechafirm).ToString("dd MMM yyyy") : "";
+            Ruta = documento._ruta;
+            NombreCliente = documento._nombrecli;
+            RutaFirmado = documento._results;
+            FechaCreacion = documento._fechacre != null ? Converters.getFecha(documento._fechacre).ToString("dd MMM yyyy") : "";
+            Seleccionado = false;
+        }
     }
 
     public class DocumentoLeidoResultado
