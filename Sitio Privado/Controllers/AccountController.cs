@@ -20,12 +20,20 @@ using ScrapySharp.Extensions;
 using System.Text;
 using System.Net.Http;
 using System.IO;
+using System.Configuration;
+using System.Globalization;
 
 namespace Sitio_Privado.Controllers
 {
     [AllowAnonymous]
     public class AccountController : BaseController
     {
+        // App config settings
+        private static string clientId = ConfigurationManager.AppSettings["ida:ClientId"];
+        private static string aadInstance = ConfigurationManager.AppSettings["ida:AadInstance"];
+        private static string tenant = ConfigurationManager.AppSettings["ida:Tenant"];
+        private static string redirectUri = ConfigurationManager.AppSettings["ida:RedirectUri"];
+
         [HttpGet]
         public ActionResult SignIn()
         {
@@ -60,7 +68,7 @@ namespace Sitio_Privado.Controllers
             IdToken token = await GetToken(model);
 
             if (token == null)
-                return null; //TODO change
+                return View(model); //TODO change
 
             var identity = new ClaimsIdentity(DefaultAuthenticationTypes.ApplicationCookie);
             identity.AddClaim(new Claim("http://schemas.microsoft.com/identity/claims/objectidentifier", token.Oid));
@@ -179,7 +187,7 @@ namespace Sitio_Privado.Controllers
             keyValues.Add(new KeyValuePair<string, string>("uiver", "1"));
             keyValues.Add(new KeyValuePair<string, string>("vv", ""));
 
-            var request = new HttpRequestMessage(HttpMethod.Post, "/kundertannerprivado.onmicrosoft.com/login");
+            var request = new HttpRequestMessage(HttpMethod.Post, tenant + "/login");
             request.Content = new FormUrlEncodedContent(keyValues);
 
             return request;
@@ -187,11 +195,11 @@ namespace Sitio_Privado.Controllers
 
         private Uri GetMicrosoftLoginUri()
         {
-            UriBuilder builder = new UriBuilder("https://login.microsoftonline.com/kundertannerprivado.onmicrosoft.com/oauth2/v2.0/authorize");
+            UriBuilder builder = new UriBuilder(String.Format(CultureInfo.InvariantCulture, aadInstance, tenant, "/oauth2/v2.0", "/authorize"));
             var parameters = HttpUtility.ParseQueryString(string.Empty);
-            parameters["client_id"] = "cf6f8deb-1db9-47c7-a870-d78973dacfd8";
+            parameters["client_id"] = clientId;
             parameters["response_type"] = "id_token";
-            parameters["redirect_uri"] = "https://privado.tanner.kunder.cl";
+            parameters["redirect_uri"] = redirectUri;
             parameters["response_mode"] = "form_post";
             parameters["scope"] = "openid";
             parameters["p"] = "b2c_1_signin";
