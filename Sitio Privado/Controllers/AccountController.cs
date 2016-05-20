@@ -68,7 +68,10 @@ namespace Sitio_Privado.Controllers
             IdToken token = await GetToken(model);
 
             if (token == null)
+            {
+                ModelState.AddModelError("", "RUT o contraseña no válidos. Por favor intente nuevamente.");
                 return View(model); //TODO change
+            }
 
             var identity = new ClaimsIdentity(DefaultAuthenticationTypes.ApplicationCookie);
             identity.AddClaim(new Claim("http://schemas.microsoft.com/identity/claims/objectidentifier", token.Oid));

@@ -44,6 +44,8 @@ html, body {height:100%;width:100%;}
 @gris_medio: #6C717E; /* menu lateral - titulos y subtitulos */
 @gris_medio_oscuro: #57585B; /* textos */
 
+@rojo_oscuro: #B94A48;
+
 /* fonts ------------------------------- */
 
 @font-face {
@@ -2555,4 +2557,19 @@ input[type="date"] {
 ::-webkit-scrollbar-track {
     border-radius: 10px;
     background-color: @gris_fondo;
+}
+
+/* errors signin ------------------------------ */
+
+.field-validation-error{
+    display:inline-block;
+}
+
+.validation-summary-errors{
+    margin-bottom: 10px;
+}
+
+.text-danger {
+  color: @rojo_oscuro;
+  font-size: 80%;
 }
