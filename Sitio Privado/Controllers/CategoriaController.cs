@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Sitio_Privado.Models.CategoriaInversionista;
+using Sitio_Privado.Models;
 using Sitio_Privado.CategoriaInversionista;
 using System.Threading.Tasks;
 
