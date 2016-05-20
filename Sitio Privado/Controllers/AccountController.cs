@@ -123,9 +123,16 @@ namespace Sitio_Privado.Controllers
 
                     //Read id_token
                     HtmlNode htmlNode = GetScrappedDoc(await result.Content.ReadAsStreamAsync());
-                    string id_token = htmlNode.CssSelect("input[name=id_token]").First().GetAttributeValue("value"); //TODO check if id_token is present
-                    IdToken parsedToken = new IdToken(id_token);
-                    return parsedToken;
+                    if(htmlNode.CssSelect("input[name=id_token]").Count() > 0)
+                    {
+                        string id_token = htmlNode.CssSelect("input[name=id_token]").First().GetAttributeValue("value");
+                        IdToken parsedToken = new IdToken(id_token);
+                        return parsedToken;
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
             }
         }
