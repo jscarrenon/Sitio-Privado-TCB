@@ -102,7 +102,7 @@ namespace Sitio_Privado.Controllers
             var authManager = ctx.Authentication;
 
             authManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("SignIn", "Account");
+            return Redirect("https://www.tanner.cl");
         }
 
         private async Task<IdToken> GetToken(LoginModel model)
