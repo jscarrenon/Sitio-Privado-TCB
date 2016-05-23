@@ -33,6 +33,7 @@ namespace Sitio_Privado.Controllers
         private static string aadInstance = ConfigurationManager.AppSettings["ida:AadInstance"];
         private static string tenant = ConfigurationManager.AppSettings["ida:Tenant"];
         private static string redirectUri = ConfigurationManager.AppSettings["ida:RedirectUri"];
+        private static string signInPolicy = ConfigurationManager.AppSettings["ida:SignInPolicyId"];
 
         [HttpGet]
         public ActionResult SignIn()
@@ -205,7 +206,7 @@ namespace Sitio_Privado.Controllers
             parameters["redirect_uri"] = redirectUri;
             parameters["response_mode"] = "form_post";
             parameters["scope"] = "openid";
-            parameters["p"] = "b2c_1_signin";
+            parameters["p"] = signInPolicy;
             builder.Query = parameters.ToString();
             return builder.Uri;
         }
