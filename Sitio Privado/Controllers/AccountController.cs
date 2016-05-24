@@ -12,11 +12,29 @@ using Sitio_Privado.Policies;
 using System.Security.Claims;
 using Sitio_Privado.Models;
 using System.Web.Http;
+using System.Threading.Tasks;
+using System.Globalization;
+using System.Configuration;
+using Microsoft.AspNet.Identity;
+using System.Net;
+using System.Net.Http;
+using System.IO;
+using System.Text;
+using HtmlAgilityPack;
+using ScrapySharp.Extensions;
+using Sitio_Privado.Extras;
 
 namespace Sitio_Privado.Controllers
 {
     public class AccountController : BaseController
     {
+        // App config settings
+        private static string clientId = ConfigurationManager.AppSettings["ida:ClientId"];
+        private static string aadInstance = ConfigurationManager.AppSettings["ida:AadInstance"];
+        private static string tenant = ConfigurationManager.AppSettings["ida:Tenant"];
+        private static string redirectUri = ConfigurationManager.AppSettings["ida:RedirectUri"];
+        private static string signInPolicy = ConfigurationManager.AppSettings["ida:SignInPolicyId"];
+
         public void SignIn()
         {
             if (!Request.IsAuthenticated)
@@ -47,6 +65,156 @@ namespace Sitio_Privado.Controllers
                     {
                         {Startup.PolicyKey, ClaimsPrincipal.Current.FindFirst(Startup.AcrClaimType).Value}
                     }), OpenIdConnectAuthenticationDefaults.AuthenticationType, CookieAuthenticationDefaults.AuthenticationType);
+        }
+
+        [System.Web.Mvc.AllowAnonymous]
+        [System.Web.Mvc.HttpGet]
+        public ActionResult SignInExternal()
+        {
+            if (!Request.IsAuthenticated)
+            {
+                return View();
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [System.Web.Mvc.AllowAnonymous]
+        [System.Web.Mvc.HttpPost]
+        //[ValidateAntiForgeryToken]
+        public async Task<ActionResult> SignInExternal(LoginModel model)
+        {
+            if (!ModelState.IsValid)
+                return RedirectToAction("Index", "Home"); ; //TODO change
+
+            IdToken token = await GetToken(model);
+
+            if (token == null)
+            {
+                ModelState.AddModelError("", "RUT o contraseña no válidos. Por favor intente nuevamente.");
+                return View(model); //TODO change
+            }
+
+            var identity = new ClaimsIdentity(DefaultAuthenticationTypes.ApplicationCookie);
+            identity.AddClaim(new Claim("http://schemas.microsoft.com/identity/claims/objectidentifier", token.Oid));
+            identity.AddClaim(new Claim(ClaimTypes.GivenName, token.Names));
+            identity.AddClaim(new Claim(ClaimTypes.Surname, token.Surnames));
+            identity.AddClaim(new Claim("country", token.Country));
+            identity.AddClaim(new Claim("city", token.City));
+            var ctx = Request.GetOwinContext();
+            var authManager = ctx.Authentication;
+            authManager.SignIn(identity);
+
+            return RedirectToAction("Index", "Home"); //TODO check
+        }
+
+        private async Task<IdToken> GetToken(LoginModel model)
+        {
+            //Ask B2C login page
+            Uri azureLoginPageUri = GetMicrosoftLoginUri();
+            HttpWebRequest azureLoginPageRequest = HttpWebRequest.CreateHttp(azureLoginPageUri);
+            //azureLoginPageRequest.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
+            //azureLoginPageRequest.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36";
+            HttpWebResponse azureLoginPageResponse = await InitialLoginPageRequest(azureLoginPageRequest);
+
+            //Save cookies for later usage
+            CookieCollection azureLoginPageCookies = azureLoginPageRequest.CookieContainer.GetCookies(azureLoginPageUri);
+            azureLoginPageCookies.Add(azureLoginPageResponse.Cookies);
+
+            //Scrap the document for inserting the data
+            HtmlNode html = GetScrappedDoc(azureLoginPageResponse.GetResponseStream());
+            HttpRequestMessage tokenRequest = GetTokenRequestMessage(html, model);
+
+            //Prepare data for login request
+            var baseAddress = new Uri("https://login.microsoftonline.com");
+            CookieContainer cookieContainer = new CookieContainer();
+            cookieContainer.Add(azureLoginPageCookies);
+            using (var handler = new WebRequestHandler() { CookieContainer = cookieContainer })
+            {
+                handler.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => { return true; };
+                using (var client = new HttpClient(handler) { BaseAddress = baseAddress })
+                {
+                    //Send request
+                    var result = await client.SendAsync(tokenRequest);
+
+                    //Read id_token
+                    HtmlNode htmlNode = GetScrappedDoc(await result.Content.ReadAsStreamAsync());
+                    if (htmlNode.CssSelect("input[name=id_token]").Count() > 0)
+                    {
+                        string id_token = htmlNode.CssSelect("input[name=id_token]").First().GetAttributeValue("value");
+                        IdToken parsedToken = new IdToken(id_token);
+                        return parsedToken;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
+        }
+
+        private async Task<HttpWebResponse> InitialLoginPageRequest(HttpWebRequest request)
+        {
+            request.CookieContainer = new CookieContainer();
+            request.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => { return true; };
+            return await request.GetResponseAsync() as HttpWebResponse;
+        }
+
+        private HtmlNode GetScrappedDoc(Stream stream)
+        {
+            HtmlDocument html = new HtmlDocument();
+            var encoding = ASCIIEncoding.ASCII;
+            using (var reader = new System.IO.StreamReader(stream, encoding))
+            {
+                string responseText = reader.ReadToEnd();
+                html.LoadHtml(responseText);
+            }
+
+            return html.DocumentNode;
+        }
+
+        private HttpRequestMessage GetTokenRequestMessage(HtmlNode html, LoginModel model)
+        {
+            var keyValues = new List<KeyValuePair<string, string>>();
+            keyValues.Add(new KeyValuePair<string, string>("LoginOptions", "3"));
+            keyValues.Add(new KeyValuePair<string, string>("NewUser", "1"));
+            keyValues.Add(new KeyValuePair<string, string>("PwdPad", ""));
+            keyValues.Add(new KeyValuePair<string, string>("ctx", html.CssSelect("input[name=ctx]").First().GetAttributeValue("value")));
+            keyValues.Add(new KeyValuePair<string, string>("flowToken", html.CssSelect("input[name=flowToken]").First().GetAttributeValue("value")));
+            keyValues.Add(new KeyValuePair<string, string>("i12", "1"));
+            keyValues.Add(new KeyValuePair<string, string>("i13", "Chrome"));
+            keyValues.Add(new KeyValuePair<string, string>("i14", "48.0.2564.116"));
+            keyValues.Add(new KeyValuePair<string, string>("i15", "1366"));
+            keyValues.Add(new KeyValuePair<string, string>("i16", "768"));
+            keyValues.Add(new KeyValuePair<string, string>("i20", ""));
+            keyValues.Add(new KeyValuePair<string, string>("idsbho", "1"));
+            keyValues.Add(new KeyValuePair<string, string>("login", model.Rut));
+            keyValues.Add(new KeyValuePair<string, string>("passwd", model.Password));
+            keyValues.Add(new KeyValuePair<string, string>("sso", ""));
+            keyValues.Add(new KeyValuePair<string, string>("type", "11"));
+            keyValues.Add(new KeyValuePair<string, string>("uiver", "1"));
+            keyValues.Add(new KeyValuePair<string, string>("vv", ""));
+
+            var request = new HttpRequestMessage(HttpMethod.Post, tenant + "/login");
+            request.Content = new FormUrlEncodedContent(keyValues);
+
+            return request;
+        }
+
+        private Uri GetMicrosoftLoginUri()
+        {
+            UriBuilder builder = new UriBuilder(String.Format(CultureInfo.InvariantCulture, aadInstance, tenant, "/oauth2/v2.0", "/authorize"));
+            var parameters = HttpUtility.ParseQueryString(string.Empty);
+            parameters["client_id"] = clientId;
+            parameters["response_type"] = "id_token";
+            parameters["redirect_uri"] = redirectUri;
+            parameters["response_mode"] = "form_post";
+            parameters["scope"] = "openid";
+            parameters["p"] = signInPolicy;
+            parameters["prompt"] = "login";
+            parameters["nonce"] = "defaultNonce";
+            builder.Query = parameters.ToString();
+            return builder.Uri;
         }
     }
 }
