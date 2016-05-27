@@ -3,15 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
-// The following using statements were added for this sample.
-using Microsoft.Owin.Security;
-using Microsoft.Owin.Security.OpenIdConnect;
-using Microsoft.Owin.Security.Cookies;
-using Sitio_Privado.Policies;
 using System.Security.Claims;
 using Sitio_Privado.Models;
-using System.Web.Http;
 using System.Threading.Tasks;
 using System.Globalization;
 using System.Configuration;
@@ -43,8 +36,8 @@ namespace Sitio_Privado.Controllers
             return Redirect("https://www.tanner.cl");
         }
 
-        [System.Web.Mvc.AllowAnonymous]
-        [System.Web.Mvc.HttpGet]
+        [AllowAnonymous]
+        [HttpGet]
         public ActionResult SignInExternal()
         {
             if (!Request.IsAuthenticated)
@@ -55,8 +48,8 @@ namespace Sitio_Privado.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [System.Web.Mvc.AllowAnonymous]
-        [System.Web.Mvc.HttpPost]
+        [AllowAnonymous]
+        [HttpPost]
         public async Task<ActionResult> SignInExternal(LoginModel model)
         {
             if (!ModelState.IsValid)
@@ -83,7 +76,6 @@ namespace Sitio_Privado.Controllers
             return RedirectToAction("Index", "Home"); 
         }
 
-
         private async Task<IdToken> GetToken(LoginModel model)
         {
             //Ask B2C login page
@@ -103,6 +95,7 @@ namespace Sitio_Privado.Controllers
             var baseAddress = new Uri("https://login.microsoftonline.com");
             CookieContainer cookieContainer = new CookieContainer();
             cookieContainer.Add(azureLoginPageCookies);
+
             using (var handler = new WebRequestHandler() { CookieContainer = cookieContainer })
             {
                 handler.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => { return true; };
@@ -115,7 +108,7 @@ namespace Sitio_Privado.Controllers
                     if (result.StatusCode == HttpStatusCode.OK)
                     {
                         //Ask B2C login confirmed page
-                        Uri azureLoginConfirmedPageUri = GetMicrosoftLoginConfirmedUri(csrf,tx);
+                        Uri azureLoginConfirmedPageUri = GetMicrosoftLoginConfirmedUri(tokenRequest);
                         HttpWebRequest azureLoginConfirmedPageRequest = HttpWebRequest.CreateHttp(azureLoginConfirmedPageUri);
                         HttpWebResponse azureLoginConfirmedPageResponse = await LoginConfirmedPageRequest(azureLoginConfirmedPageRequest, cookieContainer);
 
@@ -183,19 +176,16 @@ namespace Sitio_Privado.Controllers
             string contentData = settingsData.Substring(settingsData.IndexOf("{\"remoteResource\""));
             JObject settingsDataJson = JObject.Parse(contentData);
 
-            tx = settingsDataJson.GetValue("transId").ToString();
-            csrf = settingsDataJson.GetValue("csrf").ToString();
+            string tx = settingsDataJson.GetValue("transId").ToString();
+            string csrf = settingsDataJson.GetValue("csrf").ToString();
 
-            var request = new HttpRequestMessage(HttpMethod.Post, "https://login.microsoftonline.com/kundertannerprivado.onmicrosoft.com/B2C_1_Custom_B2C_Policy/SelfAsserted?tx="+tx+"&p=B2C_1_Custom_B2C_Policy");
+            var request = new HttpRequestMessage(HttpMethod.Post, GetMicrosoftLoginSelfAssertedUri(tx));
             request.Content = new FormUrlEncodedContent(keyValues);
             request.Headers.Add("X-CSRF-TOKEN", csrf);
             request.Headers.Add("X-Requested-With", "XMLHttpRequest");
 
             return request;
         }
-
-        private static string csrf = "";
-        private static string tx = "";
 
         private Uri GetMicrosoftLoginUri()
         {
@@ -213,13 +203,27 @@ namespace Sitio_Privado.Controllers
             return builder.Uri;
         }
 
-        private Uri GetMicrosoftLoginConfirmedUri(string csrf, string tx)
+        private Uri GetMicrosoftLoginConfirmedUri(HttpRequestMessage tokenRequest)
         {
-            UriBuilder builder = new UriBuilder("https://login.microsoftonline.com/kundertannerprivado.onmicrosoft.com/B2C_1_Custom_B2C_Policy/api/CombinedSigninAndSignup/confirmed");
+            UriBuilder builder = new UriBuilder(String.Format(CultureInfo.InvariantCulture, aadInstance, tenant, "/" + signInPolicy, "/api/CombinedSigninAndSignup/confirmed"));
             var parameters = HttpUtility.ParseQueryString(string.Empty);
+
+            string csrf = tokenRequest.Headers.GetValues("X-CSRF-TOKEN").First();
+            string tx = HttpUtility.ParseQueryString(tokenRequest.RequestUri.Query).Get("tx");
+
             parameters["csrf_token"] = csrf;
             parameters["tx"] = tx;
             parameters["metrics"] = "";
+            parameters["p"] = signInPolicy;
+            builder.Query = parameters.ToString();
+            return builder.Uri;
+        }
+
+        private Uri GetMicrosoftLoginSelfAssertedUri(string tx)
+        {
+            UriBuilder builder = new UriBuilder(String.Format(CultureInfo.InvariantCulture, aadInstance, tenant, "/" + signInPolicy, "/SelfAsserted"));
+            var parameters = HttpUtility.ParseQueryString(string.Empty);
+            parameters["tx"] = tx;
             parameters["p"] = signInPolicy;
             builder.Query = parameters.ToString();
             return builder.Uri;
