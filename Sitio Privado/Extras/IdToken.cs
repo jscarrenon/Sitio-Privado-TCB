@@ -23,7 +23,7 @@ namespace Sitio_Privado.Extras
             JObject json = JObject.Parse(decoded);
             Oid = json.GetValue("oid").ToString();
             Names = json.GetValue("given_name").ToString();
-            Surnames = json.GetValue("family_name") != null? json.GetValue("family_name").ToString(): "";
+            Surnames = json.GetValue("family_name") != null ? json.GetValue("family_name").ToString() : "";
             Country = json.GetValue("country") != null ? json.GetValue("country").ToString() : "";
             City = json.GetValue("city") != null ? json.GetValue("city").ToString() : "";
         }

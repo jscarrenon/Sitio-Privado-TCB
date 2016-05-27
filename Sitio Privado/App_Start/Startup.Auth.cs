@@ -39,11 +39,10 @@ namespace Sitio_Privado
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new Microsoft.Owin.PathString("/Account/SignIn")
+                LoginPath = new Microsoft.Owin.PathString("/Account/SignInExternal")
             });
-            
-            /*
-            app.SetDefaultSignInAsAuthenticationType(CookieAuthenticationDefaults.AuthenticationType);
+
+            /*app.SetDefaultSignInAsAuthenticationType(CookieAuthenticationDefaults.AuthenticationType);
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions());
 
@@ -74,9 +73,7 @@ namespace Sitio_Privado
                 },
             };
 
-            app.UseOpenIdConnectAuthentication(options);
-
-    */
+            app.UseOpenIdConnectAuthentication(options);*/
 
         }
 

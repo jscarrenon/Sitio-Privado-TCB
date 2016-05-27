@@ -11,21 +11,22 @@ using Microsoft.Owin.Security.Cookies;
 using Sitio_Privado.Policies;
 using System.Security.Claims;
 using Sitio_Privado.Models;
-using Microsoft.AspNet.Identity;
+using System.Web.Http;
 using System.Threading.Tasks;
-using Sitio_Privado.Extras;
+using System.Globalization;
+using System.Configuration;
+using Microsoft.AspNet.Identity;
 using System.Net;
-using HtmlAgilityPack;
-using ScrapySharp.Extensions;
-using System.Text;
 using System.Net.Http;
 using System.IO;
-using System.Configuration;
-using System.Globalization;
+using System.Text;
+using HtmlAgilityPack;
+using ScrapySharp.Extensions;
+using Sitio_Privado.Extras;
+using Newtonsoft.Json.Linq;
 
 namespace Sitio_Privado.Controllers
 {
-    [AllowAnonymous]
     public class AccountController : BaseController
     {
         // App config settings
@@ -35,36 +36,31 @@ namespace Sitio_Privado.Controllers
         private static string redirectUri = ConfigurationManager.AppSettings["ida:RedirectUri"];
         private static string signInPolicy = ConfigurationManager.AppSettings["ida:SignInPolicyId"];
 
-        [HttpGet]
-        public ActionResult SignIn()
+        public ActionResult SignOut()
+        {
+            HttpContext.GetOwinContext().Authentication.SignOut();
+
+            return Redirect("https://www.tanner.cl");
+        }
+
+        [System.Web.Mvc.AllowAnonymous]
+        [System.Web.Mvc.HttpGet]
+        public ActionResult SignInExternal()
         {
             if (!Request.IsAuthenticated)
             {
-                // To execute a policy, you simply need to trigger an OWIN challenge.
-                // You can indicate which policy to use by adding it to the AuthenticationProperties using the PolicyKey provided.
-
-                /*HttpContext.GetOwinContext().Authentication.Challenge(
-                    new AuthenticationProperties(
-                        new Dictionary<string, string>
-                        {
-                            {Startup.PolicyKey, Startup.SignInPolicyId}
-                        })
-                    {
-                        RedirectUri = "/",
-                    }, OpenIdConnectAuthenticationDefaults.AuthenticationType);*/
-
                 return View();
             }
 
             return RedirectToAction("Index", "Home");
         }
-        
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> SignIn(LoginModel model)
+
+        [System.Web.Mvc.AllowAnonymous]
+        [System.Web.Mvc.HttpPost]
+        public async Task<ActionResult> SignInExternal(LoginModel model)
         {
             if (!ModelState.IsValid)
-                return View(model); //TODO change
+                return RedirectToAction("Index", "Home"); ; //TODO change
 
             IdToken token = await GetToken(model);
 
@@ -84,27 +80,9 @@ namespace Sitio_Privado.Controllers
             var authManager = ctx.Authentication;
             authManager.SignIn(identity);
 
-            return RedirectToAction("Index", "Home"); //TODO check
+            return RedirectToAction("Index", "Home"); 
         }
 
-        public ActionResult SignOut()
-        {
-            // To sign out the user, you should issue an OpenIDConnect sign out request using the last policy that the user executed.
-            // This is as easy as looking up the current value of the ACR claim, adding it to the AuthenticationProperties, and making an OWIN SignOut call.
-
-            /*HttpContext.GetOwinContext().Authentication.SignOut(
-                new AuthenticationProperties(
-                    new Dictionary<string, string>
-                    {
-                        {Startup.PolicyKey, ClaimsPrincipal.Current.FindFirst(Startup.AcrClaimType).Value}
-                    }), OpenIdConnectAuthenticationDefaults.AuthenticationType, CookieAuthenticationDefaults.AuthenticationType);*/
-
-            var ctx = Request.GetOwinContext();
-            var authManager = ctx.Authentication;
-
-            authManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return Redirect("https://www.tanner.cl");
-        }
 
         private async Task<IdToken> GetToken(LoginModel model)
         {
@@ -133,13 +111,26 @@ namespace Sitio_Privado.Controllers
                     //Send request
                     var result = await client.SendAsync(tokenRequest);
 
-                    //Read id_token
-                    HtmlNode htmlNode = GetScrappedDoc(await result.Content.ReadAsStreamAsync());
-                    if(htmlNode.CssSelect("input[name=id_token]").Count() > 0)
+                    //Confirmation
+                    if (result.StatusCode == HttpStatusCode.OK)
                     {
-                        string id_token = htmlNode.CssSelect("input[name=id_token]").First().GetAttributeValue("value");
-                        IdToken parsedToken = new IdToken(id_token);
-                        return parsedToken;
+                        //Ask B2C login confirmed page
+                        Uri azureLoginConfirmedPageUri = GetMicrosoftLoginConfirmedUri(csrf,tx);
+                        HttpWebRequest azureLoginConfirmedPageRequest = HttpWebRequest.CreateHttp(azureLoginConfirmedPageUri);
+                        HttpWebResponse azureLoginConfirmedPageResponse = await LoginConfirmedPageRequest(azureLoginConfirmedPageRequest, cookieContainer);
+
+                        //Read id_token
+                        HtmlNode htmlNode = GetScrappedDoc(azureLoginConfirmedPageResponse.GetResponseStream());
+                        if (htmlNode.CssSelect("input[name=id_token]").Count() > 0)
+                        {
+                            string id_token = htmlNode.CssSelect("input[name=id_token]").First().GetAttributeValue("value");
+                            IdToken parsedToken = new IdToken(id_token);
+                            return parsedToken;
+                        }
+                        else
+                        {
+                            return null;
+                        }
                     }
                     else
                     {
@@ -152,6 +143,13 @@ namespace Sitio_Privado.Controllers
         private async Task<HttpWebResponse> InitialLoginPageRequest(HttpWebRequest request)
         {
             request.CookieContainer = new CookieContainer();
+            request.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => { return true; };
+            return await request.GetResponseAsync() as HttpWebResponse;
+        }
+
+        private async Task<HttpWebResponse> LoginConfirmedPageRequest(HttpWebRequest request, CookieContainer cookieContainer)
+        {
+            request.CookieContainer = cookieContainer;
             request.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => { return true; };
             return await request.GetResponseAsync() as HttpWebResponse;
         }
@@ -172,40 +170,56 @@ namespace Sitio_Privado.Controllers
         private HttpRequestMessage GetTokenRequestMessage(HtmlNode html, LoginModel model)
         {
             var keyValues = new List<KeyValuePair<string, string>>();
-            keyValues.Add(new KeyValuePair<string, string>("LoginOptions", "3"));
-            keyValues.Add(new KeyValuePair<string, string>("NewUser", "1"));
-            keyValues.Add(new KeyValuePair<string, string>("PwdPad", ""));
-            keyValues.Add(new KeyValuePair<string, string>("ctx", html.CssSelect("input[name=ctx]").First().GetAttributeValue("value")));
-            keyValues.Add(new KeyValuePair<string, string>("flowToken", html.CssSelect("input[name=flowToken]").First().GetAttributeValue("value")));
-            keyValues.Add(new KeyValuePair<string, string>("i12", "1"));
-            keyValues.Add(new KeyValuePair<string, string>("i13", "Chrome"));
-            keyValues.Add(new KeyValuePair<string, string>("i14", "48.0.2564.116"));
-            keyValues.Add(new KeyValuePair<string, string>("i15", "1366"));
-            keyValues.Add(new KeyValuePair<string, string>("i16", "768"));
-            keyValues.Add(new KeyValuePair<string, string>("i20", ""));
-            keyValues.Add(new KeyValuePair<string, string>("idsbho", "1"));
-            keyValues.Add(new KeyValuePair<string, string>("login", model.Rut));
-            keyValues.Add(new KeyValuePair<string, string>("passwd", model.Password));
-            keyValues.Add(new KeyValuePair<string, string>("sso", ""));
-            keyValues.Add(new KeyValuePair<string, string>("type", "11"));
-            keyValues.Add(new KeyValuePair<string, string>("uiver", "1"));
-            keyValues.Add(new KeyValuePair<string, string>("vv", ""));
 
-            var request = new HttpRequestMessage(HttpMethod.Post, tenant + "/login");
+            keyValues.Add(new KeyValuePair<string, string>("logonIdentifier", model.Rut));
+            keyValues.Add(new KeyValuePair<string, string>("password", model.Password));
+            keyValues.Add(new KeyValuePair<string, string>("request_type", "RESPONSE"));
+
+            HtmlNodeCollection nodes = html.SelectNodes("//script");
+            HtmlNode node = nodes.Where(x => x.InnerHtml.Contains("settings.data")).FirstOrDefault();
+            string script = node.InnerText;
+            string settingsData = script.Substring(script.IndexOf("define('settings.data'"));
+            settingsData = settingsData.Substring(0, settingsData.IndexOf(");"));
+            string contentData = settingsData.Substring(settingsData.IndexOf("{\"remoteResource\""));
+            JObject settingsDataJson = JObject.Parse(contentData);
+
+            tx = settingsDataJson.GetValue("transId").ToString();
+            csrf = settingsDataJson.GetValue("csrf").ToString();
+
+            var request = new HttpRequestMessage(HttpMethod.Post, "https://login.microsoftonline.com/kundertannerprivado.onmicrosoft.com/B2C_1_Custom_B2C_Policy/SelfAsserted?tx="+tx+"&p=B2C_1_Custom_B2C_Policy");
             request.Content = new FormUrlEncodedContent(keyValues);
+            request.Headers.Add("X-CSRF-TOKEN", csrf);
+            request.Headers.Add("X-Requested-With", "XMLHttpRequest");
 
             return request;
         }
+
+        private static string csrf = "";
+        private static string tx = "";
 
         private Uri GetMicrosoftLoginUri()
         {
             UriBuilder builder = new UriBuilder(String.Format(CultureInfo.InvariantCulture, aadInstance, tenant, "/oauth2/v2.0", "/authorize"));
             var parameters = HttpUtility.ParseQueryString(string.Empty);
-            parameters["client_id"] = clientId;
+            parameters["client_Id"] = clientId;
             parameters["response_type"] = "id_token";
             parameters["redirect_uri"] = redirectUri;
             parameters["response_mode"] = "form_post";
             parameters["scope"] = "openid";
+            parameters["p"] = signInPolicy;
+            parameters["prompt"] = "login";
+            parameters["nonce"] = "defaultNonce";
+            builder.Query = parameters.ToString();
+            return builder.Uri;
+        }
+
+        private Uri GetMicrosoftLoginConfirmedUri(string csrf, string tx)
+        {
+            UriBuilder builder = new UriBuilder("https://login.microsoftonline.com/kundertannerprivado.onmicrosoft.com/B2C_1_Custom_B2C_Policy/api/CombinedSigninAndSignup/confirmed");
+            var parameters = HttpUtility.ParseQueryString(string.Empty);
+            parameters["csrf_token"] = csrf;
+            parameters["tx"] = tx;
+            parameters["metrics"] = "";
             parameters["p"] = signInPolicy;
             builder.Query = parameters.ToString();
             return builder.Uri;
