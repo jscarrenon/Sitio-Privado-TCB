@@ -228,5 +228,28 @@ namespace Sitio_Privado.Controllers
             builder.Query = parameters.ToString();
             return builder.Uri;
         }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public JsonResult PasswordRecovery(PasswordRecoveryModel model)
+        {
+            //Rut validation
+            if (model.Rut != null) // TODO check
+            {
+                //Check rut in db
+                if(model.Rut != null)
+                {
+                    //TODO Send mail
+
+                    return new JsonResult() { Data = "Una nueva contraseña temporal ha sido enviada a su correo electrónico." };
+                }
+                else
+                {
+                    return new JsonResult() { Data = "El Rut ingresado no es Cliente de Tanner, para cualquier duda contacte a mes de atención de clientes al NNNN." };
+                }
+            }
+
+            return new JsonResult() { Data = "Ingrese un Rut." };
+        }
     }
 }

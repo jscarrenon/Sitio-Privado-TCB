@@ -371,6 +371,7 @@
     <Compile Include="Models\FondoMutuoModel.cs" />
     <Compile Include="Models\GraphUserModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\PasswordRecoveryModel.cs" />
     <Compile Include="Models\ProductoModel.cs" />
     <Compile Include="Models\CategoriaModel.cs" />
     <Compile Include="Models\TannerUserModel.cs" />
