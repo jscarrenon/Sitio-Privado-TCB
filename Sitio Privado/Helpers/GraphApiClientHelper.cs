@@ -43,6 +43,8 @@ namespace Sitio_Privado.Helpers
         private static string SignInValueParamKey = "value";
         private static string SignInAlternativesParamKey = "alternativeSignInNamesInfo";
         private static string UpdatedAtParamKey = ExtensionsPrefixe + "UpdatedAt";
+        private static string IsTemporalPasswordParamKey = ExtensionsPrefixe + "IsTemporalPassword";
+        private static string TemporalPasswordTimestampParamKey = ExtensionsPrefixe + "TemporalPasswordTimestamp";
         #endregion
 
         private const string AadGraphResourceId = "https://graph.windows.net/";
@@ -410,6 +412,9 @@ namespace Sitio_Privado.Helpers
             passwordProfile.Add(ForcePasswordChangeParamKey, true);
             json.Add(PasswordProfileParamKey, passwordProfile);
 
+            json.Add(IsTemporalPasswordParamKey, user.IsTemporalPassword);
+            json.Add(TemporalPasswordTimestampParamKey, user.TemporalPasswordTimestamp);
+
             return json.ToString();
         }
 
@@ -529,6 +534,12 @@ namespace Sitio_Privado.Helpers
 
             if (body.GetValue(UpdatedAtParamKey) != null)
                 user.UpdatedAt = body.GetValue(UpdatedAtParamKey).ToString();
+
+            if (body.GetValue(IsTemporalPasswordParamKey) != null)
+                user.IsTemporalPassword = (bool)body.GetValue(IsTemporalPasswordParamKey);
+
+            if (body.GetValue(TemporalPasswordTimestampParamKey) != null)
+                user.TemporalPasswordTimestamp = body.GetValue(TemporalPasswordTimestampParamKey).ToString();
 
             {
                 JArray jArray = (JArray)body.GetValue(SignInAlternativesParamKey);

@@ -32,6 +32,8 @@ namespace Sitio_Privado.Controllers
                 {
                     string tempPassword = PasswordGeneratorHelper.GeneratePassword();
                     getUserResponse.User.TemporalPassword = tempPassword;
+                    getUserResponse.User.IsTemporalPassword = true;
+                    getUserResponse.User.TemporalPasswordTimestamp = DateTime.Now.ToString();
 
                     //Reset user password
                     var apiResponse = await graphApiClient.ResetUserPassword(getUserResponse.User.ObjectId, getUserResponse.User);
