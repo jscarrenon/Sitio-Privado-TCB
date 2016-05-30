@@ -409,7 +409,7 @@ namespace Sitio_Privado.Helpers
             //Temporal password
             JObject passwordProfile = new JObject();
             passwordProfile.Add(PasswordParamKey, user.TemporalPassword);
-            passwordProfile.Add(ForcePasswordChangeParamKey, true);
+            passwordProfile.Add(ForcePasswordChangeParamKey, false);
             json.Add(PasswordProfileParamKey, passwordProfile);
 
             json.Add(IsTemporalPasswordParamKey, user.IsTemporalPassword);
