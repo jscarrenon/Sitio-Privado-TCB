@@ -90,6 +90,22 @@ namespace Sitio_Privado.Helpers
             return response;
         }
 
+        public async Task<GraphApiResponseInfo> ResetUserPassword(string id, GraphUserModel user)
+        {
+            string path = UsersApiPath + "/" + id;
+            string json = GetUpdateUserPasswordRequestBody(user);
+            HttpResponseMessage graphResponse = await SendGraphPatchRequest(path, json);
+            GraphApiResponseInfo response = new GraphApiResponseInfo();
+            response.StatusCode = graphResponse.StatusCode;
+
+            if (!graphResponse.IsSuccessStatusCode)
+            {
+                response.Message = "Could not find any object matching that Rut";
+            }
+
+            return response;
+        }
+
         public async Task<GraphApiResponseInfo> CreateUser(GraphUserModel graphUser, bool randomEmail)
         {
             string json = GetCreateUserRequestBody(graphUser, randomEmail);
@@ -380,6 +396,19 @@ namespace Sitio_Privado.Helpers
 
             json.Add(SignInAlternativesParamKey, signInAlternativesArray);
             
+
+            return json.ToString();
+        }
+
+        private string GetUpdateUserPasswordRequestBody(GraphUserModel user)
+        {
+            JObject json = new JObject();
+
+            //Temporal password
+            JObject passwordProfile = new JObject();
+            passwordProfile.Add(PasswordParamKey, user.TemporalPassword);
+            passwordProfile.Add(ForcePasswordChangeParamKey, true);
+            json.Add(PasswordProfileParamKey, passwordProfile);
 
             return json.ToString();
         }

@@ -23,11 +23,29 @@ namespace Sitio_Privado.Controllers
             if (ModelState.IsValid)
             {
                 string id = ExtraHelpers.FormatRutToId(model.Rut);
-                GraphApiResponseInfo apiResponse = await graphApiClient.GetUserByRut(id);
+                GraphApiResponseInfo getUserResponse = await graphApiClient.GetUserByRut(id);
 
                 //Check rut in db
-                if (apiResponse.StatusCode == System.Net.HttpStatusCode.OK)
+                if (getUserResponse.StatusCode == System.Net.HttpStatusCode.OK)
                 {
+                    string tempPassword = PasswordGeneratorHelper.GeneratePassword();
+                    getUserResponse.User.TemporalPassword = tempPassword;
+
+                    var apiResponse = await graphApiClient.ResetUserPassword(getUserResponse.User.ObjectId, getUserResponse.User);
+
+                    if (apiResponse.StatusCode != System.Net.HttpStatusCode.NoContent)
+                    {
+                        string message = "Error al intentar cambiar la contraseña. Intente otra vez.";
+
+                        var resp = new HttpResponseMessage(HttpStatusCode.InternalServerError)
+                        {
+                            Content = new StringContent(message),
+                            ReasonPhrase = "Error al intentar cambiar la contraseña"
+                        };
+
+                        throw new HttpResponseException(resp);
+                    }
+
                     //TODO Send mail
 
                     return Json("Una nueva contraseña temporal ha sido enviada a su correo electrónico.");
