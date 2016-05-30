@@ -1,27 +1,32 @@
 ﻿using Sitio_Privado.Extras;
+using Sitio_Privado.Helpers;
 using Sitio_Privado.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace Sitio_Privado.Controllers
 {
     public class UsersController : ApiController
     {
+        private GraphApiClientHelper graphApiClient = new GraphApiClientHelper();
+
         [AllowAnonymous]
         [HttpPost]
-        public IHttpActionResult PasswordRecovery(PasswordRecoveryModel model)
+        public async Task<IHttpActionResult> PasswordRecovery(PasswordRecoveryModel model)
         {
             //Rut validation
             if (ModelState.IsValid)
             {
                 string id = ExtraHelpers.FormatRutToId(model.Rut);
+                GraphApiResponseInfo apiResponse = await graphApiClient.GetUserByRut(id);
 
                 //Check rut in db
-                if (model.Rut != null)
+                if (apiResponse.StatusCode == System.Net.HttpStatusCode.OK)
                 {
                     //TODO Send mail
 
