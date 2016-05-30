@@ -305,6 +305,7 @@
     <Compile Include="Controllers\CircularizacionController.cs" />
     <Compile Include="Controllers\IndicesController.cs" />
     <Compile Include="Extras\IdToken.cs" />
+    <Compile Include="Extras\RutValidationAttribute.cs" />
     <Compile Include="Extras\Utils.cs" />
     <Compile Include="Filters\NoCacheAttribute.cs" />
     <Compile Include="Filters\TokenAuthorizationFilterAttribute.cs" />

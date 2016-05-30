@@ -234,7 +234,7 @@ namespace Sitio_Privado.Controllers
         public JsonResult PasswordRecovery(PasswordRecoveryModel model)
         {
             //Rut validation
-            if (model.Rut != null) // TODO check
+            if (ModelState.IsValid)
             {
                 //Check rut in db
                 if(model.Rut != null)
@@ -248,8 +248,10 @@ namespace Sitio_Privado.Controllers
                     return new JsonResult() { Data = "El Rut ingresado no es Cliente de Tanner, para cualquier duda contacte a mes de atención de clientes al NNNN." };
                 }
             }
-
-            return new JsonResult() { Data = "Ingrese un Rut." };
+            else
+            {
+                return new JsonResult() { Data = string.Join(". ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage)) };
+            }
         }
     }
 }
