@@ -236,6 +236,8 @@ namespace Sitio_Privado.Controllers
             //Rut validation
             if (ModelState.IsValid)
             {
+                string id = ExtraHelpers.FormatRutToId(model.Rut);
+
                 //Check rut in db
                 if(model.Rut != null)
                 {
