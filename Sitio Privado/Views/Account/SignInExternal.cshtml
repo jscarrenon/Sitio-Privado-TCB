@@ -61,7 +61,7 @@
                     <div class="go-back">
                         <a class="show" href="#">Volver</a>
                     </div>
-                    @using (Html.BeginForm("PasswordRecovery", "Account"))
+                    @using (Html.BeginForm("", "api/users/passwordRecovery"))
                     {
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <p>Ingrese su RUT y su contraseña será enviada al correo asignado previamente.</p>
