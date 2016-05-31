@@ -279,5 +279,14 @@ namespace Sitio_Privado.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public ActionResult ChangePassword(ChangePasswordModel model)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
