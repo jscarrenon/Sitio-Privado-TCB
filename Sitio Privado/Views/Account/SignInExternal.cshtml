@@ -61,12 +61,16 @@
                     <div class="go-back">
                         <a class="show" href="#">Volver</a>
                     </div>
-                    <p>Ingrese su RUT y su contraseña será enviada al correo asignado previamente.</p>
-                    <div class="input-field">
-                        RUT (Ej: 12123123K)
-                        <input type="text" placeholder="Ingrese su RUT">
-                    </div>
-                    <input type="submit" value="Enviar Contraseña" class="button green">
+                    @using (Html.BeginForm("", "api/users/passwordRecovery"))
+                    {
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <p>Ingrese su RUT y su contraseña será enviada al correo asignado previamente.</p>
+                        <div class="input-field">
+                            @Html.EditorFor(model => model.Rut)
+                            @Html.ValidationMessageFor(model => model.Rut, "", new { @class = "text-danger" })
+                        </div>
+                        <input type="submit" value="Enviar Contraseña" class="button green">
+                    }
                 </div>
             </div>
         </div>

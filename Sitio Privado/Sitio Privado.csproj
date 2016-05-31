@@ -147,12 +147,16 @@
       <HintPath>..\packages\NLog.4.2.3\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Postal, Version=1.0.0.0, Culture=neutral, PublicKeyToken=45719375b8b4d528, processorArchitecture=MSIL">
+      <HintPath>..\packages\Postal.Mvc5.1.2.0\lib\net45\Postal.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Quartz, Version=2.3.3.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
       <HintPath>..\packages\Quartz.2.3.3\lib\net40\Quartz.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="RazorEngine, Version=3.3.0.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
-      <HintPath>..\packages\RazorEngine.3.3.0\lib\net40\RazorEngine.dll</HintPath>
+    <Reference Include="RazorEngine, Version=3.8.2.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
+      <HintPath>..\packages\RazorEngine.3.8.2\lib\net45\RazorEngine.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ScrapySharp.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -304,7 +308,10 @@
     <Compile Include="Controllers\ApiBaseController.cs" />
     <Compile Include="Controllers\CircularizacionController.cs" />
     <Compile Include="Controllers\IndicesController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Extras\ExtraHelpers.cs" />
     <Compile Include="Extras\IdToken.cs" />
+    <Compile Include="Extras\RutValidationAttribute.cs" />
     <Compile Include="Extras\Utils.cs" />
     <Compile Include="Filters\NoCacheAttribute.cs" />
     <Compile Include="Filters\TokenAuthorizationFilterAttribute.cs" />
@@ -363,6 +370,7 @@
     <Compile Include="Models\AzureBlobModel.cs" />
     <Compile Include="Helpers\GraphApiResponseInfo.cs" />
     <Compile Include="Models\CircularizacionModel.cs" />
+    <Compile Include="Models\PasswordRecoveryEmailModel.cs" />
     <Compile Include="Models\IndicesModel.cs" />
     <Compile Include="Models\DocumentoModel.cs" />
     <Compile Include="Models\CartolaModel.cs" />
@@ -371,6 +379,7 @@
     <Compile Include="Models\FondoMutuoModel.cs" />
     <Compile Include="Models\GraphUserModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\PasswordRecoveryModel.cs" />
     <Compile Include="Models\ProductoModel.cs" />
     <Compile Include="Models\CategoriaModel.cs" />
     <Compile Include="Models\TannerUserModel.cs" />
@@ -428,6 +437,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Views\Account\SignInExternal.cshtml" />
+    <Content Include="Views\Emails\Web.config" />
+    <Content Include="Views\Emails\PasswordRecoveryEmailModel.cshtml" />
+    <Content Include="Views\Emails\_ViewStart.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
     <None Include="Web References\CartolaResumida\tann_cartola_resumida.disco" />
     <Content Include="app\modules\mis-inversiones\templates\estado-documentos_respuesta.html" />
     <Content Include="Resources\img\favicon.ico" />
