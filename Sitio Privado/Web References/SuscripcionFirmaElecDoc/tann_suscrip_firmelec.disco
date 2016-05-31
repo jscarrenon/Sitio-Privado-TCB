@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<discovery xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/disco/">
+  <contractRef ref="http://apolo-cert/wstsf/tann_suscrip_firmelec.asmx?wsdl" docRef="http://apolo-cert/wstsf/tann_suscrip_firmelec.asmx" xmlns="http://schemas.xmlsoap.org/disco/scl/" />
+  <soap address="http://apolo-cert/wstsf/tann_suscrip_firmelec.asmx" xmlns:q1="http://tempuri.org/" binding="q1:tann_suscrip_firmelecSoap" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+  <soap address="http://apolo-cert/wstsf/tann_suscrip_firmelec.asmx" xmlns:q2="http://tempuri.org/" binding="q2:tann_suscrip_firmelecSoap12" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+</discovery>

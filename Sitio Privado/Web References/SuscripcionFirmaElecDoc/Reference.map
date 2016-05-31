@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DiscoveryClientResultsFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Results>
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.ContractReference" url="http://apolo-cert/wstsf/tann_suscrip_firmelec.asmx?wsdl" filename="tann_suscrip_firmelec.wsdl" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.DiscoveryDocumentReference" url="http://apolo-cert/wstsf/tann_suscrip_firmelec.asmx?disco" filename="tann_suscrip_firmelec.disco" />
+  </Results>
+</DiscoveryClientResultsFile>
