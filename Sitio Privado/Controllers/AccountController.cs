@@ -33,7 +33,7 @@ namespace Sitio_Privado.Controllers
         private static string countryClaim = "country";
         private static string cityClaim = "city";
         private static string objectIdClaim = "http://schemas.microsoft.com/identity/claims/objectidentifier";
-        GraphApiClientHelper graphApiHelper = new GraphApiClientHelper();
+        GraphApiClientHelper graphApiClient = new GraphApiClientHelper();
 
         public ActionResult SignOut()
         {
@@ -244,7 +244,7 @@ namespace Sitio_Privado.Controllers
         private async Task<bool> RedirectChangePassword(string oid)
         {
             //Retrieve user info
-            GraphApiResponseInfo response = await graphApiHelper.GetUserByObjectId(oid);
+            GraphApiResponseInfo response = await graphApiClient.GetUserByObjectId(oid);
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
@@ -281,12 +281,37 @@ namespace Sitio_Privado.Controllers
         }
 
         [HttpPost]
-        public ActionResult ChangePassword(ChangePasswordModel model)
+        public async Task<ActionResult> ChangePassword(ChangePasswordModel model)
         {
-            if (!ModelState.IsValid)
-                return View();
+            if (ModelState.IsValid)
+            {
+                var usuario = this.Usuario;
 
-            return RedirectToAction("Index", "Home");
+                //Retrieve user info
+                Claim idClaim = ((ClaimsIdentity)usuario.Identity).Claims.Where(c => c.Type == objectIdClaim).First();
+                GraphApiResponseInfo getUserResponse = await graphApiClient.GetUserByObjectId(idClaim.Value);
+                if (getUserResponse.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    getUserResponse.User.TemporalPassword = model.Password;
+                    getUserResponse.User.IsTemporalPassword = false;
+                    getUserResponse.User.TemporalPasswordTimestamp = DateTime.MinValue.ToString();
+                    var apiResponse = await graphApiClient.ResetUserPassword(getUserResponse.User.ObjectId, getUserResponse.User);
+
+                    if (apiResponse.StatusCode != System.Net.HttpStatusCode.NoContent)
+                    {
+                        ModelState.AddModelError("", "Error al intentar cambiar la contraseña. Intente otra vez.");
+                        return View(model);
+                    }
+                }
+
+                //Display success message: "Su contraseña ha sido modificadda con éxito" TODO
+
+                //Send email TODO
+
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View(model);
         }
     }
 }
