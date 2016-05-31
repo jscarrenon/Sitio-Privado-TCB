@@ -8,7 +8,9 @@
         circularizacionPendiente: boolean;
         getCircularizacionPendiente(): void;
         documentosPendientes: number;
+        susFirmaElecDoc: number;
         getDocumentosPendientes(): void;
+        setSusFirmaElecDoc(glosa: string, respuesta: string): void;
     }
 
     export class AuthService implements IAuth {
@@ -16,6 +18,7 @@
         usuario: app.domain.IUsuario;
         circularizacionPendiente: boolean;
         documentosPendientes: number;
+        susFirmaElecDoc: number;
                 
         static $inject = ['constantService', 'dataService', 'extrasService'];
         constructor(private constantService: ConstantService,
@@ -24,6 +27,7 @@
             this.circularizacionPendiente = false;
             this.documentosPendientes = 0;
             this.getUsuarioActual();
+            this.getSusFirmaElecDoc();
         }
 
         getUsuarioActual(): void {
@@ -65,6 +69,22 @@
                 .then((result: app.domain.IDocumentosPendientesCantidadResultado) => {
                     this.documentosPendientes = result.Resultado;
                 });
+        }
+
+        getSusFirmaElecDoc(): void {
+            this.dataService.postWebService(this.constantService.apiDocumentoURI + 'getConsultaRespuestaSusFirmaElecDoc','')
+                .then((result: number) => {
+                    this.susFirmaElecDoc = result;
+                });
+        }
+
+        setSusFirmaElecDoc(glosa: string, respuesta: string): void {
+            this.susFirmaElecDoc = -99;
+            var input: app.domain.ISuscripcionFirmaElectronica = new app.domain.SuscripcionFirmaElectronica(respuesta,glosa);
+            this.dataService.postWebService(this.constantService.apiDocumentoURI + 'setRespuestaSusFirmaElecDoc', input )
+                .then((result: number) => {
+                    this.susFirmaElecDoc = result;
+                }).finally(() => this.susFirmaElecDoc = -1);
         }
     }
 

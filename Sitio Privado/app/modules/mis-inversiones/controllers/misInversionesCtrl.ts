@@ -63,6 +63,13 @@
             this.templates[3] = "estado-documentos.html";
             this.templates[4] = "circularizacion.html";
         }
+
+        setResponseSusFirmaElecDoc(respuesta: string) {
+            this.dataService.postWebService(this.constantService.apiDocumentoURI + 'setRespuestaSusFirmaElecDoc', respuesta)
+                .then((result: string) => {
+                    
+                });
+        }
     }
     angular.module('tannerPrivadoApp')
         .controller('MisInversionesCtrl', MisInversionesCtrl);

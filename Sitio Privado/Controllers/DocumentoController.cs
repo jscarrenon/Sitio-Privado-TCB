@@ -8,6 +8,7 @@ using Sitio_Privado.Models;
 using Sitio_Privado.DocumentosPendientesFirma;
 using System.Threading.Tasks;
 using Sitio_Privado.Extras;
+using Sitio_Privado.SuscripcionFirmaElecDoc;
 
 namespace Sitio_Privado.Controllers
 {
@@ -145,6 +146,42 @@ namespace Sitio_Privado.Controllers
                 return NotFound();
             }
         }
+
+
+        [HttpPost]
+        public async Task<IHttpActionResult> setRespuestaSusFirmaElecDoc([FromBody]SuscripcionFirmaElectronica input)
+        {
+            try
+            {
+                var usuario = await GetUsuarioActual();
+                RespuestaClienteSusFirmaElectronicaDocs resultado = new RespuestaClienteSusFirmaElectronicaDocs(usuario.Rut, input.Glosa, input.Respuesta);
+
+                return Ok(resultado.Resultado);
+            }
+            catch (Exception e)
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpPost]
+        public async Task<IHttpActionResult> getConsultaRespuestaSusFirmaElecDoc()
+        {
+            try
+            {
+                var usuario = await GetUsuarioActual();
+
+                ConsultaRespuestaSusFirmaElecDocs resultado = new ConsultaRespuestaSusFirmaElecDocs(usuario.Rut);
+
+                return Ok(resultado.Resultado);
+            }
+            catch (Exception e)
+            {
+                return NotFound();
+            }
+        }
+
+
     }
 }
 
