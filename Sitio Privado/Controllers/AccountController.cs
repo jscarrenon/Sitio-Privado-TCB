@@ -17,6 +17,7 @@ using HtmlAgilityPack;
 using ScrapySharp.Extensions;
 using Sitio_Privado.Extras;
 using Newtonsoft.Json.Linq;
+using Sitio_Privado.Helpers;
 
 namespace Sitio_Privado.Controllers
 {
@@ -28,6 +29,11 @@ namespace Sitio_Privado.Controllers
         private static string tenant = ConfigurationManager.AppSettings["ida:Tenant"];
         private static string redirectUri = ConfigurationManager.AppSettings["ida:RedirectUri"];
         private static string signInPolicy = ConfigurationManager.AppSettings["ida:SignInPolicyId"];
+
+        private static string countryClaim = "country";
+        private static string cityClaim = "city";
+        private static string objectIdClaim = "http://schemas.microsoft.com/identity/claims/objectidentifier";
+        GraphApiClientHelper graphApiHelper = new GraphApiClientHelper();
 
         public ActionResult SignOut()
         {
@@ -63,12 +69,18 @@ namespace Sitio_Privado.Controllers
                 return View(model); //TODO change
             }
 
+            if (await RedirectChangePassword(token.Oid))
+            {
+                return View("ChangePassword");
+            }
+
             var identity = new ClaimsIdentity(DefaultAuthenticationTypes.ApplicationCookie);
-            identity.AddClaim(new Claim("http://schemas.microsoft.com/identity/claims/objectidentifier", token.Oid));
+            identity.AddClaim(new Claim(objectIdClaim, token.Oid));
             identity.AddClaim(new Claim(ClaimTypes.GivenName, token.Names));
             identity.AddClaim(new Claim(ClaimTypes.Surname, token.Surnames));
-            identity.AddClaim(new Claim("country", token.Country));
-            identity.AddClaim(new Claim("city", token.City));
+            identity.AddClaim(new Claim(countryClaim, token.Country));
+            identity.AddClaim(new Claim(cityClaim, token.City));
+
             var ctx = Request.GetOwinContext();
             var authManager = ctx.Authentication;
             authManager.SignIn(identity);
@@ -227,6 +239,39 @@ namespace Sitio_Privado.Controllers
             parameters["p"] = signInPolicy;
             builder.Query = parameters.ToString();
             return builder.Uri;
+        }
+
+        private async Task<bool> RedirectChangePassword(string oid)
+        {
+            //Retrieve user info
+            GraphApiResponseInfo response = await graphApiHelper.GetUserByObjectId(oid);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                if (response.User.IsTemporalPassword)
+                {
+                    DateTime temporalPasswordTimestamp = DateTime.Parse(response.User.TemporalPasswordTimestamp);
+                    double hours = double.Parse(ConfigurationManager.AppSettings["tempPass:Timeout"]);
+                    DateTime limit = temporalPasswordTimestamp.AddHours(hours);
+
+                    if (DateTime.Now <= limit)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        throw new TimeoutException("Su contraseña temporal ha caducado. Por favor solicite una nueva.");
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                throw new NullReferenceException("No se encontró información asociada al usuario.");
+            }
         }
     }
 }
