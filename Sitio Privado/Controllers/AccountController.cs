@@ -69,11 +69,6 @@ namespace Sitio_Privado.Controllers
                 return View(model); //TODO change
             }
 
-            if (await RedirectChangePassword(token.Oid))
-            {
-                return View("ChangePassword");
-            }
-
             var identity = new ClaimsIdentity(DefaultAuthenticationTypes.ApplicationCookie);
             identity.AddClaim(new Claim(objectIdClaim, token.Oid));
             identity.AddClaim(new Claim(ClaimTypes.GivenName, token.Names));
@@ -84,6 +79,11 @@ namespace Sitio_Privado.Controllers
             var ctx = Request.GetOwinContext();
             var authManager = ctx.Authentication;
             authManager.SignIn(identity);
+
+            if (await RedirectChangePassword(token.Oid))
+            {
+                return RedirectToAction("ChangePassword");
+            }
 
             return RedirectToAction("Index", "Home"); 
         }
@@ -272,6 +272,12 @@ namespace Sitio_Privado.Controllers
             {
                 throw new NullReferenceException("No se encontró información asociada al usuario.");
             }
+        }
+
+        [HttpGet]
+        public ActionResult ChangePassword()
+        {
+            return View();
         }
     }
 }
