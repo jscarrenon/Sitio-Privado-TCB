@@ -311,6 +311,7 @@
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Extras\ExtraHelpers.cs" />
     <Compile Include="Extras\IdToken.cs" />
+    <Compile Include="Extras\PasswordExpiredAttribute.cs" />
     <Compile Include="Extras\PasswordFormatValidationAttribute.cs" />
     <Compile Include="Extras\RutValidationAttribute.cs" />
     <Compile Include="Extras\Utils.cs" />

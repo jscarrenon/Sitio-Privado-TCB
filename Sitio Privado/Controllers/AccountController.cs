@@ -19,6 +19,7 @@ using Sitio_Privado.Extras;
 using Newtonsoft.Json.Linq;
 using Sitio_Privado.Helpers;
 using System.Net.Configuration;
+using Microsoft.Owin.Security;
 
 namespace Sitio_Privado.Controllers
 {
@@ -31,9 +32,11 @@ namespace Sitio_Privado.Controllers
         private static string redirectUri = ConfigurationManager.AppSettings["ida:RedirectUri"];
         private static string signInPolicy = ConfigurationManager.AppSettings["ida:SignInPolicyId"];
 
-        private static string countryClaim = "country";
-        private static string cityClaim = "city";
-        private static string objectIdClaim = "http://schemas.microsoft.com/identity/claims/objectidentifier";
+        private const string countryClaim = "country";
+        private const string cityClaim = "city";
+        private const string isTemporalPasswordClaim = "isTemporalPassword";
+        private const string TemporalPasswordTimestampClaim = "temporalPasswordTimestamp";
+        private const string objectIdClaim = "http://schemas.microsoft.com/identity/claims/objectidentifier";
         GraphApiClientHelper graphApiClient = new GraphApiClientHelper();
 
         public ActionResult SignOut()
@@ -71,20 +74,11 @@ namespace Sitio_Privado.Controllers
             }
 
             var identity = new ClaimsIdentity(DefaultAuthenticationTypes.ApplicationCookie);
-            identity.AddClaim(new Claim(objectIdClaim, token.Oid));
-            identity.AddClaim(new Claim(ClaimTypes.GivenName, token.Names));
-            identity.AddClaim(new Claim(ClaimTypes.Surname, token.Surnames));
-            identity.AddClaim(new Claim(countryClaim, token.Country));
-            identity.AddClaim(new Claim(cityClaim, token.City));
+            await SetSignInClaims(identity, token);
 
             var ctx = Request.GetOwinContext();
             var authManager = ctx.Authentication;
             authManager.SignIn(identity);
-
-            if (await RedirectChangePassword(token.Oid))
-            {
-                return RedirectToAction("ChangePassword");
-            }
 
             return RedirectToAction("Index", "Home"); 
         }
@@ -242,31 +236,29 @@ namespace Sitio_Privado.Controllers
             return builder.Uri;
         }
 
-        private async Task<bool> RedirectChangePassword(string oid)
+        private async Task SetSignInClaims(ClaimsIdentity identity, IdToken token)
         {
+            identity.AddClaim(new Claim(objectIdClaim, token.Oid));
+            identity.AddClaim(new Claim(ClaimTypes.GivenName, token.Names));
+            identity.AddClaim(new Claim(ClaimTypes.Surname, token.Surnames));
+            identity.AddClaim(new Claim(countryClaim, token.Country));
+            identity.AddClaim(new Claim(cityClaim, token.City));
+
             //Retrieve user info
-            GraphApiResponseInfo response = await graphApiClient.GetUserByObjectId(oid);
+            GraphApiResponseInfo response = await graphApiClient.GetUserByObjectId(token.Oid);
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
+                DateTime temporalPasswordTimestamp = DateTime.Parse(response.User.TemporalPasswordTimestamp);
+                identity.AddClaim(new Claim(TemporalPasswordTimestampClaim, temporalPasswordTimestamp.ToString()));
+
                 if (response.User.IsTemporalPassword)
                 {
-                    DateTime temporalPasswordTimestamp = DateTime.Parse(response.User.TemporalPasswordTimestamp);
-                    double hours = double.Parse(ConfigurationManager.AppSettings["tempPass:Timeout"]);
-                    DateTime limit = temporalPasswordTimestamp.AddHours(hours);
-
-                    if (DateTime.Now <= limit)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        throw new TimeoutException("Su contraseña temporal ha caducado. Por favor solicite una nueva.");
-                    }
+                    identity.AddClaim(new Claim(isTemporalPasswordClaim, bool.TrueString));
                 }
                 else
                 {
-                    return false;
+                    identity.AddClaim(new Claim(isTemporalPasswordClaim, bool.FalseString));
                 }
             }
             else
@@ -296,6 +288,7 @@ namespace Sitio_Privado.Controllers
                     getUserResponse.User.TemporalPassword = model.Password;
                     getUserResponse.User.IsTemporalPassword = false;
                     getUserResponse.User.TemporalPasswordTimestamp = DateTime.MinValue.ToString();
+
                     var apiResponse = await graphApiClient.ResetUserPassword(getUserResponse.User.ObjectId, getUserResponse.User);
 
                     if (apiResponse.StatusCode != System.Net.HttpStatusCode.NoContent)
@@ -305,6 +298,19 @@ namespace Sitio_Privado.Controllers
                     }
                     else
                     {
+                        //Update claims
+                        Claim claim = ((ClaimsIdentity)this.User.Identity).Claims.Where(c => c.Type == isTemporalPasswordClaim).First();
+                        ((ClaimsIdentity)this.User.Identity).RemoveClaim(claim);
+                        ((ClaimsIdentity)this.User.Identity).AddClaim(new Claim(isTemporalPasswordClaim, bool.FalseString));
+
+                        claim = ((ClaimsIdentity)this.User.Identity).Claims.Where(c => c.Type == TemporalPasswordTimestampClaim).First();
+                        ((ClaimsIdentity)this.User.Identity).RemoveClaim(claim);
+                        ((ClaimsIdentity)this.User.Identity).AddClaim(new Claim(TemporalPasswordTimestampClaim, DateTime.MinValue.ToString()));
+
+                        var ctx = Request.GetOwinContext();
+                        var authManager = ctx.Authentication;
+                        authManager.AuthenticationResponseGrant = new AuthenticationResponseGrant(new ClaimsPrincipal(this.User.Identity), new AuthenticationProperties() { IsPersistent = true });
+
                         //Sign out B2C TODO
 
                         //Display success message: "Su contraseña ha sido modificadda con éxito" TODO
