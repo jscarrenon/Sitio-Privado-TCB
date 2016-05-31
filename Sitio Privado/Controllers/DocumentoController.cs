@@ -149,7 +149,7 @@ namespace Sitio_Privado.Controllers
 
 
         [HttpPost]
-        public async Task<IHttpActionResult> setRespuestaSusFirmaElecDoc([FromBody]SuscripcionFirmaElectronica input)
+        public async Task<IHttpActionResult> SetRespuestaSusFirmaElecDoc([FromBody]SuscripcionFirmaElectronica input)
         {
             try
             {
@@ -165,7 +165,7 @@ namespace Sitio_Privado.Controllers
         }
 
         [HttpPost]
-        public async Task<IHttpActionResult> getConsultaRespuestaSusFirmaElecDoc()
+        public async Task<IHttpActionResult> GetConsultaRespuestaSusFirmaElecDoc()
         {
             try
             {

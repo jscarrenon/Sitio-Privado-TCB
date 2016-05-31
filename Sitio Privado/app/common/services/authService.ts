@@ -72,7 +72,7 @@
         }
 
         getSusFirmaElecDoc(): void {
-            this.dataService.postWebService(this.constantService.apiDocumentoURI + 'getConsultaRespuestaSusFirmaElecDoc','')
+            this.dataService.postWebService(this.constantService.apiDocumentoURI + 'GetConsultaRespuestaSusFirmaElecDoc','')
                 .then((result: number) => {
                     this.susFirmaElecDoc = result;
                 });
@@ -81,7 +81,7 @@
         setSusFirmaElecDoc(glosa: string, respuesta: string): void {
             this.susFirmaElecDoc = -99;
             var input: app.domain.ISuscripcionFirmaElectronica = new app.domain.SuscripcionFirmaElectronica(respuesta,glosa);
-            this.dataService.postWebService(this.constantService.apiDocumentoURI + 'setRespuestaSusFirmaElecDoc', input )
+            this.dataService.postWebService(this.constantService.apiDocumentoURI + 'SetRespuestaSusFirmaElecDoc', input )
                 .then((result: number) => {
                     this.susFirmaElecDoc = result;
                 }).finally(() => this.susFirmaElecDoc = -1);

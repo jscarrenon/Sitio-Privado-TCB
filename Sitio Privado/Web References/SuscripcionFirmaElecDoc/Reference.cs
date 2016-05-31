@@ -13,100 +13,119 @@
 // 
 #pragma warning disable 1591
 
-namespace Sitio_Privado.SuscripcionFirmaElecDoc {
+namespace Sitio_Privado.SuscripcionFirmaElecDoc
+{
     using System;
     using System.Web.Services;
     using System.Diagnostics;
     using System.Web.Services.Protocols;
     using System.Xml.Serialization;
     using System.ComponentModel;
-    
-    
+
+
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1067.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Web.Services.WebServiceBindingAttribute(Name="tann_suscrip_firmelecSoap", Namespace="http://tempuri.org/")]
-    public partial class tann_suscrip_firmelec : System.Web.Services.Protocols.SoapHttpClientProtocol {
-        
+    [System.Web.Services.WebServiceBindingAttribute(Name = "tann_suscrip_firmelecSoap", Namespace = "http://tempuri.org/")]
+    public partial class tann_suscrip_firmelec : System.Web.Services.Protocols.SoapHttpClientProtocol
+    {
+
         private Authentication authenticationValueField;
-        
+
         private System.Threading.SendOrPostCallback reg_resp_clienteOperationCompleted;
-        
+
         private System.Threading.SendOrPostCallback val_resp_clienteOperationCompleted;
-        
+
         private bool useDefaultCredentialsSetExplicitly;
-        
+
         /// <remarks/>
-        public tann_suscrip_firmelec() {
+        public tann_suscrip_firmelec()
+        {
             this.Url = global::Sitio_Privado.Properties.Settings.Default.Sitio_Privado_SuscripcionFirmaElecDoc_tann_suscrip_firmelec;
-            if ((this.IsLocalFileSystemWebService(this.Url) == true)) {
+            if ((this.IsLocalFileSystemWebService(this.Url) == true))
+            {
                 this.UseDefaultCredentials = true;
                 this.useDefaultCredentialsSetExplicitly = false;
             }
-            else {
+            else
+            {
                 this.useDefaultCredentialsSetExplicitly = true;
             }
         }
-        
-        public Authentication AuthenticationValue {
-            get {
+
+        public Authentication AuthenticationValue
+        {
+            get
+            {
                 return this.authenticationValueField;
             }
-            set {
+            set
+            {
                 this.authenticationValueField = value;
             }
         }
-        
-        public new string Url {
-            get {
+
+        public new string Url
+        {
+            get
+            {
                 return base.Url;
             }
-            set {
-                if ((((this.IsLocalFileSystemWebService(base.Url) == true) 
-                            && (this.useDefaultCredentialsSetExplicitly == false)) 
-                            && (this.IsLocalFileSystemWebService(value) == false))) {
+            set
+            {
+                if ((((this.IsLocalFileSystemWebService(base.Url) == true)
+                            && (this.useDefaultCredentialsSetExplicitly == false))
+                            && (this.IsLocalFileSystemWebService(value) == false)))
+                {
                     base.UseDefaultCredentials = false;
                 }
                 base.Url = value;
             }
         }
-        
-        public new bool UseDefaultCredentials {
-            get {
+
+        public new bool UseDefaultCredentials
+        {
+            get
+            {
                 return base.UseDefaultCredentials;
             }
-            set {
+            set
+            {
                 base.UseDefaultCredentials = value;
                 this.useDefaultCredentialsSetExplicitly = true;
             }
         }
-        
+
         /// <remarks/>
         public event reg_resp_clienteCompletedEventHandler reg_resp_clienteCompleted;
-        
+
         /// <remarks/>
         public event val_resp_clienteCompletedEventHandler val_resp_clienteCompleted;
-        
+
         /// <remarks/>
         [System.Web.Services.Protocols.SoapHeaderAttribute("AuthenticationValue")]
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/reg_resp_cliente", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public _itemWs reg_resp_cliente(string _rut, string _glosa, string respuesta) {
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/reg_resp_cliente", RequestNamespace = "http://tempuri.org/", ResponseNamespace = "http://tempuri.org/", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public _itemWs reg_resp_cliente(string _rut, string _glosa, string respuesta)
+        {
             object[] results = this.Invoke("reg_resp_cliente", new object[] {
                         _rut,
                         _glosa,
                         respuesta});
             return ((_itemWs)(results[0]));
         }
-        
+
         /// <remarks/>
-        public void reg_resp_clienteAsync(string _rut, string _glosa, string respuesta) {
+        public void reg_resp_clienteAsync(string _rut, string _glosa, string respuesta)
+        {
             this.reg_resp_clienteAsync(_rut, _glosa, respuesta, null);
         }
-        
+
         /// <remarks/>
-        public void reg_resp_clienteAsync(string _rut, string _glosa, string respuesta, object userState) {
-            if ((this.reg_resp_clienteOperationCompleted == null)) {
+        public void reg_resp_clienteAsync(string _rut, string _glosa, string respuesta, object userState)
+        {
+            if ((this.reg_resp_clienteOperationCompleted == null))
+            {
                 this.reg_resp_clienteOperationCompleted = new System.Threading.SendOrPostCallback(this.Onreg_resp_clienteOperationCompleted);
             }
             this.InvokeAsync("reg_resp_cliente", new object[] {
@@ -114,189 +133,226 @@ namespace Sitio_Privado.SuscripcionFirmaElecDoc {
                         _glosa,
                         respuesta}, this.reg_resp_clienteOperationCompleted, userState);
         }
-        
-        private void Onreg_resp_clienteOperationCompleted(object arg) {
-            if ((this.reg_resp_clienteCompleted != null)) {
+
+        private void Onreg_resp_clienteOperationCompleted(object arg)
+        {
+            if ((this.reg_resp_clienteCompleted != null))
+            {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.reg_resp_clienteCompleted(this, new reg_resp_clienteCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
-        
+
         /// <remarks/>
         [System.Web.Services.Protocols.SoapHeaderAttribute("AuthenticationValue")]
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/val_resp_cliente", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public _itemWs val_resp_cliente(string _rut) {
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/val_resp_cliente", RequestNamespace = "http://tempuri.org/", ResponseNamespace = "http://tempuri.org/", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public _itemWs val_resp_cliente(string _rut)
+        {
             object[] results = this.Invoke("val_resp_cliente", new object[] {
                         _rut});
             return ((_itemWs)(results[0]));
         }
-        
+
         /// <remarks/>
-        public void val_resp_clienteAsync(string _rut) {
+        public void val_resp_clienteAsync(string _rut)
+        {
             this.val_resp_clienteAsync(_rut, null);
         }
-        
+
         /// <remarks/>
-        public void val_resp_clienteAsync(string _rut, object userState) {
-            if ((this.val_resp_clienteOperationCompleted == null)) {
+        public void val_resp_clienteAsync(string _rut, object userState)
+        {
+            if ((this.val_resp_clienteOperationCompleted == null))
+            {
                 this.val_resp_clienteOperationCompleted = new System.Threading.SendOrPostCallback(this.Onval_resp_clienteOperationCompleted);
             }
             this.InvokeAsync("val_resp_cliente", new object[] {
                         _rut}, this.val_resp_clienteOperationCompleted, userState);
         }
-        
-        private void Onval_resp_clienteOperationCompleted(object arg) {
-            if ((this.val_resp_clienteCompleted != null)) {
+
+        private void Onval_resp_clienteOperationCompleted(object arg)
+        {
+            if ((this.val_resp_clienteCompleted != null))
+            {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.val_resp_clienteCompleted(this, new val_resp_clienteCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
-        
+
         /// <remarks/>
-        public new void CancelAsync(object userState) {
+        public new void CancelAsync(object userState)
+        {
             base.CancelAsync(userState);
         }
-        
-        private bool IsLocalFileSystemWebService(string url) {
-            if (((url == null) 
-                        || (url == string.Empty))) {
+
+        private bool IsLocalFileSystemWebService(string url)
+        {
+            if (((url == null)
+                        || (url == string.Empty)))
+            {
                 return false;
             }
             System.Uri wsUri = new System.Uri(url);
-            if (((wsUri.Port >= 1024) 
-                        && (string.Compare(wsUri.Host, "localHost", System.StringComparison.OrdinalIgnoreCase) == 0))) {
+            if (((wsUri.Port >= 1024)
+                        && (string.Compare(wsUri.Host, "localHost", System.StringComparison.OrdinalIgnoreCase) == 0)))
+            {
                 return true;
             }
             return false;
         }
     }
-    
+
     /// <comentarios/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1067.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/", IsNullable=false)]
-    public partial class Authentication : System.Web.Services.Protocols.SoapHeader {
-        
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tempuri.org/")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/", IsNullable = false)]
+    public partial class Authentication : System.Web.Services.Protocols.SoapHeader
+    {
+
         private string passwordField;
-        
+
         private string userNameField;
-        
+
         private System.Xml.XmlAttribute[] anyAttrField;
-        
+
         /// <comentarios/>
-        public string Password {
-            get {
+        public string Password
+        {
+            get
+            {
                 return this.passwordField;
             }
-            set {
+            set
+            {
                 this.passwordField = value;
             }
         }
-        
+
         /// <comentarios/>
-        public string UserName {
-            get {
+        public string UserName
+        {
+            get
+            {
                 return this.userNameField;
             }
-            set {
+            set
+            {
                 this.userNameField = value;
             }
         }
-        
+
         /// <comentarios/>
         [System.Xml.Serialization.XmlAnyAttributeAttribute()]
-        public System.Xml.XmlAttribute[] AnyAttr {
-            get {
+        public System.Xml.XmlAttribute[] AnyAttr
+        {
+            get
+            {
                 return this.anyAttrField;
             }
-            set {
+            set
+            {
                 this.anyAttrField = value;
             }
         }
     }
-    
+
     /// <comentarios/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1067.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
-    public partial class _itemWs {
-        
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tempuri.org/")]
+    public partial class _itemWs
+    {
+
         private string conceptoField;
-        
+
         private double _valorField;
-        
+
         /// <comentarios/>
-        public string concepto {
-            get {
+        public string concepto
+        {
+            get
+            {
                 return this.conceptoField;
             }
-            set {
+            set
+            {
                 this.conceptoField = value;
             }
         }
-        
+
         /// <comentarios/>
-        public double _valor {
-            get {
+        public double _valor
+        {
+            get
+            {
                 return this._valorField;
             }
-            set {
+            set
+            {
                 this._valorField = value;
             }
         }
     }
-    
+
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1067.0")]
     public delegate void reg_resp_clienteCompletedEventHandler(object sender, reg_resp_clienteCompletedEventArgs e);
-    
+
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1067.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class reg_resp_clienteCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
+    public partial class reg_resp_clienteCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs
+    {
+
         private object[] results;
-        
-        internal reg_resp_clienteCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
+
+        internal reg_resp_clienteCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+                base(exception, cancelled, userState)
+        {
             this.results = results;
         }
-        
+
         /// <remarks/>
-        public _itemWs Result {
-            get {
+        public _itemWs Result
+        {
+            get
+            {
                 this.RaiseExceptionIfNecessary();
                 return ((_itemWs)(this.results[0]));
             }
         }
     }
-    
+
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1067.0")]
     public delegate void val_resp_clienteCompletedEventHandler(object sender, val_resp_clienteCompletedEventArgs e);
-    
+
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1067.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class val_resp_clienteCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
+    public partial class val_resp_clienteCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs
+    {
+
         private object[] results;
-        
-        internal val_resp_clienteCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
+
+        internal val_resp_clienteCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+                base(exception, cancelled, userState)
+        {
             this.results = results;
         }
-        
+
         /// <remarks/>
-        public _itemWs Result {
-            get {
+        public _itemWs Result
+        {
+            get
+            {
                 this.RaiseExceptionIfNecessary();
                 return ((_itemWs)(this.results[0]));
             }
