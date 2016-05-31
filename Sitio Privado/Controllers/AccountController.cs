@@ -18,6 +18,7 @@ using ScrapySharp.Extensions;
 using Sitio_Privado.Extras;
 using Newtonsoft.Json.Linq;
 using Sitio_Privado.Helpers;
+using System.Net.Configuration;
 
 namespace Sitio_Privado.Controllers
 {
@@ -302,13 +303,35 @@ namespace Sitio_Privado.Controllers
                         ModelState.AddModelError("", "Error al intentar cambiar la contraseña. Intente otra vez.");
                         return View(model);
                     }
+                    else
+                    {
+                        //Sign out B2C TODO
+
+                        //Display success message: "Su contraseña ha sido modificadda con éxito" TODO
+
+                        //Send mail
+                        try
+                        {
+                            SmtpSection settings = (SmtpSection)ConfigurationManager.GetSection("system.net/mailSettings/smtp");
+                            var email = new ChangePasswordEmailModel
+                            {
+                                From = settings.From,
+                                User = getUserResponse.User
+                            };
+                            email.Send();
+                        }
+                        catch(Exception e)
+                        {
+                            //TODO
+                        }
+
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
-
-                //Display success message: "Su contraseña ha sido modificadda con éxito" TODO
-
-                //Send email TODO
-
-                return RedirectToAction("Index", "Home");
+                else
+                {
+                    throw new NullReferenceException("No se encontró información asociada al usuario.");
+                }
             }
 
             return View(model);

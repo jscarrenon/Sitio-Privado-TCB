@@ -372,6 +372,7 @@
     <Compile Include="Helpers\GraphApiResponseInfo.cs" />
     <Compile Include="Models\ChangePasswordModel.cs" />
     <Compile Include="Models\CircularizacionModel.cs" />
+    <Compile Include="Models\ChangePasswordEmailModel.cs" />
     <Compile Include="Models\PasswordRecoveryEmailModel.cs" />
     <Compile Include="Models\IndicesModel.cs" />
     <Compile Include="Models\DocumentoModel.cs" />
@@ -443,6 +444,7 @@
     <Content Include="Views\Emails\PasswordRecoveryEmailModel.cshtml" />
     <Content Include="Views\Emails\_ViewStart.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Emails\ChangePasswordEmailModel.cshtml" />
     <None Include="Web References\CartolaResumida\tann_cartola_resumida.disco" />
     <Content Include="app\modules\mis-inversiones\templates\estado-documentos_respuesta.html" />
     <Content Include="Resources\img\favicon.ico" />
