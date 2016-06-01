@@ -8,6 +8,11 @@
         fecha: Date;
         aceptaCondiciones: boolean;
         changeAceptaCondiciones(): void;
+        btnAceptar: boolean;
+        btnRechazar: boolean;
+        btnCerrar: boolean;
+        divInformativo: boolean;
+        condiciones: boolean;
     }
 
     export class ModalInstanceCtrl implements IModalInstanceViewModel {
@@ -16,12 +21,22 @@
         authService: app.common.services.AuthService;
         aceptaCondiciones: boolean;
         static $inject = ['$uibModalInstance', 'authService'];
+        btnAceptar: boolean;
+        btnRechazar: boolean;
+        btnCerrar: boolean;
+        divInformativo: boolean;
+        condiciones: boolean;
         constructor(private $uibModalInstance: ng.ui.bootstrap.IModalServiceInstance,
                     private authSer: app.common.services.AuthService) {
             
             this.fecha = new Date();
             this.authService = authSer;
             this.aceptaCondiciones = false;
+            this.btnAceptar = true;
+            this.btnRechazar = true;
+            this.btnCerrar = false;
+            this.divInformativo = false;
+            this.condiciones = true;
         }
 
         ok(): void {
@@ -34,10 +49,20 @@
 
         aceptar(): void {
             if (this.aceptaCondiciones) {
-                this.authService.setSusFirmaElecDoc('aceptado', '1');
-                this.$uibModalInstance.close();
-            }
+                this.authService.setSusFirmaElecDoc('aceptado', '1')
+                    .then(function (data) {
+                        if (data == 1) {
+                      }
+                    });
+
+                this.divInformativo = true;
+                this.btnAceptar = false;
+                this.btnRechazar = false;
+                this.btnCerrar = true;
+                this.condiciones = false;
+            }    
         }
+        
 
         rechazar(): void {
             if (this.aceptaCondiciones) {
@@ -53,7 +78,6 @@
                 this.aceptaCondiciones = false;
             }
         }
-
     }
 
     angular.module('tannerPrivadoApp')
