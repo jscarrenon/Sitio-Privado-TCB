@@ -15,33 +15,35 @@ namespace Sitio_Privado.Filters
 
         public override void OnAuthorization(System.Web.Mvc.AuthorizationContext filterContext)
         {
+            if (filterContext.ActionDescriptor.GetCustomAttributes(typeof(SkipPasswordExpiredAttribute), false).Any())
+            {
+                return;
+            }
+
             IPrincipal user = filterContext.HttpContext.User;
 
-            if(filterContext.HttpContext.Request.Url.AbsolutePath != "/Account/ChangePassword")
+            if (user != null && user.Identity.IsAuthenticated)
             {
-                if (user != null && user.Identity.IsAuthenticated)
+                Claim claim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == isTemporalPasswordClaim).First();
+                bool isTemporalPassword = bool.Parse(claim.Value);
+
+                claim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == TemporalPasswordTimestampClaim).First();
+                DateTime temporalPasswordTimestamp = DateTime.Parse(claim.Value);
+
+                if (isTemporalPassword)
                 {
-                    Claim claim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == isTemporalPasswordClaim).First();
-                    bool isTemporalPassword = bool.Parse(claim.Value);
+                    DateTime limit = temporalPasswordTimestamp.AddHours(passwordExpiresInHours);
 
-                    claim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == TemporalPasswordTimestampClaim).First();
-                    DateTime temporalPasswordTimestamp = DateTime.Parse(claim.Value);
-
-                    if (isTemporalPassword)
+                    if (DateTime.Now <= limit)
                     {
-                        DateTime limit = temporalPasswordTimestamp.AddHours(passwordExpiresInHours);
-
-                        if (DateTime.Now <= limit)
-                        {
-                            filterContext.HttpContext.Response.Redirect(string.Format("~/{0}/{1}?{2}", "Account", "ChangePassword", "reason=expired"));
-                        }
-                        else
-                        {
-                            throw new TimeoutException("Su contraseña temporal ha caducado. Por favor solicite una nueva.");
-                        }
-                    }                    
-                }
-            }
+                        filterContext.HttpContext.Response.Redirect(string.Format("~/{0}/{1}?{2}", "Account", "ChangePassword", "reason=expired"));
+                    }
+                    else
+                    {
+                        throw new TimeoutException("Su contraseña temporal ha caducado. Por favor solicite una nueva.");
+                    }
+                }                    
+            }            
             
             base.OnAuthorization(filterContext);
         }

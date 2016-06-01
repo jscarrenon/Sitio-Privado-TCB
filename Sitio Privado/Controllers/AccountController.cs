@@ -20,6 +20,7 @@ using Newtonsoft.Json.Linq;
 using Sitio_Privado.Helpers;
 using System.Net.Configuration;
 using Microsoft.Owin.Security;
+using Sitio_Privado.Filters;
 
 namespace Sitio_Privado.Controllers
 {
@@ -39,6 +40,7 @@ namespace Sitio_Privado.Controllers
         private const string objectIdClaim = "http://schemas.microsoft.com/identity/claims/objectidentifier";
         GraphApiClientHelper graphApiClient = new GraphApiClientHelper();
 
+        [SkipPasswordExpired]
         public ActionResult SignOut()
         {
             HttpContext.GetOwinContext().Authentication.SignOut();
@@ -267,12 +269,14 @@ namespace Sitio_Privado.Controllers
             }
         }
 
+        [SkipPasswordExpired]
         [HttpGet]
         public ActionResult ChangePassword()
         {
             return View();
         }
 
+        [SkipPasswordExpired]
         [HttpPost]
         public async Task<ActionResult> ChangePassword(ChangePasswordModel model)
         {
