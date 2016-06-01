@@ -411,6 +411,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\pdf\Anexo 1 Opción firma electrónica.pdf" />
     <None Include="Web References\CartolaResumida\tann_cartola_resumida.disco" />
     <Content Include="app\modules\mis-inversiones\templates\sus-conf-firma-electronica-docs-modal.html" />
     <Content Include="app\modules\mis-inversiones\templates\estado-documentos_respuesta.html" />
