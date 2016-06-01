@@ -5,7 +5,7 @@ using System.Security.Claims;
 using System.Security.Principal;
 using System.Web.Mvc;
 
-namespace Sitio_Privado.Extras
+namespace Sitio_Privado.Filters
 {
     public class PasswordExpiredAttribute : AuthorizeAttribute
     {
