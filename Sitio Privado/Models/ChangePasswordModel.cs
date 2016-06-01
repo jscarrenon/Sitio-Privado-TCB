@@ -8,6 +8,7 @@ namespace Sitio_Privado.Models
     {
         [Required]
         [DisplayName("Contraseña actual")]
+        [DataType(DataType.Password)]
         public string OldPassword { get; set; }
 
         [Required]
@@ -15,11 +16,13 @@ namespace Sitio_Privado.Models
         [RegularExpression(@"^([a-zA-Z0-9]+)$", ErrorMessage = "La clave sólo puede contener letras mayúsculas, minúsculas y números")]
         [PasswordFormatValidation(ErrorMessage = "La clave debe contener mayúsculas, minúsculas y números")]
         [DisplayName("Nueva contraseña")]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
         [Required]
         [DisplayName("Nueva contraseña (repetir)")]
         [Compare("Password", ErrorMessage = "Las contraseñas ingresadas no coinciden")]
+        [DataType(DataType.Password)]
         public string PasswordValidation { get; set; }
     }
 }
