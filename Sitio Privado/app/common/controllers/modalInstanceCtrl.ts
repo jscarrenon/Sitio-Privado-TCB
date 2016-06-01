@@ -26,8 +26,9 @@
         btnCerrar: boolean;
         divInformativo: boolean;
         condiciones: boolean;
+        
         constructor(private $uibModalInstance: ng.ui.bootstrap.IModalServiceInstance,
-                    private authSer: app.common.services.AuthService) {
+            private authSer: app.common.services.AuthService) {
             
             this.fecha = new Date();
             this.authService = authSer;
@@ -65,10 +66,12 @@
         
 
         rechazar(): void {
+            
             if (this.aceptaCondiciones) {
                 this.authService.setSusFirmaElecDoc('rechazado', '0');
-                this.$uibModalInstance.close();
+                this.$uibModalInstance.dismiss('cancelar');
             }
+
         }
 
         changeAceptaCondiciones(): void {
