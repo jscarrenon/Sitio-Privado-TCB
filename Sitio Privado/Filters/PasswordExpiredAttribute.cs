@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
@@ -9,7 +10,7 @@ namespace Sitio_Privado.Filters
 {
     public class PasswordExpiredAttribute : AuthorizeAttribute
     {
-        private static readonly double passwordExpiresInHours = double.Parse(ConfigurationManager.AppSettings["tempPass:Timeout"]);
+        private static readonly double passwordExpiresInHours = double.Parse(ConfigurationManager.AppSettings["tempPass:Timeout"], CultureInfo.InvariantCulture);
         private const string isTemporalPasswordClaim = "isTemporalPassword";
         private const string TemporalPasswordTimestampClaim = "temporalPasswordTimestamp";
 
