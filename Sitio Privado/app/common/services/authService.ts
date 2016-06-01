@@ -10,7 +10,7 @@
         documentosPendientes: number;
         susFirmaElecDoc: number;
         getDocumentosPendientes(): void;
-        setSusFirmaElecDoc(glosa: string, respuesta: string): void;
+        setSusFirmaElecDoc(glosa: string, respuesta: string): ng.IPromise<number>;
     }
 
     export class AuthService implements IAuth {
@@ -19,15 +19,18 @@
         circularizacionPendiente: boolean;
         documentosPendientes: number;
         susFirmaElecDoc: number;
+        private qService: ng.IQService;
                 
-        static $inject = ['constantService', 'dataService', 'extrasService'];
+        static $inject = ['constantService', 'dataService', 'extrasService', '$q'];
         constructor(private constantService: ConstantService,
             private dataService: DataService,
-            private extrasService: ExtrasService) {
+            private extrasService: ExtrasService,
+            $q: ng.IQService) {
             this.circularizacionPendiente = false;
             this.documentosPendientes = 0;
             this.getUsuarioActual();
             this.getSusFirmaElecDoc();
+            this.qService = $q;
         }
 
         getUsuarioActual(): void {
@@ -78,13 +81,16 @@
                 });
         }
 
-        setSusFirmaElecDoc(glosa: string, respuesta: string): void {
-            this.susFirmaElecDoc = -99;
+        setSusFirmaElecDoc(glosa: string, respuesta: string): ng.IPromise<number> {
+            var self = this;
+            var deferred = self.qService.defer();
             var input: app.domain.ISuscripcionFirmaElectronica = new app.domain.SuscripcionFirmaElectronica(respuesta,glosa);
             this.dataService.postWebService(this.constantService.apiDocumentoURI + 'SetRespuestaSusFirmaElecDoc', input )
                 .then((result: number) => {
-                    this.susFirmaElecDoc = result;
-                }).finally(() => this.susFirmaElecDoc = -1);
+                    deferred.resolve(result);
+                }).finally(() => deferred.resolve(-1));
+
+            return deferred.promise;
         }
     }
 

@@ -1,12 +1,18 @@
 ﻿<div class="modal-style modal2">
     <div class="pretitle"></div>
     <div class="title">Confirmación Suscripción Firma Electrónica de Documentos</div>
-    <div class="text">Confirmación para la suscripción de firma electrónica de documentos en la página web de Tanner Corredores de Bolsa.
+    <div class="text" ng-show="modal.condiciones">Confirmación para la suscripción de firma electrónica de documentos en la página web de Tanner Corredores de Bolsa.
     <br/><br />
     <input type="checkbox"  ng-click="modal.changeAceptaCondiciones()" /> He leído y acepto las <a href="/Resources/pdf/Anexo 1 Opción firma electrónica.pdf" target="_blank">condiciones legales.</a>
     </div>
     <br />
-    <div class="button green"><a href="" class="clink" ng-click="modal.aceptar()">Aceptar</a></div>
-    <div class="button button2 silver"><a href="" class="clink" ng-click="modal.rechazar()">Rechazar</a></div>
+    <div ng-show="modal.divInformativo" class="text" >
+        Respuesta ingresada correctamente.
+        <br/>El documento de formalización quedar disponible para su firma durante las próximas 24 horas (hábiles).
+    </div>
+    <br />
+    <div class="button green"  ng-show="modal.btnAceptar"><a href="" class="clink" ng-click="modal.aceptar()">Aceptar</a></div>
+    <div class="button button2 silver"  ng-show="modal.btnRechazar"><a href="" class="clink" ng-click="modal.rechazar()">Rechazar</a></div>
+    <div class="button green"  ng-show="modal.btnCerrar"><a href="" class="clink" ng-click="modal.ok()" >Cerrar</a></div>
     <button class="modal-close" ng-click="modal.cancelar()"></button>
 </div>
