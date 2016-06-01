@@ -11,8 +11,6 @@ namespace Sitio_Privado.Filters
 {
     public class PasswordExpiredAttribute : AuthorizeAttribute
     {
-        private const string isTemporalPasswordClaimKey = "isTemporalPassword";
-
         public override void OnAuthorization(System.Web.Mvc.AuthorizationContext filterContext)
         {
             if (filterContext.ActionDescriptor.GetCustomAttributes(typeof(SkipPasswordExpiredAttribute), false).Any())
@@ -24,7 +22,7 @@ namespace Sitio_Privado.Filters
 
             if (user != null && user.Identity.IsAuthenticated)
             {
-                Claim claim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == isTemporalPasswordClaimKey).First();
+                Claim claim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == Startup.isTemporalPasswordClaimKey).First();
                 bool isTemporalPassword = bool.Parse(claim.Value);
 
                 if (isTemporalPassword)

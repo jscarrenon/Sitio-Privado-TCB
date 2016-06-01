@@ -27,20 +27,11 @@ namespace Sitio_Privado.Controllers
 {
     public class AccountController : BaseController
     {
-        // App config settings
-        private static string clientId = ConfigurationManager.AppSettings["ida:ClientId"];
-        private static string aadInstance = ConfigurationManager.AppSettings["ida:AadInstance"];
-        private static string tenant = ConfigurationManager.AppSettings["ida:Tenant"];
-        private static string redirectUri = ConfigurationManager.AppSettings["ida:RedirectUri"];
-        private static string signInPolicy = ConfigurationManager.AppSettings["ida:SignInPolicyId"];
-
         private const string countryClaimKey = "country";
         private const string cityClaimKey = "city";
-        private const string isTemporalPasswordClaimKey = "isTemporalPassword";
-        private const string temporalPasswordTimestampClaimKey = "temporalPasswordTimestamp";
-        private const string objectIdClaimKey = "http://schemas.microsoft.com/identity/claims/objectidentifier";
+
         GraphApiClientHelper graphApiClient = new GraphApiClientHelper();
-        private static readonly double passwordExpiresInHours = double.Parse(ConfigurationManager.AppSettings["tempPass:Timeout"], CultureInfo.InvariantCulture);
+        private static readonly double passwordExpiresInHours = double.Parse(Startup.temporalPasswordTimeout, CultureInfo.InvariantCulture);
 
         [SkipPasswordExpired]
         public ActionResult SignOut()
@@ -200,14 +191,14 @@ namespace Sitio_Privado.Controllers
 
         private Uri GetMicrosoftLoginUri()
         {
-            UriBuilder builder = new UriBuilder(String.Format(CultureInfo.InvariantCulture, aadInstance, tenant, "/oauth2/v2.0", "/authorize"));
+            UriBuilder builder = new UriBuilder(String.Format(CultureInfo.InvariantCulture, Startup.aadInstance, Startup.tenant, "/oauth2/v2.0", "/authorize"));
             var parameters = HttpUtility.ParseQueryString(string.Empty);
-            parameters["client_Id"] = clientId;
+            parameters["client_Id"] = Startup.clientId;
             parameters["response_type"] = "id_token";
-            parameters["redirect_uri"] = redirectUri;
+            parameters["redirect_uri"] = Startup.redirectUri;
             parameters["response_mode"] = "form_post";
             parameters["scope"] = "openid";
-            parameters["p"] = signInPolicy;
+            parameters["p"] = Startup.SignInPolicyId;
             parameters["prompt"] = "login";
             parameters["nonce"] = "defaultNonce";
             builder.Query = parameters.ToString();
@@ -216,7 +207,7 @@ namespace Sitio_Privado.Controllers
 
         private Uri GetMicrosoftLoginConfirmedUri(HttpRequestMessage tokenRequest)
         {
-            UriBuilder builder = new UriBuilder(String.Format(CultureInfo.InvariantCulture, aadInstance, tenant, "/" + signInPolicy, "/api/CombinedSigninAndSignup/confirmed"));
+            UriBuilder builder = new UriBuilder(String.Format(CultureInfo.InvariantCulture, Startup.aadInstance, Startup.tenant, "/" + Startup.SignInPolicyId, "/api/CombinedSigninAndSignup/confirmed"));
             var parameters = HttpUtility.ParseQueryString(string.Empty);
 
             string csrf = tokenRequest.Headers.GetValues("X-CSRF-TOKEN").First();
@@ -225,24 +216,24 @@ namespace Sitio_Privado.Controllers
             parameters["csrf_token"] = csrf;
             parameters["tx"] = tx;
             parameters["metrics"] = "";
-            parameters["p"] = signInPolicy;
+            parameters["p"] = Startup.SignInPolicyId;
             builder.Query = parameters.ToString();
             return builder.Uri;
         }
 
         private Uri GetMicrosoftLoginSelfAssertedUri(string tx)
         {
-            UriBuilder builder = new UriBuilder(String.Format(CultureInfo.InvariantCulture, aadInstance, tenant, "/" + signInPolicy, "/SelfAsserted"));
+            UriBuilder builder = new UriBuilder(String.Format(CultureInfo.InvariantCulture, Startup.aadInstance, Startup.tenant, "/" + Startup.SignInPolicyId, "/SelfAsserted"));
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["tx"] = tx;
-            parameters["p"] = signInPolicy;
+            parameters["p"] = Startup.SignInPolicyId;
             builder.Query = parameters.ToString();
             return builder.Uri;
         }
 
         private async Task SetSignInClaims(ClaimsIdentity identity, IdToken token)
         {
-            identity.AddClaim(new Claim(objectIdClaimKey, token.Oid));
+            identity.AddClaim(new Claim(Startup.objectIdClaimKey, token.Oid));
             identity.AddClaim(new Claim(ClaimTypes.GivenName, token.Names));
             identity.AddClaim(new Claim(ClaimTypes.Surname, token.Surnames));
             identity.AddClaim(new Claim(countryClaimKey, token.Country));
@@ -254,15 +245,15 @@ namespace Sitio_Privado.Controllers
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 DateTime temporalPasswordTimestamp = DateTime.Parse(response.User.TemporalPasswordTimestamp);
-                identity.AddClaim(new Claim(temporalPasswordTimestampClaimKey, temporalPasswordTimestamp.ToString()));
+                identity.AddClaim(new Claim(Startup.temporalPasswordTimestampClaimKey, temporalPasswordTimestamp.ToString()));
 
                 if (response.User.IsTemporalPassword)
                 {
-                    identity.AddClaim(new Claim(isTemporalPasswordClaimKey, bool.TrueString));
+                    identity.AddClaim(new Claim(Startup.isTemporalPasswordClaimKey, bool.TrueString));
                 }
                 else
                 {
-                    identity.AddClaim(new Claim(isTemporalPasswordClaimKey, bool.FalseString));
+                    identity.AddClaim(new Claim(Startup.isTemporalPasswordClaimKey, bool.FalseString));
                 }
             }
             else
@@ -277,10 +268,10 @@ namespace Sitio_Privado.Controllers
         {
             IPrincipal user = this.User; 
 
-            Claim claim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == isTemporalPasswordClaimKey).First();
+            Claim claim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == Startup.isTemporalPasswordClaimKey).First();
             bool isTemporalPassword = bool.Parse(claim.Value);
 
-            claim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == temporalPasswordTimestampClaimKey).First();
+            claim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == Startup.temporalPasswordTimestampClaimKey).First();
             DateTime temporalPasswordTimestamp = DateTime.Parse(claim.Value);
 
             if (isTemporalPassword)
@@ -302,10 +293,10 @@ namespace Sitio_Privado.Controllers
         {
             IPrincipal user = this.User;
 
-            Claim isTemporalPasswordClaim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == isTemporalPasswordClaimKey).First();
+            Claim isTemporalPasswordClaim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == Startup.isTemporalPasswordClaimKey).First();
             bool isTemporalPassword = bool.Parse(isTemporalPasswordClaim.Value);
 
-            Claim temporalPasswordTimestampClaim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == temporalPasswordTimestampClaimKey).First();
+            Claim temporalPasswordTimestampClaim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == Startup.temporalPasswordTimestampClaimKey).First();
             DateTime temporalPasswordTimestamp = DateTime.Parse(temporalPasswordTimestampClaim.Value);
 
             if (isTemporalPassword)
@@ -321,7 +312,7 @@ namespace Sitio_Privado.Controllers
             if (ModelState.IsValid)
             {
                 //Retrieve user info
-                Claim idClaim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == objectIdClaimKey).First();
+                Claim idClaim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == Startup.objectIdClaimKey).First();
                 GraphApiResponseInfo getUserResponse = await graphApiClient.GetUserByObjectId(idClaim.Value);
                 if (getUserResponse.StatusCode == System.Net.HttpStatusCode.OK)
                 {
@@ -340,10 +331,10 @@ namespace Sitio_Privado.Controllers
                     {
                         //Update claims
                         ((ClaimsIdentity)user.Identity).RemoveClaim(isTemporalPasswordClaim);
-                        ((ClaimsIdentity)user.Identity).AddClaim(new Claim(isTemporalPasswordClaimKey, bool.FalseString));
+                        ((ClaimsIdentity)user.Identity).AddClaim(new Claim(Startup.isTemporalPasswordClaimKey, bool.FalseString));
 
                         ((ClaimsIdentity)user.Identity).RemoveClaim(temporalPasswordTimestampClaim);
-                        ((ClaimsIdentity)user.Identity).AddClaim(new Claim(temporalPasswordTimestampClaimKey, DateTime.MinValue.ToString()));
+                        ((ClaimsIdentity)user.Identity).AddClaim(new Claim(Startup.temporalPasswordTimestampClaimKey, DateTime.MinValue.ToString()));
 
                         var ctx = Request.GetOwinContext();
                         var authManager = ctx.Authentication;
