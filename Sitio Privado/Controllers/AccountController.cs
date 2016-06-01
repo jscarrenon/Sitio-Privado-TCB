@@ -21,6 +21,7 @@ using Sitio_Privado.Helpers;
 using System.Net.Configuration;
 using Microsoft.Owin.Security;
 using Sitio_Privado.Filters;
+using System.Security.Principal;
 
 namespace Sitio_Privado.Controllers
 {
@@ -33,12 +34,13 @@ namespace Sitio_Privado.Controllers
         private static string redirectUri = ConfigurationManager.AppSettings["ida:RedirectUri"];
         private static string signInPolicy = ConfigurationManager.AppSettings["ida:SignInPolicyId"];
 
-        private const string countryClaim = "country";
-        private const string cityClaim = "city";
-        private const string isTemporalPasswordClaim = "isTemporalPassword";
-        private const string TemporalPasswordTimestampClaim = "temporalPasswordTimestamp";
-        private const string objectIdClaim = "http://schemas.microsoft.com/identity/claims/objectidentifier";
+        private const string countryClaimKey = "country";
+        private const string cityClaimKey = "city";
+        private const string isTemporalPasswordClaimKey = "isTemporalPassword";
+        private const string temporalPasswordTimestampClaimKey = "temporalPasswordTimestamp";
+        private const string objectIdClaimKey = "http://schemas.microsoft.com/identity/claims/objectidentifier";
         GraphApiClientHelper graphApiClient = new GraphApiClientHelper();
+        private static readonly double passwordExpiresInHours = double.Parse(ConfigurationManager.AppSettings["tempPass:Timeout"], CultureInfo.InvariantCulture);
 
         [SkipPasswordExpired]
         public ActionResult SignOut()
@@ -240,11 +242,11 @@ namespace Sitio_Privado.Controllers
 
         private async Task SetSignInClaims(ClaimsIdentity identity, IdToken token)
         {
-            identity.AddClaim(new Claim(objectIdClaim, token.Oid));
+            identity.AddClaim(new Claim(objectIdClaimKey, token.Oid));
             identity.AddClaim(new Claim(ClaimTypes.GivenName, token.Names));
             identity.AddClaim(new Claim(ClaimTypes.Surname, token.Surnames));
-            identity.AddClaim(new Claim(countryClaim, token.Country));
-            identity.AddClaim(new Claim(cityClaim, token.City));
+            identity.AddClaim(new Claim(countryClaimKey, token.Country));
+            identity.AddClaim(new Claim(cityClaimKey, token.City));
 
             //Retrieve user info
             GraphApiResponseInfo response = await graphApiClient.GetUserByObjectId(token.Oid);
@@ -252,15 +254,15 @@ namespace Sitio_Privado.Controllers
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 DateTime temporalPasswordTimestamp = DateTime.Parse(response.User.TemporalPasswordTimestamp);
-                identity.AddClaim(new Claim(TemporalPasswordTimestampClaim, temporalPasswordTimestamp.ToString()));
+                identity.AddClaim(new Claim(temporalPasswordTimestampClaimKey, temporalPasswordTimestamp.ToString()));
 
                 if (response.User.IsTemporalPassword)
                 {
-                    identity.AddClaim(new Claim(isTemporalPasswordClaim, bool.TrueString));
+                    identity.AddClaim(new Claim(isTemporalPasswordClaimKey, bool.TrueString));
                 }
                 else
                 {
-                    identity.AddClaim(new Claim(isTemporalPasswordClaim, bool.FalseString));
+                    identity.AddClaim(new Claim(isTemporalPasswordClaimKey, bool.FalseString));
                 }
             }
             else
@@ -273,6 +275,24 @@ namespace Sitio_Privado.Controllers
         [HttpGet]
         public ActionResult ChangePassword()
         {
+            IPrincipal user = this.User; 
+
+            Claim claim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == isTemporalPasswordClaimKey).First();
+            bool isTemporalPassword = bool.Parse(claim.Value);
+
+            claim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == temporalPasswordTimestampClaimKey).First();
+            DateTime temporalPasswordTimestamp = DateTime.Parse(claim.Value);
+
+            if (isTemporalPassword)
+            {
+                DateTime limit = temporalPasswordTimestamp.AddHours(passwordExpiresInHours);
+
+                if (DateTime.Now > limit)
+                {
+                    ViewBag.Message = "Su contraseña temporal ha caducado. Por favor solicite una nueva.";
+                }
+            }
+
             return View();
         }
 
@@ -280,12 +300,28 @@ namespace Sitio_Privado.Controllers
         [HttpPost]
         public async Task<ActionResult> ChangePassword(ChangePasswordModel model)
         {
+            IPrincipal user = this.User;
+
+            Claim isTemporalPasswordClaim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == isTemporalPasswordClaimKey).First();
+            bool isTemporalPassword = bool.Parse(isTemporalPasswordClaim.Value);
+
+            Claim temporalPasswordTimestampClaim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == temporalPasswordTimestampClaimKey).First();
+            DateTime temporalPasswordTimestamp = DateTime.Parse(temporalPasswordTimestampClaim.Value);
+
+            if (isTemporalPassword)
+            {
+                DateTime limit = temporalPasswordTimestamp.AddHours(passwordExpiresInHours);
+
+                if (DateTime.Now > limit)
+                {
+                    return RedirectToAction("ChangePassword");
+                }
+            }
+
             if (ModelState.IsValid)
             {
-                var usuario = this.Usuario;
-
                 //Retrieve user info
-                Claim idClaim = ((ClaimsIdentity)usuario.Identity).Claims.Where(c => c.Type == objectIdClaim).First();
+                Claim idClaim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == objectIdClaimKey).First();
                 GraphApiResponseInfo getUserResponse = await graphApiClient.GetUserByObjectId(idClaim.Value);
                 if (getUserResponse.StatusCode == System.Net.HttpStatusCode.OK)
                 {
@@ -303,17 +339,15 @@ namespace Sitio_Privado.Controllers
                     else
                     {
                         //Update claims
-                        Claim claim = ((ClaimsIdentity)this.User.Identity).Claims.Where(c => c.Type == isTemporalPasswordClaim).First();
-                        ((ClaimsIdentity)this.User.Identity).RemoveClaim(claim);
-                        ((ClaimsIdentity)this.User.Identity).AddClaim(new Claim(isTemporalPasswordClaim, bool.FalseString));
+                        ((ClaimsIdentity)user.Identity).RemoveClaim(isTemporalPasswordClaim);
+                        ((ClaimsIdentity)user.Identity).AddClaim(new Claim(isTemporalPasswordClaimKey, bool.FalseString));
 
-                        claim = ((ClaimsIdentity)this.User.Identity).Claims.Where(c => c.Type == TemporalPasswordTimestampClaim).First();
-                        ((ClaimsIdentity)this.User.Identity).RemoveClaim(claim);
-                        ((ClaimsIdentity)this.User.Identity).AddClaim(new Claim(TemporalPasswordTimestampClaim, DateTime.MinValue.ToString()));
+                        ((ClaimsIdentity)user.Identity).RemoveClaim(temporalPasswordTimestampClaim);
+                        ((ClaimsIdentity)user.Identity).AddClaim(new Claim(temporalPasswordTimestampClaimKey, DateTime.MinValue.ToString()));
 
                         var ctx = Request.GetOwinContext();
                         var authManager = ctx.Authentication;
-                        authManager.AuthenticationResponseGrant = new AuthenticationResponseGrant(new ClaimsPrincipal(this.User.Identity), new AuthenticationProperties() { IsPersistent = true });
+                        authManager.AuthenticationResponseGrant = new AuthenticationResponseGrant(new ClaimsPrincipal(user.Identity), new AuthenticationProperties() { IsPersistent = true });
 
                         //Sign out B2C TODO
 

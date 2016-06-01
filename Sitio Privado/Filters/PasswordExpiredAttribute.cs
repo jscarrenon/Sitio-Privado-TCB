@@ -5,14 +5,13 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace Sitio_Privado.Filters
 {
     public class PasswordExpiredAttribute : AuthorizeAttribute
     {
-        private static readonly double passwordExpiresInHours = double.Parse(ConfigurationManager.AppSettings["tempPass:Timeout"], CultureInfo.InvariantCulture);
-        private const string isTemporalPasswordClaim = "isTemporalPassword";
-        private const string TemporalPasswordTimestampClaim = "temporalPasswordTimestamp";
+        private const string isTemporalPasswordClaimKey = "isTemporalPassword";
 
         public override void OnAuthorization(System.Web.Mvc.AuthorizationContext filterContext)
         {
@@ -25,25 +24,16 @@ namespace Sitio_Privado.Filters
 
             if (user != null && user.Identity.IsAuthenticated)
             {
-                Claim claim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == isTemporalPasswordClaim).First();
+                Claim claim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == isTemporalPasswordClaimKey).First();
                 bool isTemporalPassword = bool.Parse(claim.Value);
-
-                claim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == TemporalPasswordTimestampClaim).First();
-                DateTime temporalPasswordTimestamp = DateTime.Parse(claim.Value);
 
                 if (isTemporalPassword)
                 {
-                    DateTime limit = temporalPasswordTimestamp.AddHours(passwordExpiresInHours);
-
-                    if (DateTime.Now <= limit)
-                    {
-                        filterContext.HttpContext.Response.Redirect(string.Format("~/{0}/{1}", "Account", "ChangePassword"));
-                    }
-                    else
-                    {
-                        //Show message: "Su contraseña temporal ha caducado. Por favor solicite una nueva." TODO
-                        filterContext.HttpContext.Response.Redirect(string.Format("~/{0}/{1}?{2}", "Account", "ChangePassword", "reason=expired"));
-                    }
+                    filterContext.HttpContext.Response.RedirectToRoute(
+                        new RouteValueDictionary {
+                            { "controller", "Account" },
+                            { "action", "ChangePassword" }
+                        });
                 }                    
             }            
             
