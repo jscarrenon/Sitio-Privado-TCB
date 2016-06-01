@@ -37,11 +37,12 @@ namespace Sitio_Privado.Filters
 
                     if (DateTime.Now <= limit)
                     {
-                        filterContext.HttpContext.Response.Redirect(string.Format("~/{0}/{1}?{2}", "Account", "ChangePassword", "reason=expired"));
+                        filterContext.HttpContext.Response.Redirect(string.Format("~/{0}/{1}", "Account", "ChangePassword"));
                     }
                     else
                     {
-                        throw new TimeoutException("Su contraseña temporal ha caducado. Por favor solicite una nueva.");
+                        //Show message: "Su contraseña temporal ha caducado. Por favor solicite una nueva." TODO
+                        filterContext.HttpContext.Response.Redirect(string.Format("~/{0}/{1}?{2}", "Account", "ChangePassword", "reason=expired"));
                     }
                 }                    
             }            
