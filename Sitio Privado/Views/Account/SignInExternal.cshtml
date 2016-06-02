@@ -39,7 +39,7 @@
             </div>
             <div class="user-login">
                 <div class="safe">Acceso Seguro</div>
-                @using (Html.BeginForm("SignInExternal","Account"))
+                @using (Html.BeginForm("", "api/users/signInExternal"))
                 {
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="input-field">

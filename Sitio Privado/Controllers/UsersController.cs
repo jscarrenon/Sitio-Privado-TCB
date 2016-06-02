@@ -1,4 +1,5 @@
 ﻿using Sitio_Privado.Extras;
+using Sitio_Privado.Filters;
 using Sitio_Privado.Helpers;
 using Sitio_Privado.Models;
 using System;
@@ -16,7 +17,9 @@ namespace Sitio_Privado.Controllers
     public class UsersController : ApiController
     {
         private GraphApiClientHelper graphApiClient = new GraphApiClientHelper();
+        private SignInHelper signInHelper = new SignInHelper();
 
+        [AllowCrossSiteJsonApi]
         [AllowAnonymous]
         [HttpPost]
         public async Task<IHttpActionResult> PasswordRecovery(PasswordRecoveryModel model)
@@ -78,6 +81,42 @@ namespace Sitio_Privado.Controllers
                     Content = new StringContent(message),
                     ReasonPhrase = "Rut inválido"
                 };              
+                throw new HttpResponseException(resp);
+            }
+        }
+
+        [AllowCrossSiteJsonApi]
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IHttpActionResult> SignInExternal(LoginModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                IdToken token = await signInHelper.GetToken(model);
+
+                if (token == null)
+                {
+                    string message = string.Join(". ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
+                    var resp = new HttpResponseMessage(HttpStatusCode.NotFound)
+                    {
+                        Content = new StringContent(message),
+                        ReasonPhrase = "RUT o contraseña no válidos. Por favor intente nuevamente."
+                    };
+                    throw new HttpResponseException(resp);
+                }
+                else
+                {
+                    return Json(token);
+                }
+            }
+            else
+            {
+                string message = string.Join(". ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
+                var resp = new HttpResponseMessage(HttpStatusCode.BadRequest)
+                {
+                    Content = new StringContent(message),
+                    ReasonPhrase = "RUT o contraseña no válidos. Por favor intente nuevamente."
+                };
                 throw new HttpResponseException(resp);
             }
         }
