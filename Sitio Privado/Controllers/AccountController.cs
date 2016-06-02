@@ -22,6 +22,7 @@ using System.Net.Configuration;
 using Microsoft.Owin.Security;
 using Sitio_Privado.Filters;
 using System.Security.Principal;
+using System.Runtime.Serialization.Json;
 
 namespace Sitio_Privado.Controllers
 {
@@ -53,21 +54,46 @@ namespace Sitio_Privado.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [AllowCrossSiteJson]
         [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult> SignInExternal(LoginModel model)
         {
+            var res = new JObject();
+
             if (!ModelState.IsValid)
-                return RedirectToAction("Index", "Home"); ; //TODO change
+            {
+                res.Add("status", "ERROR");
+                res.Add("message", "RUT o contraseña no válidos. Por favor intente nuevamente.");
+                return Content(res.ToString(), "application/json");
+            }
 
             IdToken token = await GetToken(model);
 
             if (token == null)
             {
-                ModelState.AddModelError("", "RUT o contraseña no válidos. Por favor intente nuevamente.");
-                return View(model); //TODO change
+                res.Add("status", "ERROR");
+                res.Add("message", "RUT o contraseña no válidos. Por favor intente nuevamente.");
+                return Content(res.ToString(), "application/json");
             }
 
+            JObject tokenJson = new JObject();
+            tokenJson.Add("Oid", token.Oid);
+            tokenJson.Add("Names", token.Names);
+            tokenJson.Add("Surnames", token.Surnames);
+            tokenJson.Add("Country", token.Country);
+            tokenJson.Add("City", token.City);
+
+            res.Add("status", "OK");
+            res.Add("message", tokenJson);
+            return Content(res.ToString(), "application/json");
+        }
+
+        [AllowCrossSiteJson]
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<ActionResult> SignIn(IdToken token)
+        {
             var identity = new ClaimsIdentity(DefaultAuthenticationTypes.ApplicationCookie);
             await SetSignInClaims(identity, token);
 
@@ -75,7 +101,7 @@ namespace Sitio_Privado.Controllers
             var authManager = ctx.Authentication;
             authManager.SignIn(identity);
 
-            return RedirectToAction("Index", "Home"); 
+            return RedirectToAction("Index", "Home");
         }
 
         private async Task<IdToken> GetToken(LoginModel model)
