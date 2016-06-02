@@ -37,7 +37,7 @@ namespace Sitio_Privado.Controllers
         {
             HttpContext.GetOwinContext().Authentication.SignOut();
 
-            return Redirect("https://www.tanner.cl");
+            return Redirect(ConfigurationManager.AppSettings["web:PostLogoutRedirectUrl"]);
         }
 
         [AllowAnonymous]
