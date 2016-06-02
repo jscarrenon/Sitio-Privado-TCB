@@ -17,7 +17,6 @@ namespace Sitio_Privado.Controllers
 {
     public class HomeController : BaseController
     {
-        private static string ObjectIdClaim = "http://schemas.microsoft.com/identity/claims/objectidentifier";
         GraphApiClientHelper graphApiHelper = new GraphApiClientHelper();
         private Logger logger = LogManager.GetLogger("B2CLog");
 
@@ -41,7 +40,7 @@ namespace Sitio_Privado.Controllers
         private async Task SetUserExtendedAttributes(Usuario usuario)
         {
             //Retrieve user info
-            Claim idClaim = ((ClaimsIdentity)usuario.Identity).Claims.Where(c => c.Type == ObjectIdClaim).First();
+            Claim idClaim = ((ClaimsIdentity)usuario.Identity).Claims.Where(c => c.Type == Startup.objectIdClaimKey).First();
             GraphApiResponseInfo response = await graphApiHelper.GetUserByObjectId(idClaim.Value);
 
             if(response.StatusCode == System.Net.HttpStatusCode.OK)

@@ -18,23 +18,22 @@ using ScrapySharp.Extensions;
 using Sitio_Privado.Extras;
 using Newtonsoft.Json.Linq;
 using Sitio_Privado.Helpers;
+using System.Net.Configuration;
+using Microsoft.Owin.Security;
+using Sitio_Privado.Filters;
+using System.Security.Principal;
 
 namespace Sitio_Privado.Controllers
 {
     public class AccountController : BaseController
     {
-        // App config settings
-        private static string clientId = ConfigurationManager.AppSettings["ida:ClientId"];
-        private static string aadInstance = ConfigurationManager.AppSettings["ida:AadInstance"];
-        private static string tenant = ConfigurationManager.AppSettings["ida:Tenant"];
-        private static string redirectUri = ConfigurationManager.AppSettings["ida:RedirectUri"];
-        private static string signInPolicy = ConfigurationManager.AppSettings["ida:SignInPolicyId"];
+        private const string countryClaimKey = "country";
+        private const string cityClaimKey = "city";
 
-        private static string countryClaim = "country";
-        private static string cityClaim = "city";
-        private static string objectIdClaim = "http://schemas.microsoft.com/identity/claims/objectidentifier";
-        GraphApiClientHelper graphApiHelper = new GraphApiClientHelper();
+        GraphApiClientHelper graphApiClient = new GraphApiClientHelper();
+        private static readonly double passwordExpiresInHours = double.Parse(Startup.temporalPasswordTimeout, CultureInfo.InvariantCulture);
 
+        [SkipTemporaryPassword]
         public ActionResult SignOut()
         {
             HttpContext.GetOwinContext().Authentication.SignOut();
@@ -69,17 +68,8 @@ namespace Sitio_Privado.Controllers
                 return View(model); //TODO change
             }
 
-            if (await RedirectChangePassword(token.Oid))
-            {
-                return View("ChangePassword");
-            }
-
             var identity = new ClaimsIdentity(DefaultAuthenticationTypes.ApplicationCookie);
-            identity.AddClaim(new Claim(objectIdClaim, token.Oid));
-            identity.AddClaim(new Claim(ClaimTypes.GivenName, token.Names));
-            identity.AddClaim(new Claim(ClaimTypes.Surname, token.Surnames));
-            identity.AddClaim(new Claim(countryClaim, token.Country));
-            identity.AddClaim(new Claim(cityClaim, token.City));
+            await SetSignInClaims(identity, token);
 
             var ctx = Request.GetOwinContext();
             var authManager = ctx.Authentication;
@@ -201,14 +191,14 @@ namespace Sitio_Privado.Controllers
 
         private Uri GetMicrosoftLoginUri()
         {
-            UriBuilder builder = new UriBuilder(String.Format(CultureInfo.InvariantCulture, aadInstance, tenant, "/oauth2/v2.0", "/authorize"));
+            UriBuilder builder = new UriBuilder(String.Format(CultureInfo.InvariantCulture, Startup.aadInstance, Startup.tenant, "/oauth2/v2.0", "/authorize"));
             var parameters = HttpUtility.ParseQueryString(string.Empty);
-            parameters["client_Id"] = clientId;
+            parameters["client_Id"] = Startup.clientId;
             parameters["response_type"] = "id_token";
-            parameters["redirect_uri"] = redirectUri;
+            parameters["redirect_uri"] = Startup.redirectUri;
             parameters["response_mode"] = "form_post";
             parameters["scope"] = "openid";
-            parameters["p"] = signInPolicy;
+            parameters["p"] = Startup.SignInPolicyId;
             parameters["prompt"] = "login";
             parameters["nonce"] = "defaultNonce";
             builder.Query = parameters.ToString();
@@ -217,7 +207,7 @@ namespace Sitio_Privado.Controllers
 
         private Uri GetMicrosoftLoginConfirmedUri(HttpRequestMessage tokenRequest)
         {
-            UriBuilder builder = new UriBuilder(String.Format(CultureInfo.InvariantCulture, aadInstance, tenant, "/" + signInPolicy, "/api/CombinedSigninAndSignup/confirmed"));
+            UriBuilder builder = new UriBuilder(String.Format(CultureInfo.InvariantCulture, Startup.aadInstance, Startup.tenant, "/" + Startup.SignInPolicyId, "/api/CombinedSigninAndSignup/confirmed"));
             var parameters = HttpUtility.ParseQueryString(string.Empty);
 
             string csrf = tokenRequest.Headers.GetValues("X-CSRF-TOKEN").First();
@@ -226,52 +216,152 @@ namespace Sitio_Privado.Controllers
             parameters["csrf_token"] = csrf;
             parameters["tx"] = tx;
             parameters["metrics"] = "";
-            parameters["p"] = signInPolicy;
+            parameters["p"] = Startup.SignInPolicyId;
             builder.Query = parameters.ToString();
             return builder.Uri;
         }
 
         private Uri GetMicrosoftLoginSelfAssertedUri(string tx)
         {
-            UriBuilder builder = new UriBuilder(String.Format(CultureInfo.InvariantCulture, aadInstance, tenant, "/" + signInPolicy, "/SelfAsserted"));
+            UriBuilder builder = new UriBuilder(String.Format(CultureInfo.InvariantCulture, Startup.aadInstance, Startup.tenant, "/" + Startup.SignInPolicyId, "/SelfAsserted"));
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["tx"] = tx;
-            parameters["p"] = signInPolicy;
+            parameters["p"] = Startup.SignInPolicyId;
             builder.Query = parameters.ToString();
             return builder.Uri;
         }
 
-        private async Task<bool> RedirectChangePassword(string oid)
+        private async Task SetSignInClaims(ClaimsIdentity identity, IdToken token)
         {
+            identity.AddClaim(new Claim(Startup.objectIdClaimKey, token.Oid));
+            identity.AddClaim(new Claim(ClaimTypes.GivenName, token.Names));
+            identity.AddClaim(new Claim(ClaimTypes.Surname, token.Surnames));
+            identity.AddClaim(new Claim(countryClaimKey, token.Country));
+            identity.AddClaim(new Claim(cityClaimKey, token.City));
+
             //Retrieve user info
-            GraphApiResponseInfo response = await graphApiHelper.GetUserByObjectId(oid);
+            GraphApiResponseInfo response = await graphApiClient.GetUserByObjectId(token.Oid);
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
+                DateTime temporalPasswordTimestamp = DateTime.Parse(response.User.TemporalPasswordTimestamp);
+                identity.AddClaim(new Claim(Startup.temporalPasswordTimestampClaimKey, temporalPasswordTimestamp.ToString()));
+
                 if (response.User.IsTemporalPassword)
                 {
-                    DateTime temporalPasswordTimestamp = DateTime.Parse(response.User.TemporalPasswordTimestamp);
-                    double hours = double.Parse(ConfigurationManager.AppSettings["tempPass:Timeout"]);
-                    DateTime limit = temporalPasswordTimestamp.AddHours(hours);
-
-                    if (DateTime.Now <= limit)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        throw new TimeoutException("Su contraseña temporal ha caducado. Por favor solicite una nueva.");
-                    }
+                    identity.AddClaim(new Claim(Startup.isTemporalPasswordClaimKey, bool.TrueString));
                 }
                 else
                 {
-                    return false;
+                    identity.AddClaim(new Claim(Startup.isTemporalPasswordClaimKey, bool.FalseString));
                 }
             }
             else
             {
                 throw new NullReferenceException("No se encontró información asociada al usuario.");
             }
+        }
+
+        [SkipTemporaryPassword]
+        [HttpGet]
+        public ActionResult ChangePassword()
+        {
+            IPrincipal user = this.User; 
+
+            Claim claim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == Startup.isTemporalPasswordClaimKey).First();
+            bool isTemporalPassword = bool.Parse(claim.Value);
+
+            claim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == Startup.temporalPasswordTimestampClaimKey).First();
+            DateTime temporalPasswordTimestamp = DateTime.Parse(claim.Value);
+
+            if (isTemporalPassword)
+            {
+                DateTime limit = temporalPasswordTimestamp.AddHours(passwordExpiresInHours);
+
+                if (DateTime.Now > limit)
+                {
+                    ViewBag.Message = "Su contraseña temporal ha caducado. Por favor solicite una nueva.";
+                }
+            }
+
+            return View();
+        }
+
+        [SkipTemporaryPassword]
+        [HttpPost]
+        public async Task<ActionResult> ChangePassword(ChangePasswordModel model)
+        {
+            IPrincipal user = this.User;
+
+            if (ModelState.IsValid)
+            {
+                //Retrieve user info
+                Claim idClaim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == Startup.objectIdClaimKey).First();
+                GraphApiResponseInfo getUserResponse = await graphApiClient.GetUserByObjectId(idClaim.Value);
+                if (getUserResponse.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    getUserResponse.User.TemporalPassword = model.Password;
+                    getUserResponse.User.IsTemporalPassword = false;
+                    getUserResponse.User.TemporalPasswordTimestamp = DateTime.MinValue.ToString();
+
+                    var apiResponse = await graphApiClient.ResetUserPassword(getUserResponse.User.ObjectId, getUserResponse.User);
+
+                    if (apiResponse.StatusCode != System.Net.HttpStatusCode.NoContent)
+                    {
+                        ModelState.AddModelError("", "Error al intentar cambiar la contraseña. Intente otra vez.");
+                        return View(model);
+                    }
+                    else
+                    {
+                        Claim isTemporalPasswordClaim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == Startup.isTemporalPasswordClaimKey).First();
+                        Claim temporalPasswordTimestampClaim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == Startup.temporalPasswordTimestampClaimKey).First();
+
+                        //Update claims
+                        ((ClaimsIdentity)user.Identity).RemoveClaim(isTemporalPasswordClaim);
+                        ((ClaimsIdentity)user.Identity).AddClaim(new Claim(Startup.isTemporalPasswordClaimKey, bool.FalseString));
+
+                        ((ClaimsIdentity)user.Identity).RemoveClaim(temporalPasswordTimestampClaim);
+                        ((ClaimsIdentity)user.Identity).AddClaim(new Claim(Startup.temporalPasswordTimestampClaimKey, DateTime.MinValue.ToString()));
+
+                        var ctx = Request.GetOwinContext();
+                        var authManager = ctx.Authentication;
+                        authManager.AuthenticationResponseGrant = new AuthenticationResponseGrant(new ClaimsPrincipal(user.Identity), new AuthenticationProperties() { IsPersistent = true });
+
+                        //Sign out B2C TODO
+
+                        //Display success message: "Su contraseña ha sido modificadda con éxito" TODO
+
+                        //Send mail
+                        try
+                        {
+                            SendMail(getUserResponse.User);
+                        }
+                        catch(Exception e)
+                        {
+                            //TODO
+                        }
+
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+                else
+                {
+                    throw new NullReferenceException("No se encontró información asociada al usuario.");
+                }
+            }
+
+            return View(model);
+        }
+
+        private void SendMail(GraphUserModel user)
+        {
+            SmtpSection settings = (SmtpSection)ConfigurationManager.GetSection("system.net/mailSettings/smtp");
+            var email = new ChangePasswordEmailModel
+            {
+                From = settings.From,
+                User = user
+            };
+            email.Send();
         }
     }
 }
