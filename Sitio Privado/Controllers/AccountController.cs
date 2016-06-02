@@ -287,27 +287,10 @@ namespace Sitio_Privado.Controllers
             return View();
         }
 
-        [SkipPasswordExpired]
         [HttpPost]
         public async Task<ActionResult> ChangePassword(ChangePasswordModel model)
         {
             IPrincipal user = this.User;
-
-            Claim isTemporalPasswordClaim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == Startup.isTemporalPasswordClaimKey).First();
-            bool isTemporalPassword = bool.Parse(isTemporalPasswordClaim.Value);
-
-            Claim temporalPasswordTimestampClaim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == Startup.temporalPasswordTimestampClaimKey).First();
-            DateTime temporalPasswordTimestamp = DateTime.Parse(temporalPasswordTimestampClaim.Value);
-
-            if (isTemporalPassword)
-            {
-                DateTime limit = temporalPasswordTimestamp.AddHours(passwordExpiresInHours);
-
-                if (DateTime.Now > limit)
-                {
-                    return RedirectToAction("ChangePassword");
-                }
-            }
 
             if (ModelState.IsValid)
             {
@@ -329,6 +312,9 @@ namespace Sitio_Privado.Controllers
                     }
                     else
                     {
+                        Claim isTemporalPasswordClaim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == Startup.isTemporalPasswordClaimKey).First();
+                        Claim temporalPasswordTimestampClaim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == Startup.temporalPasswordTimestampClaimKey).First();
+
                         //Update claims
                         ((ClaimsIdentity)user.Identity).RemoveClaim(isTemporalPasswordClaim);
                         ((ClaimsIdentity)user.Identity).AddClaim(new Claim(Startup.isTemporalPasswordClaimKey, bool.FalseString));
@@ -347,13 +333,7 @@ namespace Sitio_Privado.Controllers
                         //Send mail
                         try
                         {
-                            SmtpSection settings = (SmtpSection)ConfigurationManager.GetSection("system.net/mailSettings/smtp");
-                            var email = new ChangePasswordEmailModel
-                            {
-                                From = settings.From,
-                                User = getUserResponse.User
-                            };
-                            email.Send();
+                            SendMail(getUserResponse.User);
                         }
                         catch(Exception e)
                         {
@@ -370,6 +350,17 @@ namespace Sitio_Privado.Controllers
             }
 
             return View(model);
+        }
+
+        private void SendMail(GraphUserModel user)
+        {
+            SmtpSection settings = (SmtpSection)ConfigurationManager.GetSection("system.net/mailSettings/smtp");
+            var email = new ChangePasswordEmailModel
+            {
+                From = settings.From,
+                User = user
+            };
+            email.Send();
         }
     }
 }

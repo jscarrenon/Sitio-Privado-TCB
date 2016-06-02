@@ -27,8 +27,7 @@ namespace Sitio_Privado.Filters
 
                 if (isTemporalPassword)
                 {
-                    filterContext.HttpContext.Response.RedirectToRoute(
-                        new RouteValueDictionary {
+                    filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary {
                             { "controller", "Account" },
                             { "action", "ChangePassword" }
                         });
