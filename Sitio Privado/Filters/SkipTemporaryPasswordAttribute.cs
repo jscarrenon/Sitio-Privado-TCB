@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Sitio_Privado.Filters
 {
-    public class SkipPasswordExpiredAttribute : Attribute
+    public class SkipTemporaryPasswordAttribute : Attribute
     {
     }
 }

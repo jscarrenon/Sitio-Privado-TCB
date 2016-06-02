@@ -9,11 +9,11 @@ using System.Web.Routing;
 
 namespace Sitio_Privado.Filters
 {
-    public class PasswordExpiredAttribute : AuthorizeAttribute
+    public class TemporaryPasswordAttribute : AuthorizeAttribute
     {
         public override void OnAuthorization(System.Web.Mvc.AuthorizationContext filterContext)
         {
-            if (filterContext.ActionDescriptor.GetCustomAttributes(typeof(SkipPasswordExpiredAttribute), false).Any())
+            if (filterContext.ActionDescriptor.GetCustomAttributes(typeof(SkipTemporaryPasswordAttribute), false).Any())
             {
                 return;
             }

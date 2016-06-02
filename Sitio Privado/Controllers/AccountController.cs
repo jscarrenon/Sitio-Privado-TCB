@@ -33,7 +33,7 @@ namespace Sitio_Privado.Controllers
         GraphApiClientHelper graphApiClient = new GraphApiClientHelper();
         private static readonly double passwordExpiresInHours = double.Parse(Startup.temporalPasswordTimeout, CultureInfo.InvariantCulture);
 
-        [SkipPasswordExpired]
+        [SkipTemporaryPassword]
         public ActionResult SignOut()
         {
             HttpContext.GetOwinContext().Authentication.SignOut();
@@ -262,7 +262,7 @@ namespace Sitio_Privado.Controllers
             }
         }
 
-        [SkipPasswordExpired]
+        [SkipTemporaryPassword]
         [HttpGet]
         public ActionResult ChangePassword()
         {
@@ -287,6 +287,7 @@ namespace Sitio_Privado.Controllers
             return View();
         }
 
+        [SkipTemporaryPassword]
         [HttpPost]
         public async Task<ActionResult> ChangePassword(ChangePasswordModel model)
         {
