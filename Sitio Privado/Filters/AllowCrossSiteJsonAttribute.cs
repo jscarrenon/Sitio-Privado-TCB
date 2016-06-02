@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -10,7 +11,7 @@ namespace Sitio_Privado.Filters
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var domains = new List<string> { "kunder.cl", "www.kunder.cl", "tanner.cl", "www.tanner.cl" };
+            var domains = ConfigurationManager.AppSettings["web:AcceptedDomains"].Split(';');
 
             if (domains.Contains(filterContext.RequestContext.HttpContext.Request.UrlReferrer.Host))
             {
