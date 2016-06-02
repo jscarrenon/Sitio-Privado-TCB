@@ -313,12 +313,12 @@
     <Compile Include="Extras\IdToken.cs" />
     <Compile Include="Filters\AllowCrossSiteJsonApiAttribute.cs" />
     <Compile Include="Filters\AllowCrossSiteJsonAttribute.cs" />
-    <Compile Include="Filters\PasswordExpiredAttribute.cs" />
+    <Compile Include="Filters\TemporaryPasswordAttribute.cs" />
     <Compile Include="Extras\PasswordFormatValidationAttribute.cs" />
     <Compile Include="Extras\RutValidationAttribute.cs" />
     <Compile Include="Extras\Utils.cs" />
     <Compile Include="Filters\NoCacheAttribute.cs" />
-    <Compile Include="Filters\SkipPasswordExpiredAttribute.cs" />
+    <Compile Include="Filters\SkipTemporaryPasswordAttribute.cs" />
     <Compile Include="Filters\TokenAuthorizationFilterAttribute.cs" />
     <Compile Include="Extras\Converters.cs" />
     <Compile Include="Extras\NLogger.cs" />

@@ -52,13 +52,7 @@ namespace Sitio_Privado.Controllers
                     }
 
                     //Send mail
-                    SmtpSection settings = (SmtpSection)ConfigurationManager.GetSection("system.net/mailSettings/smtp");
-                    var email = new PasswordRecoveryEmailModel
-                    {
-                        From =  settings.From,
-                        User = getUserResponse.User
-                    };
-                    email.Send();
+                    SendMail(getUserResponse.User);
 
                     return Json("Una nueva contraseña temporal ha sido enviada a su correo electrónico.");
                 }
@@ -119,6 +113,17 @@ namespace Sitio_Privado.Controllers
                 };
                 throw new HttpResponseException(resp);
             }
+		}
+
+        private void SendMail(GraphUserModel user)
+        {
+            SmtpSection settings = (SmtpSection)ConfigurationManager.GetSection("system.net/mailSettings/smtp");
+            var email = new PasswordRecoveryEmailModel
+            {
+                From = settings.From,
+                User = user
+            };
+            email.Send();
         }
     }
 }

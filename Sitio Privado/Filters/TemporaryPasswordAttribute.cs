@@ -9,11 +9,11 @@ using System.Web.Routing;
 
 namespace Sitio_Privado.Filters
 {
-    public class PasswordExpiredAttribute : AuthorizeAttribute
+    public class TemporaryPasswordAttribute : AuthorizeAttribute
     {
         public override void OnAuthorization(System.Web.Mvc.AuthorizationContext filterContext)
         {
-            if (filterContext.ActionDescriptor.GetCustomAttributes(typeof(SkipPasswordExpiredAttribute), false).Any())
+            if (filterContext.ActionDescriptor.GetCustomAttributes(typeof(SkipTemporaryPasswordAttribute), false).Any())
             {
                 return;
             }
@@ -27,8 +27,7 @@ namespace Sitio_Privado.Filters
 
                 if (isTemporalPassword)
                 {
-                    filterContext.HttpContext.Response.RedirectToRoute(
-                        new RouteValueDictionary {
+                    filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary {
                             { "controller", "Account" },
                             { "action", "ChangePassword" }
                         });
