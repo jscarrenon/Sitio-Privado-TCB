@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sitio_Privado.Extras;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -11,11 +12,17 @@ namespace Sitio_Privado.Models
     public class LoginModel
     {
         [Required]
-        [DataType(DataType.Text)]
+        [RegularExpression(@"^([0-9Kk.-]+)$", ErrorMessage = "El Rut contiene caracteres no válidos")]
+        [RutValidation(ErrorMessage = "El Rut ingresado no es válido")]
+        [DisplayName("RUT")]
+        [StringLength(14, ErrorMessage = "Largo máximo de 14 caracteres")]
         public string Rut { get; set; }
 
         [Required]
-        [DisplayName("Contraseña")]
+        [StringLength(16, ErrorMessage = "La contraseña debe tener entre {2} y {1} caracteres", MinimumLength = 8)]
+        [RegularExpression(@"^([a-zA-Z0-9]+)$", ErrorMessage = "La clave sólo puede contener letras mayúsculas, minúsculas y números")]
+        [PasswordFormatValidation(ErrorMessage = "La clave debe contener mayúsculas, minúsculas y números")]
+        [DisplayName("Nueva contraseña")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
     }

@@ -86,6 +86,7 @@ namespace Sitio_Privado.Controllers
                 if (DateTime.Now > limit)
                 {
                     ViewBag.Message = "Su contraseña temporal ha caducado. Por favor solicite una nueva.";
+                    return Json(ViewBag.Message);
                 }
             }
 

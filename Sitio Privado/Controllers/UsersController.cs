@@ -5,6 +5,7 @@ using Sitio_Privado.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Configuration;
@@ -18,6 +19,7 @@ namespace Sitio_Privado.Controllers
     {
         private GraphApiClientHelper graphApiClient = new GraphApiClientHelper();
         private SignInHelper signInHelper = new SignInHelper();
+        private static readonly double passwordExpiresInHours = double.Parse(Startup.temporalPasswordTimeout, CultureInfo.InvariantCulture);
 
         [AllowCrossSiteJsonApi]
         [AllowAnonymous]
@@ -84,23 +86,66 @@ namespace Sitio_Privado.Controllers
         [HttpPost]
         public async Task<IHttpActionResult> SignInExternal(LoginModel model)
         {
-            if(ModelState.IsValid)
+            //Rut validation
+            if (ModelState.IsValid)
             {
-                IdToken token = await signInHelper.GetToken(model);
+                string id = ExtraHelpers.FormatRutToId(model.Rut);
+                GraphApiResponseInfo getUserResponse = await graphApiClient.GetUserByRut(id);
 
-                if (token == null)
+                //Check rut in db
+                if (getUserResponse.StatusCode == System.Net.HttpStatusCode.OK)
                 {
-                    string message = string.Join(". ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
-                    var resp = new HttpResponseMessage(HttpStatusCode.NotFound)
+                    //Try to log in
+                    model.Rut = id;
+                    IdToken token = await signInHelper.GetToken(model);
+
+                    if (token != null)
                     {
-                        Content = new StringContent(message),
-                        ReasonPhrase = "RUT o contraseña no válidos. Por favor intente nuevamente."
-                    };
-                    throw new HttpResponseException(resp);
+                        //Check temporary password
+                        if(getUserResponse.User.IsTemporalPassword == false)
+                        {
+                            //Success!
+                            return Json(token);
+                        }
+                        else
+                        {
+                            DateTime temporalPasswordTimestamp = DateTime.Parse(getUserResponse.User.TemporalPasswordTimestamp);
+                            DateTime limit = temporalPasswordTimestamp.AddHours(passwordExpiresInHours);
+
+                            if (DateTime.Now <= limit)
+                            {
+                                //Success
+                                return Json(token);
+                            }
+                            else
+                            {
+                                var resp = new HttpResponseMessage(HttpStatusCode.Forbidden)
+                                {
+                                    Content = new StringContent("Contraseña temporal caducada."),
+                                    ReasonPhrase = "Su contraseña temporal ha caducado. Por favor solicite una nueva."
+                                };
+                                throw new HttpResponseException(resp);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        var resp = new HttpResponseMessage(HttpStatusCode.BadGateway)
+                        {
+                            Content = new StringContent("Token nulo."),
+                            ReasonPhrase = "No se pudo iniciar sesión. Por favor revise su RUT y contraseña e intente nuevamente."
+                        };
+                        throw new HttpResponseException(resp);
+                    }
                 }
                 else
                 {
-                    return Json(token);
+                    var resp = new HttpResponseMessage(HttpStatusCode.NotFound)
+                    {
+                        Content = new StringContent("RUT no encontrado en el sistema."),
+                        ReasonPhrase = "El RUT ingresado no es Cliente de Tanner, para cualquier duda contacte a mesa de atención de clientes al NNNN."
+                    };
+                    throw new HttpResponseException(resp);
                 }
             }
             else
