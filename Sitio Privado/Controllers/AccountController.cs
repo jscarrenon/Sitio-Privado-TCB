@@ -66,16 +66,5 @@ namespace Sitio_Privado.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-
-        private void SendMail(GraphUserModel user)
-        {
-            SmtpSection settings = (SmtpSection)ConfigurationManager.GetSection("system.net/mailSettings/smtp");
-            var email = new ChangePasswordEmailModel
-            {
-                From = settings.From,
-                User = user
-            };
-            email.Send();
-        }
     }
 }

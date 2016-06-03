@@ -50,7 +50,7 @@ namespace Sitio_Privado.Controllers
                         //Send mail
                         try
                         {
-                            SendMail(getUserResponse.User);
+                            SendPasswordRecoveryMail(getUserResponse.User);
                         }
                         catch(Exception e)
                         {
@@ -171,17 +171,6 @@ namespace Sitio_Privado.Controllers
             }
 		}
 
-        private void SendMail(GraphUserModel user)
-        {
-            SmtpSection settings = (SmtpSection)ConfigurationManager.GetSection("system.net/mailSettings/smtp");
-            var email = new PasswordRecoveryEmailModel
-            {
-                From = settings.From,
-                User = user
-            };
-            email.Send();
-        }
-
         [SkipTemporaryPassword]
         [HttpPost]
         public async Task<IHttpActionResult> ChangePassword(ChangePasswordModel model)
@@ -226,7 +215,7 @@ namespace Sitio_Privado.Controllers
                         //Send mail
                         try
                         {
-                            SendMail(getUserResponse.User);
+                            SendChagePasswordMail(getUserResponse.User);
                         }
                         catch (Exception e)
                         {
@@ -265,6 +254,28 @@ namespace Sitio_Privado.Controllers
                 };
                 throw new HttpResponseException(resp);
             }
+        }
+
+        private void SendPasswordRecoveryMail(GraphUserModel user)
+        {
+            SmtpSection settings = (SmtpSection)ConfigurationManager.GetSection("system.net/mailSettings/smtp");
+            var email = new PasswordRecoveryEmailModel
+            {
+                From = settings.From,
+                User = user
+            };
+            email.Send();
+        }
+
+        private void SendChagePasswordMail(GraphUserModel user)
+        {
+            SmtpSection settings = (SmtpSection)ConfigurationManager.GetSection("system.net/mailSettings/smtp");
+            var email = new ChangePasswordEmailModel
+            {
+                From = settings.From,
+                User = user
+            };
+            email.Send();
         }
     }
 }
