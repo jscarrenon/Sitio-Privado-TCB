@@ -195,6 +195,10 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Web.Http.Owin, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Owin.5.2.3\lib\net45\System.Web.Http.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
       <Private>True</Private>
@@ -444,6 +448,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="app\modules\home\templates\cambiar-contrasena.html" />
     <Content Include="Views\Account\SignInExternal.cshtml" />
     <Content Include="Views\Emails\Web.config" />
     <Content Include="Views\Emails\PasswordRecoveryEmailModel.cshtml" />
@@ -507,6 +512,7 @@
     <Content Include="Frontend_Tests\Controllers\misInversionesDocumentosControllerSpec.js" />
     <Content Include="Frontend_Tests\Controllers\modalInstanceControllerSpec.js" />
     <Content Include="Scripts\extras\index.js" />
+    <TypeScriptCompile Include="app\common\controllers\changePasswordCtrl.ts" />
     <TypeScriptCompile Include="app\common\controllers\modalInstanceCtrl.ts" />
     <TypeScriptCompile Include="app\common\directives\loadingDirective.ts" />
     <Content Include="favicon.ico" />
@@ -754,6 +760,7 @@
     <TypeScriptCompile Include="app\common\services\constantService.ts" />
     <TypeScriptCompile Include="app\common\services\dataService.ts" />
     <TypeScriptCompile Include="app\common\typings\slicknav.ts" />
+    <TypeScriptCompile Include="app\domain\ChangePasswordInput.ts" />
     <TypeScriptCompile Include="app\domain\CircularizacionInput.ts" />
     <TypeScriptCompile Include="app\domain\CircularizacionArchivo.ts" />
     <TypeScriptCompile Include="app\domain\CircularizacionProcesoResultado.ts" />

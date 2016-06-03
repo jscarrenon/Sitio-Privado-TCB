@@ -21,6 +21,10 @@
                     templateUrl: buildFolderURI + "html/modules/home/templates/mis-datos.html",
                     controller: "HomeCtrl as ctrl"
                 })
+                .when("/cambiar-contrasena", {
+                    templateUrl: buildFolderURI + "html/modules/home/templates/cambiar-contrasena.html",
+                    controller: "ChangePasswordCtrl as ctrl"
+                })
                 .when("/informacion-financiera/:seccion?", {
                     templateUrl: buildFolderURI + "html/modules/informacion-financiera/templates/index.html",
                     controller: "InformacionFinancieraCtrl as ctrl"

@@ -1,0 +1,79 @@
+﻿<div id="container-full">
+
+    <div id="header">
+        <div class="in">
+            <div class="head">
+                <div class="title">Mis Datos</div>
+                <div class="subtitle"></div>
+            </div>
+        </div>
+    </div>
+    <div id="content">
+        <div class="in">
+
+            <div class="status-message" style="display:none;">
+                <div class="ok">La contraseña se ha cambiado exitosamente.</div>
+                <div class="error">Ha ocurrido un error.</div>
+            </div>
+
+            <div class="two-col">
+
+                <div class="user-info white-box">
+                    <div class="info-col">
+                        <div class="in-title">Cambiar contraseña</div>
+                        <div class="info-input">
+                            Contraseña actual
+                            <input type="password" ng-model="ctrl.changePasswordInput.OldPassword">
+                        </div>
+                        <div class="info-input">
+                            Nueva contraseña
+                            <input type="password" ng-model="ctrl.changePasswordInput.Password">
+                        </div>
+                        <div class="do-not-match" style="display:none;">
+                            La contraseña debe incluir letras, números y carácteres especiales.
+                        </div>
+                        <div class="info-input">
+                            Repetir nueva contraseña
+                            <input type="password" ng-model="ctrl.changePasswordInput.PasswordValidation">
+                        </div>
+                        <div class="do-not-match" style="display:none;">
+                            Las contraseñas no coinciden.
+                        </div>
+                        <div class="button green">
+                            <a href="" ng-click="ctrl.changePassword()">Guardar</a>
+                        </div>
+                    </div>
+                    <div class="edit-note none">
+                    </div>
+                </div>
+
+            </div><!--end two-col-->
+
+            <div class="three-col home" ng-controller="AgenteCtrl as agenteCtrl">
+                <div class="executive white-box">
+                    <loading param="agenteCtrl.loading"></loading>
+                    <div ng-show="!agenteCtrl.loading">
+                        <div class="photo" ng-style="{'background-image':'url({{agenteCtrl.agente.PathImg}})'}"></div>
+                        <div class="text">
+                            <div class="name">{{agenteCtrl.agente.Nombre}}</div>
+                            <div class="contact">
+                                Tel: {{agenteCtrl.agente.Telefono}}<br />
+                                E-mail: <a href="mailto:{{agenteCtrl.agente.Email}}">{{agenteCtrl.agente.Email}}</a>
+                            </div>
+                            <div class="info">
+                                Fecha de acreditación: {{agenteCtrl.agente.FechaInicioAcreditacion}}<br />
+                                Sucursal: {{agenteCtrl.agente.Sucursal}}
+                            </div>
+                        </div>
+                        <div class="button blue call" ng-show="agenteCtrl.agente.Telefono"><a href="tel:{{agenteCtrl.agente.Telefono}}" class="clink">Llamar</a></div>
+                    </div>
+                    <div id="clear"></div>
+                </div>
+            </div>
+            <div id="clear"></div>
+
+            <ng-include src="ctrl.constantService.templateFooterURI"></ng-include>
+
+        </div><!--end in-->
+    </div><!--end content-->
+</div><!--end container-full-->

@@ -1,4 +1,5 @@
-﻿using Sitio_Privado.Extras;
+﻿using Microsoft.Owin.Security;
+using Sitio_Privado.Extras;
 using Sitio_Privado.Filters;
 using Sitio_Privado.Helpers;
 using Sitio_Privado.Models;
@@ -10,6 +11,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Configuration;
 using System.Net.Http;
+using System.Security.Claims;
+using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -177,6 +180,91 @@ namespace Sitio_Privado.Controllers
                 User = user
             };
             email.Send();
+        }
+
+        [SkipTemporaryPassword]
+        [HttpPost]
+        public async Task<IHttpActionResult> ChangePassword(ChangePasswordModel model)
+        {
+            IPrincipal user = this.User;
+
+            if (ModelState.IsValid)
+            {
+                //Retrieve user info
+                Claim idClaim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == Startup.objectIdClaimKey).First();
+                GraphApiResponseInfo getUserResponse = await graphApiClient.GetUserByObjectId(idClaim.Value);
+                if (getUserResponse.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    getUserResponse.User.TemporalPassword = model.Password;
+                    getUserResponse.User.IsTemporalPassword = false;
+                    getUserResponse.User.TemporalPasswordTimestamp = DateTime.MinValue.ToString();
+
+                    var apiResponse = await graphApiClient.ResetUserPassword(getUserResponse.User.ObjectId, getUserResponse.User);
+
+                    if (apiResponse.StatusCode == System.Net.HttpStatusCode.NoContent)
+                    {
+                        //Success!
+
+                        Claim isTemporalPasswordClaim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == Startup.isTemporalPasswordClaimKey).First();
+                        Claim temporalPasswordTimestampClaim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == Startup.temporalPasswordTimestampClaimKey).First();
+
+                        //Update claims
+                        ((ClaimsIdentity)user.Identity).RemoveClaim(isTemporalPasswordClaim);
+                        ((ClaimsIdentity)user.Identity).AddClaim(new Claim(Startup.isTemporalPasswordClaimKey, bool.FalseString));
+
+                        ((ClaimsIdentity)user.Identity).RemoveClaim(temporalPasswordTimestampClaim);
+                        ((ClaimsIdentity)user.Identity).AddClaim(new Claim(Startup.temporalPasswordTimestampClaimKey, DateTime.MinValue.ToString()));
+
+                        var ctx = Request.GetOwinContext();
+                        var authManager = ctx.Authentication;
+                        authManager.AuthenticationResponseGrant = new AuthenticationResponseGrant(new ClaimsPrincipal(user.Identity), new AuthenticationProperties() { IsPersistent = true });
+
+                        //Sign out B2C TODO
+
+                        //Display success message: "Su contraseña ha sido modificadda con éxito" TODO
+
+                        //Send mail
+                        try
+                        {
+                            SendMail(getUserResponse.User);
+                        }
+                        catch (Exception e)
+                        {
+                            //TODO
+                        }
+
+                        return Json("Contraseña modificada con éxito.");
+                    }
+                    else
+                    {
+                        var resp = new HttpResponseMessage(HttpStatusCode.InternalServerError)
+                        {
+                            Content = new StringContent("Error al intentar cambiar la contraseña. B2C Status Code: " + apiResponse.StatusCode),
+                            ReasonPhrase = "Error al intentar cambiar la contraseña. Intente otra vez."
+                        };
+                        throw new HttpResponseException(resp);
+                    }
+                }
+                else
+                {
+                    var resp = new HttpResponseMessage(HttpStatusCode.NotFound)
+                    {
+                        Content = new StringContent("Usuario no encontrado en el sistema."),
+                        ReasonPhrase = "No se encontró al usuario en el sistema."
+                    };
+                    throw new HttpResponseException(resp);
+                }
+            }
+            else
+            {
+                string message = string.Join(". ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
+                var resp = new HttpResponseMessage(HttpStatusCode.BadRequest)
+                {
+                    Content = new StringContent(message),
+                    ReasonPhrase = "Error de validación modelo."
+                };
+                throw new HttpResponseException(resp);
+            }
         }
     }
 }

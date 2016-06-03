@@ -21,6 +21,7 @@
         apiDocumentoURI: string;
         apiIndicesURI: string;
         apiCircularizacionURI: string;
+        apiUsersURI: string;
     }
 
     export class ConstantService implements IConstant {
@@ -44,6 +45,7 @@
         apiDocumentoURI: string;
         apiIndicesURI: string;
         apiCircularizacionURI: string;
+        apiUsersURI: string;
 
         constructor() {
             this.buildFolderURI = '.build/';
@@ -66,6 +68,7 @@
             this.apiDocumentoURI = '/api/documento/';
             this.apiIndicesURI = '/api/indices/';
             this.apiCircularizacionURI = '/api/circularizacion/';
+            this.apiUsersURI = 'api/users/';
         }
     }
 
