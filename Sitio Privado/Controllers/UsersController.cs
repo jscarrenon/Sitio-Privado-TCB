@@ -42,29 +42,37 @@ namespace Sitio_Privado.Controllers
 
                     //Reset user password
                     var apiResponse = await graphApiClient.ResetUserPassword(getUserResponse.User.ObjectId, getUserResponse.User);
-                    if (apiResponse.StatusCode != System.Net.HttpStatusCode.NoContent)
+                    if (apiResponse.StatusCode == System.Net.HttpStatusCode.NoContent)
                     {
-                        string message = "Error al intentar cambiar la contraseña. Intente otra vez.";
+                        //Send mail
+                        try
+                        {
+                            SendMail(getUserResponse.User);
+                        }
+                        catch(Exception e)
+                        {
+                            //TODO
+                        }
+
+                        //Success!
+                        return Json("Una nueva contraseña temporal ha sido enviada a su correo electrónico.");
+                    }
+                    else
+                    {
                         var resp = new HttpResponseMessage(HttpStatusCode.InternalServerError)
                         {
-                            Content = new StringContent(message),
-                            ReasonPhrase = "Error al intentar cambiar la contraseña"
+                            Content = new StringContent("Error al intentar cambiar la contraseña. B2C Status Code: " + apiResponse.StatusCode),
+                            ReasonPhrase = "Error al intentar cambiar la contraseña. Intente otra vez."
                         };
                         throw new HttpResponseException(resp);
                     }
-
-                    //Send mail
-                    SendMail(getUserResponse.User);
-
-                    return Json("Una nueva contraseña temporal ha sido enviada a su correo electrónico.");
                 }
                 else
                 {
-                    string message = "El Rut ingresado no es Cliente de Tanner, para cualquier duda contacte a mes de atención de clientes al NNNN.";
                     var resp = new HttpResponseMessage(HttpStatusCode.NotFound)
                     {
-                        Content = new StringContent(message),
-                        ReasonPhrase = "Rut no encontrado"
+                        Content = new StringContent("RUT no encontrado en el sistema."),
+                        ReasonPhrase = "El RUT ingresado no es Cliente de Tanner, para cualquier duda contacte a mesa de atención de clientes al NNNN."
                     };
                     throw new HttpResponseException(resp);
                 }
@@ -75,8 +83,8 @@ namespace Sitio_Privado.Controllers
                 var resp = new HttpResponseMessage(HttpStatusCode.BadRequest)
                 {
                     Content = new StringContent(message),
-                    ReasonPhrase = "Rut inválido"
-                };              
+                    ReasonPhrase = "RUT no válido. Por favor intente nuevamente."
+                };
                 throw new HttpResponseException(resp);
             }
         }
