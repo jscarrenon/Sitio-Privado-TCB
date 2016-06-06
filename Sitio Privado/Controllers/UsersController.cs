@@ -15,6 +15,7 @@ using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Results;
 
 namespace Sitio_Privado.Controllers
 {
@@ -246,13 +247,8 @@ namespace Sitio_Privado.Controllers
             }
             else
             {
-                string message = string.Join(". ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
-                var resp = new HttpResponseMessage(HttpStatusCode.BadRequest)
-                {
-                    Content = new StringContent(message),
-                    ReasonPhrase = "Error de validación modelo."
-                };
-                throw new HttpResponseException(resp);
+                return BadRequest(ModelState);
+
             }
         }
 

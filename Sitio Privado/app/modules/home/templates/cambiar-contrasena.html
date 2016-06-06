@@ -11,9 +11,9 @@
     <div id="content">
         <div class="in">
 
-            <div class="status-message" style="display:none;">
-                <div class="ok">La contraseña se ha cambiado exitosamente.</div>
-                <div class="error">Ha ocurrido un error.</div>
+            <div class="status-message" ng-show="ctrl.processSuccess || (!ctrl.processSuccess && ctrl.errorMessage)">
+                <div class="ok" ng-show="ctrl.processSuccess">La contraseña se ha cambiado exitosamente.</div>
+                <div class="error" ng-show="!ctrl.processSuccess && ctrl.errorMessage">Ha ocurrido un error: {{ctrl.errorMessage}}</div>
             </div>
 
             <div class="two-col">
@@ -29,15 +29,15 @@
                             Nueva contraseña
                             <input type="password" ng-model="ctrl.changePasswordInput.Password">
                         </div>
-                        <div class="do-not-match" style="display:none;">
-                            La contraseña debe incluir letras, números y carácteres especiales.
+                        <div class="do-not-match" ng-show="ctrl.passwordErrors">
+                            <p ng-repeat="error in ctrl.passwordErrors">{{error}}</p>
                         </div>
                         <div class="info-input">
                             Repetir nueva contraseña
                             <input type="password" ng-model="ctrl.changePasswordInput.PasswordValidation">
                         </div>
-                        <div class="do-not-match" style="display:none;">
-                            Las contraseñas no coinciden.
+                        <div class="do-not-match" ng-show="ctrl.passwordValidationErrors">
+                            <p ng-repeat="error in ctrl.passwordValidationErrors">{{error}}</p>
                         </div>
                         <div class="button green">
                             <a href="" ng-click="ctrl.changePassword()">Guardar</a>
