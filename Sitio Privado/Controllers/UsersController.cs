@@ -211,8 +211,6 @@ namespace Sitio_Privado.Controllers
 
                         //Sign out B2C TODO
 
-                        //Display success message: "Su contraseña ha sido modificadda con éxito" TODO
-
                         //Send mail
                         try
                         {

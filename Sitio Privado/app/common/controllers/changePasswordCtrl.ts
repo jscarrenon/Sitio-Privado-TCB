@@ -52,6 +52,9 @@
                             }
                         }
                     }
+                    else {
+                        this.errorMessage = result.statusText;
+                    }
                 })
                 .finally(() => this.loading = false);
         }
