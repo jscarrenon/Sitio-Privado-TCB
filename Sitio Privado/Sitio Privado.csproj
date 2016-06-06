@@ -455,7 +455,6 @@
     <Content Include="Views\Emails\Web.config" />
     <Content Include="Views\Emails\PasswordRecoveryEmailModel.cshtml" />
     <Content Include="Views\Emails\_ViewStart.cshtml" />
-    <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Emails\ChangePasswordEmailModel.cshtml" />
     <None Include="Web References\CartolaResumida\tann_cartola_resumida.disco" />
     <Content Include="app\modules\mis-inversiones\templates\estado-documentos_respuesta.html" />
