@@ -40,6 +40,7 @@ namespace Sitio_Privado.Controllers
             return Redirect(ConfigurationManager.AppSettings["web:PostLogoutRedirectUrl"]);
         }
 
+        [SkipTemporaryPassword]
         [AllowAnonymous]
         [HttpGet]
         public ActionResult SignInExternal()
@@ -52,6 +53,7 @@ namespace Sitio_Privado.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [SkipTemporaryPassword]
         [AllowCrossSiteJson]
         [AllowAnonymous]
         [HttpPost]

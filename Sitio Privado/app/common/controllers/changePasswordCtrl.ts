@@ -36,6 +36,8 @@
             this.dataService.postWebService(this.constantService.apiUsersURI + 'changePassword', this.changePasswordInput)
                 .then((result: any) => {
                     this.processSuccess = true;
+                    //Update user data
+                    this.authService.getUsuarioActual();
                 })
                 .catch((result: any) => {
                     this.processSuccess = false;

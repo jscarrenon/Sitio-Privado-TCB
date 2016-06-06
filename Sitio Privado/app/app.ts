@@ -46,6 +46,10 @@
                 function ($q, $injector, $window, $location) {
                     return {
                         request: function (config) {
+                            var authService: app.common.services.AuthService = $injector.get('authService');
+                            if (authService.autenticado && authService.usuario.ContrasenaTemporal) {
+                                $location.path('/cambiar-contrasena');
+                            }
                             return config || $q.when(config);
                         },
                         responseError: function (response) {
