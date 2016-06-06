@@ -449,6 +449,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="app\modules\home\templates\cambiar-contrasena.html" />
+    <Content Include="Resources\img\mail_logo-tannerclientes.png" />
+    <Content Include="Resources\img\mail_tanner.jpg" />
     <Content Include="Views\Account\SignInExternal.cshtml" />
     <Content Include="Views\Emails\Web.config" />
     <Content Include="Views\Emails\PasswordRecoveryEmailModel.cshtml" />
