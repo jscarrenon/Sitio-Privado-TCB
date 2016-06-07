@@ -13,6 +13,7 @@
         btnCerrar: boolean;
         divInformativo: boolean;
         condiciones: boolean;
+        btnVolver: boolean;
     }
 
     export class ModalInstanceCtrl implements IModalInstanceViewModel {
@@ -26,6 +27,10 @@
         btnCerrar: boolean;
         divInformativo: boolean;
         condiciones: boolean;
+        btnConfirmacionRechazo: boolean;
+        divInformativoRechazo: boolean;
+        btnVolver: boolean;
+        classModal: string;
         
         constructor(private $uibModalInstance: ng.ui.bootstrap.IModalServiceInstance,
             private authSer: app.common.services.AuthService) {
@@ -38,6 +43,10 @@
             this.btnCerrar = false;
             this.divInformativo = false;
             this.condiciones = true;
+            this.btnConfirmacionRechazo = false;
+            this.divInformativoRechazo = false;
+            this.btnVolver = false;
+            this.classModal = "modal-style modal4";
         }
 
         ok(): void {
@@ -55,7 +64,7 @@
                         if (data == 1) {
                       }
                     });
-
+                this.classModal = "modal-style modal2";
                 this.divInformativo = true;
                 this.btnAceptar = false;
                 this.btnRechazar = false;
@@ -66,12 +75,35 @@
         
 
         rechazar(): void {
-            
+            if (this.aceptaCondiciones) {
+                this.classModal = "modal-style modal2";
+                this.btnAceptar = false;
+                this.btnRechazar = false;
+                this.condiciones = false;
+                this.btnConfirmacionRechazo = true;
+                this.divInformativoRechazo = true;
+                this.btnVolver = true;
+            }
+
+        }
+
+
+        confirmacionRechazo(): void{
             if (this.aceptaCondiciones) {
                 this.authService.setSusFirmaElecDoc('rechazado', '0');
                 this.$uibModalInstance.dismiss('cancelar');
             }
+        }
 
+        volver(): void {
+
+            this.btnAceptar = true;
+            this.btnRechazar = true;
+            this.condiciones = true;
+            this.btnConfirmacionRechazo = false;
+            this.divInformativoRechazo = false;
+            this.btnVolver = false;
+            this.classModal = "modal-style modal4";
         }
 
         changeAceptaCondiciones(): void {
