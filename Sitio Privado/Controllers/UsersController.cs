@@ -186,6 +186,11 @@ namespace Sitio_Privado.Controllers
                 GraphApiResponseInfo getUserResponse = await graphApiClient.GetUserByObjectId(idClaim.Value);
                 if (getUserResponse.StatusCode == System.Net.HttpStatusCode.OK)
                 {
+                    //Try to login with old password
+                    LoginModel loginModel = new LoginModel() { Rut = getUserResponse.User.Rut, Password = model.OldPassword };
+                    var loginResponse = await this.SignInExternal(loginModel);
+
+                    //If it's ok then try to change the password
                     getUserResponse.User.TemporalPassword = model.Password;
                     getUserResponse.User.IsTemporalPassword = false;
                     getUserResponse.User.TemporalPasswordTimestamp = DateTime.MinValue.ToString();
@@ -195,6 +200,8 @@ namespace Sitio_Privado.Controllers
                     if (apiResponse.StatusCode == System.Net.HttpStatusCode.NoContent)
                     {
                         //Success!
+                        string ip = Request.GetClientIpAddress();
+                        DateTime timestamp = DateTime.Now;
 
                         Claim isTemporalPasswordClaim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == Startup.isTemporalPasswordClaimKey).First();
                         Claim temporalPasswordTimestampClaim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == Startup.temporalPasswordTimestampClaimKey).First();
@@ -215,7 +222,7 @@ namespace Sitio_Privado.Controllers
                         //Send mail
                         try
                         {
-                            SendChagePasswordMail(getUserResponse.User);
+                            SendChagePasswordMail(getUserResponse.User, ip, timestamp);
                         }
                         catch (Exception e)
                         {
@@ -262,13 +269,15 @@ namespace Sitio_Privado.Controllers
             email.Send();
         }
 
-        private void SendChagePasswordMail(GraphUserModel user)
+        private void SendChagePasswordMail(GraphUserModel user, string ip, DateTime timestamp)
         {
             SmtpSection settings = (SmtpSection)ConfigurationManager.GetSection("system.net/mailSettings/smtp");
             var email = new ChangePasswordEmailModel
             {
                 From = settings.From,
-                User = user
+                User = user,
+                IP = ip,
+                Timestamp = timestamp
             };
             email.Send();
         }

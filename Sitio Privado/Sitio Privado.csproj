@@ -314,6 +314,7 @@
     <Compile Include="Controllers\IndicesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Extras\ExtraHelpers.cs" />
+    <Compile Include="Extras\HttpRequestMessageExtensions.cs" />
     <Compile Include="Extras\IdToken.cs" />
     <Compile Include="Filters\AllowCrossSiteJsonApiAttribute.cs" />
     <Compile Include="Filters\AllowCrossSiteJsonAttribute.cs" />
