@@ -24,7 +24,7 @@ namespace Sitio_Privado.Helpers
 
         GraphApiClientHelper graphApiClient = new GraphApiClientHelper();
 
-        public async Task<IdToken> GetToken(LoginModel model)
+        public async Task<string> GetToken(LoginModel model)
         {
             //Ask B2C login page
             Uri azureLoginPageUri = GetMicrosoftLoginUri();
@@ -64,9 +64,7 @@ namespace Sitio_Privado.Helpers
                         HtmlNode htmlNode = GetScrappedDoc(azureLoginConfirmedPageResponse.GetResponseStream());
                         if (htmlNode.CssSelect("input[name=id_token]").Count() > 0)
                         {
-                            string id_token = htmlNode.CssSelect("input[name=id_token]").First().GetAttributeValue("value");
-                            IdToken parsedToken = new IdToken(id_token);
-                            return parsedToken;
+                            return htmlNode.CssSelect("input[name=id_token]").First().GetAttributeValue("value");
                         }
                         else
                         {
