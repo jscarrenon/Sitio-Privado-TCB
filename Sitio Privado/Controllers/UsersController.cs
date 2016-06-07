@@ -110,7 +110,7 @@ namespace Sitio_Privado.Controllers
                 {
                     //Try to log in
                     model.Rut = id;
-                    IdToken token = await signInHelper.GetToken(model);
+                    string token = await signInHelper.GetToken(model);
 
                     if (token != null)
                     {

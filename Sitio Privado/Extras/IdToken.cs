@@ -10,8 +10,6 @@ namespace Sitio_Privado.Extras
 {
     public class IdToken
     {
-        public IdToken() { }
-
         public IdToken(string base64)
         {
             var strings = base64.Split('.');

@@ -59,10 +59,12 @@ namespace Sitio_Privado.Controllers
         [AllowCrossSiteJson]
         [AllowAnonymous]
         [HttpPost]
-        public async Task<ActionResult> SignIn(IdToken token)
+        public async Task<ActionResult> SignIn(string token)
         {
+            IdToken idToken = new IdToken(token);
+
             var identity = new ClaimsIdentity(DefaultAuthenticationTypes.ApplicationCookie);
-            await signInHelper.SetSignInClaims(identity, token);
+            await signInHelper.SetSignInClaims(identity, idToken);
 
             var ctx = Request.GetOwinContext();
             var authManager = ctx.Authentication;
