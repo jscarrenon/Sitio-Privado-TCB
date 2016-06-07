@@ -451,11 +451,13 @@
     <Content Include="app\modules\home\templates\cambiar-contrasena.html" />
     <Content Include="Resources\img\mail_logo-tannerclientes.png" />
     <Content Include="Resources\img\mail_tanner.jpg" />
+    <Content Include="Scripts\extras\login.js" />
     <Content Include="Views\Account\SignInExternal.cshtml" />
     <Content Include="Views\Emails\Web.config" />
     <Content Include="Views\Emails\PasswordRecoveryEmailModel.cshtml" />
     <Content Include="Views\Emails\_ViewStart.cshtml" />
     <Content Include="Views\Emails\ChangePasswordEmailModel.cshtml" />
+    <Content Include="Styles\login.less" />
     <None Include="Web References\CartolaResumida\tann_cartola_resumida.disco" />
     <Content Include="app\modules\mis-inversiones\templates\estado-documentos_respuesta.html" />
     <Content Include="Resources\img\favicon.ico" />
