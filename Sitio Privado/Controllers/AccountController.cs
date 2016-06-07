@@ -31,6 +31,7 @@ namespace Sitio_Privado.Controllers
         GraphApiClientHelper graphApiClient = new GraphApiClientHelper();
         SignInHelper signInHelper = new SignInHelper();
         private static readonly double passwordExpiresInHours = double.Parse(Startup.temporalPasswordTimeout, CultureInfo.InvariantCulture);
+        private static readonly string baseURL = ConfigurationManager.AppSettings["web:BaseURL"];
 
         [SkipTemporaryPassword]
         public ActionResult SignOut()
@@ -47,6 +48,7 @@ namespace Sitio_Privado.Controllers
         {
             if (!Request.IsAuthenticated)
             {
+                ViewBag.baseURL = baseURL;
                 return View();
             }
 

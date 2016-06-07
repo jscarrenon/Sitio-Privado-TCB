@@ -1,6 +1,5 @@
 ﻿jQuery(document).ready(function ($) {
-    //Url base
-    var baseURL = 'http://localhost:63495';
+    //BaseURL definida en Web.config
     //Cambiar de formulario para recuperar contraseña
     $('#textoRecuperarContr').click(function (event) {
         //Oculta campos de contraseña temporal
