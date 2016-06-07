@@ -36,13 +36,7 @@
         posting.done(function (data) {
             //Loader sigue desplegado y formulario oculto
             //Envía nuevo formulario 
-            $('<form action="' + baseURL + '/Account/SignIn' + '" method="POST">' +
-			'<input type="hidden" name="Oid" value="' + data.Oid + '">' +
-			'<input type="hidden" name="Names" value="' + data.Names + '">' +
-			'<input type="hidden" name="Surnames" value="' + data.Surnames + '">' +
-			'<input type="hidden" name="Country" value="' + data.Country + '">' +
-			'<input type="hidden" name="City" value="' + data.City + '">' +
-			'</form>').submit();
+            formSignIn(data).submit();
         });
         //En caso de error
         posting.fail(function (jqXHR, textStatus, errorThrown) {
@@ -56,9 +50,8 @@
             $('#loginError').html('<div></div><p>' + jqXHR.statusText + '</p>').show();
         });
     });
-
-    var formsActions = function()
-    {
+    //Fuciones para manipular formularios
+    var formsActions = function() {
         //Procesar passwordRecoveryForm
         var $passwordRecoveryForm = $("#passwordRecoveryForm");
         // Attach a submit handler to the form
@@ -124,13 +117,7 @@
             posting.done(function (data) {
                 //Loader sigue desplegado y formulario oculto
                 //Envía nuevo formulario 
-                $('<form action="' + baseURL + '/Account/SignIn' + '" method="POST">' +
-                '<input type="hidden" name="Oid" value="' + data.Oid + '">' +
-                '<input type="hidden" name="Names" value="' + data.Names + '">' +
-                '<input type="hidden" name="Surnames" value="' + data.Surnames + '">' +
-                '<input type="hidden" name="Country" value="' + data.Country + '">' +
-                '<input type="hidden" name="City" value="' + data.City + '">' +
-                '</form>').submit();
+                formSignIn(data).submit();
             });
             //En caso de error
             posting.fail(function (jqXHR, textStatus, errorThrown) {
@@ -144,5 +131,15 @@
                 $('#recuperatePasswordError').html('<div></div><p>' + jqXHR.statusText + '</p>').show();
             });
         });
+    }
+    //Formulario sign in
+    var formSignIn = function (data) {
+        return $('<form action="' + baseURL + '/Account/SignIn' + '" method="POST">' +
+                '<input type="hidden" name="Oid" value="' + data.Oid + '">' +
+                '<input type="hidden" name="Names" value="' + data.Names + '">' +
+                '<input type="hidden" name="Surnames" value="' + data.Surnames + '">' +
+                '<input type="hidden" name="Country" value="' + data.Country + '">' +
+                '<input type="hidden" name="City" value="' + data.City + '">' +
+                '</form>');
     }
 });
