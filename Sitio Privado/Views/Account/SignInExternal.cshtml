@@ -1,78 +1,89 @@
-﻿@model Sitio_Privado.Models.LoginModel
-
-@{
-    Layout = null;
-}
-
-<!DOCTYPE html>
-
-<html>
+﻿<!DOCTYPE html>
+<html lang="es">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>TannerClientes / Login</title>
-    <link rel="stylesheet" type="text/css" href="/.build/css/stylesCss.css" />
-    <link rel="stylesheet" type="text/css" href="/.build/css/stylesLess.css" />
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:600,700' rel='stylesheet' type='text/css'>
-    <meta name="viewport" content="width=device-width">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-    <script type="text/javascript" src="/.build/vendors/vendors.js"></script>
-
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
     <script>
-        $(document).ready(function(){
-            $('.show').click(function(){
-            $('.password-recover').toggle()
-            });
-        });
+        var baseURL = "@ViewBag.baseURL";
     </script>
+
+    <!-- stylesLess:css -->
+    <link rel="stylesheet" href="/.build/css/stylesLoginLess.css">
+    <!-- endinject -->
+    <!-- extras:js -->
+    <script src="/.build/js/extrasLogin.js"></script>
+    <!-- endinject -->
+
+    <link rel="icon" href="/.build/img/favicon.ico" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <script type="text/javascript">  var appInsights=window.appInsights||function(config){    function r(config){t[config]=function(){var i=arguments;t.queue.push(function(){t[config].apply(t,i)})}}var t={config:config},u=document,e=window,o="script",s=u.createElement(o),i,f;for(s.src=config.url||"//az416426.vo.msecnd.net/scripts/a/ai.0.js",u.getElementsByTagName(o)[0].parentNode.appendChild(s),t.cookie=u.cookie,t.queue=[],i=["Event","Exception","Metric","PageView","Trace"];i.length;)r("track"+i.pop());return r("setAuthenticatedUserContext"),r("clearAuthenticatedUserContext"),config.disableExceptionTracking||(i="onerror",r("_"+i),f=e[i],e[i]=function(config,r,u,e,o){var s=f&&f(config,r,u,e,o);return s!==!0&&t["_"+i](config,r,u,e,o),s}),t    }({        instrumentationKey:"bbf416ca-6238-427a-82ed-be8dc8c3d9b2"    });           window.appInsights=appInsights;    appInsights.trackPageView();</script>
+
 </head>
 <body>
-    <div class="login">
-        <div class="top">
-            <div class="logo"></div>
-            <div class="tannercl">
-                <a href="http://www.tanner.cl" target="_blank">Volver a tanner.cl</a>
+    <div id="modal">
+        <div id="container" class="clientes_login">
+            <img src="/.build/img/mail_logo-tannerclientes.png">
+            <h4>Acceso Clientes</h4>
+            <div id="contenedorLoaderPestania"><div></div></div>
+            <form method="post" id="loginForm">
+                <div class="grupoInput">
+                    <label for="rut">RUT</label>
+                    <input type="text" id="rut" name="Rut">
+                </div>
+                <div class="grupoInput">
+                    <label for="pwd">Contraseña</label>
+                    <input type="password" id="pwd" name="Password">
+                </div>
+                <p id="textoRecuperarContr">¿Olvidaste tu contraseña?</p>
+                <div id="loginError" style="display:none;">
+                </div>
+                <button type="submit">Ingresar</button>
+            </form>
+            <div id="loginPie">
+                <p><span>¿Quieres ser Cliente de Inversiones Tanner?</span><br>Visita nuestro sitio <a href="http://www.tanner.cl">www.tanner.cl</a> o contacta al Servicio de Atención al Cliente al (+56) 2 2674 7500.</p>
             </div>
         </div>
-        <div class="log white-box">
-            <div class="img">
-                <div class="slogan">Hacemos realidad los sueños de crecer</div>
+    </div>
+
+    <div id="recuperatePasswordFormContainer" style="display:none;">
+        <img src="/.build/img/mail_logo-tannerclientes.png">
+        <div id="recuperatePasswordClose"></div>
+        <h4 class="recuperarContr"><span class="modalEs">Recuperar contraseña</span></h4>
+        <h4 class="claveTemp"><span class="modalEs">Ingresar clave temporal</span></h4>
+        <p class="recuperarContr"><span class="modalEs">En caso de haber olvidado tu contraseña, debes ingresar tu RUT.</span></p>
+        <p class="claveTemp"><span class="modalEs">Enviamos una clave temporal a tu correo. Utiliza esta clave para ingresar.</span></p>
+        <div id="contenedorLoaderRecoveryForm"><div></div></div>
+        <form action="#" id="passwordRecoveryForm">
+            <div class="grupoInput">
+                <label class="recuperarContr" for="rut"><span class="modalEs">RUT</span></label>
+                <input class="recuperarContr" type="text" id="rut" name="Rut">
+                <label class="claveTemp" for="password"><span class="modalEs">CLAVE TEMPORAL</span></label>
+                <input class="claveTemp" type="password" id="password" name="Password">
             </div>
-            <div class="user-login">
-                <div class="safe">Acceso Seguro</div>
-                @using (Html.BeginForm("SignInExternal","Account"))
-                {
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="input-field">
-                        RUT (Ej: 12123123K)
-                        @Html.EditorFor(model => model.Rut)
-                        @Html.ValidationMessageFor(model => model.Rut, "", new { @class = "text-danger" })
-                    </div>
-                        <div class="input-field">
-                            Contraseña
-                            <div class="no-password">
-                                <a class="show" href="#">Recuperar contraseña</a>
-                            </div>
-                            @Html.EditorFor(model => model.Password)
-                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                        </div>
-                        <input type="submit" value="Ingresar" class="button green">
-                }
-                <div class="password-recover">
-                    <div class="go-back">
-                        <a class="show" href="#">Volver</a>
-                    </div>
-                    @using (Html.BeginForm("", "api/users/passwordRecovery"))
-                    {
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        <p>Ingrese su RUT y su contraseña será enviada al correo asignado previamente.</p>
-                        <div class="input-field">
-                            @Html.EditorFor(model => model.Rut)
-                            @Html.ValidationMessageFor(model => model.Rut, "", new { @class = "text-danger" })
-                        </div>
-                        <input type="submit" value="Enviar Contraseña" class="button green">
-                    }
-                </div>
+            <div id="claveTempInfo">
+                <!-- si se activa el error de abajo estas instrucciones se quedan en 'display:none' -->
+                <div></div>
+                <p><span class="modalEs">Enviaremos una clave temporal al correo asociado a tu cuenta.</span></p>
             </div>
+            <div id="recuperatePasswordError">
+                <!-- comienza en 'display:none' y se activa en caso de error -->
+                <div></div>
+                <p><span class="modalEs">El RUT ingresado no está registrado como Cliente Tanner. Si tienes dudas contacta a Atención al Cliente.</span></p>
+            </div>
+            <div id="recuperatePasswordInstrucciones">
+                <!-- comienza en 'display:none' y se activa en caso de error -->
+                <div></div>
+                <p><span class="modalEs">Asegúrate de cambiar tu clave al ingresar al sitio de clientes.</span></p>
+            </div>
+            <button class="recuperarContr" type="submit"><span class="modalEs">SOLICITAR CONTRASEÑA</span></button>
+            <button class="claveTemp" type="button" id="submitClaveTempButton"><span class="modalEs">INGRESAR</span></button>
+        </form>
+        <div id="loginPie">
+            <p><span>¿Quieres ser Cliente de Inversiones Tanner?</span><br>Visita nuestro sitio <a href="http://www.tanner.cl">www.tanner.cl</a> o contacta al Servicio de Atención al Cliente al (+56) 2 2674 7500.</p>
         </div>
     </div>
 </body>

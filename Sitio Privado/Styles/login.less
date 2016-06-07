@@ -1,0 +1,320 @@
+/* colors ------------------------------- */
+
+@blanco: #FFFFFF;
+@azul_claro: #005eb8;
+@azul_oscuro: #314574;
+@gris_medio: #6C717E;
+@gris_oscuro: #575C69;
+@rojo: #dd2339;
+@verde: #78BE20;
+
+/* general use ----------------------------------- */
+
+.border-small() {border-radius: 4px;-webkit-border-radius: 4px;
+-moz-border-radius: 4px;}
+.border-normal() {border-radius: 7px;-webkit-border-radius: 7px;
+-moz-border-radius: 7px;}
+
+/* fonts ------------------------------- */
+
+@font-face {
+    font-family: 'GothamBook';
+	src: url('../fonts/GothamBook.eot');
+	src: local('☺'), url('../fonts/GothamBook.woff') format('woff'), url('../fonts/GothamBook.ttf') format('truetype'), url('../fonts/GothamBook.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+    font-family: 'GothamBold';
+	src: url('../fonts/GothamBold.eot');
+	src: local('☺'), url('../fonts/GothamBold.woff') format('woff'), url('../fonts/GothamBold.ttf') format('truetype'), url('../fonts/GothamBold.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'GothamMedium';
+	src: url('../fonts/Gotham-Medium.eot');
+	src: local('☺'), url('../fonts/Gotham-Medium.woff') format('woff'), url('../fonts/Gotham-Medium.ttf') format('truetype'), url('../fonts/Gotham-Medium.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.fregular() {font-family: 'GothamBook', "helvetica neue", Arial, sans-serif;}
+.fmedium() {font-family: 'GothamMedium', "helvetica neue", Arial, sans-serif;}
+.fbold() {font-family: 'GothamBold', "helvetica neue", Arial, sans-serif;}
+
+/* estilos ------------------------------- */
+
+body{
+	margin: 0;
+	background-color: #f3f4f7;
+}
+#modal{
+	position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+.clientes_login{
+	height: 315px;
+}
+.clientes_login_error{
+	height: 362px;
+}
+.clientes_ingresar_clave_temporal{
+	height: 330px;
+}
+.clientes_olvido_contrasenia{
+ 	height: 336px;
+}
+.clientes_olvido_contrasenia_error{
+ 	height: 346px;
+}
+#container{
+	width: 315px;
+    position: absolute;
+    top:-100%;
+    bottom:-100%;
+    right:-100%;
+    left:-100%;
+    margin:auto;
+	background-color:@blanco;
+    box-shadow: 0 0 8px rgba(166, 166, 166, 0.5);
+    .border-normal();
+    img{
+    	display: block;
+    	position: absolute;
+    	bottom: 109%;
+    	left: -100%;
+    	right: -101%;
+    	margin: 0 auto;
+    }
+    h4{
+        display: block;
+        width: 260px;
+        margin: 35px auto 15px auto;
+        color: @azul_claro;
+        .fmedium();
+        font-size: 15px;
+        font-weight: 500;
+    }
+    p{
+        display: block;
+        width: 260px;
+        margin: 20px auto 20px auto;
+        .fregular();
+        font-size: 12.2px;
+        font-weight: 300;
+        color: @gris_oscuro;
+        line-height: 19px;
+    }
+    #contenedorLoaderPestania{
+        display: none;
+        width: 100%;
+        height: 195px;
+        position: relative;
+        div{
+            position: absolute;
+            top: -100%;
+            bottom: -100%;
+            left: -100%;
+            right: -100%;
+            margin: auto;
+            background:url('../img/loader-1.gif') no-repeat center;
+            width: 32px;
+            height: 32px;
+        }
+    }
+    #contenedorLoaderRecoveryForm{
+        display: none;
+        width: 100%;
+        height: 195px;
+        position: relative;
+        div{
+            position: absolute;
+            top: -100%;
+            bottom: -100%;
+            left: -100%;
+            right: -100%;
+            margin: auto;
+            background:url('../img/loader-1.gif') no-repeat center;
+            width: 32px;
+            height: 32px;
+        }
+    }
+    form{
+        .grupoInput{
+            label{
+                display: block;
+                width: 260px;
+                margin: 20px auto 4px auto;
+                color: @azul_claro;
+                .fbold();
+                font-size: 11px;
+                text-transform: uppercase;
+            }
+            input{
+                width: 240px;
+                padding-left: 10px;
+                padding-right: 10px;
+                height: 30px;
+                background-color:@blanco;
+                border: 1px solid #ddd;
+                .border-small();
+                margin: 10px auto;
+                display: block;
+                &:focus {
+                    box-shadow: 0px 0px 2px 2px rgba(242,242,242,0.50);
+                    border:1px solid @gris_medio;
+                }
+            }
+        }
+        #recuperatePasswordInstrucciones, #recuperatePasswordError, #claveTempInfo{
+            height: 55px;
+            width: 260px;
+            margin: 0 auto 10px auto;
+            position: relative;
+            div{
+                position: absolute;
+                top: 15px;
+                left: 2px;
+                width: 16px;
+                height: 16px;
+            }
+            p{
+                position: absolute;
+                top: 0;
+                right: 0;
+                font-size: 12px;
+                .fmedium();
+                display: block;
+                margin: 15px auto 10px auto;
+                width: 224px;                    
+            }
+        }
+        #recuperatePasswordError {
+            height:70px;
+        }
+        #recuperatePasswordInstrucciones{
+            div{
+                background:url('../img/icon_warning.svg') no-repeat center;
+            }
+            p{
+                color: @azul_oscuro;                
+            }
+        }
+        #recuperatePasswordError{
+            div{
+                background:url('../img/icon_error.svg') no-repeat center;
+            }
+            p{
+                color: @rojo;                 
+            }
+        }
+        #claveTempInfo{
+            div{
+                background:url('../img/icon_info.svg') no-repeat center;
+            }
+            p{
+                color: @azul_oscuro;                   
+            }
+        }
+        button{
+            width: 260px;
+            height: 36px;
+            margin: 25px auto 10px auto;
+            background-color: @verde;
+            .border-small();
+            border: 0px;
+            cursor: hand;
+            cursor: pointer;
+            color: @blanco;
+            .fmedium();
+            font-size: 11.8px;
+            display: block;
+            line-height: 36px;
+            text-transform: uppercase;
+            text-decoration: none;
+            letter-spacing: 0.3px;
+            &:hover {
+                background-color:@verde;
+                box-shadow: 0px 0px 8px 0px rgba(102,102,102,0.30);
+            }
+        }
+    }
+    #textoRecuperarContr{
+        color: @azul_oscuro;
+        font-size: 12px;
+        .fmedium();
+        text-align: right;
+        display: block;
+        margin: auto;
+        width: 250px;
+        cursor: hand;
+        cursor: pointer;
+        a {
+            color:@azul_oscuro;
+            text-decoration: none;
+            &:hover {color:@azul_claro;}
+        }
+    }
+    #loginError{
+        height: 50px;
+        width: 260px;
+        margin: 0 auto 10px auto;
+        position: relative;
+        div{
+            position: absolute;
+            top: 20px;
+            left: 2px;
+            width: 16px;
+            height: 16px;
+            background:url('../img/icon_error.svg') no-repeat center;
+        }
+        p{
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-size: 12px;
+            .fmedium();
+            display: block;
+            margin: 20px auto 10px auto;
+            width: 224px;         
+            color: @rojo;
+            line-height: 17px;
+        }  
+    }
+    #loginPie{
+        padding: 20px 0;
+        p{
+            text-align: center;
+            font-size: 11.8px;
+            .fregular();
+            color: @gris_medio;
+            width: 315px;
+            line-height: 18px;
+            span{
+                .fmedium();
+            }
+            a {
+                color:@gris_medio;
+                text-decoration: none;
+                &:hover {color:@gris_oscuro;}
+            }
+        }
+    }
+}
+
+@media only screen and (max-height: 640px) {
+	#modal{
+		position: relative;
+	}
+	#container{
+	    top:0;
+	    bottom:0;
+		margin:100px auto;
+	}
+}

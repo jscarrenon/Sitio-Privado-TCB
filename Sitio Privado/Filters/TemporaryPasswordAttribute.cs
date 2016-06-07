@@ -27,10 +27,7 @@ namespace Sitio_Privado.Filters
 
                 if (isTemporalPassword)
                 {
-                    filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary {
-                            { "controller", "Account" },
-                            { "action", "ChangePassword" }
-                        });
+                    filterContext.Result = new RedirectResult("#/cambiar-contrasena");
                 }                    
             }            
             

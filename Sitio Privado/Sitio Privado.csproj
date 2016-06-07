@@ -195,6 +195,10 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Web.Http.Owin, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Owin.5.2.3\lib\net45\System.Web.Http.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
       <Private>True</Private>
@@ -310,7 +314,10 @@
     <Compile Include="Controllers\IndicesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Extras\ExtraHelpers.cs" />
+    <Compile Include="Extras\HttpRequestMessageExtensions.cs" />
     <Compile Include="Extras\IdToken.cs" />
+    <Compile Include="Filters\AllowCrossSiteJsonApiAttribute.cs" />
+    <Compile Include="Filters\AllowCrossSiteJsonAttribute.cs" />
     <Compile Include="Filters\TemporaryPasswordAttribute.cs" />
     <Compile Include="Extras\PasswordFormatValidationAttribute.cs" />
     <Compile Include="Extras\RutValidationAttribute.cs" />
@@ -369,6 +376,7 @@
     </Compile>
     <Compile Include="Helpers\PasswordGeneratorHelper.cs" />
     <Compile Include="Helpers\TannerDatabaseHelper.cs" />
+    <Compile Include="Helpers\SignInHelper.cs" />
     <Compile Include="Models\AzureFolderModel.cs" />
     <Compile Include="Models\AzureBlobModel.cs" />
     <Compile Include="Helpers\GraphApiResponseInfo.cs" />
@@ -441,12 +449,19 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="app\modules\home\templates\cambiar-contrasena.html" />
+    <Content Include="Resources\img\icon_error.svg" />
+    <Content Include="Resources\img\icon_info.svg" />
+    <Content Include="Resources\img\icon_warning.svg" />
+    <Content Include="Resources\img\mail_logo-tannerclientes.png" />
+    <Content Include="Resources\img\mail_tanner.jpg" />
+    <Content Include="Scripts\extras\login.js" />
     <Content Include="Views\Account\SignInExternal.cshtml" />
     <Content Include="Views\Emails\Web.config" />
     <Content Include="Views\Emails\PasswordRecoveryEmailModel.cshtml" />
     <Content Include="Views\Emails\_ViewStart.cshtml" />
-    <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Emails\ChangePasswordEmailModel.cshtml" />
+    <Content Include="Styles\login.less" />
     <None Include="Web References\CartolaResumida\tann_cartola_resumida.disco" />
     <Content Include="app\modules\mis-inversiones\templates\estado-documentos_respuesta.html" />
     <Content Include="Resources\img\favicon.ico" />
@@ -504,6 +519,7 @@
     <Content Include="Frontend_Tests\Controllers\misInversionesDocumentosControllerSpec.js" />
     <Content Include="Frontend_Tests\Controllers\modalInstanceControllerSpec.js" />
     <Content Include="Scripts\extras\index.js" />
+    <TypeScriptCompile Include="app\common\controllers\changePasswordCtrl.ts" />
     <TypeScriptCompile Include="app\common\controllers\modalInstanceCtrl.ts" />
     <TypeScriptCompile Include="app\common\directives\loadingDirective.ts" />
     <Content Include="favicon.ico" />
@@ -751,6 +767,7 @@
     <TypeScriptCompile Include="app\common\services\constantService.ts" />
     <TypeScriptCompile Include="app\common\services\dataService.ts" />
     <TypeScriptCompile Include="app\common\typings\slicknav.ts" />
+    <TypeScriptCompile Include="app\domain\ChangePasswordInput.ts" />
     <TypeScriptCompile Include="app\domain\CircularizacionInput.ts" />
     <TypeScriptCompile Include="app\domain\CircularizacionArchivo.ts" />
     <TypeScriptCompile Include="app\domain\CircularizacionProcesoResultado.ts" />

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using Sitio_Privado.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace Sitio_Privado.Extras
 {
     public class IdToken
     {
+        public IdToken() { }
+
         public IdToken(string base64)
         {
             var strings = base64.Split('.');
