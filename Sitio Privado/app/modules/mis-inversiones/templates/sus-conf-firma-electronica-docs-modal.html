@@ -1,9 +1,20 @@
-﻿<div class="modal-style modal2">
+﻿<div class="" ng-class="modal.classModal">
     <div class="pretitle"></div>
-    <div class="title">Confirmación Suscripción Firma Electrónica de Documentos</div>
-    <div class="text" ng-show="modal.condiciones">Confirmación para la suscripción de firma electrónica de documentos en la página web de Tanner Corredores de Bolsa.
-    <br/><br />
-    <input type="checkbox"  ng-click="modal.changeAceptaCondiciones()" /> He leído y acepto las <a href="/Resources/pdf/Anexo 1 Opción firma electrónica.pdf" target="_blank">condiciones legales.</a>
+    <div class="title">Suscripción Firma Electrónica de Documentos y Operaciones </div>
+    <div ng-show="modal.divInformativoRechazo" class="text">
+        Se inhabilitará la opción de firma electrónica respecto de todas las gestiones pendientes de firma en el sitio y que deban ser realizadas en el futuro.
+        <br/>
+        ¿Está seguro de Rechazar?
+
+    </div>
+    <div class="text" ng-show="modal.condiciones">
+        Si actualmente usted firma electrónicamente sus operaciones en el sitio web de Tanner Corredores de Bolsa S.A., y desea continuar utilizando este sistema, le rogamos aceptar este mensaje.
+        <br/>
+        <b>Advertencia:</b> En caso de rechazar, se inhabilitará la opción de firma electrónica respecto de todas las gestiones que deban ser realizadas en el futuro con la Corredora a partir de la fecha de su rechazo.
+        <br/>
+        Cualquier duda o consulta, contactar a su Ejecutivo de Inversiones.
+        <br/><br />
+        <input type="checkbox"  ng-click="modal.changeAceptaCondiciones()" /> He leído y acepto las <a href="/Resources/pdf/Anexo 1 Opción firma electrónica.pdf" target="_blank">condiciones legales.</a>
     </div>
     <br />
     <div ng-show="modal.divInformativo" class="text" >
@@ -11,8 +22,10 @@
         <br/>El documento de formalización quedará disponible para su firma durante las próximas 24 horas (hábiles).
     </div>
     <br />
-    <div class="button green" title="Debe marcarar que ha leído y aceptado las condiciones legales" ng-show="modal.btnAceptar"><a href="" class="clink" ng-click="modal.aceptar()">Aceptar</a></div>
-    <div class="button button2 silver" title="Debe marcarar que ha leído y aceptado las condiciones legales"  ng-show="modal.btnRechazar"><a href="" class="clink" ng-click="modal.rechazar()">Rechazar</a></div>
+    <div class="button green"  ng-show="modal.btnConfirmacionRechazo"><a href="" class="clink" ng-click="modal.confirmacionRechazo()">Rechazar</a></div>
+    <div class="button green" title="Debe marcar que ha leído y aceptado las condiciones legales" ng-show="modal.btnAceptar"><a href="" class="clink" ng-click="modal.aceptar()">Aceptar</a></div>
+    <div class="button button2 silver" title="Debe marcar que ha leído y aceptado las condiciones legales"  ng-show="modal.btnRechazar"><a href="" class="clink" ng-click="modal.rechazar()">Rechazar</a></div>
+    <div class="button button2 silver"  ng-show="modal.btnVolver"><a href="" class="clink" ng-click="modal.volver()">Volver</a></div>
     <div class="button green"  ng-show="modal.btnCerrar"><a href="" class="clink" ng-click="modal.ok()" >Cerrar</a></div>
     <button class="modal-close" ng-click="modal.cancelar()"></button>
 </div>
