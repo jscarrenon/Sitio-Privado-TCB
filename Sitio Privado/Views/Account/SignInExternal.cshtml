@@ -24,7 +24,8 @@
         <div id="container" class="clientes_login">
             <img src="/.build/img/mail_logo-tannerclientes.png">
             <h4>Acceso Clientes</h4>
-            <form action="clientes_login_error.html">
+            <div id="contenedorLoaderPestania"><div></div></div>
+            <form method="post" id="loginForm">
                 <div class="grupoInput">
                     <label for="rut">RUT</label>
                     <input type="text" id="rut" name="Rut">
@@ -33,12 +34,52 @@
                     <label for="pwd">Contraseña</label>
                     <input type="password" id="pwd" name="Password">
                 </div>
-                <p id="textoRecuperarContr"><a href="clientes_olvido_contrasenia.html">¿Olvidaste tu contraseña?</a></p>
+                <p id="textoRecuperarContr">¿Olvidaste tu contraseña?</p>
+                <div id="loginError" style="display:none;">
+                </div>
                 <button type="submit">Ingresar</button>
             </form>
             <div id="loginPie">
                 <p><span>¿Quieres ser Cliente de Inversiones Tanner?</span><br>Visita nuestro sitio <a href="http://www.tanner.cl">www.tanner.cl</a> o contacta al Servicio de Atención al Cliente al (+56) 2 2674 7500.</p>
             </div>
+        </div>
+    </div>
+
+    <div id="recuperatePasswordFormContainer" style="display:none;">
+        <img src="/.build/img/mail_logo-tannerclientes.png">
+        <div id="recuperatePasswordClose"></div>
+        <h4 class="recuperarContr"><span class="modalEs">Recuperar contraseña</span></h4>
+        <h4 class="claveTemp"><span class="modalEs">Ingresar clave temporal</span></h4>
+        <p class="recuperarContr"><span class="modalEs">En caso de haber olvidado tu contraseña, debes ingresar tu RUT.</span></p>
+        <p class="claveTemp"><span class="modalEs">Enviamos una clave temporal a tu correo. Utiliza esta clave para ingresar.</span></p>
+        <div id="contenedorLoaderRecoveryForm"><div></div></div>
+        <form action="#" id="passwordRecoveryForm">
+            <div class="grupoInput">
+                <label class="recuperarContr" for="rut"><span class="modalEs">RUT</span></label>
+                <input class="recuperarContr" type="text" id="rut" name="Rut">
+                <label class="claveTemp" for="password"><span class="modalEs">CLAVE TEMPORAL</span></label>
+                <input class="claveTemp" type="password" id="password" name="Password">
+            </div>
+            <div id="claveTempInfo">
+                <!-- si se activa el error de abajo estas instrucciones se quedan en 'display:none' -->
+                <div></div>
+                <p><span class="modalEs">Enviaremos una clave temporal al correo asociado a tu cuenta.</span></p>
+            </div>
+            <div id="recuperatePasswordError">
+                <!-- comienza en 'display:none' y se activa en caso de error -->
+                <div></div>
+                <p><span class="modalEs">El RUT ingresado no está registrado como Cliente Tanner. Si tienes dudas contacta a Atención al Cliente.</span></p>
+            </div>
+            <div id="recuperatePasswordInstrucciones">
+                <!-- comienza en 'display:none' y se activa en caso de error -->
+                <div></div>
+                <p><span class="modalEs">Asegúrate de cambiar tu clave al ingresar al sitio de clientes.</span></p>
+            </div>
+            <button class="recuperarContr" type="submit"><span class="modalEs">SOLICITAR CONTRASEÑA</span></button>
+            <button class="claveTemp" type="button" id="submitClaveTempButton"><span class="modalEs">INGRESAR</span></button>
+        </form>
+        <div id="loginPie">
+            <p><span>¿Quieres ser Cliente de Inversiones Tanner?</span><br>Visita nuestro sitio <a href="http://www.tanner.cl">www.tanner.cl</a> o contacta al Servicio de Atención al Cliente al (+56) 2 2674 7500.</p>
         </div>
     </div>
 </body>

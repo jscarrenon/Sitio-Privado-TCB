@@ -449,6 +449,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="app\modules\home\templates\cambiar-contrasena.html" />
+    <Content Include="Resources\img\icon_error.svg" />
+    <Content Include="Resources\img\icon_info.svg" />
+    <Content Include="Resources\img\icon_warning.svg" />
     <Content Include="Resources\img\mail_logo-tannerclientes.png" />
     <Content Include="Resources\img\mail_tanner.jpg" />
     <Content Include="Scripts\extras\login.js" />
