@@ -135,11 +135,7 @@
     //Formulario sign in
     var formSignIn = function (data) {
         return $('<form action="' + baseURL + '/Account/SignIn' + '" method="POST">' +
-                '<input type="hidden" name="Oid" value="' + data.Oid + '">' +
-                '<input type="hidden" name="Names" value="' + data.Names + '">' +
-                '<input type="hidden" name="Surnames" value="' + data.Surnames + '">' +
-                '<input type="hidden" name="Country" value="' + data.Country + '">' +
-                '<input type="hidden" name="City" value="' + data.City + '">' +
+                '<input type="hidden" name="token" value="' + data + '">' +
                 '</form>');
     }
 });
