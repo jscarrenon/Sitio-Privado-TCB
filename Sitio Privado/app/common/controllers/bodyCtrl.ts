@@ -9,7 +9,7 @@
     export class BodyCtrl implements IBodyViewModel {
 
         seccionId: number;
-        
+        suscripcionFirmaElectronica :number;
         static $inject = ['constantService', 'dataService', 'authService', 'extrasService','$scope', '$uibModal', '$location','Analytics'];
         constructor(private constantService: app.common.services.ConstantService,
             private dataService: app.common.services.DataService,
@@ -19,25 +19,27 @@
             private $uibModal: ng.ui.bootstrap.IModalService,
             private $location: ng.ILocationService,
             private Analytics: ng.google.analytics.AnalyticsService) {
-
+            this.suscripcionFirmaElectronica = 0;
             this.seccionId = 0;
-            this.seleccionarSeccion(this.seccionId);            
-            this.$scope.$watch(() => this.authService.circularizacionPendiente,
-                (newValue: boolean, oldValue: boolean) => {
-                    if ((newValue != oldValue) && newValue)
-                        this.crearInstanciaModal("circularizacion");
-                });
-            this.$scope.$watch(() => this.authService.documentosPendientes,
-                (newValue: number, oldValue: number) => {
-                    if ((newValue != oldValue) && newValue > 0)
-                        this.crearInstanciaModal("documentos");
-                });   
+            this.seleccionarSeccion(this.seccionId);   
+
             this.$scope.$watch(() => this.authService.susFirmaElecDoc,
-                (respuesta: number) => {
-                    if (respuesta == 0) {
-                        this.crearInstanciaModal("susConFirmaElectronicaDocs");
-                    }
-                });  
+            (respuesta: number) => {
+                if (respuesta == 0) {
+                    this.crearInstanciaModal("susConFirmaElectronicaDocs");
+                } else if(respuesta > 0) {
+                    this.suscripcionFirmaElectronica = 1;
+                }
+            });  
+            
+
+            this.$scope.$watch(() =>this.suscripcionFirmaElectronica, (value: number) => {
+                if (value > 0) {
+                    this.modalDocumentosPendientes();
+                    this.modalCircularizacion();
+                }
+            });
+            
                 
 
             this.$scope.$on('$routeChangeSuccess', (event: any) => {
@@ -76,7 +78,25 @@
 
                 instanciaModal.result.then(_ => this.$location.path(ruta));
             }
-        }        
+        } 
+
+        modalDocumentosPendientes() {
+            this.$scope.$watch(() => this.authService.documentosPendientes,
+                (newValue: number, oldValue: number) => {
+                    if ((newValue != oldValue) && newValue > 0) {
+                        this.crearInstanciaModal("documentos");
+                    }
+            });
+        }
+
+        modalCircularizacion() {
+            this.$scope.$watch(() => this.authService.circularizacionPendiente,
+            (newValue: boolean, oldValue: boolean) => {
+                if ((newValue != oldValue) && newValue) {
+                    this.crearInstanciaModal("circularizacion");
+                }
+            });
+        }
     }
 
     angular.module('tannerPrivadoApp')
