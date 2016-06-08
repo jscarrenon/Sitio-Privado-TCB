@@ -23,6 +23,7 @@ using Microsoft.Owin.Security;
 using Sitio_Privado.Filters;
 using System.Security.Principal;
 using System.Runtime.Serialization.Json;
+using NLog;
 
 namespace Sitio_Privado.Controllers
 {
@@ -32,10 +33,16 @@ namespace Sitio_Privado.Controllers
         SignInHelper signInHelper = new SignInHelper();
         private static readonly double passwordExpiresInHours = double.Parse(Startup.temporalPasswordTimeout, CultureInfo.InvariantCulture);
         private static readonly string baseURL = ConfigurationManager.AppSettings["web:BaseURL"];
+        private static Logger logger = LogManager.GetLogger("SessionLog");
 
         [SkipTemporaryPassword]
         public ActionResult SignOut()
         {
+            //Log
+            var usuario = this.Usuario;
+            logger.Info("User signed out => Rut: " + usuario.Rut + "; Email: " +
+                usuario.Email + "; IP: " + Request.ServerVariables["REMOTE_ADDR"] + ";");
+
             HttpContext.GetOwinContext().Authentication.SignOut();
 
             return Redirect(ConfigurationManager.AppSettings["web:PostLogoutRedirectUrl"]);

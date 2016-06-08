@@ -1,4 +1,5 @@
 ﻿using Microsoft.Owin.Security;
+using NLog;
 using Sitio_Privado.Extras;
 using Sitio_Privado.Filters;
 using Sitio_Privado.Helpers;
@@ -25,6 +26,7 @@ namespace Sitio_Privado.Controllers
         private SignInHelper signInHelper = new SignInHelper();
         private static readonly double passwordExpiresInHours = double.Parse(Startup.temporalPasswordTimeout, CultureInfo.InvariantCulture);
         private static readonly string contactPhoneNumber = ConfigurationManager.AppSettings["web:ContactPhoneNumber"];
+        private static Logger logger = LogManager.GetLogger("SessionLog");
 
         [AllowCrossSiteJsonApi]
         [AllowAnonymous]
@@ -49,14 +51,21 @@ namespace Sitio_Privado.Controllers
                     var apiResponse = await graphApiClient.ResetUserPassword(getUserResponse.User.ObjectId, getUserResponse.User);
                     if (apiResponse.StatusCode == System.Net.HttpStatusCode.NoContent)
                     {
+                        //Log
+                        logger.Info("Temporary password set => Rut: " + getUserResponse.User.Rut + "; Email: " +
+                                getUserResponse.User.Email + "; IP: " + Request.GetClientIpAddress() + ";");
+
                         //Send mail
                         try
                         {
                             SendPasswordRecoveryMail(getUserResponse.User);
+                            logger.Info("Temporary password mail sent => Rut: " + getUserResponse.User.Rut + "; Email: " +
+                                getUserResponse.User.Email + "; IP: " + Request.GetClientIpAddress() + ";");
                         }
                         catch(Exception e)
                         {
-                            //TODO
+                            logger.Error(e, "Temporary password mail error => Rut: " + getUserResponse.User.Rut + "; Email: " +
+                                getUserResponse.User.Email + "; IP: " + Request.GetClientIpAddress() + ";");
                         }
 
                         //Success!
@@ -118,6 +127,8 @@ namespace Sitio_Privado.Controllers
                         if(getUserResponse.User.IsTemporalPassword == false)
                         {
                             //Success!
+                            logger.Info("User signed in => Rut: " + getUserResponse.User.Rut + "; Email: " +
+                                        getUserResponse.User.Email + "; IP: " + Request.GetClientIpAddress() + ";");
                             return Json(token);
                         }
                         else
@@ -128,6 +139,8 @@ namespace Sitio_Privado.Controllers
                             if (DateTime.Now <= limit)
                             {
                                 //Success
+                                logger.Info("User signed in => Rut: " + getUserResponse.User.Rut + "; Email: " +
+                                            getUserResponse.User.Email + "; IP: " + Request.GetClientIpAddress() + ";");
                                 return Json(token);
                             }
                             else
@@ -203,6 +216,10 @@ namespace Sitio_Privado.Controllers
                         string ip = Request.GetClientIpAddress();
                         DateTime timestamp = DateTime.Now;
 
+                        //Log
+                        logger.Info("Password changed => Rut: " + getUserResponse.User.Rut + "; Email: " +
+                                    getUserResponse.User.Email + "; IP: " + ip + ";");
+
                         Claim isTemporalPasswordClaim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == Startup.isTemporalPasswordClaimKey).First();
                         Claim temporalPasswordTimestampClaim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == Startup.temporalPasswordTimestampClaimKey).First();
 
@@ -223,10 +240,13 @@ namespace Sitio_Privado.Controllers
                         try
                         {
                             SendChagePasswordMail(getUserResponse.User, ip, timestamp);
+                            logger.Info("Password changed mail sent => Rut: " + getUserResponse.User.Rut + "; Email: " +
+                                getUserResponse.User.Email + "; IP: " + ip + ";");
                         }
                         catch (Exception e)
                         {
-                            //TODO
+                            logger.Error(e, "Password changed mail error => Rut: " + getUserResponse.User.Rut + "; Email: " +
+                                getUserResponse.User.Email + "; IP: " + ip + ";");
                         }
 
                         return Json("Contraseña modificada con éxito.");
