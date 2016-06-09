@@ -36,11 +36,11 @@ namespace Sitio_Privado.Controllers
         private static Logger logger = LogManager.GetLogger("SessionLog");
 
         [SkipTemporaryPassword]
-        public ActionResult SignOut()
+        public async Task<ActionResult> SignOut()
         {
             //Log
-            var usuario = this.Usuario;
-            logger.Info("User signed out => Rut: " + usuario.Rut + "; Email: " +
+            var usuario = await GetUsuario();
+            logger.Info("User signed out => Rut: " + ExtraHelpers.FormatRutToText(usuario.Rut) + "; Email: " +
                 usuario.Email + "; IP: " + Request.ServerVariables["REMOTE_ADDR"] + ";");
 
             HttpContext.GetOwinContext().Authentication.SignOut();

@@ -52,19 +52,19 @@ namespace Sitio_Privado.Controllers
                     if (apiResponse.StatusCode == System.Net.HttpStatusCode.NoContent)
                     {
                         //Log
-                        logger.Info("Temporary password set => Rut: " + getUserResponse.User.Rut + "; Email: " +
+                        logger.Info("Temporary password set => Rut: " + ExtraHelpers.FormatRutToText(getUserResponse.User.Rut) + "; Email: " +
                                 getUserResponse.User.Email + "; IP: " + Request.GetClientIpAddress() + ";");
 
                         //Send mail
                         try
                         {
                             SendPasswordRecoveryMail(getUserResponse.User);
-                            logger.Info("Temporary password mail sent => Rut: " + getUserResponse.User.Rut + "; Email: " +
+                            logger.Info("Temporary password mail sent => Rut: " + ExtraHelpers.FormatRutToText(getUserResponse.User.Rut) + "; Email: " +
                                 getUserResponse.User.Email + "; IP: " + Request.GetClientIpAddress() + ";");
                         }
                         catch(Exception e)
                         {
-                            logger.Error(e, "Temporary password mail error => Rut: " + getUserResponse.User.Rut + "; Email: " +
+                            logger.Error(e, "Temporary password mail error => Rut: " + ExtraHelpers.FormatRutToText(getUserResponse.User.Rut) + "; Email: " +
                                 getUserResponse.User.Email + "; IP: " + Request.GetClientIpAddress() + ";");
                         }
 
@@ -127,7 +127,7 @@ namespace Sitio_Privado.Controllers
                         if(getUserResponse.User.IsTemporalPassword == false)
                         {
                             //Success!
-                            logger.Info("User signed in => Rut: " + getUserResponse.User.Rut + "; Email: " +
+                            logger.Info("User signed in => Rut: " + ExtraHelpers.FormatRutToText(getUserResponse.User.Rut) + "; Email: " +
                                         getUserResponse.User.Email + "; IP: " + Request.GetClientIpAddress() + ";");
                             return Json(token);
                         }
@@ -139,7 +139,7 @@ namespace Sitio_Privado.Controllers
                             if (DateTime.Now <= limit)
                             {
                                 //Success
-                                logger.Info("User signed in => Rut: " + getUserResponse.User.Rut + "; Email: " +
+                                logger.Info("User signed in => Rut: " + ExtraHelpers.FormatRutToText(getUserResponse.User.Rut) + "; Email: " +
                                             getUserResponse.User.Email + "; IP: " + Request.GetClientIpAddress() + ";");
                                 return Json(token);
                             }
@@ -217,7 +217,7 @@ namespace Sitio_Privado.Controllers
                         DateTime timestamp = DateTime.Now;
 
                         //Log
-                        logger.Info("Password changed => Rut: " + getUserResponse.User.Rut + "; Email: " +
+                        logger.Info("Password changed => Rut: " + ExtraHelpers.FormatRutToText(getUserResponse.User.Rut) + "; Email: " +
                                     getUserResponse.User.Email + "; IP: " + ip + ";");
 
                         Claim isTemporalPasswordClaim = ((ClaimsIdentity)user.Identity).Claims.Where(c => c.Type == Startup.isTemporalPasswordClaimKey).First();
@@ -240,12 +240,12 @@ namespace Sitio_Privado.Controllers
                         try
                         {
                             SendChagePasswordMail(getUserResponse.User, ip, timestamp);
-                            logger.Info("Password changed mail sent => Rut: " + getUserResponse.User.Rut + "; Email: " +
+                            logger.Info("Password changed mail sent => Rut: " + ExtraHelpers.FormatRutToText(getUserResponse.User.Rut) + "; Email: " +
                                 getUserResponse.User.Email + "; IP: " + ip + ";");
                         }
                         catch (Exception e)
                         {
-                            logger.Error(e, "Password changed mail error => Rut: " + getUserResponse.User.Rut + "; Email: " +
+                            logger.Error(e, "Password changed mail error => Rut: " + ExtraHelpers.FormatRutToText(getUserResponse.User.Rut) + "; Email: " +
                                 getUserResponse.User.Email + "; IP: " + ip + ";");
                         }
 
