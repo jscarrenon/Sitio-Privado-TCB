@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Net.Http;
 
 namespace Sitio_Privado.Extras
@@ -8,6 +9,7 @@ namespace Sitio_Privado.Extras
         private const string HttpContext = "MS_HttpContext";
         private const string RemoteEndpointMessage = "System.ServiceModel.Channels.RemoteEndpointMessageProperty";
         private const string OwinContext = "MS_OwinContext";
+        private static readonly string timeZone = ConfigurationManager.AppSettings["web:TimeZone"];
 
         public static string GetClientIpAddress(this HttpRequestMessage request)
         {
@@ -51,7 +53,9 @@ namespace Sitio_Privado.Extras
                 dynamic ctx = request.Properties[HttpContext];
                 if (ctx != null)
                 {
-                    return ctx.Timestamp;
+                    DateTime serverTimestamp = ctx.Timestamp;
+                    DateTime localTimestamp = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(serverTimestamp, TimeZoneInfo.Local.Id, timeZone);
+                    return localTimestamp;
                 }
             }
 
