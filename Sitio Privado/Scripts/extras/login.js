@@ -122,13 +122,14 @@
             //En caso de error
             posting.fail(function (jqXHR, textStatus, errorThrown) {
                 //Cambia clase contenedor
-                $('#container').attr('class', 'clientes_login_error');
+                $('#container').attr('class', 'clientes_olvido_contrasenia_error');
                 //Oculta loader
                 $('#contenedorLoaderRecoveryForm').hide();
                 //Muestra formulario
                 $passwordRecoveryForm.show();
                 //Muestra error
                 $('#recuperatePasswordError').html('<div></div><p>' + jqXHR.statusText + '</p>').show();
+                $('#recuperatePasswordInstrucciones').hide();
             });
         });
     }
