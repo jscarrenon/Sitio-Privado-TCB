@@ -47,7 +47,7 @@
             //Muestra formulario
             $loginForm.show();
             //Muestra error
-            $('#loginError').html('<div></div><p>' + jqXHR.statusText + '</p>').show();
+            $('#loginError').html('<div></div><p>' + jqXHR.responseText + '</p>').show();
         });
     });
     //Fuciones para manipular formularios
@@ -95,7 +95,7 @@
                 $('.claveTemp').hide();
                 $('#claveTempInfo').hide();
                 //Muestra error
-                $('#recuperatePasswordError').html('<div></div><p>' + jqXHR.statusText + '</p>').show();
+                $('#recuperatePasswordError').html('<div></div><p>' + jqXHR.responseText + '</p>').show();
                 $('#recuperatePasswordInstrucciones').hide();
             });
         });
@@ -128,7 +128,7 @@
                 //Muestra formulario
                 $passwordRecoveryForm.show();
                 //Muestra error
-                $('#recuperatePasswordError').html('<div></div><p>' + jqXHR.statusText + '</p>').show();
+                $('#recuperatePasswordError').html('<div></div><p>' + jqXHR.responseText + '</p>').show();
                 $('#recuperatePasswordInstrucciones').hide();
             });
         });

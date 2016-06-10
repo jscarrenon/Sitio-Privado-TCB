@@ -74,8 +74,8 @@ namespace Sitio_Privado.Controllers
                     {
                         var resp = new HttpResponseMessage(HttpStatusCode.InternalServerError)
                         {
-                            Content = new StringContent("Error al intentar cambiar la contraseña. B2C Status Code: " + apiResponse.StatusCode),
-                            ReasonPhrase = "Error al intentar cambiar la contraseña. Intente otra vez."
+                            Content = new StringContent("Error al intentar cambiar la contraseña. Intente otra vez."),
+                            ReasonPhrase = "Error al intentar cambiar la contraseña. B2C Status Code: " + apiResponse.StatusCode
                         };
                         throw new HttpResponseException(resp);
                     }
@@ -84,8 +84,8 @@ namespace Sitio_Privado.Controllers
                 {
                     var resp = new HttpResponseMessage(HttpStatusCode.NotFound)
                     {
-                        Content = new StringContent("RUT no encontrado en el sistema."),
-                        ReasonPhrase = "El RUT ingresado no es Cliente de Tanner. Contacte a Servicio de Atención al Cliente."
+                        Content = new StringContent("El RUT ingresado no es Cliente de Tanner. Contacte a Servicio de Atención al Cliente."),
+                        ReasonPhrase = "RUT no encontrado en el sistema."
                     };
                     throw new HttpResponseException(resp);
                 }
@@ -95,8 +95,8 @@ namespace Sitio_Privado.Controllers
                 string message = string.Join(". ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
                 var resp = new HttpResponseMessage(HttpStatusCode.BadRequest)
                 {
-                    Content = new StringContent(message),
-                    ReasonPhrase = "RUT no válido. Por favor intente nuevamente."
+                    Content = new StringContent("RUT no válido. Por favor intente nuevamente."),
+                    ReasonPhrase = message
                 };
                 throw new HttpResponseException(resp);
             }
@@ -146,8 +146,8 @@ namespace Sitio_Privado.Controllers
                             {
                                 var resp = new HttpResponseMessage(HttpStatusCode.Forbidden)
                                 {
-                                    Content = new StringContent("Contraseña temporal caducada."),
-                                    ReasonPhrase = "Su contraseña temporal ha caducado. Por favor solicite una nueva."
+                                    Content = new StringContent("Su contraseña temporal ha caducado. Por favor solicite una nueva."),
+                                    ReasonPhrase = "Contraseña temporal caducada."
                                 };
                                 throw new HttpResponseException(resp);
                             }
@@ -157,8 +157,8 @@ namespace Sitio_Privado.Controllers
                     {
                         var resp = new HttpResponseMessage(HttpStatusCode.BadGateway)
                         {
-                            Content = new StringContent("Token nulo."),
-                            ReasonPhrase = "No se pudo iniciar sesión. Por favor revise su RUT y contraseña e intente nuevamente."
+                            Content = new StringContent("No se pudo iniciar sesión. Por favor revise su RUT y contraseña e intente nuevamente."),
+                            ReasonPhrase = "Token nulo."
                         };
                         throw new HttpResponseException(resp);
                     }
@@ -167,8 +167,8 @@ namespace Sitio_Privado.Controllers
                 {
                     var resp = new HttpResponseMessage(HttpStatusCode.NotFound)
                     {
-                        Content = new StringContent("RUT no encontrado en el sistema."),
-                        ReasonPhrase = "El RUT ingresado no es Cliente de Tanner. Contacte a Servicio de Atención al Cliente."
+                        Content = new StringContent("El RUT ingresado no es Cliente de Tanner. Contacte a Servicio de Atención al Cliente."),
+                        ReasonPhrase = "RUT no encontrado en el sistema."
                     };
                     throw new HttpResponseException(resp);
                 }
@@ -178,8 +178,8 @@ namespace Sitio_Privado.Controllers
                 string message = string.Join(". ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
                 var resp = new HttpResponseMessage(HttpStatusCode.BadRequest)
                 {
-                    Content = new StringContent(message),
-                    ReasonPhrase = "RUT o contraseña no válidos. Por favor intente nuevamente."
+                    Content = new StringContent("RUT o contraseña no válidos. Por favor intente nuevamente."),
+                    ReasonPhrase = message
                 };
                 throw new HttpResponseException(resp);
             }
@@ -254,8 +254,8 @@ namespace Sitio_Privado.Controllers
                     {
                         var resp = new HttpResponseMessage(HttpStatusCode.InternalServerError)
                         {
-                            Content = new StringContent("Error al intentar cambiar la contraseña. B2C Status Code: " + apiResponse.StatusCode),
-                            ReasonPhrase = "Error al intentar cambiar la contraseña. Intente otra vez."
+                            Content = new StringContent("Error al intentar cambiar la contraseña. Intente otra vez."),
+                            ReasonPhrase = "Error al intentar cambiar la contraseña. B2C Status Code: " + apiResponse.StatusCode
                         };
                         throw new HttpResponseException(resp);
                     }
@@ -264,8 +264,8 @@ namespace Sitio_Privado.Controllers
                 {
                     var resp = new HttpResponseMessage(HttpStatusCode.NotFound)
                     {
-                        Content = new StringContent("Usuario no encontrado en el sistema."),
-                        ReasonPhrase = "No se encontró al usuario en el sistema."
+                        Content = new StringContent("No se encontró al usuario en el sistema."),
+                        ReasonPhrase = "Usuario no encontrado en el sistema."
                     };
                     throw new HttpResponseException(resp);
                 }
@@ -273,7 +273,6 @@ namespace Sitio_Privado.Controllers
             else
             {
                 return BadRequest(ModelState);
-
             }
         }
 

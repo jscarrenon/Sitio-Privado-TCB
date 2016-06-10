@@ -55,7 +55,7 @@
                         }
                     }
                     else {
-                        this.errorMessage = result.statusText;
+                        this.errorMessage = result.data;
                     }
                 })
                 .finally(() => this.loading = false);
