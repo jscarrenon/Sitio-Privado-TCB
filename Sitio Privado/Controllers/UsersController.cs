@@ -213,7 +213,7 @@ namespace Sitio_Privado.Controllers
                     {
                         //Success!
                         string ip = Request.GetClientIpAddress();
-                        DateTime timestamp = DateTime.Now;
+                        DateTime timestamp = Request.GetTimestamp();
 
                         //Log
                         logger.Info("Password changed => Rut: " + ExtraHelpers.FormatRutToText(getUserResponse.User.Rut) + "; Email: " +

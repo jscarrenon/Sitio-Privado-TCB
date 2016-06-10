@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 
 namespace Sitio_Privado.Extras
 {
@@ -41,6 +42,20 @@ namespace Sitio_Privado.Extras
             }
 
             return null;
+        }
+
+        public static DateTime GetTimestamp(this HttpRequestMessage request)
+        {
+            if (request.Properties.ContainsKey(HttpContext))
+            {
+                dynamic ctx = request.Properties[HttpContext];
+                if (ctx != null)
+                {
+                    return ctx.Timestamp;
+                }
+            }
+
+            return DateTime.Now;
         }
     }
 }
