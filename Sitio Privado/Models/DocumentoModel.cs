@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using Sitio_Privado.DocumentosPendientesFirma;
 using Sitio_Privado.Extras;
+using Sitio_Privado.SuscripcionFirmaElecDoc;
+using System.Web.Configuration;
 
 namespace Sitio_Privado.Models
 {
@@ -141,6 +143,48 @@ namespace Sitio_Privado.Models
             int resultadoOperaciones = webService.cns_operaciones_pendientes(Converters.getRutParteEntera(usuario.Rut));
             int resultadoDocumentos = webService.cns_documentos_pendientes(Converters.getRutParteEntera(usuario.Rut));
             Resultado = resultadoOperaciones + resultadoDocumentos;
+        }
+    }
+
+
+
+    public class RespuestaClienteSusFirmaElectronicaDocs
+    {
+        public int Resultado { get; set; }
+
+        public RespuestaClienteSusFirmaElectronicaDocs(string rut,string glosa, string respuesta)
+        {
+            tann_suscrip_firmelec webService = new tann_suscrip_firmelec();
+            Authentication auth = new Authentication();
+            var userName = WebConfigurationManager.AppSettings["ws:username"];
+            var password = WebConfigurationManager.AppSettings["ws:password"];
+
+            auth.Password = password;
+            auth.UserName = userName;
+            webService.AuthenticationValue = auth;
+            webService.reg_resp_cliente(rut, glosa, respuesta);
+            Resultado = 1;
+        }
+    }
+
+    public class ConsultaRespuestaSusFirmaElecDocs
+    {
+        public int Resultado { get; set; }
+
+        public ConsultaRespuestaSusFirmaElecDocs(string rut)
+        {
+            tann_suscrip_firmelec webService = new tann_suscrip_firmelec();
+            Authentication auth = new Authentication();
+            var userName = WebConfigurationManager.AppSettings["ws:username"];
+            var password = WebConfigurationManager.AppSettings["ws:password"];
+
+            auth.Password = password;
+            auth.UserName = userName;
+            webService.AuthenticationValue = auth;
+            _itemWs respuesta =  webService.val_resp_cliente(rut);
+            Resultado = (int) respuesta._valor;
+
+
         }
     }
 }

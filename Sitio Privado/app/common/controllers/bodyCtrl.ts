@@ -31,7 +31,15 @@
                 (newValue: number, oldValue: number) => {
                     if ((newValue != oldValue) && newValue > 0)
                         this.crearInstanciaModal("documentos");
-                });    
+                });   
+            this.$scope.$watch(() => this.authService.susFirmaElecDoc,
+                (respuesta: number) => {
+                    if (respuesta == 0) {
+                        this.crearInstanciaModal("susConFirmaElectronicaDocs");
+                    }
+                });  
+                
+
             this.$scope.$on('$routeChangeSuccess', (event: any) => {
                 Analytics.trackPage(Analytics.getUrl());
             });
@@ -52,6 +60,10 @@
                     break;
                 case "documentos":
                     urlPlantilla = this.constantService.templateDocumentosPendientesModalURI;
+                    ruta = '/mis-inversiones/estado-documentos';
+                    break;
+                case "susConFirmaElectronicaDocs":
+                    urlPlantilla = this.constantService.templateSusConfFirmaElecDocModalURI;
                     ruta = '/mis-inversiones/estado-documentos';
                     break;
             };

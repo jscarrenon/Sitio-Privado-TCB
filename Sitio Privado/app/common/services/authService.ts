@@ -8,7 +8,9 @@
         circularizacionPendiente: boolean;
         getCircularizacionPendiente(): void;
         documentosPendientes: number;
+        susFirmaElecDoc: number;
         getDocumentosPendientes(): void;
+        setSusFirmaElecDoc(glosa: string, respuesta: string): ng.IPromise<number>;
     }
 
     export class AuthService implements IAuth {
@@ -16,14 +18,19 @@
         usuario: app.domain.IUsuario;
         circularizacionPendiente: boolean;
         documentosPendientes: number;
+        susFirmaElecDoc: number;
+        private qService: ng.IQService;
                 
-        static $inject = ['constantService', 'dataService', 'extrasService'];
+        static $inject = ['constantService', 'dataService', 'extrasService', '$q'];
         constructor(private constantService: ConstantService,
             private dataService: DataService,
-            private extrasService: ExtrasService) {
+            private extrasService: ExtrasService,
+            $q: ng.IQService) {
             this.circularizacionPendiente = false;
             this.documentosPendientes = 0;
             this.getUsuarioActual();
+            this.getSusFirmaElecDoc();
+            this.qService = $q;
         }
 
         getUsuarioActual(): void {
@@ -65,6 +72,25 @@
                 .then((result: app.domain.IDocumentosPendientesCantidadResultado) => {
                     this.documentosPendientes = result.Resultado;
                 });
+        }
+
+        getSusFirmaElecDoc(): void {
+            this.dataService.postWebService(this.constantService.apiDocumentoURI + 'GetConsultaRespuestaSusFirmaElecDoc','')
+                .then((result: number) => {
+                    this.susFirmaElecDoc = result;
+                });
+        }
+
+        setSusFirmaElecDoc(glosa: string, respuesta: string): ng.IPromise<number> {
+            var self = this;
+            var deferred = self.qService.defer();
+            var input: app.domain.ISuscripcionFirmaElectronica = new app.domain.SuscripcionFirmaElectronica(respuesta,glosa);
+            this.dataService.postWebService(this.constantService.apiDocumentoURI + 'SetRespuestaSusFirmaElecDoc', input )
+                .then((result: number) => {
+                    deferred.resolve(result);
+                }).finally(() => deferred.resolve(-1));
+
+            return deferred.promise;
         }
     }
 
