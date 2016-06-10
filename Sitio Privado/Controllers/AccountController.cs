@@ -34,6 +34,7 @@ namespace Sitio_Privado.Controllers
         private static readonly double passwordExpiresInHours = double.Parse(Startup.temporalPasswordTimeout, CultureInfo.InvariantCulture);
         private static readonly string baseURL = ConfigurationManager.AppSettings["web:BaseURL"];
         private static Logger logger = LogManager.GetLogger("SessionLog");
+        private static readonly string contactPhoneNumber = ConfigurationManager.AppSettings["web:ContactPhoneNumber"];
 
         [SkipTemporaryPassword]
         public async Task<ActionResult> SignOut()
@@ -56,6 +57,7 @@ namespace Sitio_Privado.Controllers
             if (!Request.IsAuthenticated)
             {
                 ViewBag.baseURL = baseURL;
+                ViewBag.contactPhoneNumber = contactPhoneNumber;
                 return View();
             }
 

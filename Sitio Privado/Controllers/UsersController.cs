@@ -25,7 +25,6 @@ namespace Sitio_Privado.Controllers
         private GraphApiClientHelper graphApiClient = new GraphApiClientHelper();
         private SignInHelper signInHelper = new SignInHelper();
         private static readonly double passwordExpiresInHours = double.Parse(Startup.temporalPasswordTimeout, CultureInfo.InvariantCulture);
-        private static readonly string contactPhoneNumber = ConfigurationManager.AppSettings["web:ContactPhoneNumber"];
         private static Logger logger = LogManager.GetLogger("SessionLog");
 
         [AllowCrossSiteJsonApi]
@@ -86,7 +85,7 @@ namespace Sitio_Privado.Controllers
                     var resp = new HttpResponseMessage(HttpStatusCode.NotFound)
                     {
                         Content = new StringContent("RUT no encontrado en el sistema."),
-                        ReasonPhrase = "El RUT ingresado no es Cliente de Tanner, para cualquier duda contacte a mesa de atención de clientes al " + contactPhoneNumber + "."
+                        ReasonPhrase = "El RUT ingresado no es Cliente de Tanner. Contacte a Servicio de Atención al Cliente."
                     };
                     throw new HttpResponseException(resp);
                 }
@@ -169,7 +168,7 @@ namespace Sitio_Privado.Controllers
                     var resp = new HttpResponseMessage(HttpStatusCode.NotFound)
                     {
                         Content = new StringContent("RUT no encontrado en el sistema."),
-                        ReasonPhrase = "El RUT ingresado no es Cliente de Tanner, para cualquier duda contacte a mesa de atención de clientes al " + contactPhoneNumber + "."
+                        ReasonPhrase = "El RUT ingresado no es Cliente de Tanner. Contacte a Servicio de Atención al Cliente."
                     };
                     throw new HttpResponseException(resp);
                 }
