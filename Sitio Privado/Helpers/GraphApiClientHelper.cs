@@ -43,6 +43,8 @@ namespace Sitio_Privado.Helpers
         private static string SignInValueParamKey = "value";
         private static string SignInAlternativesParamKey = "alternativeSignInNamesInfo";
         private static string UpdatedAtParamKey = ExtensionsPrefixe + "UpdatedAt";
+        private static string IsTemporalPasswordParamKey = ExtensionsPrefixe + "IsTemporalPassword";
+        private static string TemporalPasswordTimestampParamKey = ExtensionsPrefixe + "TemporalPasswordTimestamp";
         #endregion
 
         private const string AadGraphResourceId = "https://graph.windows.net/";
@@ -85,6 +87,22 @@ namespace Sitio_Privado.Helpers
                 {
                     response = await UpdateUser(id, user, true);
                 }
+            }
+
+            return response;
+        }
+
+        public async Task<GraphApiResponseInfo> ResetUserPassword(string id, GraphUserModel user)
+        {
+            string path = UsersApiPath + "/" + id;
+            string json = GetUpdateUserPasswordRequestBody(user);
+            HttpResponseMessage graphResponse = await SendGraphPatchRequest(path, json);
+            GraphApiResponseInfo response = new GraphApiResponseInfo();
+            response.StatusCode = graphResponse.StatusCode;
+
+            if (!graphResponse.IsSuccessStatusCode)
+            {
+                response.Message = "Could not find any object matching that Rut";
             }
 
             return response;
@@ -384,6 +402,22 @@ namespace Sitio_Privado.Helpers
             return json.ToString();
         }
 
+        private string GetUpdateUserPasswordRequestBody(GraphUserModel user)
+        {
+            JObject json = new JObject();
+
+            //Temporal password
+            JObject passwordProfile = new JObject();
+            passwordProfile.Add(PasswordParamKey, user.TemporalPassword);
+            passwordProfile.Add(ForcePasswordChangeParamKey, false);
+            json.Add(PasswordProfileParamKey, passwordProfile);
+
+            json.Add(IsTemporalPasswordParamKey, user.IsTemporalPassword);
+            json.Add(TemporalPasswordTimestampParamKey, user.TemporalPasswordTimestamp);
+
+            return json.ToString();
+        }
+
         private string GetUpdateUserRequestBody(GraphUserModel graphUser, bool randomEmail)
         {
             JObject json = new JObject();
@@ -500,6 +534,12 @@ namespace Sitio_Privado.Helpers
 
             if (body.GetValue(UpdatedAtParamKey) != null)
                 user.UpdatedAt = body.GetValue(UpdatedAtParamKey).ToString();
+
+            if (body.GetValue(IsTemporalPasswordParamKey) != null)
+                user.IsTemporalPassword = (bool)body.GetValue(IsTemporalPasswordParamKey);
+
+            if (body.GetValue(TemporalPasswordTimestampParamKey) != null)
+                user.TemporalPasswordTimestamp = body.GetValue(TemporalPasswordTimestampParamKey).ToString();
 
             {
                 JArray jArray = (JArray)body.GetValue(SignInAlternativesParamKey);

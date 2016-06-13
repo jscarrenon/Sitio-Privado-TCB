@@ -22,6 +22,7 @@
         apiIndicesURI: string;
         apiCircularizacionURI: string;
         templateSusConfFirmaElecDocModalURI: string;
+        apiUsersURI: string;
     }
 
     export class ConstantService implements IConstant {
@@ -46,6 +47,7 @@
         apiIndicesURI: string;
         apiCircularizacionURI: string;
         templateSusConfFirmaElecDocModalURI: string;
+        apiUsersURI: string;
 
         constructor() {
             this.buildFolderURI = '.build/';
@@ -71,6 +73,7 @@
             this.apiDocumentoURI = '/api/documento/';
             this.apiIndicesURI = '/api/indices/';
             this.apiCircularizacionURI = '/api/circularizacion/';
+            this.apiUsersURI = 'api/users/';
         }
     }
 

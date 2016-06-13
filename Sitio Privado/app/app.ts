@@ -21,6 +21,10 @@
                     templateUrl: buildFolderURI + "html/modules/home/templates/mis-datos.html",
                     controller: "HomeCtrl as ctrl"
                 })
+                .when("/cambiar-contrasena", {
+                    templateUrl: buildFolderURI + "html/modules/home/templates/cambiar-contrasena.html",
+                    controller: "ChangePasswordCtrl as ctrl"
+                })
                 .when("/informacion-financiera/:seccion?", {
                     templateUrl: buildFolderURI + "html/modules/informacion-financiera/templates/index.html",
                     controller: "InformacionFinancieraCtrl as ctrl"
@@ -42,6 +46,10 @@
                 function ($q, $injector, $window, $location) {
                     return {
                         request: function (config) {
+                            var authService: app.common.services.AuthService = $injector.get('authService');
+                            if (authService.autenticado && authService.usuario.ContrasenaTemporal) {
+                                $location.path('/cambiar-contrasena');
+                            }
                             return config || $q.when(config);
                         },
                         responseError: function (response) {

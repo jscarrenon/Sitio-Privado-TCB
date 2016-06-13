@@ -1,4 +1,4 @@
-/// <binding BeforeBuild='clean' AfterBuild='css-task, templates-task, scripts-task, better-dom-task, vendors-task, spa-task, encoding-task, resources-task' Clean='clean' />
+/// <binding BeforeBuild='clean' AfterBuild='css-task, templates-task, scripts-task, better-dom-task, vendors-task, spa-task, encoding-task, resources-task, login-task' Clean='clean' />
 /*
 This file in the main entry point for defining Gulp tasks and using Gulp plugins.
 Click here to learn more. http://go.microsoft.com/fwlink/?LinkId=518007
@@ -22,6 +22,12 @@ var appName = 'tannerPrivadoApp';
 var paths = {
     buildFolder: '.build',
     index: './Views/Home/Index.cshtml',
+    login: {
+        src: './Views/Account/SignInExternal.cshtml',
+        stylesLess: ['./Styles/login.less'],
+        scripts: ['./Scripts/extras/login.js'],
+        folder: './Views/Account'
+    },
     homeFolder: './Views/Home',
     domainFiles: ['./app/domain/IEntity.js', './app/domain/IInput.js', './app/domain/*.js'],
     appFiles: ['./app/*.js',
@@ -31,8 +37,8 @@ var paths = {
                 './app/common/typings/*.js',
                 './app/modules/**/*.js'],
     stylesCss: ['./Styles/*.css'],
-    stylesLess: ['./Styles/*.less'],
-    scripts: ['./Scripts/extras/jquery.sticky.js','./Scripts/extras/*.js','!./Scripts/extras/jquery-1.12.0.js'],
+    stylesLess: ['./Styles/*.less', '!./Styles/login.less'],
+    scripts: ['./Scripts/extras/jquery.sticky.js', './Scripts/extras/*.js', '!./Scripts/extras/jquery-1.12.0.js', '!./Scripts/extras/login.js'],
     bower_components: ['./bower_components/angular-google-analytics/dist/angular-google-analytics.js',
                         './bower_components/angular-rut/dist/angular-rut.min.js',
                         './bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
@@ -54,7 +60,7 @@ var paths = {
 };
 
 gulp.task('default', function (callback) {
-    runSequence('clean', 'css-task', 'templates-task', 'scripts-task', 'better-dom-task', 'vendors-task', 'spa-task', 'encoding-task', 'resources-task', callback);
+    runSequence('clean', 'css-task', 'templates-task', 'scripts-task', 'better-dom-task', 'vendors-task', 'spa-task', 'encoding-task', 'resources-task', 'login-task', callback);
 });
 
 gulp.task('clean', function () {
@@ -191,4 +197,33 @@ gulp.task('encoding-task', function () {
     return target
             .pipe(header('\ufeff'))
             .pipe(gulp.dest(paths.homeFolder));
+});
+
+gulp.task('login-task', function () {
+    var target = gulp.src(paths.login.src);
+
+    var customLessStream = gulp.src(paths.login.stylesLess);
+    var css =  target
+            .pipe(inject(
+                customLessStream.pipe(print())
+                .pipe(concat('stylesLoginLess.css'))
+                .pipe(less())
+                .pipe(gulp.dest(paths.buildFolder+'/css')), { name: 'stylesLess' })
+                )
+            .pipe(gulp.dest(paths.login.folder));
+
+    var extrasJsStream = gulp.src(paths.login.scripts);
+    var scripts = target
+            .pipe(inject(
+                extrasJsStream.pipe(print())
+                .pipe(concat('extrasLogin.js'))
+                .pipe(gulp.dest(paths.buildFolder + '/js')), { name: 'extras' })
+                )
+            .pipe(gulp.dest(paths.login.folder));
+
+    var encoding = target
+            .pipe(header('\ufeff'))
+            .pipe(gulp.dest(paths.login.folder));
+
+    return merge(css, scripts, encoding);
 });
