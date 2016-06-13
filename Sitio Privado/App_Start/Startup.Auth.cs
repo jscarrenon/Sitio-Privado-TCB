@@ -11,30 +11,44 @@ using System.IdentityModel.Tokens;
 using Sitio_Privado.Policies;
 using System.Threading;
 using System.Globalization;
+using Microsoft.AspNet.Identity;
 
 namespace Sitio_Privado
 {
     public partial class Startup
     {
+        
         // The ACR claim is used to indicate which policy was executed
         public const string AcrClaimType = "http://schemas.microsoft.com/claims/authnclassreference";
         public const string PolicyKey = "b2cpolicy";
         public const string OIDCMetadataSuffix = "/.well-known/openid-configuration";
 
         // App config settings
-        private static string clientId = ConfigurationManager.AppSettings["ida:ClientId"];
-        private static string aadInstance = ConfigurationManager.AppSettings["ida:AadInstance"];
-        private static string tenant = ConfigurationManager.AppSettings["ida:Tenant"];
-        private static string redirectUri = ConfigurationManager.AppSettings["ida:RedirectUri"];
+        public static string clientId = ConfigurationManager.AppSettings["ida:ClientId"];
+        public static string aadInstance = ConfigurationManager.AppSettings["ida:AadInstance"];
+        public static string tenant = ConfigurationManager.AppSettings["ida:Tenant"];
+        public static string redirectUri = ConfigurationManager.AppSettings["ida:RedirectUri"];
 
         // B2C policy identifiers
         public static string SignUpPolicyId = ConfigurationManager.AppSettings["ida:SignUpPolicyId"];
         public static string SignInPolicyId = ConfigurationManager.AppSettings["ida:SignInPolicyId"];
         public static string ProfilePolicyId = ConfigurationManager.AppSettings["ida:UserProfilePolicyId"];
 
+        // Custom login process parameters
+        public const string objectIdClaimKey = "http://schemas.microsoft.com/identity/claims/objectidentifier";
+        public static string temporalPasswordTimeout = ConfigurationManager.AppSettings["tempPass:Timeout"];
+        public const string isTemporalPasswordClaimKey = "isTemporalPassword";
+        public const string temporalPasswordTimestampClaimKey = "temporalPasswordTimestamp";
+
         public void ConfigureAuth(IAppBuilder app)
         {
-            app.SetDefaultSignInAsAuthenticationType(CookieAuthenticationDefaults.AuthenticationType);
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
+                LoginPath = new Microsoft.Owin.PathString("/Account/SignInExternal")
+            });
+
+            /*app.SetDefaultSignInAsAuthenticationType(CookieAuthenticationDefaults.AuthenticationType);
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions());
 
@@ -65,7 +79,7 @@ namespace Sitio_Privado
                 },
             };
 
-            app.UseOpenIdConnectAuthentication(options);
+            app.UseOpenIdConnectAuthentication(options);*/
 
         }
 

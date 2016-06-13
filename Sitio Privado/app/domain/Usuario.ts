@@ -15,6 +15,7 @@
         Banco: string;
         NombreCompleto: string;
         CiudadPais: string;
+        ContrasenaTemporal: boolean;
     }
 
     export class Usuario extends app.domain.EntityBase implements IUsuario {
@@ -32,7 +33,8 @@
             public CuentaCorriente: string,
             public Banco: string,
             public NombreCompleto: string,
-            public CiudadPais: string) {
+            public CiudadPais: string,
+            public ContrasenaTemporal: boolean) {
 
             super();
         }

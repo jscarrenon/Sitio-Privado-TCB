@@ -45,6 +45,8 @@ html, body {height:100%;width:100%;}
 @gris_medio: #6C717E; /* menu lateral - titulos y subtitulos */
 @gris_medio_oscuro: #57585B; /* textos */
 
+@rojo_oscuro: #B94A48;
+
 /* fonts ------------------------------- */
 
 @font-face {
@@ -2220,6 +2222,11 @@ input[type="date"] {
                     font-size:13px;
                     color:@gris_medio_oscuro;
                     .fmedium();
+                    &:focus {
+                       background-color:@blanco;
+                        box-shadow: 0px 0px 2px 2px rgba(242,242,242,0.50);
+                        border:1px solid @gris_borde; 
+                    }
                 }
                 .no-password a {
                     position:absolute;
@@ -2582,4 +2589,64 @@ input[type="date"] {
 ::-webkit-scrollbar-track {
     border-radius: 10px;
     background-color: @gris_fondo;
+}
+
+/* errors signin ------------------------------ */
+
+.field-validation-error{
+    display:inline-block;
+}
+
+.validation-summary-errors{
+    margin-bottom: 10px;
+}
+
+.text-danger {
+  color: @rojo_oscuro;
+  font-size: 80%;
+}
+
+/* password ---------------------------------- */
+
+.user-info {
+    .in-title {
+        padding:25px 0px 15px 0px;
+        color:@gris_medio;
+        font-size:16.5px;
+        height: 15px;
+    }
+    input[type=password] {
+        width:100%;
+        margin-top:8px;
+        .border-small();
+        border:1px solid @gris_borde;
+        padding:8px 12px;
+        &:focus {
+            background-color:@blanco;
+            box-shadow: 0px 0px 2px 2px rgba(242,242,242,0.50);
+            border:1px solid #CDCDCD; 
+        }
+    }
+    .info-col .button {
+        margin-top:25px;
+        width:85px;
+    }
+    .edit-note.none {height: 0px;padding-bottom: 0px;}
+    .do-not-match {
+        color:#E20000;
+        font-size:11.5px;
+        padding-top:12px;
+        .fmedium();
+        line-height: 16px;
+    }
+}
+
+.password{
+    width:100%;
+    clear: both;
+    padding-top: 30px;
+    .button {
+        width:180px;
+        margin-left:20px;
+    }
 }

@@ -20,6 +20,7 @@ namespace Sitio_Privado.Models
         public const string Email = ClaimTypes.Email;
         public const string CuentaCorriente = "cuentacorriente";
         public const string Banco = "banco";
+        public const string ContrasenaTemporal = Startup.isTemporalPasswordClaimKey;
     }
 
     interface ICustomPrincipal : IPrincipal
@@ -39,6 +40,7 @@ namespace Sitio_Privado.Models
         string Banco { get; }
         string NombreCompleto { get; }
         string CiudadPais { get; }
+        bool ContrasenaTemporal { get; }
     }
 
     public class Usuario : ClaimsPrincipal, ICustomPrincipal
@@ -77,6 +79,8 @@ namespace Sitio_Privado.Models
 
         public string CiudadPais { get { return (!string.IsNullOrEmpty(Ciudad) || !string.IsNullOrEmpty(Pais)) ? Ciudad + ", " + Pais : ""; } }
 
+        public bool ContrasenaTemporal { get; set; }
+
     }
 
     /// <summary>
@@ -114,6 +118,8 @@ namespace Sitio_Privado.Models
 
         public string CiudadPais { get; set; }
 
+        public bool ContrasenaTemporal { get; set; }
+
         public UsuarioDTO(Usuario usuario)
         {
             Autenticado = usuario.Autenticado;
@@ -131,6 +137,7 @@ namespace Sitio_Privado.Models
             Banco = usuario.Banco;
             NombreCompleto = usuario.NombreCompleto;
             CiudadPais = usuario.CiudadPais;
+            ContrasenaTemporal = usuario.ContrasenaTemporal;
         }
     }
 }
