@@ -32,7 +32,7 @@
             <form method="post" id="loginForm">
                 <div class="grupoInput">
                     <label for="rut">RUT</label>
-                    <input type="text" id="rut" name="Rut">
+                    <input type="text" id="rut" name="Rut" onkeyup="formatRut(this)" onchange="formatRut(this)">
                 </div>
                 <div class="grupoInput">
                     <label for="pwd">Contraseña</label>
@@ -60,7 +60,7 @@
         <form action="#" id="passwordRecoveryForm">
             <div class="grupoInput">
                 <label class="recuperarContr" for="rut"><span class="modalEs">RUT</span></label>
-                <input class="recuperarContr" type="text" id="rut" name="Rut">
+                <input class="recuperarContr" type="text" id="rut" name="Rut" onkeyup="formatRut(this)" onchange="formatRut(this)">
                 <label class="claveTemp" for="password"><span class="modalEs">CLAVE TEMPORAL</span></label>
                 <input class="claveTemp" type="password" id="password" name="Password">
             </div>
