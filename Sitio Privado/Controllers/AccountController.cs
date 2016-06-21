@@ -56,9 +56,7 @@ namespace Sitio_Privado.Controllers
         {
             if (!Request.IsAuthenticated)
             {
-                ViewBag.baseURL = baseURL;
-                ViewBag.contactPhoneNumber = contactPhoneNumber;
-                return View();
+                return Redirect(ConfigurationManager.AppSettings["web:PostLogoutRedirectUrl"]+"?action=login");
             }
 
             return RedirectToAction("Index", "Home");
