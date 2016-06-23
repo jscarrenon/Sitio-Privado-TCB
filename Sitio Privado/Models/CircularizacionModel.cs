@@ -62,6 +62,11 @@ namespace Sitio_Privado.Models
 
         public CircularizacionProcesoResultado(CircularizacionRespondidaInput input, Usuario usuario)
         {
+            if(input.respuesta == "S")
+            {
+                input.comentario = string.Empty;
+            }
+
             tann_circularizacion webService = new tann_circularizacion();
             bool resultado = webService.cli_respuesta_circularizacion(Converters.getRutParteEnteraInt(usuario.Rut), input.respuesta, input.comentario);
             Resultado = resultado;
