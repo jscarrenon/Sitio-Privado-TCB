@@ -9,22 +9,18 @@ namespace Sitio_Privado.Models
 {
     public class CircularizacionPendienteInput
     {
-        public string fecha { get; set; } //dd-MM-yyyy
     }
 
     public class CircularizacionArchivoInput
     {
-        public string fecha { get; set; } //dd-MM-yyyy
     }
 
     public class CircularizacionLeidaInput
     {
-        public string fecha { get; set; } //dd-MM-yyyy
     }
 
     public class CircularizacionRespondidaInput
     {
-        public string fecha { get; set; } 
         public string respuesta { get; set; } // "S" ó "N"
         public string comentario { get; set; } //Sólo en caso de rechazo ("N")
     }

@@ -58,8 +58,7 @@
         }
 
         getCircularizacionPendiente(): void {
-            var fecha: Date = new Date(); // Temporal --KUNDER
-            var input: app.domain.ICircularizacionPendienteInput = new app.domain.CircularizacionPendienteInput(this.extrasService.getFechaFormato(fecha));
+            var input: app.domain.ICircularizacionPendienteInput = new app.domain.CircularizacionPendienteInput();
             this.dataService.postWebService(this.constantService.apiCircularizacionURI + 'getPendiente', input)
                 .then((result: app.domain.ICircularizacionProcesoResultado) => {
                     this.circularizacionPendiente = result.Resultado;
