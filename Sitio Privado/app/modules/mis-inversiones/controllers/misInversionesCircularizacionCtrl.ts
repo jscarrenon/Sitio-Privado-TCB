@@ -135,6 +135,13 @@
         responder(): void {
             this.setRespondida(this.respuestaInput);
         }
+
+        getFecha(input: app.domain.ICircularizacionFechaInput): void {
+            this.dataService.postWebService(this.constantService.apiCircularizacionURI + 'getFecha', input)
+                .then((result: Date) => {
+                    this.fecha = result;
+                });
+        }
     }
     angular.module('tannerPrivadoApp')
         .controller('MisInversionesCircularizacionCtrl', MisInversionesCircularizacionCtrl);

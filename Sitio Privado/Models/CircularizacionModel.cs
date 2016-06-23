@@ -25,6 +25,10 @@ namespace Sitio_Privado.Models
         public string comentario { get; set; } //Sólo en caso de rechazo ("N")
     }
 
+    public class CircularizacionFechaInput
+    {
+    }
+
     public class CircularizacionArchivo
     {
         public string UrlCartola { get; set; }

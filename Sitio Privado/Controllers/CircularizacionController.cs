@@ -7,6 +7,7 @@ using System.Web.Http;
 using Sitio_Privado.Models;
 using Sitio_Privado.CircularizacionCustodia;
 using System.Threading.Tasks;
+using Sitio_Privado.Extras;
 
 namespace Sitio_Privado.Controllers
 {
@@ -65,6 +66,28 @@ namespace Sitio_Privado.Controllers
                 var usuario = await GetUsuarioActual();
                 CircularizacionProcesoResultado proceso = new CircularizacionProcesoResultado(input, usuario);
                 return Ok(proceso);
+            }
+            catch (Exception e)
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpPost]
+        public async Task<IHttpActionResult> GetFecha([FromBody]CircularizacionFechaInput input)
+        {
+            try
+            {
+                var usuario = await GetUsuarioActual();
+                tann_circularizacion webService = new tann_circularizacion();
+                string fecha = webService.cli_fecha_circularizacion(Converters.getRutParteEnteraInt(usuario.Rut));
+                DateTime resultado = new DateTime();
+                if(fecha != "Sin periodo")
+                {
+                    resultado = DateTime.Parse(fecha);
+                }
+
+                return Ok(resultado);
             }
             catch (Exception e)
             {

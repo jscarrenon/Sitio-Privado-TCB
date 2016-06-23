@@ -41,4 +41,14 @@
             super();
         }
     }
+
+    export interface ICircularizacionFechaInput {
+    }
+
+    export class CircularizacionFechaInput extends app.domain.InputBase implements ICircularizacionFechaInput {
+        constructor() {
+
+            super();
+        }
+    }
 }
