@@ -4,6 +4,7 @@
 
     interface IMisInversionesCircularizacionViewModel extends app.common.interfaces.ISeccion {
         fecha: Date;
+        getFecha(input: app.domain.ICircularizacionFechaInput): void;
         pendienteResultado: app.domain.ICircularizacionProcesoResultado;
         getPendiente(input: app.domain.ICircularizacionPendienteInput): void;
         pendienteLoading: boolean;
@@ -28,6 +29,7 @@
         seccionId: number;
 
         fecha: Date;
+        fechaInput: app.domain.ICircularizacionFechaInput;
         pendienteResultado: app.domain.ICircularizacionProcesoResultado;
         pendienteInput: app.domain.ICircularizacionPendienteInput;
         archivo: app.domain.ICircularizacionArchivo;
@@ -47,7 +49,8 @@
             this.setTemplates();
             this.seccionId = 0;
             this.seleccionarSeccion(this.seccionId);
-            this.fecha = new Date(); //Temporal --KUNDER
+            this.fechaInput = new app.domain.CircularizacionFechaInput();
+            this.getFecha(this.fechaInput);
             this.leida = false;
             this.respuestaInput = new app.domain.CircularizacionRespondidaInput("S", null);
             this.pendienteInput = new app.domain.CircularizacionPendienteInput();
@@ -140,6 +143,7 @@
             this.dataService.postWebService(this.constantService.apiCircularizacionURI + 'getFecha', input)
                 .then((result: Date) => {
                     this.fecha = result;
+                    this.authService.fechaCircularizacion = result;
                 });
         }
     }

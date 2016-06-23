@@ -11,6 +11,8 @@
         susFirmaElecDoc: number;
         getDocumentosPendientes(): void;
         setSusFirmaElecDoc(glosa: string, respuesta: string): ng.IPromise<number>;
+        fechaCircularizacion: Date;
+        getFechaCircularizacion(): void;
     }
 
     export class AuthService implements IAuth {
@@ -19,6 +21,7 @@
         circularizacionPendiente: boolean;
         documentosPendientes: number;
         susFirmaElecDoc: number;
+        fechaCircularizacion: Date;
         private qService: ng.IQService;
                 
         static $inject = ['constantService', 'dataService', 'extrasService', '$q'];
@@ -26,6 +29,7 @@
             private dataService: DataService,
             private extrasService: ExtrasService,
             $q: ng.IQService) {
+            this.fechaCircularizacion = null;
             this.circularizacionPendiente = false;
             this.documentosPendientes = 0;
             this.getUsuarioActual();
@@ -38,11 +42,13 @@
                 this.usuario = result;
                 if (this.usuario.Autenticado) {
                     this.autenticado = true;
+                    this.getFechaCircularizacion();
                     this.getCircularizacionPendiente();
                     this.getDocumentosPendientes();
                 }
                 else {
                     this.autenticado = false;
+                    this.fechaCircularizacion = null;
                     this.circularizacionPendiente = false;
                     this.documentosPendientes = 0;
                 }
@@ -55,6 +61,14 @@
             this.documentosPendientes = 0;
             this.usuario = null;
             this.extrasService.abrirRuta(this.constantService.mvcSignOutURI, "_self");
+        }
+
+        getFechaCircularizacion(): void {
+            var input: app.domain.ICircularizacionFechaInput = new app.domain.CircularizacionFechaInput();
+            this.dataService.postWebService(this.constantService.apiCircularizacionURI + 'getFecha', input)
+                .then((result: Date) => {
+                    this.fechaCircularizacion = result;
+                });
         }
 
         getCircularizacionPendiente(): void {
