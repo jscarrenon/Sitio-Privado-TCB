@@ -8,6 +8,7 @@ using Sitio_Privado.Models;
 using Sitio_Privado.CircularizacionCustodia;
 using System.Threading.Tasks;
 using Sitio_Privado.Extras;
+using System.Globalization;
 
 namespace Sitio_Privado.Controllers
 {
@@ -81,17 +82,18 @@ namespace Sitio_Privado.Controllers
                 var usuario = await GetUsuarioActual();
                 tann_circularizacion webService = new tann_circularizacion();
                 string fecha = webService.cli_fecha_circularizacion(Converters.getRutParteEnteraInt(usuario.Rut));
-                DateTime resultado = new DateTime();
-                if(fecha != "Sin periodo")
+                DateTime? resultado = null;
+
+                if(fecha.ToLower() != "sin periodo" && fecha.ToLower() != "sin proceso")
                 {
-                    resultado = DateTime.Parse(fecha);
+                    resultado = DateTime.ParseExact(fecha, "dd-MM-yyyy", CultureInfo.InvariantCulture);
                 }
 
                 return Ok(resultado);
             }
             catch (Exception e)
             {
-                return NotFound();
+                return InternalServerError(e);
             }
         }
 
