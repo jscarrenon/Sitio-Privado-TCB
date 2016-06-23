@@ -16,6 +16,7 @@
         respondidaResultado: app.domain.ICircularizacionProcesoResultado;
         setRespondida(input: app.domain.ICircularizacionRespondidaInput): void;
         respondidaLoading: boolean;
+        respondidaError: boolean;
         verDocumento(tipoDocumento: TipoDocumento): void;
         leida: boolean;
         respuestaInput: app.domain.ICircularizacionRespondidaInput;
@@ -40,6 +41,7 @@
         pendienteLoading: boolean;
         archivoLoading: boolean;
         respondidaLoading: boolean;
+        respondidaError: boolean;
 
         static $inject = ['constantService', 'dataService', 'authService', 'extrasService'];
         constructor(private constantService: app.common.services.ConstantService,
@@ -106,6 +108,7 @@
 
         setRespondida(input: app.domain.ICircularizacionRespondidaInput): void {
             this.respondidaLoading = true;
+            this.respondidaError = false;
             this.dataService.postWebService(this.constantService.apiCircularizacionURI + 'setRespondida', input)
                 .then((result: app.domain.ICircularizacionProcesoResultado) => {
                     this.respondidaResultado = result;
@@ -113,6 +116,12 @@
                         this.seleccionarSeccion(0);
                         this.getPendiente(this.pendienteInput);
                     }
+                    else {
+                        this.respondidaError = true;
+                    }
+                })
+                .catch(() => {
+                    this.respondidaError = true;
                 })
                 .finally(() => this.respondidaLoading = false);
         }
