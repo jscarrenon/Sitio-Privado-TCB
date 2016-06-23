@@ -39,7 +39,7 @@ namespace Sitio_Privado.Models
         public CircularizacionArchivo(CircularizacionArchivoInput input, Usuario usuario)
         {
             tann_circularizacion webService = new tann_circularizacion();
-            archivocli archivo = webService.cli_archivo_circularizacion(usuario.Rut, input.fecha);
+            archivocli archivo = webService.cli_archivo_circularizacion(usuario.Rut);
 
             UrlCartola = archivo._cartola;
             UrlCircularizacion = archivo._circula;
@@ -53,21 +53,21 @@ namespace Sitio_Privado.Models
         public CircularizacionProcesoResultado(CircularizacionPendienteInput input, Usuario usuario)
         {
             tann_circularizacion webService = new tann_circularizacion();
-            bool resultado = webService.cli_circularizacion(Converters.getRutParteEnteraInt(usuario.Rut), input.fecha);
+            bool resultado = webService.cli_circularizacion(Converters.getRutParteEnteraInt(usuario.Rut));
             Resultado = resultado;
         }
 
         public CircularizacionProcesoResultado(CircularizacionLeidaInput input, Usuario usuario)
         {
             tann_circularizacion webService = new tann_circularizacion();
-            bool resultado = webService.cli_leer_circularizacion(Converters.getRutParteEnteraInt(usuario.Rut), input.fecha);
+            bool resultado = webService.cli_leer_circularizacion(Converters.getRutParteEnteraInt(usuario.Rut));
             Resultado = resultado;
         }
 
         public CircularizacionProcesoResultado(CircularizacionRespondidaInput input, Usuario usuario)
         {
             tann_circularizacion webService = new tann_circularizacion();
-            bool resultado = webService.cli_respuesta_circularizacion(Converters.getRutParteEnteraInt(usuario.Rut), input.fecha, input.respuesta, input.comentario);
+            bool resultado = webService.cli_respuesta_circularizacion(Converters.getRutParteEnteraInt(usuario.Rut), input.respuesta, input.comentario);
             Resultado = resultado;
         }
     }
