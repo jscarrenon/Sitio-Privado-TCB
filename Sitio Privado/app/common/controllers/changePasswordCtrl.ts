@@ -36,6 +36,10 @@
             this.dataService.postWebService(this.constantService.apiUsersURI + 'changePassword', this.changePasswordInput)
                 .then((result: any) => {
                     this.processSuccess = true;
+                    //Clear fields
+                    this.changePasswordInput.OldPassword = "";
+                    this.changePasswordInput.Password = "";
+                    this.changePasswordInput.PasswordValidation = "";
                     //Update user data
                     this.authService.getUsuarioActual();
                 })

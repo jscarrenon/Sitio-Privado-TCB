@@ -23,7 +23,7 @@ namespace Sitio_Privado.CircularizacionCustodia {
     
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Web.Services.WebServiceBindingAttribute(Name="tann_circularizacionSoap", Namespace="http://servicios.tanner.cl/circularizacion")]
@@ -34,6 +34,8 @@ namespace Sitio_Privado.CircularizacionCustodia {
         private System.Threading.SendOrPostCallback cli_archivo_circularizacionOperationCompleted;
         
         private System.Threading.SendOrPostCallback cli_leer_circularizacionOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback cli_fecha_circularizacionOperationCompleted;
         
         private System.Threading.SendOrPostCallback cli_respuesta_circularizacionOperationCompleted;
         
@@ -85,30 +87,31 @@ namespace Sitio_Privado.CircularizacionCustodia {
         public event cli_leer_circularizacionCompletedEventHandler cli_leer_circularizacionCompleted;
         
         /// <remarks/>
+        public event cli_fecha_circularizacionCompletedEventHandler cli_fecha_circularizacionCompleted;
+        
+        /// <remarks/>
         public event cli_respuesta_circularizacionCompletedEventHandler cli_respuesta_circularizacionCompleted;
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://servicios.tanner.cl/circularizacion/cli_circularizacion", RequestNamespace="http://servicios.tanner.cl/circularizacion", ResponseNamespace="http://servicios.tanner.cl/circularizacion", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public bool cli_circularizacion(int rut, string fecha) {
+        public bool cli_circularizacion(int rut) {
             object[] results = this.Invoke("cli_circularizacion", new object[] {
-                        rut,
-                        fecha});
+                        rut});
             return ((bool)(results[0]));
         }
         
         /// <remarks/>
-        public void cli_circularizacionAsync(int rut, string fecha) {
-            this.cli_circularizacionAsync(rut, fecha, null);
+        public void cli_circularizacionAsync(int rut) {
+            this.cli_circularizacionAsync(rut, null);
         }
         
         /// <remarks/>
-        public void cli_circularizacionAsync(int rut, string fecha, object userState) {
+        public void cli_circularizacionAsync(int rut, object userState) {
             if ((this.cli_circularizacionOperationCompleted == null)) {
                 this.cli_circularizacionOperationCompleted = new System.Threading.SendOrPostCallback(this.Oncli_circularizacionOperationCompleted);
             }
             this.InvokeAsync("cli_circularizacion", new object[] {
-                        rut,
-                        fecha}, this.cli_circularizacionOperationCompleted, userState);
+                        rut}, this.cli_circularizacionOperationCompleted, userState);
         }
         
         private void Oncli_circularizacionOperationCompleted(object arg) {
@@ -120,26 +123,24 @@ namespace Sitio_Privado.CircularizacionCustodia {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://servicios.tanner.cl/circularizacion/cli_archivo_circularizacion", RequestNamespace="http://servicios.tanner.cl/circularizacion", ResponseNamespace="http://servicios.tanner.cl/circularizacion", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public archivocli cli_archivo_circularizacion(string rut, string fecha) {
+        public archivocli cli_archivo_circularizacion(string rut) {
             object[] results = this.Invoke("cli_archivo_circularizacion", new object[] {
-                        rut,
-                        fecha});
+                        rut});
             return ((archivocli)(results[0]));
         }
         
         /// <remarks/>
-        public void cli_archivo_circularizacionAsync(string rut, string fecha) {
-            this.cli_archivo_circularizacionAsync(rut, fecha, null);
+        public void cli_archivo_circularizacionAsync(string rut) {
+            this.cli_archivo_circularizacionAsync(rut, null);
         }
         
         /// <remarks/>
-        public void cli_archivo_circularizacionAsync(string rut, string fecha, object userState) {
+        public void cli_archivo_circularizacionAsync(string rut, object userState) {
             if ((this.cli_archivo_circularizacionOperationCompleted == null)) {
                 this.cli_archivo_circularizacionOperationCompleted = new System.Threading.SendOrPostCallback(this.Oncli_archivo_circularizacionOperationCompleted);
             }
             this.InvokeAsync("cli_archivo_circularizacion", new object[] {
-                        rut,
-                        fecha}, this.cli_archivo_circularizacionOperationCompleted, userState);
+                        rut}, this.cli_archivo_circularizacionOperationCompleted, userState);
         }
         
         private void Oncli_archivo_circularizacionOperationCompleted(object arg) {
@@ -151,26 +152,24 @@ namespace Sitio_Privado.CircularizacionCustodia {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://servicios.tanner.cl/circularizacion/cli_leer_circularizacion", RequestNamespace="http://servicios.tanner.cl/circularizacion", ResponseNamespace="http://servicios.tanner.cl/circularizacion", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public bool cli_leer_circularizacion(int rut, string fecha) {
+        public bool cli_leer_circularizacion(int rut) {
             object[] results = this.Invoke("cli_leer_circularizacion", new object[] {
-                        rut,
-                        fecha});
+                        rut});
             return ((bool)(results[0]));
         }
         
         /// <remarks/>
-        public void cli_leer_circularizacionAsync(int rut, string fecha) {
-            this.cli_leer_circularizacionAsync(rut, fecha, null);
+        public void cli_leer_circularizacionAsync(int rut) {
+            this.cli_leer_circularizacionAsync(rut, null);
         }
         
         /// <remarks/>
-        public void cli_leer_circularizacionAsync(int rut, string fecha, object userState) {
+        public void cli_leer_circularizacionAsync(int rut, object userState) {
             if ((this.cli_leer_circularizacionOperationCompleted == null)) {
                 this.cli_leer_circularizacionOperationCompleted = new System.Threading.SendOrPostCallback(this.Oncli_leer_circularizacionOperationCompleted);
             }
             this.InvokeAsync("cli_leer_circularizacion", new object[] {
-                        rut,
-                        fecha}, this.cli_leer_circularizacionOperationCompleted, userState);
+                        rut}, this.cli_leer_circularizacionOperationCompleted, userState);
         }
         
         private void Oncli_leer_circularizacionOperationCompleted(object arg) {
@@ -181,29 +180,56 @@ namespace Sitio_Privado.CircularizacionCustodia {
         }
         
         /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://servicios.tanner.cl/circularizacion/cli_fecha_circularizacion", RequestNamespace="http://servicios.tanner.cl/circularizacion", ResponseNamespace="http://servicios.tanner.cl/circularizacion", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public string cli_fecha_circularizacion(int rut) {
+            object[] results = this.Invoke("cli_fecha_circularizacion", new object[] {
+                        rut});
+            return ((string)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void cli_fecha_circularizacionAsync(int rut) {
+            this.cli_fecha_circularizacionAsync(rut, null);
+        }
+        
+        /// <remarks/>
+        public void cli_fecha_circularizacionAsync(int rut, object userState) {
+            if ((this.cli_fecha_circularizacionOperationCompleted == null)) {
+                this.cli_fecha_circularizacionOperationCompleted = new System.Threading.SendOrPostCallback(this.Oncli_fecha_circularizacionOperationCompleted);
+            }
+            this.InvokeAsync("cli_fecha_circularizacion", new object[] {
+                        rut}, this.cli_fecha_circularizacionOperationCompleted, userState);
+        }
+        
+        private void Oncli_fecha_circularizacionOperationCompleted(object arg) {
+            if ((this.cli_fecha_circularizacionCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.cli_fecha_circularizacionCompleted(this, new cli_fecha_circularizacionCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://servicios.tanner.cl/circularizacion/cli_respuesta_circularizacion", RequestNamespace="http://servicios.tanner.cl/circularizacion", ResponseNamespace="http://servicios.tanner.cl/circularizacion", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public bool cli_respuesta_circularizacion(int rut_cli, string fecha, string respuesta, string comentario) {
+        public bool cli_respuesta_circularizacion(int rut_cli, string respuesta, string comentario) {
             object[] results = this.Invoke("cli_respuesta_circularizacion", new object[] {
                         rut_cli,
-                        fecha,
                         respuesta,
                         comentario});
             return ((bool)(results[0]));
         }
         
         /// <remarks/>
-        public void cli_respuesta_circularizacionAsync(int rut_cli, string fecha, string respuesta, string comentario) {
-            this.cli_respuesta_circularizacionAsync(rut_cli, fecha, respuesta, comentario, null);
+        public void cli_respuesta_circularizacionAsync(int rut_cli, string respuesta, string comentario) {
+            this.cli_respuesta_circularizacionAsync(rut_cli, respuesta, comentario, null);
         }
         
         /// <remarks/>
-        public void cli_respuesta_circularizacionAsync(int rut_cli, string fecha, string respuesta, string comentario, object userState) {
+        public void cli_respuesta_circularizacionAsync(int rut_cli, string respuesta, string comentario, object userState) {
             if ((this.cli_respuesta_circularizacionOperationCompleted == null)) {
                 this.cli_respuesta_circularizacionOperationCompleted = new System.Threading.SendOrPostCallback(this.Oncli_respuesta_circularizacionOperationCompleted);
             }
             this.InvokeAsync("cli_respuesta_circularizacion", new object[] {
                         rut_cli,
-                        fecha,
                         respuesta,
                         comentario}, this.cli_respuesta_circularizacionOperationCompleted, userState);
         }
@@ -268,11 +294,11 @@ namespace Sitio_Privado.CircularizacionCustodia {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     public delegate void cli_circularizacionCompletedEventHandler(object sender, cli_circularizacionCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class cli_circularizacionCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -294,11 +320,11 @@ namespace Sitio_Privado.CircularizacionCustodia {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     public delegate void cli_archivo_circularizacionCompletedEventHandler(object sender, cli_archivo_circularizacionCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class cli_archivo_circularizacionCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -320,11 +346,11 @@ namespace Sitio_Privado.CircularizacionCustodia {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     public delegate void cli_leer_circularizacionCompletedEventHandler(object sender, cli_leer_circularizacionCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class cli_leer_circularizacionCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -346,11 +372,37 @@ namespace Sitio_Privado.CircularizacionCustodia {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
+    public delegate void cli_fecha_circularizacionCompletedEventHandler(object sender, cli_fecha_circularizacionCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class cli_fecha_circularizacionCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal cli_fecha_circularizacionCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public string Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     public delegate void cli_respuesta_circularizacionCompletedEventHandler(object sender, cli_respuesta_circularizacionCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class cli_respuesta_circularizacionCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {

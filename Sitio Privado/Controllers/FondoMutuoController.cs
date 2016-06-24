@@ -44,7 +44,7 @@ namespace Sitio_Privado.Controllers
             }
             catch (Exception e)
             {
-                return NotFound();
+                return InternalServerError(e);
             }
         }
     }
