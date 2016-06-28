@@ -457,6 +457,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\img\firma-Jorge-Oliva.png" />
     <Content Include="Resources\pdf\Anexo 1 Opción firma electrónica.pdf" />
     <Content Include="app\modules\home\templates\cambiar-contrasena.html" />
     <Content Include="Resources\img\icon_error.svg" />
