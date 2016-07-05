@@ -48,6 +48,10 @@
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CorsProxy.AspNet, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CorsProxy.AspNet.1.0.1\lib\net45\CorsProxy.AspNet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="FSharp.Core, Version=4.4.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\FSharp.Core.4.0.0.1\lib\net40\FSharp.Core.dll</HintPath>
       <Private>True</Private>
@@ -466,6 +470,7 @@
     <Content Include="Resources\img\mail_logo-tannerclientes.png" />
     <Content Include="Resources\img\mail_tanner.jpg" />
     <Content Include="Scripts\extras\login.js" />
+    <Content Include="Scripts\jquery.corsproxy.1.0.0.js" />
     <Content Include="Views\Account\SignInExternal.cshtml" />
     <Content Include="Views\Emails\Web.config" />
     <Content Include="Views\Emails\PasswordRecoveryEmailModel.cshtml" />
