@@ -27,6 +27,7 @@ namespace Sitio_Privado.DelegatingHandlers
             if (request.Content.Headers.ContentType == null && request.Method == HttpMethod.Post)
             {
                 request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
+                request.Headers.Add("X-Domain-Request", "ie9");
             }
 
             return base.SendAsync(request, cancellationToken);
