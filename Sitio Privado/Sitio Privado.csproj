@@ -319,6 +319,7 @@
     <Compile Include="Controllers\CircularizacionController.cs" />
     <Compile Include="Controllers\IndicesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="DelegatingHandlers\XDomainRequestDelegatingHandler.cs" />
     <Compile Include="Extras\ExtraHelpers.cs" />
     <Compile Include="Extras\HttpRequestMessageExtensions.cs" />
     <Compile Include="Extras\IdToken.cs" />
