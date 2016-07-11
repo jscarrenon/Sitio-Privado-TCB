@@ -4,6 +4,7 @@
 
     interface IMisInversionesCircularizacionViewModel extends app.common.interfaces.ISeccion {
         fecha: Date;
+        getFecha(input: app.domain.ICircularizacionFechaInput): void;
         pendienteResultado: app.domain.ICircularizacionProcesoResultado;
         getPendiente(input: app.domain.ICircularizacionPendienteInput): void;
         pendienteLoading: boolean;
@@ -15,6 +16,7 @@
         respondidaResultado: app.domain.ICircularizacionProcesoResultado;
         setRespondida(input: app.domain.ICircularizacionRespondidaInput): void;
         respondidaLoading: boolean;
+        respondidaError: boolean;
         verDocumento(tipoDocumento: TipoDocumento): void;
         leida: boolean;
         respuestaInput: app.domain.ICircularizacionRespondidaInput;
@@ -28,6 +30,7 @@
         seccionId: number;
 
         fecha: Date;
+        fechaInput: app.domain.ICircularizacionFechaInput;
         pendienteResultado: app.domain.ICircularizacionProcesoResultado;
         pendienteInput: app.domain.ICircularizacionPendienteInput;
         archivo: app.domain.ICircularizacionArchivo;
@@ -38,6 +41,7 @@
         pendienteLoading: boolean;
         archivoLoading: boolean;
         respondidaLoading: boolean;
+        respondidaError: boolean;
 
         static $inject = ['constantService', 'dataService', 'authService', 'extrasService'];
         constructor(private constantService: app.common.services.ConstantService,
@@ -47,10 +51,11 @@
             this.setTemplates();
             this.seccionId = 0;
             this.seleccionarSeccion(this.seccionId);
-            this.fecha = new Date(); //Temporal --KUNDER
+            this.fechaInput = new app.domain.CircularizacionFechaInput();
+            this.getFecha(this.fechaInput);
             this.leida = false;
-            this.respuestaInput = new app.domain.CircularizacionRespondidaInput(this.extrasService.getFechaFormato(this.fecha), "S", null);
-            this.pendienteInput = new app.domain.CircularizacionPendienteInput(this.extrasService.getFechaFormato(this.fecha));
+            this.respuestaInput = new app.domain.CircularizacionRespondidaInput("S", null);
+            this.pendienteInput = new app.domain.CircularizacionPendienteInput();
             this.getPendiente(this.pendienteInput);                       
         }
 
@@ -58,7 +63,7 @@
             this.seccionId = id;
 
             if (this.seccionId == 1) {
-                var archivoInput: app.domain.ICircularizacionArchivoInput = new app.domain.CircularizacionArchivoInput(this.extrasService.getFechaFormato(this.fecha));
+                var archivoInput: app.domain.ICircularizacionArchivoInput = new app.domain.CircularizacionArchivoInput();
                 this.getArchivo(archivoInput);
             }
 
@@ -77,6 +82,7 @@
             this.dataService.postWebService(this.constantService.apiCircularizacionURI + 'getPendiente', input)
                 .then((result: app.domain.ICircularizacionProcesoResultado) => {
                     this.pendienteResultado = result;
+                    this.authService.circularizacionPendiente = result.Resultado;
                 })
                 .finally(() => this.pendienteLoading = false);
         }
@@ -102,6 +108,7 @@
 
         setRespondida(input: app.domain.ICircularizacionRespondidaInput): void {
             this.respondidaLoading = true;
+            this.respondidaError = false;
             this.dataService.postWebService(this.constantService.apiCircularizacionURI + 'setRespondida', input)
                 .then((result: app.domain.ICircularizacionProcesoResultado) => {
                     this.respondidaResultado = result;
@@ -109,6 +116,12 @@
                         this.seleccionarSeccion(0);
                         this.getPendiente(this.pendienteInput);
                     }
+                    else {
+                        this.respondidaError = true;
+                    }
+                })
+                .catch(() => {
+                    this.respondidaError = true;
                 })
                 .finally(() => this.respondidaLoading = false);
         }
@@ -127,13 +140,21 @@
             }
 
             if (documentoAbierto) {
-                var leidaInput: app.domain.ICircularizacionLeidaInput = new app.domain.CircularizacionLeidaInput(this.extrasService.getFechaFormato(this.fecha));
+                var leidaInput: app.domain.ICircularizacionLeidaInput = new app.domain.CircularizacionLeidaInput();
                 this.setLeida(leidaInput);
             }
         }
 
         responder(): void {
             this.setRespondida(this.respuestaInput);
+        }
+
+        getFecha(input: app.domain.ICircularizacionFechaInput): void {
+            this.dataService.postWebService(this.constantService.apiCircularizacionURI + 'getFecha', input)
+                .then((result: Date) => {
+                    this.fecha = result;
+                    this.authService.fechaCircularizacion = result;
+                });
         }
     }
     angular.module('tannerPrivadoApp')
