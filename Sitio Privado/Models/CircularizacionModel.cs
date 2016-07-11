@@ -9,24 +9,24 @@ namespace Sitio_Privado.Models
 {
     public class CircularizacionPendienteInput
     {
-        public string fecha { get; set; } //dd-MM-yyyy
     }
 
     public class CircularizacionArchivoInput
     {
-        public string fecha { get; set; } //dd-MM-yyyy
     }
 
     public class CircularizacionLeidaInput
     {
-        public string fecha { get; set; } //dd-MM-yyyy
     }
 
     public class CircularizacionRespondidaInput
     {
-        public string fecha { get; set; } 
         public string respuesta { get; set; } // "S" ó "N"
         public string comentario { get; set; } //Sólo en caso de rechazo ("N")
+    }
+
+    public class CircularizacionFechaInput
+    {
     }
 
     public class CircularizacionArchivo
@@ -39,7 +39,7 @@ namespace Sitio_Privado.Models
         public CircularizacionArchivo(CircularizacionArchivoInput input, Usuario usuario)
         {
             tann_circularizacion webService = new tann_circularizacion();
-            archivocli archivo = webService.cli_archivo_circularizacion(usuario.Rut, input.fecha);
+            archivocli archivo = webService.cli_archivo_circularizacion(usuario.Rut);
 
             UrlCartola = archivo._cartola;
             UrlCircularizacion = archivo._circula;
@@ -53,21 +53,26 @@ namespace Sitio_Privado.Models
         public CircularizacionProcesoResultado(CircularizacionPendienteInput input, Usuario usuario)
         {
             tann_circularizacion webService = new tann_circularizacion();
-            bool resultado = webService.cli_circularizacion(Converters.getRutParteEnteraInt(usuario.Rut), input.fecha);
+            bool resultado = webService.cli_circularizacion(Converters.getRutParteEnteraInt(usuario.Rut));
             Resultado = resultado;
         }
 
         public CircularizacionProcesoResultado(CircularizacionLeidaInput input, Usuario usuario)
         {
             tann_circularizacion webService = new tann_circularizacion();
-            bool resultado = webService.cli_leer_circularizacion(Converters.getRutParteEnteraInt(usuario.Rut), input.fecha);
+            bool resultado = webService.cli_leer_circularizacion(Converters.getRutParteEnteraInt(usuario.Rut));
             Resultado = resultado;
         }
 
         public CircularizacionProcesoResultado(CircularizacionRespondidaInput input, Usuario usuario)
         {
+            if(input.respuesta == "S")
+            {
+                input.comentario = string.Empty;
+            }
+
             tann_circularizacion webService = new tann_circularizacion();
-            bool resultado = webService.cli_respuesta_circularizacion(Converters.getRutParteEnteraInt(usuario.Rut), input.fecha, input.respuesta, input.comentario);
+            bool resultado = webService.cli_respuesta_circularizacion(Converters.getRutParteEnteraInt(usuario.Rut), input.respuesta, input.comentario);
             Resultado = resultado;
         }
     }

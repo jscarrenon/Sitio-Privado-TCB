@@ -4,6 +4,10 @@
 
     <loading param="circularizacionCtrl.respondidaLoading"></loading>
 
+    <div class="status-message" ng-show="circularizacionCtrl.respondidaError">
+        <div class="error">Ha ocurrido un error. Por favor intente más tarde.</div>
+    </div>
+
     <div class="full-text" ng-show="!circularizacionCtrl.respondidaLoading">
         <p>De mi/nuestra consideración:</p>
         <p>En respuesta a lo solicitado por ustedes, les manifiesto lo siguiente:</p>
