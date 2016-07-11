@@ -2,7 +2,7 @@
 
     <loading param="circularizacionCtrl.pendienteLoading"></loading>
 
-    <div class="one-pending" ng-if="circularizacionCtrl.pendienteResultado.Resultado" ng-show="!circularizacionCtrl.pendienteLoading">
+    <div class="one-pending" ng-if="circularizacionCtrl.authService.circularizacionPendiente" ng-show="!circularizacionCtrl.pendienteLoading">
         <div class="title">
             Usted tiene una circularización pendiente de aprobación.<br />
             <strong>Circularización Anual de Custodia {{circularizacionCtrl.fecha|date:'y'}}</strong>
@@ -10,7 +10,7 @@
         <div class="button green"><a href="" ng-click="circularizacionCtrl.seleccionarSeccion(1)">Revisar</a></div>
     </div>
 
-    <div class="none-pending" ng-if="!circularizacionCtrl.pendienteResultado.Resultado" ng-show="!circularizacionCtrl.pendienteLoading">
+    <div class="none-pending" ng-if="!circularizacionCtrl.authService.circularizacionPendiente" ng-show="!circularizacionCtrl.pendienteLoading">
         <div class="none">No hay ninguna circularización pendiente.</div>
     </div>
 

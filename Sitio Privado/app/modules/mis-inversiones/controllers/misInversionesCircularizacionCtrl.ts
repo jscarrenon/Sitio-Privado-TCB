@@ -80,6 +80,7 @@
             this.dataService.postWebService(this.constantService.apiCircularizacionURI + 'getPendiente', input)
                 .then((result: app.domain.ICircularizacionProcesoResultado) => {
                     this.pendienteResultado = result;
+                    this.authService.circularizacionPendiente = result.Resultado;
                 })
                 .finally(() => this.pendienteLoading = false);
         }
