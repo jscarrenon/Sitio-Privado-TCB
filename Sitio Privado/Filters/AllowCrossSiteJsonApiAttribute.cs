@@ -13,9 +13,18 @@ namespace Sitio_Privado.Filters
         {
             var domains = ConfigurationManager.AppSettings["web:AcceptedDomains"].Split(';');
 
-            if (domains.Contains(actionExecutedContext.ActionContext.RequestContext.Url.Request.Headers.Referrer.Host))
+            if (actionExecutedContext.ActionContext.RequestContext.Url.Request.Headers.Referrer != null)
             {
-                if (actionExecutedContext.Response != null)
+                if (domains.Contains(actionExecutedContext.ActionContext.RequestContext.Url.Request.Headers.Referrer.Host)
+                    && actionExecutedContext.Response != null)
+                {
+                    actionExecutedContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+                }
+            }
+            else
+            {
+                if (actionExecutedContext.Request.Headers.GetValues("X-Domain-Request").Contains("ie9")
+                    && actionExecutedContext.Response != null)
                 {
                     actionExecutedContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
                 }

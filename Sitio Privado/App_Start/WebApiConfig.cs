@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Web.Http;
+using Sitio_Privado.DelegatingHandlers;
 
 namespace Sitio_Privado
 {
@@ -13,6 +14,9 @@ namespace Sitio_Privado
             // Web API routes
             config.Filters.Add(new AuthorizeAttribute());
             config.MapHttpAttributeRoutes();
+
+            // Deserialize / Model Bind IE 8 and 9 Ajax Requests
+            config.MessageHandlers.Add(new XDomainRequestDelegatingHandler());
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
