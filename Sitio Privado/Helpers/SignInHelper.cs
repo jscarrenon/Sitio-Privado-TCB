@@ -188,7 +188,9 @@ namespace Sitio_Privado.Helpers
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                DateTime temporalPasswordTimestamp = DateTime.Parse(response.User.TemporalPasswordTimestamp);
+                DateTime temporalPasswordTimestamp;
+                bool timeStampResult = DateTime.TryParse(response.User.TemporalPasswordTimestamp, out temporalPasswordTimestamp);
+
                 identity.AddClaim(new Claim(Startup.temporalPasswordTimestampClaimKey, temporalPasswordTimestamp.ToString()));
 
                 if (response.User.IsTemporalPassword)
