@@ -14,6 +14,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using Microsoft.ApplicationInsights;
 
 namespace Sitio_Privado.Helpers
 {
@@ -24,59 +25,84 @@ namespace Sitio_Privado.Helpers
 
         GraphApiClientHelper graphApiClient = new GraphApiClientHelper();
 
+        TelemetryClient telemetry = new TelemetryClient();
+
         public async Task<string> GetToken(LoginModel model)
         {
-            //Ask B2C login page
-            Uri azureLoginPageUri = GetMicrosoftLoginUri();
-            HttpWebRequest azureLoginPageRequest = HttpWebRequest.CreateHttp(azureLoginPageUri);
-            HttpWebResponse azureLoginPageResponse = await InitialLoginPageRequest(azureLoginPageRequest);
+            var success = false;
+            var startTime = DateTime.UtcNow;
+            var timer = System.Diagnostics.Stopwatch.StartNew();
 
-            //Save cookies for later usage
-            CookieCollection azureLoginPageCookies = azureLoginPageRequest.CookieContainer.GetCookies(azureLoginPageUri);
-            azureLoginPageCookies.Add(azureLoginPageResponse.Cookies);
-
-            //Scrap the document for inserting the data
-            HtmlNode html = GetScrappedDoc(azureLoginPageResponse.GetResponseStream());
-            HttpRequestMessage tokenRequest = GetTokenRequestMessage(html, model);
-
-            //Prepare data for login request
-            var baseAddress = new Uri("https://login.microsoftonline.com");
-            CookieContainer cookieContainer = new CookieContainer();
-            cookieContainer.Add(azureLoginPageCookies);
-
-            using (var handler = new WebRequestHandler() { CookieContainer = cookieContainer })
+            try
             {
-                handler.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => { return true; };
-                using (var client = new HttpClient(handler) { BaseAddress = baseAddress })
+
+                //Ask B2C login page
+                Uri azureLoginPageUri = GetMicrosoftLoginUri();
+                HttpWebRequest azureLoginPageRequest = HttpWebRequest.CreateHttp(azureLoginPageUri);
+                HttpWebResponse azureLoginPageResponse = await InitialLoginPageRequest(azureLoginPageRequest);
+
+                //Save cookies for later usage
+                CookieCollection azureLoginPageCookies = azureLoginPageRequest.CookieContainer.GetCookies(azureLoginPageUri);
+                azureLoginPageCookies.Add(azureLoginPageResponse.Cookies);
+
+                //Scrap the document for inserting the data
+                HtmlNode html = GetScrappedDoc(azureLoginPageResponse.GetResponseStream());
+                HttpRequestMessage tokenRequest = GetTokenRequestMessage(html, model);
+
+                //Prepare data for login request
+                var baseAddress = new Uri("https://login.microsoftonline.com");
+                CookieContainer cookieContainer = new CookieContainer();
+                cookieContainer.Add(azureLoginPageCookies);
+
+                using (var handler = new WebRequestHandler() { CookieContainer = cookieContainer })
                 {
-                    //Send request
-                    var result = await client.SendAsync(tokenRequest);
-
-                    //Confirmation
-                    if (result.StatusCode == HttpStatusCode.OK)
+                    handler.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => { return true; };
+                    using (var client = new HttpClient(handler) { BaseAddress = baseAddress })
                     {
-                        //Ask B2C login confirmed page
-                        Uri azureLoginConfirmedPageUri = GetMicrosoftLoginConfirmedUri(tokenRequest);
-                        HttpWebRequest azureLoginConfirmedPageRequest = HttpWebRequest.CreateHttp(azureLoginConfirmedPageUri);
-                        HttpWebResponse azureLoginConfirmedPageResponse = await LoginConfirmedPageRequest(azureLoginConfirmedPageRequest, cookieContainer);
+                        //Send request
+                        var result = await client.SendAsync(tokenRequest);
 
-                        //Read id_token
-                        HtmlNode htmlNode = GetScrappedDoc(azureLoginConfirmedPageResponse.GetResponseStream());
-                        if (htmlNode.CssSelect("input[name=id_token]").Count() > 0)
+                        //Confirmation
+                        if (result.StatusCode == HttpStatusCode.OK)
                         {
-                            return htmlNode.CssSelect("input[name=id_token]").First().GetAttributeValue("value");
+                            //Ask B2C login confirmed page
+                            Uri azureLoginConfirmedPageUri = GetMicrosoftLoginConfirmedUri(tokenRequest);
+                            HttpWebRequest azureLoginConfirmedPageRequest = HttpWebRequest.CreateHttp(azureLoginConfirmedPageUri);
+                            HttpWebResponse azureLoginConfirmedPageResponse = await LoginConfirmedPageRequest(azureLoginConfirmedPageRequest, cookieContainer);
+
+                            //Read id_token
+                            HtmlNode htmlNode = GetScrappedDoc(azureLoginConfirmedPageResponse.GetResponseStream());
+                            if (htmlNode.CssSelect("input[name=id_token]").Count() > 0)
+                            {
+                                return htmlNode.CssSelect("input[name=id_token]").First().GetAttributeValue("value");
+                            }
+                            else
+                            {
+                                return null;
+                            }
                         }
                         else
                         {
                             return null;
                         }
                     }
-                    else
-                    {
-                        return null;
-                    }
                 }
+
+                success = true;
+
             }
+            catch(Exception e)
+            {
+                telemetry.TrackException(e);
+                return null;
+
+            }
+            finally
+            {
+                timer.Stop();
+                telemetry.TrackDependency("Scrapper", "Login", startTime, timer.Elapsed, success);
+            }
+
         }
 
         private async Task<HttpWebResponse> InitialLoginPageRequest(HttpWebRequest request)
