@@ -115,10 +115,10 @@ namespace Sitio_Privado.Helpers
             keyValues.Add(new KeyValuePair<string, string>("request_type", "RESPONSE"));
 
             HtmlNodeCollection nodes = html.SelectNodes("//script");
-            HtmlNode node = nodes.Where(x => x.InnerHtml.Contains("settings.data")).FirstOrDefault();
+            HtmlNode node = nodes.Where(x => x.InnerHtml.Contains("SETTINGS")).FirstOrDefault();
             string script = node.InnerText;
-            string settingsData = script.Substring(script.IndexOf("define('settings.data'"));
-            settingsData = settingsData.Substring(0, settingsData.IndexOf(");"));
+            string settingsData = script.Substring(script.IndexOf("var SETTINGS = "));
+            settingsData = settingsData.Substring(0, settingsData.IndexOf(";"));
             string contentData = settingsData.Substring(settingsData.IndexOf("{\"remoteResource\""));
             JObject settingsDataJson = JObject.Parse(contentData);
 
