@@ -108,6 +108,7 @@ namespace Sitio_Privado.Helpers
 
         private HttpRequestMessage GetTokenRequestMessage(HtmlNode html, LoginModel model)
         {
+          
             var keyValues = new List<KeyValuePair<string, string>>();
 
             keyValues.Add(new KeyValuePair<string, string>("logonIdentifier", model.Rut));
@@ -131,6 +132,7 @@ namespace Sitio_Privado.Helpers
             request.Headers.Add("X-Requested-With", "XMLHttpRequest");
 
             return request;
+        
         }
 
         private Uri GetMicrosoftLoginUri()
