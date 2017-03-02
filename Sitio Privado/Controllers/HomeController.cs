@@ -21,7 +21,7 @@ namespace Sitio_Privado.Controllers
     {
 
         private string asd = "";
-        //[SkipTemporaryPassword]
+        [SkipTemporaryPassword]
         public ActionResult Index()
         {
             return View();
