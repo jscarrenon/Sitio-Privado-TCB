@@ -409,6 +409,7 @@
     <Compile Include="Infraestructure\ExceptionHandling\ApiErrorCode.cs" />
     <Compile Include="Infraestructure\ExceptionHandling\ApiErrorList.cs" />
     <Compile Include="Infraestructure\ExceptionHandling\ApiErrorResult.cs" />
+    <Compile Include="Infraestructure\ExceptionHandling\OwinExceptionHandler.cs" />
     <Compile Include="Models\AuthorityUserInfo.cs" />
     <Compile Include="Models\AzureFolderModel.cs" />
     <Compile Include="Models\AzureBlobModel.cs" />

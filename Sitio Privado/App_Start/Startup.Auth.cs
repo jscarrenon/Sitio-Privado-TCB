@@ -1,19 +1,12 @@
-﻿using System;
-using Owin;
-using Microsoft.Owin.Security;
-using Microsoft.Owin.Security.Cookies;
+﻿using Owin;
 using Microsoft.Owin.Security.OpenIdConnect;
 using System.Threading.Tasks;
 using Microsoft.Owin.Security.Notifications;
 using Microsoft.IdentityModel.Protocols;
 using System.Configuration;
-using System.IdentityModel.Tokens;
 using Sitio_Privado.Policies;
 using System.Threading;
-using System.Globalization;
-using Microsoft.AspNet.Identity;
 using IdentityServer3.AccessTokenValidation;
-using System.Web.Http;
 
 namespace Sitio_Privado
 {
@@ -44,51 +37,22 @@ namespace Sitio_Privado
 
         public void ConfigureAuth(IAppBuilder app)
         {
+            //app.Use<OwinExceptionHandler>(app);
+            app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions
+            {
+                ValidationMode = ValidationMode.ValidationEndpoint,
+                Authority = ConfigurationManager.AppSettings["AuthorityUrl"]
+            });
 
-            //app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions
-            //{
-            //    ValidationMode = ValidationMode.ValidationEndpoint,
-            //    Authority = ConfigurationManager.AppSettings["AuthorityUrl"]
-            //});
-          
             //app.UseCookieAuthentication(new CookieAuthenticationOptions
             //{
             //    AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
             //    LoginPath = new Microsoft.Owin.PathString("/Account/SignInExternal")
             //});
 
-            /*app.SetDefaultSignInAsAuthenticationType(CookieAuthenticationDefaults.AuthenticationType);
-
-            app.UseCookieAuthentication(new CookieAuthenticationOptions());
-
-            OpenIdConnectAuthenticationOptions options = new OpenIdConnectAuthenticationOptions
-            {
-                // These are standard OpenID Connect parameters, with values pulled from web.config
-                ClientId = clientId,
-                RedirectUri = redirectUri,
-                PostLogoutRedirectUri = redirectUri,
-                Notifications = new OpenIdConnectAuthenticationNotifications
-                {
-                    AuthenticationFailed = AuthenticationFailed,
-                    //RedirectToIdentityProvider = OnRedirectToIdentityProvider,
-                },
-                Scope = "openid",
-                ResponseType = "id_token",
-
-                // The PolicyConfigurationManager takes care of getting the correct Azure AD authentication
-                // endpoints from the OpenID Connect metadata endpoint.  It is included in the PolicyAuthHelpers folder.
-                ConfigurationManager = new PolicyConfigurationManager(
-                    String.Format(CultureInfo.InvariantCulture, aadInstance, tenant, "/v2.0", OIDCMetadataSuffix),
-                    new string[] { SignInPolicyId }),
-
-                // This piece is optional - it is used for displaying the user's name in the navigation bar.
-                TokenValidationParameters = new TokenValidationParameters
-                {
-                    NameClaimType = "name",
-                },
-            };
-
-            app.UseOpenIdConnectAuthentication(options);*/
+            //HttpConfiguration config = new HttpConfiguration();
+            //WebApiConfiguration.Register(config);
+            //app.UseWebApi(config);
 
         }
 

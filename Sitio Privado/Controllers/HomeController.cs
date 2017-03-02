@@ -19,15 +19,11 @@ namespace Sitio_Privado.Controllers
 {
     public class HomeController : BaseController
     {
-
-        private string asd = "";
-        [SkipTemporaryPassword]
         public ActionResult Index()
         {
             return View();
         }
 
-        [SkipTemporaryPassword]
         public ActionResult GetUsuarioActual()
         {
             var usuario = GetUsuario();
