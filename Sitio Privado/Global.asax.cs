@@ -29,7 +29,7 @@ namespace Sitio_Privado
             SyncUsersDataJobScheduler.Start();
         }
 
-        protected void Application_EndRequest()
+        protected void Application_EndRequest(object sender, EventArgs e)
         {
             // Any AJAX request that ends in a redirect should get mapped to an unauthorized request
             // since it should only happen when the request is not authorized and gets automatically
