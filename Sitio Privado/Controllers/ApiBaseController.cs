@@ -21,31 +21,31 @@ namespace Sitio_Privado.Controllers
             get { return new Usuario(base.User as ClaimsPrincipal); }
         }
 
-        public async Task<Usuario> GetUsuarioActual()
+        public Usuario GetUsuarioActual()
         {
             var usuario = this.Usuario;
-            await SetUserExtendedAttributes(usuario);
+            SetUserExtendedAttributes(usuario);
             return usuario;
         }
 
-        private async Task SetUserExtendedAttributes(Usuario usuario)
+        private void SetUserExtendedAttributes(Usuario usuario)
         {
             //Retrieve user info
             Claim idClaim = ((ClaimsIdentity)usuario.Identity).Claims.Where(c => c.Type == Startup.objectIdClaimKey).First();
-            GraphApiResponseInfo response = await graphApiHelper.GetUserByObjectId(idClaim.Value);
+           // GraphApiResponseInfo response = await graphApiHelper.GetUserByObjectId(idClaim.Value);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-            {
-                //Save used info
-                usuario.Banco = response.User.Bank;
-                usuario.CuentaCorriente = response.User.CheckingAccount;
-                usuario.Email = response.User.Email;
-                usuario.TelefonoComercial = response.User.WorkPhone;
-                usuario.TelefonoParticular = response.User.HomePhone;
-                usuario.DireccionComercial = response.User.WorkAddress;
-                usuario.DireccionParticular = response.User.HomeAddress;
-                usuario.Rut = response.User.Rut.Insert(response.User.Rut.Length - 1, "-");
-            }
+            //if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            //{
+            //    //Save used info
+            //    usuario.Banco = response.User.Bank;
+            //    usuario.CuentaCorriente = response.User.CheckingAccount;
+            //    usuario.Email = response.User.Email;
+            //    usuario.TelefonoComercial = response.User.WorkPhone;
+            //    usuario.TelefonoParticular = response.User.HomePhone;
+            //    usuario.DireccionComercial = response.User.WorkAddress;
+            //    usuario.DireccionParticular = response.User.HomeAddress;
+            //    usuario.Rut = response.User.Rut.Insert(response.User.Rut.Length - 1, "-");
+            //}
         }
     }
 }

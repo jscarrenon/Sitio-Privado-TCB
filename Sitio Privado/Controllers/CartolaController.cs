@@ -18,11 +18,11 @@ namespace Sitio_Privado.Controllers
         private string authPassword = ConfigurationManager.AppSettings["ws:password"];
 
         [HttpPost]
-        public async Task<IHttpActionResult> GetSingle([FromBody]CartolaInput input)
+        public IHttpActionResult GetSingle([FromBody]CartolaInput input)
         {
             try
             {
-                var usuario = await GetUsuarioActual();
+                var usuario = GetUsuarioActual();
                 Cartola cartola = new Cartola(input, usuario);
                 return Ok(cartola);
             }
@@ -33,11 +33,11 @@ namespace Sitio_Privado.Controllers
         }
 
         [HttpPost]
-        public async Task<IHttpActionResult> GetConceptosTitulo([FromBody]CartolaTituloInput input)
+        public IHttpActionResult GetConceptosTitulo([FromBody]CartolaTituloInput input)
         {
             try
             {
-                var usuario = await GetUsuarioActual();
+                var usuario = GetUsuarioActual();
 
                 CartolaConceptosTituloResultado resultado = new CartolaConceptosTituloResultado();
 

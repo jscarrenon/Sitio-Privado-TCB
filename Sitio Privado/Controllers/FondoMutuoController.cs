@@ -14,11 +14,11 @@ namespace Sitio_Privado.Controllers
     public class FondoMutuoController : ApiBaseController
     {
         [HttpPost]
-        public async Task<IHttpActionResult> GetList([FromBody]FondoMutuoInput input)
+        public IHttpActionResult GetList([FromBody]FondoMutuoInput input)
         {
             try
             {
-                var usuario = await GetUsuarioActual();
+                var usuario = GetUsuarioActual();
                 tann_fondos_mutuos webService = new tann_fondos_mutuos();
                 int rutParteEntera = Converters.getRutParteEnteraInt(usuario.Rut);
                 saldo_ffmm[] SaldosRF = webService.cn_saldo_ffmm_rf(rutParteEntera);

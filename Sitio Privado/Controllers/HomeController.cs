@@ -19,23 +19,22 @@ namespace Sitio_Privado.Controllers
 {
     public class HomeController : BaseController
     {
-        GraphApiClientHelper graphApiHelper = new GraphApiClientHelper();
-        private Logger logger = LogManager.GetLogger("B2CLog");
 
-        [SkipTemporaryPassword]
+        private string asd = "";
+        //[SkipTemporaryPassword]
         public ActionResult Index()
         {
             return View();
         }
 
         [SkipTemporaryPassword]
-        public async Task<ActionResult> GetUsuarioActual()
+        public ActionResult GetUsuarioActual()
         {
-            var usuario = await GetUsuario();
+            var usuario = GetUsuario();
             if (usuario != null && usuario.Autenticado)
             {
-                logger.Info("New connection => Rut: " + usuario.Rut + "; Email: " + 
-                    usuario.Email + "; IP: " + Request.ServerVariables["REMOTE_ADDR"] + ";");
+                //logger.Info("New connection => Rut: " + usuario.Rut + "; Email: " + 
+                //    usuario.Email + "; IP: " + Request.ServerVariables["REMOTE_ADDR"] + ";");
             }
             return Json(new UsuarioDTO(usuario), JsonRequestBehavior.AllowGet);
         }

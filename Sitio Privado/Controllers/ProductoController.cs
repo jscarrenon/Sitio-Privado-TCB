@@ -35,11 +35,11 @@ namespace Sitio_Privado.Controllers
         }
 
         [HttpPost]
-        public async Task<IHttpActionResult> GetSingle([FromBody]ProductoInput input)
+        public IHttpActionResult GetSingle([FromBody]ProductoInput input)
         {
             try
             {
-                var usuario = await GetUsuarioActual();
+                var usuario = GetUsuarioActual();
                 Producto producto = new Producto(input);
                 return Ok(producto);
             }

@@ -12,7 +12,7 @@ namespace Sitio_Privado
         public static void Register(HttpConfiguration config)
         {
             // Web API routes
-            config.Filters.Add(new AuthorizeAttribute());
+            //config.Filters.Add(new AuthorizeAttribute());
             config.MapHttpAttributeRoutes();
 
             // Deserialize / Model Bind IE 8 and 9 Ajax Requests

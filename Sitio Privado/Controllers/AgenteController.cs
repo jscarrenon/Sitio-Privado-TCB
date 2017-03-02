@@ -12,11 +12,11 @@ namespace Sitio_Privado.Controllers
     public class AgenteController : ApiBaseController
     {
         [HttpPost]
-        public async Task<IHttpActionResult> GetSingle([FromBody]AgenteInput input)
+        public IHttpActionResult GetSingle([FromBody]AgenteInput input)
         {
             try
             {
-                Usuario usuario = await GetUsuarioActual();
+                Usuario usuario = GetUsuarioActual();
                 Agente agente = new Agente(input, usuario);
                 return Ok(agente);
             }

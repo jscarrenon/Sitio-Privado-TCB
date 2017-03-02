@@ -3,6 +3,7 @@
         constructor($routeProvider: ng.route.IRouteProvider,
             AnalyticsProvider: ng.google.analytics.AnalyticsProvider,
             $httpProvider: ng.IHttpProvider) {
+            debugger;
             var buildFolderURI: string = ".build/";
             $routeProvider
                 .when("/", {

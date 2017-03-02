@@ -1,4 +1,7 @@
 ﻿module app.home {
+    export interface IInformacionFinancieraRouteParams extends ng.route.IRouteParamsService {
+        seccion?: string;
+    }
 
     interface IHomeViewModel {
     }
@@ -7,7 +10,10 @@
 
         static $inject = ['constantService', 'dataService'];
         constructor(private constantService: app.common.services.ConstantService,
-            private dataService: app.common.services.DataService) {
+            private dataService: app.common.services.DataService,
+            private $routeParams: IInformacionFinancieraRouteParams) {
+            
+            debugger;
         }
     }
     angular.module('tannerPrivadoApp')

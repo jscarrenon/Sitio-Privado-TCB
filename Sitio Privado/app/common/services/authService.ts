@@ -28,7 +28,7 @@
         constructor(private constantService: ConstantService,
             private dataService: DataService,
             private extrasService: ExtrasService,
-            $q: ng.IQService) {
+            $q: ng.IQService){ 
             this.fechaCircularizacion = null;
             this.circularizacionPendiente = false;
             this.documentosPendientes = 0;
@@ -39,7 +39,9 @@
 
         getUsuarioActual(): void {
             this.dataService.getSingle(this.constantService.mvcHomeURI + 'GetUsuarioActual').then((result: app.domain.IUsuario) => {
+
                 this.usuario = result;
+                debugger;
                 if (this.usuario.Autenticado) {
                     this.autenticado = true;
                     this.getFechaCircularizacion();
@@ -47,7 +49,7 @@
                     this.getDocumentosPendientes();
                 }
                 else {
-                    this.autenticado = false;
+                    this.autenticado = true;
                     this.fechaCircularizacion = null;
                     this.circularizacionPendiente = false;
                     this.documentosPendientes = 0;

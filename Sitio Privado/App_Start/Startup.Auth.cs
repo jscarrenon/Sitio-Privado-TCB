@@ -12,6 +12,8 @@ using Sitio_Privado.Policies;
 using System.Threading;
 using System.Globalization;
 using Microsoft.AspNet.Identity;
+using IdentityServer3.AccessTokenValidation;
+using System.Web.Http;
 
 namespace Sitio_Privado
 {
@@ -42,11 +44,18 @@ namespace Sitio_Privado
 
         public void ConfigureAuth(IAppBuilder app)
         {
-            app.UseCookieAuthentication(new CookieAuthenticationOptions
-            {
-                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new Microsoft.Owin.PathString("/Account/SignInExternal")
-            });
+
+            //app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions
+            //{
+            //    ValidationMode = ValidationMode.ValidationEndpoint,
+            //    Authority = ConfigurationManager.AppSettings["AuthorityUrl"]
+            //});
+          
+            //app.UseCookieAuthentication(new CookieAuthenticationOptions
+            //{
+            //    AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
+            //    LoginPath = new Microsoft.Owin.PathString("/Account/SignInExternal")
+            //});
 
             /*app.SetDefaultSignInAsAuthenticationType(CookieAuthenticationDefaults.AuthenticationType);
 
