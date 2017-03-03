@@ -13,6 +13,7 @@
         setSusFirmaElecDoc(glosa: string, respuesta: string): ng.IPromise<number>;
         fechaCircularizacion: Date;
         getFechaCircularizacion(): void;
+        validateToken(accessToken: string): boolean;
     }
 
     export class AuthService implements IAuth {
@@ -41,7 +42,6 @@
             this.dataService.getSingle(this.constantService.mvcHomeURI + 'GetUsuarioActual').then((result: app.domain.IUsuario) => {
 
                 this.usuario = result;
-                debugger;
                 if (this.usuario.Autenticado) {
                     this.autenticado = true;
                     this.getFechaCircularizacion();
@@ -106,6 +106,19 @@
                 }).finally(() => deferred.resolve(-1));
 
             return deferred.promise;
+        }
+
+        validateToken(accessToken: string): boolean {
+            var self = this;
+            var deferred = self.qService.defer();
+            console.log(accessToken);
+            this.dataService.postWebService(this.constantService.apiAutenticacion + 'verifylogin', accessToken)
+                .then((result: number) => {
+                    deferred.resolve(result);
+                }).finally(() => deferred.resolve(-1));
+
+          //  return deferred.promise;
+           return false;
         }
     }
 

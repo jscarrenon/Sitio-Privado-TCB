@@ -92,11 +92,11 @@
             return deferred.promise;
         }
 
-        postWebService(resource: string, input: app.domain.InputBase): ng.IPromise<app.domain.EntityBase> {
+        postWebService(resource: string, input: app.domain.InputBase, accessToken?: string): ng.IPromise<app.domain.EntityBase> {
             var self = this;
             var deferred = self.qService.defer();
 
-            self.httpService.post(resource, input)
+            self.httpService.post(resource, input, { headers: { Authorization: 'Bearer ' + accessToken } })
                 .then(function (result) {
                     deferred.resolve(result.data);
                 }, function (error) {
@@ -105,6 +105,7 @@
 
             return deferred.promise;
         }
+       
     }
 
     angular.module('tannerPrivadoApp')

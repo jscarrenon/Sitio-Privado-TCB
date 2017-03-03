@@ -493,6 +493,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="app\modules\login\templates\index.html" />
     <Content Include="Resources\img\firma-Jorge-Oliva.png" />
     <Content Include="Resources\pdf\Anexo 1 Opción firma electrónica.pdf" />
     <Content Include="app\modules\home\templates\cambiar-contrasena.html" />
@@ -578,6 +579,7 @@
     <Content Include="Frontend_Tests\Controllers\misInversionesDocumentosControllerSpec.js" />
     <Content Include="Frontend_Tests\Controllers\modalInstanceControllerSpec.js" />
     <Content Include="Scripts\extras\index.js" />
+    <TypeScriptCompile Include="app\modules\login\controllers\authCtrl.ts" />
     <TypeScriptCompile Include="app\common\controllers\changePasswordCtrl.ts" />
     <TypeScriptCompile Include="app\common\controllers\modalInstanceCtrl.ts" />
     <TypeScriptCompile Include="app\common\directives\loadingDirective.ts" />

@@ -12,8 +12,6 @@
         constructor(private constantService: app.common.services.ConstantService,
             private dataService: app.common.services.DataService,
             private $routeParams: IInformacionFinancieraRouteParams) {
-            
-            debugger;
         }
     }
     angular.module('tannerPrivadoApp')

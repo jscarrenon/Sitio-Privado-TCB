@@ -23,6 +23,8 @@
         apiCircularizacionURI: string;
         templateSusConfFirmaElecDocModalURI: string;
         apiUsersURI: string;
+        homeTanner: string;
+        apiAutenticacion: string;
     }
 
     export class ConstantService implements IConstant {
@@ -48,6 +50,8 @@
         apiCircularizacionURI: string;
         templateSusConfFirmaElecDocModalURI: string;
         apiUsersURI: string;
+        homeTanner: string;
+        apiAutenticacion: string;
 
         constructor() {
             this.buildFolderURI = '.build/';
@@ -74,6 +78,9 @@
             this.apiIndicesURI = '/api/indices/';
             this.apiCircularizacionURI = '/api/circularizacion/';
             this.apiUsersURI = 'api/users/';
+            this.homeTanner = 'https://www.tanner.cl/';
+            this.apiAutenticacion = '/api/authentication/';
+
         }
     }
 

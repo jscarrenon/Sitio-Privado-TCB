@@ -3,12 +3,17 @@
         constructor($routeProvider: ng.route.IRouteProvider,
             AnalyticsProvider: ng.google.analytics.AnalyticsProvider,
             $httpProvider: ng.IHttpProvider) {
-            debugger;
+
+           
             var buildFolderURI: string = ".build/";
             $routeProvider
                 .when("/", {
                     templateUrl: buildFolderURI + "html/modules/home/templates/index.html",
-                    controller: "HomeCtrl as ctrl"
+                    controller: "HomeCtrl asc ctrl"
+                })
+                .when("/login/:accessToken?", {
+                    templateUrl: buildFolderURI + "html/modules/login/templates/index.html",
+                    controller: "AuthenticationCtrl as ctrl"
                 })
                 .when("/mis-inversiones/:seccion?", {
                     templateUrl: buildFolderURI + "html/modules/mis-inversiones/templates/index.html",
@@ -34,7 +39,7 @@
                     templateUrl: buildFolderURI + "html/modules/productos-servicios/templates/index.html",
                     controller: "ProductosServiciosCtrl as ctrl"
                 })
-                .otherwise({ redirectTo: '/' });
+                .otherwise({ redirectTo: '/login' });
 
             AnalyticsProvider.setAccount('UA-73610006-2')
                 .trackUrlParams(true)
@@ -54,6 +59,7 @@
                             return config || $q.when(config);
                         },
                         responseError: function (response) {
+                            console.log('return interceptor 401');
                             if (response.status === 401) {
                                 $window.location.reload();
                             }
@@ -62,6 +68,7 @@
                     };
                 }
             ]);
+                    
         }
 
 
