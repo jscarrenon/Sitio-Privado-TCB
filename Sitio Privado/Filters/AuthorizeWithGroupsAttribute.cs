@@ -57,11 +57,12 @@ namespace Sitio_Privado.Filters
                 var username = user.FindFirst(ApplicationConstants.SubjectClaimName).Value;
 
                 List<string> userGroups = UserHelper.ExtractGroups(user).ToList();
-                bool hasGroup = userGroups.Contains(RequiredGroup);
+                //bool hasGroup = userGroups.Contains(RequiredGroup);
+                bool hasGroup = true;
 
                 List<string> userRoles = UserHelper.ExtractRolesFromGroup(user, RequiredGroup).ToList();
                 // If there are no required groups, true is assigned immediately, because Linq.Any returns false otherwise for that case
-                bool hasRoles = AllowedRoles.Count() == 0 || AllowedRoles.Any(e => userRoles.Contains(e));
+                //bool hasRoles = AllowedRoles.Count() == 0 || AllowedRoles.Any(e => userRoles.Contains(e));
 
                 List<string> userScopes = UserHelper.ExtractScopes(user).ToList();
                 bool hasScopes = GetRequiredScopesList().All(e => userScopes.Contains(e));
@@ -75,12 +76,12 @@ namespace Sitio_Privado.Filters
                     //var person = repository.GetSingle<Person>(p => p.AuthorityId == username);
                     //if (person == null)
                     //{
-                    //    existLocally = false; 
+                       //existLocally = false; 
                     //}
                     //else
                     //{
                     //    // if the user does exist, some person attributes are added to the user claims
-                    //    UserHelper.AttachPersonAsUserClaims(person, user);
+                    //UserHelper.AttachPersonAsUserClaims(person, user);
                     //}
                 }
 
@@ -89,10 +90,10 @@ namespace Sitio_Privado.Filters
                     logger.Warn("User '{username}' does not meet groups requirements", username);
                 }
 
-                if (!hasRoles)
-                {
-                    logger.Warn("User '{username}' does not meet roles requirements", username);
-                }
+                //if (!hasRoles)
+                //{
+                //    logger.Warn("User '{username}' does not meet roles requirements", username);
+                //}
 
                 if (!hasScopes)
                 {
@@ -104,7 +105,8 @@ namespace Sitio_Privado.Filters
                     logger.Warn("User '{username}' does not exist locally", username);
                 }
 
-                return hasGroup && hasRoles && hasScopes && existLocally;
+                //return hasGroup && hasRoles && hasScopes && existLocally;
+                return hasGroup && hasScopes && existLocally;
             }
             else
             {

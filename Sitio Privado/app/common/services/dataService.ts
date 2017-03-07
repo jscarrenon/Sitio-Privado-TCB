@@ -7,6 +7,7 @@
         update(resource: string, entity: app.domain.IEntity): ng.IPromise<app.domain.EntityBase>;
         remove(resource: string): ng.IPromise<any>;
         postWebService(resource: string, input: app.domain.InputBase): ng.IPromise<app.domain.EntityBase>; //Recibe input para llamado webservice
+        postVerifyLogin(resource: string, input: app.domain.InputBase, accessToken?: string): ng.IPromise<app.domain.EntityBase>; //Recibe input para llamado webservice
     }
 
     export class DataService implements IDataService {
@@ -92,11 +93,11 @@
             return deferred.promise;
         }
 
-        postWebService(resource: string, input: app.domain.InputBase, accessToken?: string): ng.IPromise<app.domain.EntityBase> {
+        postWebService(resource: string, input: app.domain.InputBase): ng.IPromise<app.domain.EntityBase> {
             var self = this;
             var deferred = self.qService.defer();
 
-            self.httpService.post(resource, input, { headers: { Authorization: 'Bearer ' + accessToken } })
+            self.httpService.post(resource, input)
                 .then(function (result) {
                     deferred.resolve(result.data);
                 }, function (error) {
@@ -105,7 +106,20 @@
 
             return deferred.promise;
         }
-       
+
+        postVerifyLogin(resource: string, input: app.domain.InputBase, accessToken?: string): ng.IPromise<app.domain.EntityBase> {
+            var self = this;
+            var deferred = self.qService.defer();
+
+            self.httpService.post(resource, null, { headers: { Authorization: 'Bearer ' + accessToken } })
+                .then(function (result) {
+                    deferred.resolve(result.data);
+                }, function (error) {
+                    deferred.reject(error);
+                });
+
+            return deferred.promise;
+        }
     }
 
     angular.module('tannerPrivadoApp')

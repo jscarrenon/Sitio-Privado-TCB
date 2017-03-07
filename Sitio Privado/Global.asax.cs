@@ -1,4 +1,5 @@
 ﻿using Microsoft.Owin;
+using Sitio_Privado.Configuration.Application;
 using Sitio_Privado.Extras;
 using Sitio_Privado.Tasks;
 using System;
@@ -23,6 +24,7 @@ namespace Sitio_Privado
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             GlobalConfiguration.Configuration.Services.Replace(typeof(ITraceWriter), new NLogger());
+           
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);

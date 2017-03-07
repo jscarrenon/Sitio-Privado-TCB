@@ -15,5 +15,6 @@ namespace Sitio_Privado.Models
         public string GivenName { get; set; }
         public string LastName { get; set; }
         public string MothersLastName { get; set; }
+        public string Email { get; set; }
     }
 }

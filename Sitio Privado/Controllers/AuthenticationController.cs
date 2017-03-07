@@ -10,12 +10,20 @@ using Sitio_Privado.Filters;
 using Sitio_Privado.Infraestructure.ExceptionHandling;
 using Sitio_Privado.Services;
 using Sitio_Privado.Models;
+using Sitio_Privado.Services.Interfaces;
 
 namespace Sitio_Privado.Controllers
 {
     [RoutePrefix("api/authentication")]
     public class AuthenticationController : ApiBaseController
     {
+        IHttpService httpService = null;
+        IAuthorityClientService authorityClientService = null;
+        public AuthenticationController(IHttpService httpService, IAuthorityClientService authorityClientService)
+        {
+            this.httpService = httpService;
+            this.authorityClientService = authorityClientService;
+        }
         /// <summary>
         /// Verifies if the logged user has the minimum group requirements to use the application
         /// and do some initalization if the user does not exist locally
@@ -26,17 +34,16 @@ namespace Sitio_Privado.Controllers
         [HttpPost]
         public IHttpActionResult VerifyLogin()
         {
-            HttpService httpService = new HttpService();
-            AuthorityClientService clientService = new AuthorityClientService();
+            var usuario = this.GetUsuarioActual();
 
-            Usuario usuario = clientService.VerifyLoginAndGetPersonInformation(
+            Person user = authorityClientService.VerifyLoginAndGetPersonInformation(
                 httpService.ExtractAccessToken(Request),
                 UserHelper.ExtractRolesFromGroup(User as ClaimsPrincipal, ApplicationConstants.RequiredGroupName));
 
-            if (usuario != null)
+            if (user != null)
             {
                 //return RedirectToAction("Index", "Home");
-                return Ok(usuario);
+                return Ok(user);
             }
             else
             {

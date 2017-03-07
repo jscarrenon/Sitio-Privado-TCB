@@ -24,7 +24,7 @@ namespace Sitio_Privado.Controllers
         public Usuario GetUsuarioActual()
         {
             var usuario = this.Usuario;
-            SetUserExtendedAttributes(usuario);
+            //SetUserExtendedAttributes(usuario);
             return usuario;
         }
 

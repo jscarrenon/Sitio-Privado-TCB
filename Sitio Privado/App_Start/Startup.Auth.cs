@@ -7,6 +7,7 @@ using System.Configuration;
 using Sitio_Privado.Policies;
 using System.Threading;
 using IdentityServer3.AccessTokenValidation;
+using System.Web.Http;
 
 namespace Sitio_Privado
 {
@@ -49,10 +50,6 @@ namespace Sitio_Privado
             //    AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
             //    LoginPath = new Microsoft.Owin.PathString("/Account/SignInExternal")
             //});
-
-            //HttpConfiguration config = new HttpConfiguration();
-            //WebApiConfiguration.Register(config);
-            //app.UseWebApi(config);
 
         }
 

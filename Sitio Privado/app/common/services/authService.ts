@@ -1,5 +1,7 @@
 ﻿module app.common.services {
-
+    export interface IAuthenticationRouteParams extends ng.route.IRouteParamsService {
+        accessToken?: string;
+    }
     interface IAuth {
         autenticado: boolean;
         usuario: app.domain.IUsuario;
@@ -13,7 +15,8 @@
         setSusFirmaElecDoc(glosa: string, respuesta: string): ng.IPromise<number>;
         fechaCircularizacion: Date;
         getFechaCircularizacion(): void;
-        validateToken(accessToken: string): boolean;
+        validateToken(accessToken: string): ng.IPromise<app.domain.IUsuario>;
+        setUsuario(usuario: app.domain.IUsuario): void;
     }
 
     export class AuthService implements IAuth {
@@ -25,21 +28,30 @@
         fechaCircularizacion: Date;
         private qService: ng.IQService;
                 
-        static $inject = ['constantService', 'dataService', 'extrasService', '$q'];
-        constructor(private constantService: ConstantService,
+        static $inject = ['$window', '$location', 'constantService', 'dataService', 'extrasService', '$q', '$routeParams'];
+        constructor(private $window: ng.IWindowService,
+            private $location: ng.ILocationService,
+            private constantService: ConstantService,
             private dataService: DataService,
             private extrasService: ExtrasService,
-            $q: ng.IQService){ 
+            $q: ng.IQService,
+            private $routeParams: IAuthenticationRouteParams) { 
+
             this.fechaCircularizacion = null;
             this.circularizacionPendiente = false;
             this.documentosPendientes = 0;
-            this.getUsuarioActual();
+            var token = $location.absUrl().split('=')[1];
+            this.validateToken(token);
+            //console.log(token);
+            //this.getUsuarioActual();
             this.getSusFirmaElecDoc();
             this.qService = $q;
         }
 
         getUsuarioActual(): void {
+            console.log('getUsuarioActual');
             this.dataService.getSingle(this.constantService.mvcHomeURI + 'GetUsuarioActual').then((result: app.domain.IUsuario) => {
+                console.log(result);
 
                 this.usuario = result;
                 if (this.usuario.Autenticado) {
@@ -56,7 +68,15 @@
                 }
             });
         }
+        setUsuario(usuario: app.domain.IUsuario): void {
+            if (usuario != null && usuario.Autenticado) {
+                console.log('setUsuarioActual');
 
+                this.autenticado = true;
+                this.usuario = usuario;
+            }
+
+        }
         cerrarSesion(): void {
             this.autenticado = false;
             this.circularizacionPendiente = false;
@@ -108,17 +128,16 @@
             return deferred.promise;
         }
 
-        validateToken(accessToken: string): boolean {
+        validateToken(accessToken: string): ng.IPromise<app.domain.IUsuario>  {
             var self = this;
-            var deferred = self.qService.defer();
-            console.log(accessToken);
-            this.dataService.postWebService(this.constantService.apiAutenticacion + 'verifylogin', accessToken)
-                .then((result: number) => {
-                    deferred.resolve(result);
-                }).finally(() => deferred.resolve(-1));
+            var response = this.dataService.postVerifyLogin(this.constantService.apiAutenticacion + 'verifylogin', null, accessToken)
+                .then((result: app.domain.IUsuario) => {
+                    this.setUsuario(result);
 
-          //  return deferred.promise;
-           return false;
+                    return result;
+                });
+
+           return response;
         }
     }
 

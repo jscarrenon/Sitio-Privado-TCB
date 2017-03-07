@@ -9,7 +9,7 @@
             $routeProvider
                 .when("/", {
                     templateUrl: buildFolderURI + "html/modules/home/templates/index.html",
-                    controller: "HomeCtrl asc ctrl"
+                    controller: "HomeCtrl as ctrl"
                 })
                 .when("/login/:accessToken?", {
                     templateUrl: buildFolderURI + "html/modules/login/templates/index.html",
@@ -39,7 +39,7 @@
                     templateUrl: buildFolderURI + "html/modules/productos-servicios/templates/index.html",
                     controller: "ProductosServiciosCtrl as ctrl"
                 })
-                .otherwise({ redirectTo: '/login' });
+                .otherwise({ redirectTo: '/login:accessToken?' });
 
             AnalyticsProvider.setAccount('UA-73610006-2')
                 .trackUrlParams(true)
@@ -60,8 +60,10 @@
                         },
                         responseError: function (response) {
                             console.log('return interceptor 401');
+                          
                             if (response.status === 401) {
-                                $window.location.reload();
+                                $window.location.href = "https://www.tanner.cl";
+                                console.log(response);
                             }
                             return $q.reject(response);
                         }

@@ -97,8 +97,10 @@ namespace Sitio_Privado.Helpers
         public static void AttachPersonAsUserClaims(Usuario person, ClaimsPrincipal user)
         {
             var identity = user.Identity as ClaimsIdentity;
-            //identity.AddClaim(new Claim(ApplicationConstants.PersonIdClaimName, person.Id.ToString()));
-            //identity.AddClaim(new Claim(ApplicationConstants.PersonTypeClaimName, person.Type.ToString()));
+
+            // TODO: revisar Id, que es propiedad "sub" 
+            identity.AddClaim(new Claim(ApplicationConstants.PersonIdClaimName, person.Email.ToString()));
+            identity.AddClaim(new Claim(ApplicationConstants.PersonTypeClaimName, person.GetType().ToString()));
         }
 
         /// <summary>
