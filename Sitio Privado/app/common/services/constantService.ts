@@ -25,6 +25,10 @@
         apiUsersURI: string;
         homeTanner: string;
         apiAutenticacion: string;
+        apiOAuthURI: string;
+        userClientId: string;
+        userClientSecret: string;
+
     }
 
     export class ConstantService implements IConstant {
@@ -52,6 +56,9 @@
         apiUsersURI: string;
         homeTanner: string;
         apiAutenticacion: string;
+        apiOAuthURI: string;
+        userClientId: string;
+        userClientSecret: string;
 
         constructor() {
             this.buildFolderURI = '.build/';
@@ -80,7 +87,9 @@
             this.apiUsersURI = 'api/users/';
             this.homeTanner = 'https://www.tanner.cl/';
             this.apiAutenticacion = '/api/authentication/';
-
+            this.apiOAuthURI = 'https://kunder-tanner-oauth.azurewebsites.net/';
+            this.userClientId = 'passwordgrant';
+            this.userClientSecret = 'secret';
         }
     }
 

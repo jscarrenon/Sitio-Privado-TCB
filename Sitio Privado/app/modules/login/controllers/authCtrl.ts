@@ -32,14 +32,14 @@
             private $location: ng.ILocationService,
             public constantService: app.common.services.ConstantService,
             private dataService: app.common.services.DataService,
-            public authenticationService: app.common.services.AuthService,
+            private authenticationService: app.common.services.AuthService,
             private $routeParams: IAuthenticationRouteParams) {
 
             this.usuario = null;
             this.passwordErrors = [];
             this.passwordValidationErrors = [];
-            var token = $routeParams.accessToken;
-
+            var token = $location.search().accessToken;
+            
             authenticationService.validateToken(token)
                 .then(function (result) {
                     this.usuario = result;
@@ -48,13 +48,13 @@
                         $window.location.href = constantService.homeTanner;
                     console.log(result);
                     this.usuario = result;
-
-                    $window.location.assign("/?accessToken=" + token);
-                    //setTimeout(() => {
-                    //    //$window.location.href = "/";
-                        
-                    //    console.log('aaaaaaaaaasdsdsdsd');
-                    //}, 500);
+                    var token = $location.search().accessToken;
+                    var refreshToken = $location.search().refreshToken;
+                    var expiresIn = $location.search().expiresIn;
+                    authenticationService.saveToken(token, refreshToken, expiresIn);
+                    authenticationService.setTimerForRefreshToken();
+                    $window.location.assign("/");
+                  
                 });  
         }
 

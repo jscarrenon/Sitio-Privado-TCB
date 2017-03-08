@@ -4,7 +4,6 @@
             AnalyticsProvider: ng.google.analytics.AnalyticsProvider,
             $httpProvider: ng.IHttpProvider) {
 
-           
             var buildFolderURI: string = ".build/";
             $routeProvider
                 .when("/", {
@@ -53,17 +52,20 @@
                     return {
                         request: function (config) {
                             var authService: app.common.services.AuthService = $injector.get('authService');
-                            if (authService.autenticado && authService.usuario.ContrasenaTemporal) {
-                                $location.path('/cambiar-contrasena');
-                            }
+                            //if (authService.autenticado && authService.usuario.ContrasenaTemporal) {
+                            //    $location.path('/cambiar-contrasena');
+                            //}
                             return config || $q.when(config);
                         },
                         responseError: function (response) {
+                            var authService: app.common.services.AuthService = $injector.get('authService');
+
                             console.log('return interceptor 401');
                           
                             if (response.status === 401) {
-                                $window.location.href = "https://www.tanner.cl";
+                                //$window.location.href = "https://www.tanner.cl";
                                 console.log(response);
+                                //authService.refreshToken();
                             }
                             return $q.reject(response);
                         }
@@ -77,6 +79,6 @@
     }
     Config.$inject = ['$routeProvider','AnalyticsProvider','$httpProvider'];
 
-    var mainApp = angular.module('tannerPrivadoApp', ['ngRoute', 'ui.bootstrap', 'platanus.rut', 'angular-google-analytics']);
+    var mainApp = angular.module('tannerPrivadoApp', ['LocalForageModule','ngRoute', 'ui.bootstrap', 'platanus.rut', 'angular-google-analytics']);
     mainApp.config(Config);
 }
