@@ -8,11 +8,14 @@ using Sitio_Privado.Models;
 using Sitio_Privado.ConsultaSaldosFondosMutuos;
 using System.Threading.Tasks;
 using Sitio_Privado.Extras;
+using Sitio_Privado.Filters;
 
 namespace Sitio_Privado.Controllers
 {
+   
     public class FondoMutuoController : ApiBaseController
     {
+        [AuthorizeWithGroups(CheckLocalExistence = false, RequiredScopes = "openid profile")]
         [HttpPost]
         public IHttpActionResult GetList([FromBody]FondoMutuoInput input)
         {

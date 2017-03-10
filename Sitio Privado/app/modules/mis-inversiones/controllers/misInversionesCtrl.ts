@@ -13,9 +13,10 @@
         seccionURI: string;
         seccionId: number;
 
-        static $inject = ['constantService', 'dataService', 'authService', 'extrasService', '$routeParams'];
+        static $inject = ['constantService', 'dataService', '$localForage','authService', 'extrasService', '$routeParams'];
         constructor(private constantService: app.common.services.ConstantService,
             private dataService: app.common.services.DataService,
+            private $localForage,
             private authService: app.common.services.AuthService,
             private extrasService: app.common.services.ExtrasService,
             private $routeParams: IMisInversionesRouteParams) {
@@ -65,9 +66,12 @@
         }
 
         setResponseSusFirmaElecDoc(respuesta: string) {
-            this.dataService.postWebService(this.constantService.apiDocumentoURI + 'setRespuestaSusFirmaElecDoc', respuesta)
-                .then((result: string) => {
-                    
+            this.$localForage.getItem('accessToken')
+                .then((responseToken) => {
+                    this.dataService.postWebService(this.constantService.apiDocumentoURI + 'setRespuestaSusFirmaElecDoc', respuesta, responseToken)
+                        .then((result: string) => {
+
+                        });
                 });
         }
     }
