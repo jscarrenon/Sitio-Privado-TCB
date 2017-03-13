@@ -17,8 +17,10 @@
         loading: boolean;
         errorFecha: string;
 
-        static $inject = ['constantService', 'dataService', 'extrasService'];
-        constructor(private constantService: app.common.services.ConstantService,
+        static $inject = ['$localForage', 'constantService', 'dataService', 'extrasService'];
+        constructor(
+            private $localForage,
+            private constantService: app.common.services.ConstantService,
             private dataService: app.common.services.DataService,
             private extrasService: app.common.services.ExtrasService) {
 
@@ -39,15 +41,17 @@
 
         getIndices(input: app.domain.IIndicesInput): void {
             this.loading = true;
-            this.dataService.postWebService(this.constantService.apiIndicesURI + 'getSingle', input)
-                .then((result: app.domain.IIndices) => {
-                    this.indices = result;
-                })
-                .finally(() => this.loading = false);
+
+            this.$localForage.getItem('accessToken')
+                .then(responseToken => {
+                    this.dataService.postWebService(this.constantService.apiIndicesURI + 'getSingle', input, responseToken)
+                        .then((result: app.domain.IIndices) => { this.indices = result; })
+                        .finally(() => this.loading = false);
+                });
         }
 
         actualizarIndices(): void {
-            this.indicesInput = new app.domain.IndicesInput(this.extrasService.getFechaFormato(this.fecha, "dd/mm/aaaa"));            
+            this.indicesInput = new app.domain.IndicesInput(this.extrasService.getFechaFormato(this.fecha, "dd/mm/aaaa"));
             this.getIndices(this.indicesInput);
         }
     }
