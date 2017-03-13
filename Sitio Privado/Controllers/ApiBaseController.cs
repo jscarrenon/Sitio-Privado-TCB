@@ -57,7 +57,7 @@ namespace Sitio_Privado.Controllers
             usuario.TelefonoParticular = "3333333";
             usuario.DireccionComercial = "Dirección comercial";
             usuario.DireccionParticular = "Dirección particular";
-            usuario.Rut = "17.435.156-2";
+            usuario.Rut = "17435156-2";
         }
     }
 }
