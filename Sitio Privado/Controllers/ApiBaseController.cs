@@ -24,15 +24,15 @@ namespace Sitio_Privado.Controllers
         public Usuario GetUsuarioActual()
         {
             var usuario = this.Usuario;
-            //SetUserExtendedAttributes(usuario);
+            SetUserExtendedAttributes(usuario);
             return usuario;
         }
 
         private void SetUserExtendedAttributes(Usuario usuario)
         {
-            //Retrieve user info
-            Claim idClaim = ((ClaimsIdentity)usuario.Identity).Claims.Where(c => c.Type == Startup.objectIdClaimKey).First();
-           // GraphApiResponseInfo response = await graphApiHelper.GetUserByObjectId(idClaim.Value);
+            //Retrieve user info to inject in middleware
+            //Claim idClaim = ((ClaimsIdentity)usuario.Identity).Claims.Where(c => c.Type == Startup.objectIdClaimKey).First();
+            // GraphApiResponseInfo response = await graphApiHelper.GetUserByObjectId(idClaim.Value);
 
             //if (response.StatusCode == System.Net.HttpStatusCode.OK)
             //{
@@ -46,6 +46,18 @@ namespace Sitio_Privado.Controllers
             //    usuario.DireccionParticular = response.User.HomeAddress;
             //    usuario.Rut = response.User.Rut.Insert(response.User.Rut.Length - 1, "-");
             //}
+
+
+            // dummy
+
+            usuario.Banco = "Banco";
+            usuario.CuentaCorriente = "111111111111";
+            usuario.Email = "em@il.com";
+            usuario.TelefonoComercial = "22222222";
+            usuario.TelefonoParticular = "3333333";
+            usuario.DireccionComercial = "Dirección comercial";
+            usuario.DireccionParticular = "Dirección particular";
+            usuario.Rut = "17.435.156-2";
         }
     }
 }

@@ -43,7 +43,7 @@
             this.loading = true;
 
             this.$localForage.getItem('accessToken')
-                .then(responseToken => {
+                .then((responseToken) => {
                     this.dataService.postWebService(this.constantService.apiIndicesURI + 'getSingle', input, responseToken)
                         .then((result: app.domain.IIndices) => { this.indices = result; })
                         .finally(() => this.loading = false);

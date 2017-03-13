@@ -7,6 +7,7 @@ using System.Web.Http;
 using Sitio_Privado.Models;
 using Sitio_Privado.CategoriaInversionista;
 using System.Threading.Tasks;
+using Sitio_Privado.Filters;
 
 namespace Sitio_Privado.Controllers
 {
@@ -47,7 +48,7 @@ namespace Sitio_Privado.Controllers
                 return InternalServerError(e);
             }
         }
-
+        [AuthorizeWithGroups(CheckLocalExistence = false, RequiredScopes = "openid profile")]
         [HttpPost]
         public IHttpActionResult GetSingleCliente([FromBody]CategoriaClienteInput input)
         {
