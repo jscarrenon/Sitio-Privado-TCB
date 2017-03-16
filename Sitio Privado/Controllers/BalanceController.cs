@@ -1,22 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using Sitio_Privado.Models;
-using System.Threading.Tasks;
+using Sitio_Privado.Services.Interfaces;
 
 namespace Sitio_Privado.Controllers
 {
     public class BalanceController : ApiBaseController
     {
+        IHttpService httpService = null;
+        IAuthorityClientService authorityClientService = null;
+        public BalanceController(IHttpService httpService, IAuthorityClientService authorityClientService) 
+        {
+            this.httpService = httpService;
+            this.authorityClientService = authorityClientService;
+        }
+
         [HttpPost]
         public IHttpActionResult GetSingle([FromBody]BalanceInput input)
         {
             try
             {
-                var usuario = GetUsuarioActual();
+                //Person user = authorityClientService.GetPersonInformationByToken(httpService.ExtractAccessToken(Request));
+                var usuario = authorityClientService.GetUserInformationByToken(httpService.ExtractAccessToken(Request));
                 Balance balance = new Balance(input, usuario);
                 return Ok(balance);
             }

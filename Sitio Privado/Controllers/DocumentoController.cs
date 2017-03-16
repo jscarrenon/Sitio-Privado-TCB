@@ -1,25 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using Sitio_Privado.Models;
 using Sitio_Privado.DocumentosPendientesFirma;
-using System.Threading.Tasks;
 using Sitio_Privado.Extras;
-using Sitio_Privado.SuscripcionFirmaElecDoc;
+using Sitio_Privado.Services.Interfaces;
+using Sitio_Privado.Filters;
 
 namespace Sitio_Privado.Controllers
 {
+    [AuthorizeWithGroups(CheckLocalExistence = false, RequiredScopes = "openid profile")]
     public class DocumentoController : ApiBaseController
     {
+        IHttpService httpService = null;
+        IAuthorityClientService authorityClientService = null;
+        public DocumentoController(IHttpService httpService, IAuthorityClientService authorityClientService) 
+        {
+            this.httpService = httpService;
+            this.authorityClientService = authorityClientService;
+        }
+
         [HttpPost]
         public IHttpActionResult GetListPendientes([FromBody]DocumentosPendientesInput input)
         {
             try
             {
-                var usuario = GetUsuarioActual();
+                var usuario = authorityClientService.GetUserInformationByToken(httpService.ExtractAccessToken(Request));
                 tann_documentos webService = new tann_documentos();
                 _operacion[] operaciones = webService.cns_operacion_pendiente(Converters.getRutParteEntera(usuario.Rut));
 
@@ -53,7 +59,7 @@ namespace Sitio_Privado.Controllers
         {
             try
             {
-                var usuario = GetUsuarioActual();
+                var usuario = authorityClientService.GetPersonInformationByToken(httpService.ExtractAccessToken(Request));
                 tann_documentos webService = new tann_documentos();
                 _operacion[] operaciones = webService.cns_operacion_firmada(Converters.getRutParteEntera(usuario.Rut), input.fechaIni, input.fechaFin);
 
@@ -87,7 +93,7 @@ namespace Sitio_Privado.Controllers
         {
             try
             {
-                var usuario = GetUsuarioActual();
+                var usuario = authorityClientService.GetUserInformationByToken(httpService.ExtractAccessToken(Request));
                 DocumentoLeidoResultado resultado = new DocumentoLeidoResultado(input, usuario);
 
                 return Ok(resultado);
@@ -103,7 +109,7 @@ namespace Sitio_Privado.Controllers
         {
             try
             {
-                var usuario = GetUsuarioActual();
+                var usuario = authorityClientService.GetUserInformationByToken(httpService.ExtractAccessToken(Request));
                 DocumentoFirmarResultado resultado = new DocumentoFirmarResultado(input, usuario);
 
                 return Ok(resultado);
@@ -120,7 +126,7 @@ namespace Sitio_Privado.Controllers
         {
             try
             {
-                var usuario = GetUsuarioActual();
+                var usuario = authorityClientService.GetUserInformationByToken(httpService.ExtractAccessToken(Request));
                 DocumentoFirmarResultado resultado = new DocumentoFirmarResultado(input, usuario);
 
                 return Ok(resultado);
@@ -136,7 +142,7 @@ namespace Sitio_Privado.Controllers
         {
             try
             {
-                var usuario = GetUsuarioActual();
+                var usuario = authorityClientService.GetUserInformationByToken(httpService.ExtractAccessToken(Request));
                 DocumentosPendientesCantidadResultado resultado = new DocumentosPendientesCantidadResultado(input, usuario);
 
                 return Ok(resultado);
@@ -153,7 +159,7 @@ namespace Sitio_Privado.Controllers
         {
             try
             {
-                var usuario =  GetUsuarioActual();
+                var usuario = authorityClientService.GetUserInformationByToken(httpService.ExtractAccessToken(Request));
                 RespuestaClienteSusFirmaElectronicaDocs resultado = new RespuestaClienteSusFirmaElectronicaDocs(usuario.Rut, input.Glosa, input.Respuesta);
 
                 return Ok(resultado.Resultado);
@@ -169,7 +175,7 @@ namespace Sitio_Privado.Controllers
         {
             try
             {
-                var usuario = GetUsuarioActual();
+                var usuario = authorityClientService.GetUserInformationByToken(httpService.ExtractAccessToken(Request));
 
                 ConsultaRespuestaSusFirmaElecDocs resultado = new ConsultaRespuestaSusFirmaElecDocs(usuario.Rut);
 
@@ -180,7 +186,5 @@ namespace Sitio_Privado.Controllers
                 return InternalServerError(e);
             }
         }
-
-
     }
 }

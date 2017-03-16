@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Sitio_Privado.CartolaResumida;
 using System.Configuration;
 using Sitio_Privado.Extras;
+using Sitio_Privado.Services.Interfaces;
 
 namespace Sitio_Privado.Controllers
 {
@@ -16,13 +17,22 @@ namespace Sitio_Privado.Controllers
     {
         private string authUsername = ConfigurationManager.AppSettings["ws:username"];
         private string authPassword = ConfigurationManager.AppSettings["ws:password"];
+        IHttpService httpService = null;
+        IAuthorityClientService authorityClientService = null;
+        public CartolaController(IHttpService httpService, IAuthorityClientService authorityClientService)
+           
+        {
+            this.httpService = httpService;
+            this.authorityClientService = authorityClientService;
+        }
 
         [HttpPost]
         public IHttpActionResult GetSingle([FromBody]CartolaInput input)
         {
             try
             {
-                var usuario = GetUsuarioActual();
+                //Person user = authorityClientService.GetUserInformationByToken(httpService.ExtractAccessToken(Request));
+                var usuario = authorityClientService.GetUserInformationByToken(httpService.ExtractAccessToken(Request));
                 Cartola cartola = new Cartola(input, usuario);
                 return Ok(cartola);
             }
@@ -37,7 +47,7 @@ namespace Sitio_Privado.Controllers
         {
             try
             {
-                var usuario = GetUsuarioActual();
+                var usuario = authorityClientService.GetUserInformationByToken(httpService.ExtractAccessToken(Request));
 
                 CartolaConceptosTituloResultado resultado = new CartolaConceptosTituloResultado();
 

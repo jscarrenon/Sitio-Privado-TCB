@@ -1,17 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using Sitio_Privado.Models;
 using Sitio_Privado.CategoriaInversionista;
-using System.Threading.Tasks;
+using Sitio_Privado.Services.Interfaces;
 
 namespace Sitio_Privado.Controllers
 {
     public class ProductoController : ApiBaseController
     {
+        IHttpService httpService = null;
+        IAuthorityClientService authorityClientService = null;
+        public ProductoController(IHttpService httpService, IAuthorityClientService authorityClientService) 
+        {
+            this.httpService = httpService;
+            this.authorityClientService = authorityClientService;
+        }
+
         [HttpGet]
         public IHttpActionResult GetList()
         {
@@ -39,7 +44,7 @@ namespace Sitio_Privado.Controllers
         {
             try
             {
-                var usuario = GetUsuarioActual();
+                var usuario = authorityClientService.GetUserInformationByToken(httpService.ExtractAccessToken(Request));
                 Producto producto = new Producto(input);
                 return Ok(producto);
             }

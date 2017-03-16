@@ -9,19 +9,28 @@ using Sitio_Privado.ConsultaSaldosFondosMutuos;
 using System.Threading.Tasks;
 using Sitio_Privado.Extras;
 using Sitio_Privado.Filters;
+using Sitio_Privado.Services.Interfaces;
 
 namespace Sitio_Privado.Controllers
 {
    
     public class FondoMutuoController : ApiBaseController
     {
+        IHttpService httpService = null;
+        IAuthorityClientService authorityClientService = null;
+        public FondoMutuoController(IHttpService httpService, IAuthorityClientService authorityClientService, IExternalUserService userProvider) 
+        {
+            this.httpService = httpService;
+            this.authorityClientService = authorityClientService;
+        }
+
         [AuthorizeWithGroups(CheckLocalExistence = false, RequiredScopes = "openid profile")]
         [HttpPost]
         public IHttpActionResult GetList([FromBody]FondoMutuoInput input)
         {
             try
             {
-                var usuario = GetUsuarioActual();
+                var usuario = authorityClientService.GetUserInformationByToken(httpService.ExtractAccessToken(Request));
                 tann_fondos_mutuos webService = new tann_fondos_mutuos();
                 int rutParteEntera = Converters.getRutParteEnteraInt(usuario.Rut);
                 saldo_ffmm[] SaldosRF = webService.cn_saldo_ffmm_rf(rutParteEntera);

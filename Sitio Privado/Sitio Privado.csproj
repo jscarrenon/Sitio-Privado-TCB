@@ -206,6 +206,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IdentityModel" />
     <Reference Include="System.IdentityModel.Tokens.Jwt, Version=4.0.20622.1351, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -451,6 +452,8 @@
     <Compile Include="Models\CategoriaModel.cs" />
     <Compile Include="Models\TannerUserModel.cs" />
     <Compile Include="Models\PersonModel.cs" />
+    <Compile Include="Models\UserInfo.cs" />
+    <Compile Include="Models\UserSchemaEntry.cs" />
     <Compile Include="Models\UsuarioModel.cs" />
     <Compile Include="PolicyAuthHelpers\HttpDocumentRetriever.cs" />
     <Compile Include="PolicyAuthHelpers\PolicyAuthorize.cs" />
@@ -462,9 +465,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Services\AuthorityClientService.cs" />
+    <Compile Include="Services\ExternalUserProvider\LDAPService.cs" />
     <Compile Include="Services\HttpService.cs" />
     <Compile Include="Services\Interfaces\IAuthorityClientService.cs" />
+    <Compile Include="Services\Interfaces\IExternalUserProvider.cs" />
     <Compile Include="Services\Interfaces\IHttpService.cs" />
+    <Compile Include="Services\Interfaces\IUserSchemaEntryRepository.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Tasks\SyncUsersDataJob.cs" />
     <Compile Include="Tasks\SyncUsersDataJobScheduler.cs" />
@@ -796,6 +802,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Configuration\Environment\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

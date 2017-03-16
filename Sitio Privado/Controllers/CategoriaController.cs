@@ -1,18 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using Sitio_Privado.Models;
 using Sitio_Privado.CategoriaInversionista;
-using System.Threading.Tasks;
 using Sitio_Privado.Filters;
+using Sitio_Privado.Services.Interfaces;
 
 namespace Sitio_Privado.Controllers
 {
     public class CategoriaController : ApiBaseController
     {
+        IHttpService httpService = null;
+        IAuthorityClientService authorityClientService = null;
+        public CategoriaController(IHttpService httpService, IAuthorityClientService authorityClientService) 
+        {
+            this.httpService = httpService;
+            this.authorityClientService = authorityClientService;
+        }
+
         [HttpGet]
         public IHttpActionResult GetList()
         {
@@ -54,7 +59,8 @@ namespace Sitio_Privado.Controllers
         {
             try
             {
-                var usuario = GetUsuarioActual();
+                //Person user = authorityClientService.GetUserInformationByToken(httpService.ExtractAccessToken(Request));
+                var usuario = authorityClientService.GetUserInformationByToken(httpService.ExtractAccessToken(Request));
                 Categoria categoria = new Categoria(input, usuario);
                 return Ok(categoria);
             }

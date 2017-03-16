@@ -1,10 +1,8 @@
 ﻿using Microsoft.Practices.Unity;
 using Sitio_Privado.Services;
+using Sitio_Privado.Services.ExternalUserProvider;
 using Sitio_Privado.Services.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Sitio_Privado.Configuration.Application
 {
@@ -35,7 +33,11 @@ namespace Sitio_Privado.Configuration.Application
             // Services
             container.RegisterType<IHttpService, HttpService>();
             container.RegisterType<IAuthorityClientService, AuthorityClientService>();
-        
+
+            // Services (single instance)
+            container.RegisterInstance(typeof(IExternalUserService), container.Resolve<LDAPService>(), new ContainerControlledLifetimeManager());
+
+
         }
     }
 }

@@ -49,5 +49,7 @@ namespace Sitio_Privado.Infraestructure.Constants
         /// Lenght of special identifiers used for embedded json objects
         /// </summary>
         public const int ObjectIdLength = 24;
+
+        public const string MainDbContext = "StorageConnection";
     }
 }

@@ -16,6 +16,12 @@ namespace Sitio_Privado.Services
     public class AuthorityClientService : IAuthorityClientService
     {
         private const string UserInfoPath = "connect/userinfo";
+        IExternalUserService userService;
+        public AuthorityClientService(IExternalUserService userService)
+        {
+            this.userService = userService;
+
+        }
         public virtual Person VerifyLoginAndGetPersonInformation(string accessToken, IEnumerable<string> roles)
         {
             Person persona = null;
@@ -67,6 +73,49 @@ namespace Sitio_Privado.Services
             };
 
             return userInformation;
+        }
+
+        public Person GetPersonInformationByToken(string accessToken)
+        {
+            Person persona = null;
+            AuthorityUserInfo authorityUserInfo = GetUserInformation(accessToken);
+
+            if (authorityUserInfo != null)
+            {
+                persona = new Person();
+                persona.Autenticado = true;
+                persona.Rut = authorityUserInfo.Rut;
+                persona.Nombres = authorityUserInfo.GivenName;
+                persona.Apellidos = authorityUserInfo.LastName;
+                persona.NombreCompleto = authorityUserInfo.GivenName + " " + authorityUserInfo.LastName + " " + authorityUserInfo.MothersLastName;
+                persona.Email = authorityUserInfo.Email;
+
+            }
+
+            return persona;
+        }
+        public Usuario GetUserInformationByToken(string accessToken)
+        {
+            Usuario usuario = null;
+            AuthorityUserInfo authorityUserInfo = GetUserInformation(accessToken);
+
+            if (authorityUserInfo != null)
+            {
+                var userInfo = userService.GetUserInfoByUsername(authorityUserInfo.Rut);
+
+                usuario = new Usuario()
+                {
+                    Rut = userInfo.Rut.Insert(userInfo.Rut.Length - 1, "-"),
+                    Banco = userInfo.Bank,
+                    CuentaCorriente = userInfo.CheckingAccount,
+                    DireccionComercial = userInfo.WorkAddress,
+                    DireccionParticular = userInfo.HomeAddress,
+                    Email = userInfo.Email,
+                    TelefonoComercial = userInfo.WorkPhone
+                };
+            }
+
+            return usuario;
         }
     }
 }

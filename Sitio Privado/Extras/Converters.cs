@@ -29,7 +29,7 @@ namespace Sitio_Privado.Extras
                 int index = rut.IndexOf('-');
                 if (index != -1) {
                     return rut.Substring(0, index);
-                }
+                }               
             }
             return "";
         }
