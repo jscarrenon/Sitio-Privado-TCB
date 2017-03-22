@@ -22,6 +22,10 @@ namespace Sitio_Privado.Services.Interfaces
         /// <param name="username">The user's username to look for</param>
         /// <returns>An instance of the UserInfo model. Null if the user is not found.</returns>
         UserInfo GetUserInfoByUsername(string username);
-      
+        /// <summary>
+        /// Gets the groups of the given user
+        /// </summary>
+        /// <param name="username">The username of the user to get the groups</param>
+        List<SiteInformation> GetAllSites();
     }
 }

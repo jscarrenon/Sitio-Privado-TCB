@@ -150,5 +150,50 @@ namespace Sitio_Privado.Services.ExternalUserProvider
                 { "countryCode","Country"}
             };
         }
+
+        public List<SiteInformation> GetAllSites()
+        {
+            List<SiteInformation> groups = null;
+            DirectorySearcher searcher = InitializeSearcher(groupsBaseDN);
+            DirectoryEntry userEntry = null;
+            var description = "";
+            try
+            {
+                searcher.Filter = String.Format("(&(cn=SP*)(objectclass=posixGroup))");
+                SearchResultCollection searchResults = searcher.FindAll();
+
+                if (searchResults != null)
+                {
+                    groups = new List<SiteInformation>();
+                    for (int i = 0; i < searchResults.Count; i++)
+                    {
+                        description = searchResults[i].Properties["cn"][0].ToString().ToLower();
+                        groups.Add(new SiteInformation()
+                        {
+                            AbbreviateName = searchResults[i].Properties["shortName"].Count > 0 ? searchResults[i].Properties["shortName"][0].ToString().ToUpper() : "",
+                            Description = searchResults[i].Properties["description"].Count > 0 ? searchResults[i].Properties["description"][0].ToString().ToLower() : "",
+                            SiteName = searchResults[i].Properties["name"].Count > 0 ? searchResults[i].Properties["name"][0].ToString().ToLower() : "",
+                            Url = searchResults[i].Properties["url"].Count > 0 ? searchResults[i].Properties["url"][0].ToString().ToLower() : "",
+                            SiteType = description.Contains("spr") ? "Sitio Privado" : "Sitio Público",
+                            Cn = description,
+                            Priority = i
+                        }); //  Priority debe venir de LDAP, pero de momento es dummy
+                    }
+                }
+
+                return groups;
+            }
+            catch (COMException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (searcher != null) searcher.Dispose();
+                if (userEntry != null) userEntry.Dispose();
+            }
+        }
+
+       
     }
 }

@@ -28,7 +28,7 @@
         usuario: app.domain.IUsuario;
         circularizacionPendiente: boolean;
         documentosPendientes: number;
-        susFirmaElecDoc: number;
+        susFirmaElecDoc: number;       
         fechaCircularizacion: Date;
         private qService: ng.IQService;
         private timer: ng.IPromise<any>;
@@ -63,7 +63,7 @@
             this.circularizacionPendiente = false;
             this.documentosPendientes = 0;
             this.checkUserAuthentication();
-            this.getSusFirmaElecDoc();
+            
             this.qService = $q;
         }
 
@@ -168,8 +168,7 @@
                     this.$localForage.setItem('usuario', JSON.stringify(result));
                     return result;
                 })
-                .then((response) =>
-                    this.saveToken(accessToken, refreshToken, expiresIn))
+                .then((response) => this.saveToken(accessToken, refreshToken, expiresIn))
                 .then(() => this.setTimerForRefreshToken());
             return response;
         }
@@ -181,6 +180,7 @@
             if (this.usuario == null || this.usuario === undefined)
                 this.$localForage.getItem('usuario').then((result) => { this.setUsuario(JSON.parse(result)) });
 
+            this.getSusFirmaElecDoc();
         }
 
         saveToken(accessToken: string, refreshToken?: string, expiresIn?: number) {
@@ -191,6 +191,7 @@
             if (expiresIn != undefined)
                 this.$localForage.setItem('expiresIn', expiresIn);
         }
+       
         refreshToken(): ng.IPromise<any> {
             return this.$localForage.getItem('refreshToken')
                 .then((token) => {

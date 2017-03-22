@@ -8,5 +8,7 @@ namespace Sitio_Privado.Services.Interfaces
         Person VerifyLoginAndGetPersonInformation(string accessToken, IEnumerable<string> roles);
         Person GetPersonInformationByToken(string accessToken);
         Usuario GetUserInformationByToken(string accessToken);
+        List<SiteInformation> GetUserSitesByToken(string accessToken);
+        List<SiteInformation> GetDummySites(string accessToken);
     }
 }

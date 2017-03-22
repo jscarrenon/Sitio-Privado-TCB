@@ -87,7 +87,8 @@
             this.apiUsersURI = 'api/users/';
             this.homeTanner = 'https://www.tanner.cl/';
             this.apiAutenticacion = '/api/authentication/';
-            this.apiOAuthURI = 'https://kunder-tanner-oauth.azurewebsites.net/';
+            this.apiOAuthURI = 'http://localhost:51928/';
+            //this.apiOAuthURI = 'https://kunder-tanner-oauth.azurewebsites.net/';
             this.userClientId = 'passwordgrant';
             this.userClientSecret = 'secret';
         }

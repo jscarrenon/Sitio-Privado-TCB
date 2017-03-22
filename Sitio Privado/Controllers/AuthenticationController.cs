@@ -6,6 +6,7 @@ using Sitio_Privado.Infraestructure.Constants;
 using Sitio_Privado.Filters;
 using Sitio_Privado.Models;
 using Sitio_Privado.Services.Interfaces;
+using System.Collections.Generic;
 
 namespace Sitio_Privado.Controllers
 {
@@ -35,20 +36,38 @@ namespace Sitio_Privado.Controllers
             Person user = authorityClientService.VerifyLoginAndGetPersonInformation(
                httpService.ExtractAccessToken(Request),
                UserHelper.ExtractRolesFromGroup(User as ClaimsPrincipal, ApplicationConstants.RequiredGroupName));
-
-           // var usuario = this.GetUsuarioActual(user);
-
            
             if (user != null)
             {
-                //return RedirectToAction("Index", "Home");
                 return Ok(user);
             }
             else
             {
                 return Redirect(ConfigurationManager.AppSettings["web:PostLogoutRedirectUrl"] + "?action=login");
-               // return ResponseMessage(httpService.GenerateErrorResponse(ApiErrorCode.GenericUnauthorized, ActionContext.Request));
             }
         }
+        /// <summary>
+        /// Verifies if the logged user has the minimum group requirements to use the application
+        /// and return the user sites allowed to view
+        /// </summary>
+        /// <returns></returns>
+        [AuthorizeWithGroups(CheckLocalExistence = false, RequiredScopes = "openid profile")]
+        [Route("usersites")]
+        [HttpPost]
+        public IHttpActionResult GetUserSites()
+        {
+            //List<SiteInformation> userSites = authorityClientService.GetUserSitesByToken(httpService.ExtractAccessToken(Request));
+            List<SiteInformation> userSites = authorityClientService.GetDummySites(httpService.ExtractAccessToken(Request));
+
+            if (userSites != null)
+            {
+                return Ok(userSites);
+            }
+            else
+            {
+                return Redirect(ConfigurationManager.AppSettings["web:PostLogoutRedirectUrl"] + "?action=login");
+            }
+        }
+
     }
 }

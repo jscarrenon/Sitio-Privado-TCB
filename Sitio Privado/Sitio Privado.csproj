@@ -417,6 +417,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\JSONConverter.cs" />
     <Compile Include="Helpers\PasswordGeneratorHelper.cs" />
     <Compile Include="Helpers\TannerDatabaseHelper.cs" />
     <Compile Include="Helpers\SignInHelper.cs" />
@@ -436,6 +437,7 @@
     <Compile Include="Helpers\GraphApiResponseInfo.cs" />
     <Compile Include="Models\ChangePasswordModel.cs" />
     <Compile Include="Models\CircularizacionModel.cs" />
+    <Compile Include="Models\SiteInformation.cs" />
     <Compile Include="Models\SuscripcionFirmaElectronica.cs" />
     <Compile Include="Models\ChangePasswordEmailModel.cs" />
     <Compile Include="Models\PasswordRecoveryEmailModel.cs" />
@@ -452,6 +454,7 @@
     <Compile Include="Models\CategoriaModel.cs" />
     <Compile Include="Models\TannerUserModel.cs" />
     <Compile Include="Models\PersonModel.cs" />
+    <Compile Include="Models\TokenValidationVM.cs" />
     <Compile Include="Models\UserInfo.cs" />
     <Compile Include="Models\UserSchemaEntry.cs" />
     <Compile Include="Models\UsuarioModel.cs" />
@@ -521,6 +524,10 @@
     </Content>
     <Content Include="app\modules\login\templates\index.html" />
     <Content Include="Resources\img\firma-Jorge-Oliva.png" />
+    <Content Include="Resources\img\LU-button.svg" />
+    <Content Include="Resources\img\LU-close.svg" />
+    <Content Include="Resources\img\LU-desktop-dropdown-arrow.svg" />
+    <Content Include="Resources\img\LU-go.svg" />
     <Content Include="Resources\pdf\Anexo 1 Opción firma electrónica.pdf" />
     <Content Include="app\modules\home\templates\cambiar-contrasena.html" />
     <Content Include="Resources\img\icon_error.svg" />
@@ -529,6 +536,9 @@
     <Content Include="Resources\img\mail_logo-tannerclientes.png" />
     <Content Include="Resources\img\mail_tanner.jpg" />
     <Content Include="Scripts\extras\login.js" />
+    <Content Include="Scripts\extras\LU.js" />
+    <Content Include="Scripts\extras\uglipop.min.js" />
+    <Content Include="Styles\LU.css" />
     <Content Include="Views\Account\SignInExternal.cshtml" />
     <Content Include="Views\Emails\Web.config" />
     <Content Include="Views\Emails\PasswordRecoveryEmailModel.cshtml" />
@@ -605,6 +615,7 @@
     <Content Include="Frontend_Tests\Controllers\misInversionesDocumentosControllerSpec.js" />
     <Content Include="Frontend_Tests\Controllers\modalInstanceControllerSpec.js" />
     <Content Include="Scripts\extras\index.js" />
+    <TypeScriptCompile Include="app\domain\SiteInformation.ts" />
     <TypeScriptCompile Include="app\modules\login\controllers\authCtrl.ts" />
     <TypeScriptCompile Include="app\common\controllers\changePasswordCtrl.ts" />
     <TypeScriptCompile Include="app\common\controllers\modalInstanceCtrl.ts" />

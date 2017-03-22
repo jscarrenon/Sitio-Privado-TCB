@@ -56,7 +56,6 @@
                         },
                         responseError: function (response) {
                             var authService: app.common.services.AuthService = $injector.get('authService');
-                            console.log(response);
                             if (response.status === 401) {
                                 authService.cerrarSesion();
                                 $window.location.href = "https://www.tanner.cl";

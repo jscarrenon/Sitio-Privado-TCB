@@ -62,51 +62,28 @@ namespace Sitio_Privado.Filters
 
                 List<string> userRoles = UserHelper.ExtractRolesFromGroup(user, RequiredGroup).ToList();
                 // If there are no required groups, true is assigned immediately, because Linq.Any returns false otherwise for that case
-                //bool hasRoles = AllowedRoles.Count() == 0 || AllowedRoles.Any(e => userRoles.Contains(e));
+                bool hasRoles = AllowedRoles.Count() == 0 || AllowedRoles.Any(e => userRoles.Contains(e));
 
                 List<string> userScopes = UserHelper.ExtractScopes(user).ToList();
                 bool hasScopes = GetRequiredScopesList().All(e => userScopes.Contains(e));
-
-
-                // Checks if user exists locally only is the CheckLocalExistence flag is enabled
-                bool existLocally = true;
-                if (CheckLocalExistence)
-                {
-                    //IRepository repository = UnityConfiguration.GetConfiguredContainer().Resolve<IRepository>();
-                    //var person = repository.GetSingle<Person>(p => p.AuthorityId == username);
-                    //if (person == null)
-                    //{
-                       //existLocally = false; 
-                    //}
-                    //else
-                    //{
-                    //    // if the user does exist, some person attributes are added to the user claims
-                    //UserHelper.AttachPersonAsUserClaims(person, user);
-                    //}
-                }
 
                 if (!hasGroup)
                 {
                     logger.Warn("User '{username}' does not meet groups requirements", username);
                 }
 
-                //if (!hasRoles)
-                //{
-                //    logger.Warn("User '{username}' does not meet roles requirements", username);
-                //}
+                if (!hasRoles)
+                {
+                    logger.Warn("User '{username}' does not meet roles requirements", username);
+                }
 
                 if (!hasScopes)
                 {
                     logger.Warn("User '{username}' does not meet scopes requirements", username);
                 }
 
-                if (!existLocally)
-                {
-                    logger.Warn("User '{username}' does not exist locally", username);
-                }
-
-                //return hasGroup && hasRoles && hasScopes && existLocally;
-                return hasGroup && hasScopes && existLocally;
+                //return hasGroup && hasRoles && hasScopes;
+                return hasGroup && hasScopes && hasRoles;
             }
             else
             {

@@ -36,15 +36,15 @@
             this.loading = true;
             this.$localForage.getItem('accessToken')
                 .then((responseToken) => {
-                    this.dataService.postWebService(this.constantService.apiUsersURI + 'changePassword', this.changePasswordInput, responseToken)
+                    this.dataService.postWebService(this.constantService.apiOAuthURI + this.constantService.apiUsersURI + 'changePassword', this.changePasswordInput, responseToken)
                         .then((result: any) => {
                             this.processSuccess = true;
                             //Clear fields
                             this.changePasswordInput.OldPassword = "";
-                            this.changePasswordInput.Password = "";
+                            this.changePasswordInput.NewPassword = "";
                             this.changePasswordInput.PasswordValidation = "";
                             //Update user data
-                            this.authService.getUsuarioActual();
+                            //this.authService.getUsuarioActual();
                         })
                         .catch((result: any) => {
                             this.processSuccess = false;
