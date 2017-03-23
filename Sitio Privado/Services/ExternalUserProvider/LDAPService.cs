@@ -190,7 +190,7 @@ namespace Sitio_Privado.Services.ExternalUserProvider
                             Url = searchResults[i].Properties["url"].Count > 0 ? searchResults[i].Properties["url"][0].ToString().ToLower() : "",
                             SiteType = description.Contains("spr") ? "Sitio Privado" : "Sitio Público",
                             Cn = description,
-#warning Change priority to read the value frmo LDAP when the field name is defined.
+#warning Change priority to read the value from LDAP when the field name is defined.
                             Priority = i
                         });
                     }
