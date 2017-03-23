@@ -47,7 +47,7 @@ namespace Sitio_Privado.Controllers
             }
             else
             {
-                logger.Warn("User not found in the user service => Username: " + username + "; Email: ");
+                logger.Warn("User not found in the user service => Username: " + username);
                 return Redirect(ConfigurationManager.AppSettings["web:PostLogoutRedirectUrl"] + "?action=login");
             }
         }
@@ -61,8 +61,7 @@ namespace Sitio_Privado.Controllers
         [HttpPost]
         public IHttpActionResult GetUserSites()
         {
-            //List<SiteInformation> userSites = authorityClientService.GetUserSitesByToken(UserHelper.ExtractGroups(User as ClaimsPrincipal));
-            List<SiteInformation> userSites = authorityClientService.GetDummySites(UserHelper.ExtractGroups(User as ClaimsPrincipal));
+            List<SiteInformation> userSites = authorityClientService.GetUserSites(UserHelper.ExtractGroups(User as ClaimsPrincipal));
 
             if (userSites != null)
             {
