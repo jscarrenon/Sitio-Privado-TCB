@@ -6,7 +6,7 @@
         add(resource: string, entity: app.domain.IEntity): ng.IPromise<app.domain.EntityBase>;
         update(resource: string, entity: app.domain.IEntity): ng.IPromise<app.domain.EntityBase>;
         remove(resource: string): ng.IPromise<any>;
-        postWebService(resource: string, input: app.domain.InputBase, accessTpken:string): ng.IPromise<app.domain.EntityBase>; //Recibe input para llamado webservice
+        postWebService(resource: string, input: app.domain.InputBase, accessTpken: string): ng.IPromise<app.domain.EntityBase>; //Recibe input para llamado webservice
         postVerifyLogin(resource: string, input: app.domain.InputBase, accessToken?: string): ng.IPromise<app.domain.EntityBase>; //Recibe input para llamado webservice
     }
 
@@ -15,8 +15,8 @@
         private httpService: ng.IHttpService;
         private qService: ng.IQService;
 
-        static $inject = ['$http', '$q'];
-        constructor($http: ng.IHttpService, $q: ng.IQService) {
+        static $inject = ['$http', '$q', '$localForage'];
+        constructor($http: ng.IHttpService, $q: ng.IQService, private $localForage) {
             this.httpService = $http;
             this.qService = $q;
         }
@@ -25,14 +25,18 @@
             var self = this;
 
             var deferred = self.qService.defer();
+            return this.$localForage.getItem('accessToken')
+                .then((responseToken) => {
+                    self.httpService.get(resource, { headers: { Authorization: 'Bearer ' + responseToken } })
+                        .then(function (result: any) {
+                            deferred.resolve(result.data);
+                        }, function (error) {
+                            deferred.reject(error);
+                        });
 
-            self.httpService.get(resource).then(function (result: any) {
-                deferred.resolve(result.data);
-            }, function (error) {
-                deferred.reject(error);
-            });
+                    return deferred.promise;
+                });
 
-            return deferred.promise;
         }
 
         getSingle(resource: string): ng.IPromise<app.domain.EntityBase> {
@@ -40,14 +44,16 @@
             var self = this;
 
             var deferred = self.qService.defer();
+            return this.$localForage.getItem('accessToken')
+                .then((responseToken) => {
+                    self.httpService.get(resource).then(function (result: any) {
+                        deferred.resolve(result.data);
+                    }, function (error) {
+                        deferred.reject(error);
+                    });
 
-            self.httpService.get(resource).then(function (result: any) {
-                deferred.resolve(result.data);
-            }, function (error) {
-                deferred.reject(error);
-            });
-
-            return deferred.promise;
+                    return deferred.promise;
+                });
         }
 
         add(resource: string, entity: app.domain.IEntity): ng.IPromise<app.domain.EntityBase> {
@@ -93,7 +99,7 @@
             return deferred.promise;
         }
 
-        postWebService(resource: string, input: app.domain.InputBase,  accessToken:string): ng.IPromise<app.domain.EntityBase> {
+        postWebService(resource: string, input: app.domain.InputBase, accessToken: string): ng.IPromise<app.domain.EntityBase> {
             var self = this;
             var deferred = self.qService.defer();
 

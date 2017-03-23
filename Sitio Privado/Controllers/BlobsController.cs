@@ -5,7 +5,6 @@ using Sitio_Privado.Filters;
 
 namespace Sitio_Privado.Controllers
 {
-    [AuthorizeWithGroups]
     public class BlobsController : ApiController
     {
         #region Constants
