@@ -32,8 +32,6 @@ namespace Sitio_Privado.Services
 
             foreach (var site in allSites)
             {
-                var groupName = site.Cn.Split('_')[1].ToLower();
-
                 if (userGroups != null)
                 {
                     foreach (var group in userGroups)
