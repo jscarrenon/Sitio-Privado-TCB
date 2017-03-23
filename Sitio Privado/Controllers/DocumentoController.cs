@@ -11,7 +11,7 @@ using System.Security.Claims;
 
 namespace Sitio_Privado.Controllers
 {
-    [AuthorizeWithGroups(RequiredScopes = "openid profile")]
+    [AuthorizeWithGroups]
     public class DocumentoController : ApiController
     {
         IHttpService httpService = null;

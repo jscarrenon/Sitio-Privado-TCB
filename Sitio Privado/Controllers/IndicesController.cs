@@ -4,9 +4,11 @@ using Sitio_Privado.Models;
 using Sitio_Privado.Services.Interfaces;
 using Sitio_Privado.Helpers;
 using System.Security.Claims;
+using Sitio_Privado.Filters;
 
 namespace Sitio_Privado.Controllers
 {
+    [AuthorizeWithGroups]
     public class IndicesController : ApiController
     {
         IHttpService httpService = null;

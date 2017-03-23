@@ -11,7 +11,7 @@ using System.Security.Claims;
 
 namespace Sitio_Privado.Controllers
 {
-   
+    [AuthorizeWithGroups]
     public class FondoMutuoController : ApiController
     {
         IHttpService httpService = null;
@@ -23,7 +23,6 @@ namespace Sitio_Privado.Controllers
             this.userService = userService;
         }
 
-        [AuthorizeWithGroups(RequiredScopes = "openid profile")]
         [HttpPost]
         public IHttpActionResult GetList([FromBody]FondoMutuoInput input)
         {

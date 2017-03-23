@@ -10,6 +10,7 @@ using System.Security.Claims;
 
 namespace Sitio_Privado.Controllers
 {
+    [AuthorizeWithGroups]
     public class CategoriaController : ApiController
     {
         IHttpService httpService = null;
@@ -56,7 +57,6 @@ namespace Sitio_Privado.Controllers
                 return InternalServerError(e);
             }
         }
-        [AuthorizeWithGroups(RequiredScopes = "openid profile")]
         [HttpPost]
         public IHttpActionResult GetSingleCliente([FromBody]CategoriaClienteInput input)
         {

@@ -9,9 +9,11 @@ using Sitio_Privado.Extras;
 using Sitio_Privado.Services.Interfaces;
 using Sitio_Privado.Helpers;
 using System.Security.Claims;
+using Sitio_Privado.Filters;
 
 namespace Sitio_Privado.Controllers
 {
+    [AuthorizeWithGroups]
     public class CartolaController : ApiController
     {
         private string authUsername = ConfigurationManager.AppSettings["ws:username"];

@@ -6,9 +6,11 @@ using Sitio_Privado.CategoriaInversionista;
 using Sitio_Privado.Services.Interfaces;
 using Sitio_Privado.Helpers;
 using System.Security.Claims;
+using Sitio_Privado.Filters;
 
 namespace Sitio_Privado.Controllers
 {
+    [AuthorizeWithGroups]
     public class ProductoController : ApiController
     {
         IHttpService httpService = null;

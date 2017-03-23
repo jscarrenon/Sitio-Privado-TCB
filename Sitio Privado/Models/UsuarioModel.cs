@@ -49,7 +49,7 @@ namespace Sitio_Privado.Models
 
         public Usuario(ClaimsPrincipal principal) : base (principal) { }
 
-        public bool Autenticado { get { return this.Identity.IsAuthenticated; } }
+        public bool Autenticado { get { return this.Identity != null ? this.Identity.IsAuthenticated : false; } }
 
         public string Nombres { get { return this.Autenticado ? this.FindFirst(CustomClaimTypes.Nombres) != null ? this.FindFirst(CustomClaimTypes.Nombres).Value : "" : ""; } }
 

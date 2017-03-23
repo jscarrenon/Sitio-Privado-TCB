@@ -8,18 +8,18 @@ using System.Security.Claims;
 
 namespace Sitio_Privado.Controllers
 {
+    [AuthorizeWithGroups]
     public class AgenteController : ApiController
     {
         IHttpService httpService = null;
         IExternalUserService userService = null;
 
         public AgenteController(IHttpService httpService, IExternalUserService userService) 
-            
         {
             this.httpService = httpService;
             this.userService = userService;
         }
-        [AuthorizeWithGroups(RequiredScopes = "openid profile")]
+
         [HttpPost]
         public IHttpActionResult GetSingle([FromBody]AgenteInput input)
         {

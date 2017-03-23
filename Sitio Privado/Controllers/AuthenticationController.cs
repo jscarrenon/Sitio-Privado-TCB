@@ -33,7 +33,7 @@ namespace Sitio_Privado.Controllers
         /// and do some initalization if the user does not exist locally
         /// </summary>
         /// <returns></returns>
-        [AuthorizeWithGroups(RequiredScopes = "openid profile")]
+        [AuthorizeWithGroups]
         [Route("verifylogin")]
         [HttpPost]
         public IHttpActionResult VerifyLogin()
@@ -56,7 +56,7 @@ namespace Sitio_Privado.Controllers
         /// and return the user sites allowed to view
         /// </summary>
         /// <returns></returns>
-        [AuthorizeWithGroups(RequiredScopes = "openid profile")]
+        [AuthorizeWithGroups]
         [Route("usersites")]
         [HttpPost]
         public IHttpActionResult GetUserSites()
@@ -74,7 +74,7 @@ namespace Sitio_Privado.Controllers
             }
         }
 
-        [AuthorizeWithGroups(RequiredScopes = "openid profile")]
+        [AuthorizeWithGroups]
         [Route("signout")]
         [HttpPost]
         public IHttpActionResult SignOut()

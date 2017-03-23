@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Security.Claims;
 using System.Web.Http;
+using Sitio_Privado.Filters;
 using Sitio_Privado.Helpers;
 using Sitio_Privado.Models;
 using Sitio_Privado.Services.Interfaces;
 
 namespace Sitio_Privado.Controllers
 {
+    [AuthorizeWithGroups]
     public class BalanceController : ApiController
     {
         IHttpService httpService = null;

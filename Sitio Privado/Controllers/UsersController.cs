@@ -18,6 +18,7 @@ using System.Web.Http;
 
 namespace Sitio_Privado.Controllers
 {
+    [AuthorizeWithGroups]
     public class UsersController : ApiController
     {
         private GraphApiClientHelper graphApiClient = new GraphApiClientHelper();
