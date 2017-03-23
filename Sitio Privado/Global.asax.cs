@@ -28,7 +28,6 @@ namespace Sitio_Privado
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-           // SyncUsersDataJobScheduler.Start();
         }
 
         protected void Application_EndRequest(object sender, EventArgs e)

@@ -44,16 +44,16 @@ namespace Sitio_Privado.Models
     }
 
     public class Usuario : ClaimsPrincipal, ICustomPrincipal
-    {//Obtener el aud desde Identity, obtener el usuario y guardar los extension attributes
+    {
         public Usuario() { }
 
         public Usuario(ClaimsPrincipal principal) : base (principal) { }
 
-        public bool Autenticado { get { return this.Identity.IsAuthenticated; } }
+        public bool Autenticado { get { return this.Identity != null ? this.Identity.IsAuthenticated : false; } }
 
-        public string Nombres { get { return this.Autenticado ? this.FindFirst(CustomClaimTypes.Nombres) != null ? this.FindFirst(CustomClaimTypes.Nombres).Value : "" : ""; } }
+        public string Nombres { get; set; }
 
-        public string Apellidos { get { return this.Autenticado ? this.FindFirst(CustomClaimTypes.Apellidos) != null ? this.FindFirst(CustomClaimTypes.Apellidos).Value : "" : ""; } }
+        public string Apellidos { get; set; }
 
         public string Rut { get; set; }
 

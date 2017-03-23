@@ -1,29 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using Sitio_Privado.Models;
-using System.Threading.Tasks;
 using Sitio_Privado.CartolaResumida;
 using System.Configuration;
 using Sitio_Privado.Extras;
 using Sitio_Privado.Services.Interfaces;
+using Sitio_Privado.Helpers;
+using System.Security.Claims;
+using Sitio_Privado.Filters;
 
 namespace Sitio_Privado.Controllers
 {
-    public class CartolaController : ApiBaseController
+    [AuthorizeWithGroups]
+    public class CartolaController : ApiController
     {
         private string authUsername = ConfigurationManager.AppSettings["ws:username"];
         private string authPassword = ConfigurationManager.AppSettings["ws:password"];
         IHttpService httpService = null;
-        IAuthorityClientService authorityClientService = null;
-        public CartolaController(IHttpService httpService, IAuthorityClientService authorityClientService)
+        IExternalUserService userService = null;
+
+        public CartolaController(IHttpService httpService, IExternalUserService userService)
            
         {
             this.httpService = httpService;
-            this.authorityClientService = authorityClientService;
+            this.userService = userService;
         }
 
         [HttpPost]
@@ -31,8 +33,7 @@ namespace Sitio_Privado.Controllers
         {
             try
             {
-                //Person user = authorityClientService.GetUserInformationByToken(httpService.ExtractAccessToken(Request));
-                var usuario = authorityClientService.GetUserInformationByToken(httpService.ExtractAccessToken(Request));
+                var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
                 Cartola cartola = new Cartola(input, usuario);
                 return Ok(cartola);
             }
@@ -47,7 +48,7 @@ namespace Sitio_Privado.Controllers
         {
             try
             {
-                var usuario = authorityClientService.GetUserInformationByToken(httpService.ExtractAccessToken(Request));
+                var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
 
                 CartolaConceptosTituloResultado resultado = new CartolaConceptosTituloResultado();
 

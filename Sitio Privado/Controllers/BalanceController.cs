@@ -1,18 +1,23 @@
 ﻿using System;
+using System.Security.Claims;
 using System.Web.Http;
+using Sitio_Privado.Filters;
+using Sitio_Privado.Helpers;
 using Sitio_Privado.Models;
 using Sitio_Privado.Services.Interfaces;
 
 namespace Sitio_Privado.Controllers
 {
-    public class BalanceController : ApiBaseController
+    [AuthorizeWithGroups]
+    public class BalanceController : ApiController
     {
         IHttpService httpService = null;
-        IAuthorityClientService authorityClientService = null;
-        public BalanceController(IHttpService httpService, IAuthorityClientService authorityClientService) 
+        IExternalUserService userService = null;
+
+        public BalanceController(IHttpService httpService, IExternalUserService userService) 
         {
             this.httpService = httpService;
-            this.authorityClientService = authorityClientService;
+            this.userService = userService;
         }
 
         [HttpPost]
@@ -20,8 +25,7 @@ namespace Sitio_Privado.Controllers
         {
             try
             {
-                //Person user = authorityClientService.GetPersonInformationByToken(httpService.ExtractAccessToken(Request));
-                var usuario = authorityClientService.GetUserInformationByToken(httpService.ExtractAccessToken(Request));
+                var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
                 Balance balance = new Balance(input, usuario);
                 return Ok(balance);
             }

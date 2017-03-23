@@ -5,7 +5,6 @@ using Sitio_Privado.Filters;
 using Sitio_Privado.Helpers;
 using Sitio_Privado.Models;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
 using System.Linq;
@@ -16,10 +15,10 @@ using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.Results;
 
 namespace Sitio_Privado.Controllers
 {
+    [AuthorizeWithGroups]
     public class UsersController : ApiController
     {
         private GraphApiClientHelper graphApiClient = new GraphApiClientHelper();
