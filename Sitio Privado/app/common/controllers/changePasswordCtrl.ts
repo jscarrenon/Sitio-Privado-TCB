@@ -44,7 +44,6 @@
                             this.changePasswordInput.NewPassword = "";
                             this.changePasswordInput.PasswordValidation = "";
                             //Update user data
-                            //this.authService.getUsuarioActual();
                         })
                         .catch((result: any) => {
                             this.processSuccess = false;

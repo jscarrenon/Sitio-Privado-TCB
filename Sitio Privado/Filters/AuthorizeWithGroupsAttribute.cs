@@ -46,7 +46,7 @@ namespace Sitio_Privado.Filters
         {
             httpService = new HttpService();
             //RequiredGroup = ApplicationConstants.RequiredGroupName;
-            //AllowedRoles = allowedRoles;
+            AllowedRoles = allowedRoles;
         }
 
         protected override bool IsAuthorized(HttpActionContext actionContext)

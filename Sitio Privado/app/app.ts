@@ -10,10 +10,6 @@
                     templateUrl: buildFolderURI + "html/modules/home/templates/index.html",
                     controller: "HomeCtrl as ctrl"
                 })
-                .when("/login/:accessToken?", {
-                    templateUrl: buildFolderURI + "html/modules/login/templates/index.html",
-                    controller: "AuthenticationCtrl as ctrl"
-                })
                 .when("/mis-inversiones/:seccion?", {
                     templateUrl: buildFolderURI + "html/modules/mis-inversiones/templates/index.html",
                     controller: "MisInversionesCtrl as ctrl"
@@ -38,7 +34,7 @@
                     templateUrl: buildFolderURI + "html/modules/productos-servicios/templates/index.html",
                     controller: "ProductosServiciosCtrl as ctrl"
                 })
-                .otherwise({ redirectTo: '/login:accessToken?' });
+                .otherwise({ redirectTo: '/' });
 
             AnalyticsProvider.setAccount('UA-73610006-2')
                 .trackUrlParams(true)
@@ -71,6 +67,46 @@
     }
     Config.$inject = ['$routeProvider', 'AnalyticsProvider', '$httpProvider'];
 
-    var mainApp = angular.module('tannerPrivadoApp', ['LocalForageModule','ngRoute', 'ui.bootstrap', 'platanus.rut', 'angular-google-analytics']);
+    var mainApp = angular.module('tannerPrivadoApp', ['LocalForageModule', 'ngRoute', 'ui.bootstrap', 'platanus.rut', 'angular-google-analytics']);
     mainApp.config(Config);
+
+    class Run {
+        constructor($rootScope: ng.IRootScopeService,
+            $location: ng.ILocationService,
+            authenticationService: app.common.services.AuthService,
+            constantService: app.common.services.ConstantService,
+            $window: ng.IWindowService,
+            $localForage) {
+            $rootScope.$on("$routeChangeStart", function (event, next, current) {
+                if (!current && !authenticationService.autenticado) {
+                    // two options
+                    event.preventDefault();
+
+                    if ($location.path() === '/login') {
+                        // we need to validate token
+                        var token = $location.search().accessToken;
+                        var refreshToken = $location.search().refreshToken;
+                        var expiresIn = $location.search().expiresIn;
+                        authenticationService.validateToken(token, refreshToken, expiresIn)
+                            .then(() => (authenticationService.autenticado = true, $window.location.assign("/")));
+                    } else {
+                        // we need to make sure out authorization header is valid
+                        $localForage.getItem('accessToken')
+                            .then((responseToken) => {
+                                if (responseToken == null) {
+                                    $window.location.href = constantService.homeTanner;
+
+                                } else {
+                                    authenticationService.autenticado = true;
+                                    $rootScope.$evalAsync(() => $location.path($location.path() + '?'));
+                                }
+                            });
+                    }
+                }
+
+            });
+        }
+    }
+    Run.$inject = ['$rootScope', '$location', 'authService', 'constantService', '$window', '$localForage'];
+    mainApp.run(Run);
 }

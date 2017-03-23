@@ -88,9 +88,6 @@
         setUsuario(usuario: app.domain.IUsuario): void {
             if (usuario != null || usuario != undefined) {
                 this.usuario = usuario;
-                this.autenticado = true;
-                this.$localForage.setItem('autenticado', true);
-
             }
 
         }
@@ -139,10 +136,12 @@
         getSusFirmaElecDoc(): void {
             this.$localForage.getItem('accessToken')
                 .then((responseToken) => {
-                    this.dataService.postWebService(this.constantService.apiDocumentoURI + 'GetConsultaRespuestaSusFirmaElecDoc', '', responseToken)
-                        .then((result: number) => {
-                            this.susFirmaElecDoc = result;
-                        });
+                    if (responseToken != null) {
+                        this.dataService.postWebService(this.constantService.apiDocumentoURI + 'GetConsultaRespuestaSusFirmaElecDoc', '', responseToken)
+                            .then((result: number) => {
+                                this.susFirmaElecDoc = result;
+                            });
+                    }
                 });
         }
 
@@ -173,14 +172,16 @@
             return response;
         }
         checkUserAuthentication() {
-
             if (this.$location.path().indexOf('login') < 1)
                 this.verifyToken();
 
-            if (this.usuario == null || this.usuario === undefined)
-                this.$localForage.getItem('usuario').then((result) => { this.setUsuario(JSON.parse(result)) });
-
-            this.getSusFirmaElecDoc();
+            if (this.usuario == null || this.usuario === undefined) {
+                this.$localForage.getItem('usuario')
+                    .then((result) => {
+                        this.setUsuario(JSON.parse(result));
+                        this.getSusFirmaElecDoc();
+                    });
+            }
         }
 
         saveToken(accessToken: string, refreshToken?: string, expiresIn?: number) {
@@ -237,6 +238,7 @@
                                         .then((response) => {
                                             if (this.usuario == null || this.usuario === undefined)
                                                 this.$window.location.href = this.constantService.homeTanner;
+                                            this.getSusFirmaElecDoc();
                                         });
                                 });
                         });

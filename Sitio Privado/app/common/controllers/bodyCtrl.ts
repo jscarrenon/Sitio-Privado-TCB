@@ -108,17 +108,19 @@
                         .then((refreshTokenResult) => {
                             this.$localForage.getItem('expiresIn')
                                 .then((expiresInResult) => {
-                                    this.dataService.postWebService(this.constantService.apiAutenticacion + 'usersites', null, responseToken)
-                                        .then((result: Array<app.domain.SiteInformation>) => {
-                                            result.forEach((site) => {
-                                                site.Url = site.Url + '?accessToken=' + responseToken + '&refreshToken=' + refreshTokenResult + '&expiresIn=' + expiresInResult;
-                                            });
-                                            this.sites = result;
-                                            if (result.length > 1)
-                                                this.multiples = true;
+                                    if (responseToken != null) {
+                                        this.dataService.postWebService(this.constantService.apiAutenticacion + 'usersites', null, responseToken)
+                                            .then((result: Array<app.domain.SiteInformation>) => {
+                                                result.forEach((site) => {
+                                                    site.Url = site.Url + '?accessToken=' + responseToken + '&refreshToken=' + refreshTokenResult + '&expiresIn=' + expiresInResult;
+                                                });
+                                                this.sites = result;
+                                                if (result.length > 1)
+                                                    this.multiples = true;
 
-                                            return result;
-                                        });
+                                                return result;
+                                            });
+                                    }
                                 });
                         });
                 });

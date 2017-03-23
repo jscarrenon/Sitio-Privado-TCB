@@ -46,18 +46,18 @@
             this.refreshToken = $location.search().refreshToken;
             this.expiresIn = $location.search().expiresIn;
             
-            if (this.token != undefined && this.refreshToken != undefined &&
-                this.expiresIn != undefined) {
-                authenticationService.validateToken(this.token, this.refreshToken, this.expiresIn)
-                    .then(function (result) {
-                        this.usuario = result;
-                        if (this.usuario == null || this.usuario == undefined)
-                            $window.location.href = constantService.homeTanner;
+            //if (this.token != undefined && this.refreshToken != undefined &&
+            //    this.expiresIn != undefined) {
+            //    authenticationService.validateToken(this.token, this.refreshToken, this.expiresIn)
+            //        .then(function (result) {
+            //            this.usuario = result;
+            //            if (this.usuario == null || this.usuario == undefined)
+            //                $window.location.href = constantService.homeTanner;
 
-                     $window.location.assign("/");
-                    });
-            }
-            $window.location.href = constantService.homeTanner;
+            //         $window.location.assign("/");
+            //        });
+            //}
+            //$window.location.href = constantService.homeTanner;
         }
 
         clearMessages(): void {

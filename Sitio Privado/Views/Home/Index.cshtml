@@ -43,7 +43,7 @@
 
 
 </head>
-<body ng-controller="BodyCtrl as bodyCtrl">
+<body ng-controller="BodyCtrl as bodyCtrl" ng-cloak>
 
     <div id="prebar">
         <div class="user"><a href="#/mis-datos" class="clink" ng-click="bodyCtrl.seleccionarSeccion(-1)">{{ bodyCtrl.authService.usuario.NombreCompleto }} | Mis Datos</a></div>
