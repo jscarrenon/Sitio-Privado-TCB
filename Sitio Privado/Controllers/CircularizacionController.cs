@@ -5,18 +5,21 @@ using Sitio_Privado.CircularizacionCustodia;
 using Sitio_Privado.Extras;
 using System.Globalization;
 using Sitio_Privado.Services.Interfaces;
+using Sitio_Privado.Helpers;
+using System.Security.Claims;
 
 namespace Sitio_Privado.Controllers
 {
-    public class CircularizacionController : ApiBaseController
+    public class CircularizacionController : ApiController
     {
         IHttpService httpService = null;
-        IAuthorityClientService authorityClientService = null;
-        public CircularizacionController(IHttpService httpService, IAuthorityClientService authorityClientService) 
+        IExternalUserService userService = null;
+
+        public CircularizacionController(IHttpService httpService, IExternalUserService userService) 
             
         {
             this.httpService = httpService;
-            this.authorityClientService = authorityClientService;
+            this.userService = userService;
         }
 
         [HttpPost]
@@ -24,8 +27,7 @@ namespace Sitio_Privado.Controllers
         {
             try
             {
-                //Person user = authorityClientService.GetPersonInformationByToken(httpService.ExtractAccessToken(Request));
-                var usuario = authorityClientService.GetUserInformationByUsername(httpService.ExtractAccessToken(Request));
+                var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
                 CircularizacionProcesoResultado proceso = new CircularizacionProcesoResultado(input, usuario);
                 return Ok(proceso);
             }
@@ -40,8 +42,7 @@ namespace Sitio_Privado.Controllers
         {
             try
             {
-                Person user = authorityClientService.GetPersonInformationByToken(httpService.ExtractAccessToken(Request));
-                var usuario = GetUsuarioActual(user);
+                var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
                 CircularizacionArchivo archivo = new CircularizacionArchivo(input, usuario);
                 return Ok(archivo);
             }
@@ -56,9 +57,7 @@ namespace Sitio_Privado.Controllers
         {
             try
             {
-               // Person user = authorityClientService.GetPersonInformationByToken(httpService.ExtractAccessToken(Request));
-               // var usuario =  GetUsuarioActual(user);
-                var usuario = authorityClientService.GetUserInformationByUsername(httpService.ExtractAccessToken(Request));
+                var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
                 CircularizacionProcesoResultado proceso = new CircularizacionProcesoResultado(input, usuario);
                 return Ok(proceso);
             }
@@ -73,7 +72,7 @@ namespace Sitio_Privado.Controllers
         {
             try
             {
-                var usuario = authorityClientService.GetUserInformationByUsername(httpService.ExtractAccessToken(Request));
+                var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
                 CircularizacionProcesoResultado proceso = new CircularizacionProcesoResultado(input, usuario);
                 return Ok(proceso);
             }
@@ -88,7 +87,7 @@ namespace Sitio_Privado.Controllers
         {
             try
             {
-                var usuario = authorityClientService.GetUserInformationByUsername(httpService.ExtractAccessToken(Request));
+                var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
                 tann_circularizacion webService = new tann_circularizacion();
                 string fecha = webService.cli_fecha_circularizacion(Converters.getRutParteEnteraInt(usuario.Rut));
                 DateTime? resultado = null;

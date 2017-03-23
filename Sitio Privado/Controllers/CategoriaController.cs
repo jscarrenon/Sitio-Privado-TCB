@@ -10,7 +10,7 @@ using System.Security.Claims;
 
 namespace Sitio_Privado.Controllers
 {
-    public class CategoriaController : ApiBaseController
+    public class CategoriaController : ApiController
     {
         IHttpService httpService = null;
         IExternalUserService userService = null;

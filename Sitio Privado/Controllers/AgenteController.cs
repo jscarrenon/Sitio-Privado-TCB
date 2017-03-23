@@ -8,7 +8,7 @@ using System.Security.Claims;
 
 namespace Sitio_Privado.Controllers
 {
-    public class AgenteController : ApiBaseController
+    public class AgenteController : ApiController
     {
         IHttpService httpService = null;
         IExternalUserService userService = null;

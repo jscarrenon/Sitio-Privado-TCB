@@ -12,7 +12,7 @@ using System.Security.Claims;
 namespace Sitio_Privado.Controllers
 {
     [AuthorizeWithGroups(RequiredScopes = "openid profile")]
-    public class DocumentoController : ApiBaseController
+    public class DocumentoController : ApiController
     {
         IHttpService httpService = null;
         IExternalUserService userService = null;

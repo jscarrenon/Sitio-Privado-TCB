@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Web.Http;
 using Sitio_Privado.Models;
 using Sitio_Privado.ConsultaSaldosFondosMutuos;
@@ -14,7 +12,7 @@ using System.Security.Claims;
 namespace Sitio_Privado.Controllers
 {
    
-    public class FondoMutuoController : ApiBaseController
+    public class FondoMutuoController : ApiController
     {
         IHttpService httpService = null;
         IExternalUserService userService = null;

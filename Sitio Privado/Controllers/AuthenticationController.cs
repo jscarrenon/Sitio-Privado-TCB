@@ -7,13 +7,13 @@ using Sitio_Privado.Models;
 using Sitio_Privado.Services.Interfaces;
 using System.Collections.Generic;
 using NLog;
-using Sitio_Privado.Extras;
 using System.Web;
+using System.Net.Http;
 
 namespace Sitio_Privado.Controllers
 {
     [RoutePrefix("api/authentication")]
-    public class AuthenticationController : ApiBaseController
+    public class AuthenticationController : ApiController
     {
         IHttpService httpService = null;
         IAuthorityClientService authorityClientService = null;
@@ -61,8 +61,8 @@ namespace Sitio_Privado.Controllers
         [HttpPost]
         public IHttpActionResult GetUserSites()
         {
-            //List<SiteInformation> userSites = authorityClientService.GetUserSitesByToken(httpService.ExtractAccessToken(Request));
-            List<SiteInformation> userSites = authorityClientService.GetDummySites(httpService.ExtractAccessToken(Request));
+            //List<SiteInformation> userSites = authorityClientService.GetUserSitesByToken(UserHelper.ExtractGroups(User as ClaimsPrincipal));
+            List<SiteInformation> userSites = authorityClientService.GetDummySites(UserHelper.ExtractGroups(User as ClaimsPrincipal));
 
             if (userSites != null)
             {
@@ -79,12 +79,9 @@ namespace Sitio_Privado.Controllers
         [HttpPost]
         public IHttpActionResult SignOut()
         {
-            Logger logger = LogManager.GetLogger("SessionLog");
-            var usuario = GetUsuario();
-            logger.Info("User signed out => Rut: " + ExtraHelpers.FormatRutToText(usuario.Rut) + "; Email: " +
-                usuario.Email + "; IP: " + Request.ServerVariables["REMOTE_ADDR"] + ";");
-
-            HttpContext.GetOwinContext().Authentication.SignOut();
+            var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
+            logger.Info("User signed out => Rut: " + usuario.Rut + "; Email: " + usuario.Email + "; IP: " + Request.GetOwinContext().Request.RemoteIpAddress + ";");
+            Request.GetOwinContext().Authentication.SignOut();
 
             return Redirect(ConfigurationManager.AppSettings["web:PostLogoutRedirectUrl"]);
         }
