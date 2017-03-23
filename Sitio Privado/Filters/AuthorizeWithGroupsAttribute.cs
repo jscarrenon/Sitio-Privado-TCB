@@ -74,7 +74,6 @@ namespace Sitio_Privado.Filters
                     logger.Warn("User '{username}' does not meet scopes requirements", username);
                 }
 
-                //return hasGroup && hasRoles && hasScopes;
                 return hasGroup && hasScopes && hasRoles;
             }
             else

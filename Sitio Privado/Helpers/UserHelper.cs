@@ -98,7 +98,6 @@ namespace Sitio_Privado.Helpers
         {
             var identity = user.Identity as ClaimsIdentity;
 
-            // TODO: revisar Id, que es propiedad "sub" 
             identity.AddClaim(new Claim(ApplicationConstants.PersonIdClaimName, person.Email.ToString()));
             identity.AddClaim(new Claim(ApplicationConstants.PersonTypeClaimName, person.GetType().ToString()));
         }

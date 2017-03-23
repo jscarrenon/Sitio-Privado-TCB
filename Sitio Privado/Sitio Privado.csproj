@@ -809,7 +809,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Configuration\Environment\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
