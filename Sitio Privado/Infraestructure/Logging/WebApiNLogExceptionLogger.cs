@@ -18,7 +18,7 @@ namespace Sitio_Privado.Infrastructure.Logging
             TelemetryClient telemetry = new TelemetryClient();
             telemetry.TrackException(context.Exception);
 
-            logger.Error(context.Exception, string.Format("Unhandled endpoint exception calling: {0} {1}", context.Request.Method, context.Request.RequestUri));
+            logger.Error(context.Exception, string.Format("Unhandled endpoint exception calling: {0} {1}. Message: {2}", context.Request.Method, context.Request.RequestUri, context.Exception.Message));
 
             return Task.FromResult(0);
         }
