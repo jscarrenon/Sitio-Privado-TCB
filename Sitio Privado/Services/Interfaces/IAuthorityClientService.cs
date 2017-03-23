@@ -5,10 +5,7 @@ namespace Sitio_Privado.Services.Interfaces
 {
     public interface IAuthorityClientService
     {
-        Person VerifyLoginAndGetPersonInformation(string accessToken, IEnumerable<string> roles);
-        Person GetPersonInformationByToken(string accessToken);
-        Usuario GetUserInformationByToken(string accessToken);
-        List<SiteInformation> GetUserSitesByToken(string accessToken);
+        List<SiteInformation> GetUserSitesByToken(string accessToken, bool dummy);
         List<SiteInformation> GetDummySites(string accessToken);
     }
 }

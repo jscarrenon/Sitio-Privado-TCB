@@ -1,10 +1,7 @@
-﻿using Sitio_Privado.Configuration.Application;
-using Sitio_Privado.Filters;
-using Sitio_Privado.Helpers;
+﻿using Sitio_Privado.Filters;
 using Sitio_Privado.Models;
 using Sitio_Privado.Services.ExternalUserProvider;
 using Sitio_Privado.Services.Interfaces;
-using System.Linq;
 using System.Security.Claims;
 using System.Web.Http;
 
@@ -20,7 +17,7 @@ namespace Sitio_Privado.Controllers
             get { return new Usuario(base.User as ClaimsPrincipal); }
         }
       
-        public Usuario GetUsuarioActual(Person person) 
+        public Usuario GetUsuarioActual(Person person)
         {
             var usuario = this.Usuario;
            

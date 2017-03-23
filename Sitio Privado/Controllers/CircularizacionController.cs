@@ -25,7 +25,7 @@ namespace Sitio_Privado.Controllers
             try
             {
                 //Person user = authorityClientService.GetPersonInformationByToken(httpService.ExtractAccessToken(Request));
-                var usuario = authorityClientService.GetUserInformationByToken(httpService.ExtractAccessToken(Request));
+                var usuario = authorityClientService.GetUserInformationByUsername(httpService.ExtractAccessToken(Request));
                 CircularizacionProcesoResultado proceso = new CircularizacionProcesoResultado(input, usuario);
                 return Ok(proceso);
             }
@@ -58,7 +58,7 @@ namespace Sitio_Privado.Controllers
             {
                // Person user = authorityClientService.GetPersonInformationByToken(httpService.ExtractAccessToken(Request));
                // var usuario =  GetUsuarioActual(user);
-                var usuario = authorityClientService.GetUserInformationByToken(httpService.ExtractAccessToken(Request));
+                var usuario = authorityClientService.GetUserInformationByUsername(httpService.ExtractAccessToken(Request));
                 CircularizacionProcesoResultado proceso = new CircularizacionProcesoResultado(input, usuario);
                 return Ok(proceso);
             }
@@ -73,7 +73,7 @@ namespace Sitio_Privado.Controllers
         {
             try
             {
-                var usuario = authorityClientService.GetUserInformationByToken(httpService.ExtractAccessToken(Request));
+                var usuario = authorityClientService.GetUserInformationByUsername(httpService.ExtractAccessToken(Request));
                 CircularizacionProcesoResultado proceso = new CircularizacionProcesoResultado(input, usuario);
                 return Ok(proceso);
             }
@@ -88,7 +88,7 @@ namespace Sitio_Privado.Controllers
         {
             try
             {
-                var usuario = authorityClientService.GetUserInformationByToken(httpService.ExtractAccessToken(Request));
+                var usuario = authorityClientService.GetUserInformationByUsername(httpService.ExtractAccessToken(Request));
                 tann_circularizacion webService = new tann_circularizacion();
                 string fecha = webService.cli_fecha_circularizacion(Converters.getRutParteEnteraInt(usuario.Rut));
                 DateTime? resultado = null;

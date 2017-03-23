@@ -21,7 +21,7 @@ namespace Sitio_Privado.Controllers
             try
             {
                 //Person user = authorityClientService.GetPersonInformationByToken(httpService.ExtractAccessToken(Request));
-                var usuario = authorityClientService.GetUserInformationByToken(httpService.ExtractAccessToken(Request));
+                var usuario = authorityClientService.GetUserInformationByUsername(httpService.ExtractAccessToken(Request));
                 Balance balance = new Balance(input, usuario);
                 return Ok(balance);
             }

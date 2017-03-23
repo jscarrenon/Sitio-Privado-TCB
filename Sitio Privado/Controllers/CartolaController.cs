@@ -32,7 +32,7 @@ namespace Sitio_Privado.Controllers
             try
             {
                 //Person user = authorityClientService.GetUserInformationByToken(httpService.ExtractAccessToken(Request));
-                var usuario = authorityClientService.GetUserInformationByToken(httpService.ExtractAccessToken(Request));
+                var usuario = authorityClientService.GetUserInformationByUsername(httpService.ExtractAccessToken(Request));
                 Cartola cartola = new Cartola(input, usuario);
                 return Ok(cartola);
             }
@@ -47,7 +47,7 @@ namespace Sitio_Privado.Controllers
         {
             try
             {
-                var usuario = authorityClientService.GetUserInformationByToken(httpService.ExtractAccessToken(Request));
+                var usuario = authorityClientService.GetUserInformationByUsername(httpService.ExtractAccessToken(Request));
 
                 CartolaConceptosTituloResultado resultado = new CartolaConceptosTituloResultado();
 

@@ -20,8 +20,9 @@ namespace Sitio_Privado.Services.Interfaces
         /// Gets the user information from external user provider from the user's username
         /// </summary>
         /// <param name="username">The user's username to look for</param>
-        /// <returns>An instance of the UserInfo model. Null if the user is not found.</returns>
-        UserInfo GetUserInfoByUsername(string username);
+        /// <returns>An instance of the Person model. Null if the user is not found.</returns>
+        Usuario GetUserInfoByUsername(string username);
+
         /// <summary>
         /// Gets the groups of the given user
         /// </summary>

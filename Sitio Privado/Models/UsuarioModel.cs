@@ -44,7 +44,7 @@ namespace Sitio_Privado.Models
     }
 
     public class Usuario : ClaimsPrincipal, ICustomPrincipal
-    {//Obtener el aud desde Identity, obtener el usuario y guardar los extension attributes
+    {
         public Usuario() { }
 
         public Usuario(ClaimsPrincipal principal) : base (principal) { }

@@ -44,7 +44,7 @@ namespace Sitio_Privado.Controllers
         {
             try
             {
-                var usuario = authorityClientService.GetUserInformationByToken(httpService.ExtractAccessToken(Request));
+                var usuario = authorityClientService.GetUserInformationByUsername(httpService.ExtractAccessToken(Request));
                 Producto producto = new Producto(input);
                 return Ok(producto);
             }

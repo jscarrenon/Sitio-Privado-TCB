@@ -26,7 +26,7 @@ namespace Sitio_Privado.Controllers
         {
             try
             {
-                var usuario = authorityClientService.GetUserInformationByToken(httpService.ExtractAccessToken(Request));
+                var usuario = authorityClientService.GetUserInformationByUsername(httpService.ExtractAccessToken(Request));
                 Indices indices = new Indices(input);
                 return Ok(indices);
             }

@@ -2,11 +2,13 @@
 using System.Configuration;
 using Sitio_Privado.Helpers;
 using System.Web.Http;
-using Sitio_Privado.Infraestructure.Constants;
 using Sitio_Privado.Filters;
 using Sitio_Privado.Models;
 using Sitio_Privado.Services.Interfaces;
 using System.Collections.Generic;
+using NLog;
+using Sitio_Privado.Extras;
+using System.Web;
 
 namespace Sitio_Privado.Controllers
 {
@@ -15,12 +17,15 @@ namespace Sitio_Privado.Controllers
     {
         IHttpService httpService = null;
         IAuthorityClientService authorityClientService = null;
+        IExternalUserService userService = null;
+        Logger logger;
 
-        public AuthenticationController(IHttpService httpService, IAuthorityClientService authorityClientService)
-            
+        public AuthenticationController(IHttpService httpService, IAuthorityClientService authorityClientService, IExternalUserService userService)
         {
             this.httpService = httpService;
             this.authorityClientService = authorityClientService;
+            this.userService = userService;
+            logger = LogManager.GetLogger("SessionLog");
         }
 
         /// <summary>
@@ -28,21 +33,21 @@ namespace Sitio_Privado.Controllers
         /// and do some initalization if the user does not exist locally
         /// </summary>
         /// <returns></returns>
-        [AuthorizeWithGroups(CheckLocalExistence = false, RequiredScopes = "openid profile")]
+        [AuthorizeWithGroups(RequiredScopes = "openid profile")]
         [Route("verifylogin")]
         [HttpPost]
         public IHttpActionResult VerifyLogin()
         {
-            Person user = authorityClientService.VerifyLoginAndGetPersonInformation(
-               httpService.ExtractAccessToken(Request),
-               UserHelper.ExtractRolesFromGroup(User as ClaimsPrincipal, ApplicationConstants.RequiredGroupName));
-           
+            var username = UserHelper.ExtractAuthorityId(User as ClaimsPrincipal);
+            Usuario user = userService.GetUserInfoByUsername(username);
+
             if (user != null)
             {
                 return Ok(user);
             }
             else
             {
+                logger.Warn("User not found in the user service => Username: " + username + "; Email: ");
                 return Redirect(ConfigurationManager.AppSettings["web:PostLogoutRedirectUrl"] + "?action=login");
             }
         }
@@ -51,7 +56,7 @@ namespace Sitio_Privado.Controllers
         /// and return the user sites allowed to view
         /// </summary>
         /// <returns></returns>
-        [AuthorizeWithGroups(CheckLocalExistence = false, RequiredScopes = "openid profile")]
+        [AuthorizeWithGroups(RequiredScopes = "openid profile")]
         [Route("usersites")]
         [HttpPost]
         public IHttpActionResult GetUserSites()
@@ -69,5 +74,19 @@ namespace Sitio_Privado.Controllers
             }
         }
 
+        [AuthorizeWithGroups(RequiredScopes = "openid profile")]
+        [Route("signout")]
+        [HttpPost]
+        public IHttpActionResult SignOut()
+        {
+            Logger logger = LogManager.GetLogger("SessionLog");
+            var usuario = GetUsuario();
+            logger.Info("User signed out => Rut: " + ExtraHelpers.FormatRutToText(usuario.Rut) + "; Email: " +
+                usuario.Email + "; IP: " + Request.ServerVariables["REMOTE_ADDR"] + ";");
+
+            HttpContext.GetOwinContext().Authentication.SignOut();
+
+            return Redirect(ConfigurationManager.AppSettings["web:PostLogoutRedirectUrl"]);
+        }
     }
 }

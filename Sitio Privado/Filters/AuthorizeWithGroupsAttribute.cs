@@ -4,8 +4,6 @@ using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Security.Claims;
 using Sitio_Privado.Infraestructure.Constants;
-using System.ComponentModel.Design;
-using System.Runtime.CompilerServices;
 using Sitio_Privado.Helpers;
 using NLog;
 using Sitio_Privado.Infraestructure.ExceptionHandling;
@@ -30,11 +28,6 @@ namespace Sitio_Privado.Filters
         /// Whitespace separated scopes required to perform the required action
         /// </summary>
         public string RequiredScopes { get; set; }
-
-        /// <summary>
-        /// If true, the attribute checks if the user exists locally in the Person table
-        /// </summary>
-        public bool CheckLocalExistence { get; set; } = true;
 
         public HttpService httpService = null;
 
