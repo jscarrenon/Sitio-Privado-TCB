@@ -79,7 +79,7 @@ namespace Sitio_Privado.Controllers
         public IHttpActionResult SignOut()
         {
             var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
-            logger.Info("User signed out => Rut: " + usuario.Rut + "; Email: " + usuario.Email + "; IP: " + Request.GetOwinContext().Request.RemoteIpAddress + ";");
+            logger.Info("User signed out => Rut: " + usuario.Rut + "; Email: " + usuario.Email + "; IP: " + Request.GetOwinContext().Request.RemoteIpAddress);
             Request.GetOwinContext().Authentication.SignOut();
 
             return Redirect(ConfigurationManager.AppSettings["web:PostLogoutRedirectUrl"]);
