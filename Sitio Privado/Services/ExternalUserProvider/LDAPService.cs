@@ -82,6 +82,8 @@ namespace Sitio_Privado.Services.ExternalUserProvider
 
                 usuario = new Usuario()
                 {
+                    Nombres = userInfo.FirstName,
+                    Apellidos = userInfo.LastName,
                     Rut = userInfo.Rut.Insert(userInfo.Rut.Length - 1, "-"),
                     Banco = userInfo.Bank,
                     CuentaCorriente = userInfo.CheckingAccount,
