@@ -62,15 +62,16 @@ namespace Sitio_Privado.Services.ExternalUserProvider
             return false;
         }
 
-        public UserInfo GetUserInfoByUsername(string username)
+        public Usuario GetUserInfoByUsername(string username)
         {
             DirectorySearcher searcher = InitializeSearcher(usersBaseDN);
             UserInfo userInfo = null;
+            Usuario usuario = null;
             DirectoryEntry userEntry = null;
 
             try
             {
-                searcher.Filter = String.Format("cn={0}", username);
+                searcher.Filter = string.Format("cn={0}", username);
                 SearchResult searchResult = searcher.FindOne();
 
                 if (searchResult != null)
@@ -78,6 +79,18 @@ namespace Sitio_Privado.Services.ExternalUserProvider
                     userEntry = searchResult.GetDirectoryEntry();
                     userInfo = BuildUserFromDirectoryEntry(userEntry);
                 }
+
+                usuario = new Usuario()
+                {
+                    Rut = userInfo.Rut.Insert(userInfo.Rut.Length - 1, "-"),
+                    Banco = userInfo.Bank,
+                    CuentaCorriente = userInfo.CheckingAccount,
+                    DireccionComercial = userInfo.WorkAddress,
+                    DireccionParticular = userInfo.HomeAddress,
+                    Email = userInfo.Email,
+                    TelefonoComercial = userInfo.WorkPhone,
+                    TelefonoParticular = userInfo.HomePhone
+                };
             }
             catch (COMException ex)
             {
@@ -89,8 +102,9 @@ namespace Sitio_Privado.Services.ExternalUserProvider
                 if (userEntry != null) userEntry.Dispose();
             }
 
-            return userInfo;
+            return usuario;
         }
+
         /// <summary>
         /// Initializes a new instance of the DirectorySearcher class, pointing to differents base DN based on the user type given.
         /// </summary>

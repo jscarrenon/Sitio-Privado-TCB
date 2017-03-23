@@ -1,20 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Configuration;
 
 namespace Sitio_Privado.Infraestructure.Constants
 {
     public static class ApplicationConstants
     {
         /// <summary>
-        /// The short name of the aplication
-        /// </summary>
-        public const string AppShortName = "Corredora"; // TODO: nombre temporal
-        /// <summary>
         /// The required group to access this application resources
         /// </summary>
-        public const string RequiredGroupName = "corredora"; // TODO: nombre temporal
+        public static readonly string RequiredGroupName = ConfigurationManager.AppSettings["RequiredGroup"];
         /// <summary>
         /// The name of the subject claim taken from the access token
         /// </summary>
@@ -49,7 +42,5 @@ namespace Sitio_Privado.Infraestructure.Constants
         /// Lenght of special identifiers used for embedded json objects
         /// </summary>
         public const int ObjectIdLength = 24;
-
-        public const string MainDbContext = "StorageConnection";
     }
 }

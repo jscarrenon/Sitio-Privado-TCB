@@ -3,28 +3,30 @@ using System.Web.Http;
 using Sitio_Privado.Models;
 using Sitio_Privado.Services.Interfaces;
 using Sitio_Privado.Filters;
+using Sitio_Privado.Helpers;
+using System.Security.Claims;
 
 namespace Sitio_Privado.Controllers
 {
-    public class AgenteController : ApiBaseController
+    [AuthorizeWithGroups]
+    public class AgenteController : ApiController
     {
         IHttpService httpService = null;
-        IAuthorityClientService authorityClientService = null;
-        public AgenteController(IHttpService httpService, IAuthorityClientService authorityClientService) 
-            
+        IExternalUserService userService = null;
+
+        public AgenteController(IHttpService httpService, IExternalUserService userService) 
         {
             this.httpService = httpService;
-            this.authorityClientService = authorityClientService;
+            this.userService = userService;
         }
-        [AuthorizeWithGroups(CheckLocalExistence = false, RequiredScopes = "openid profile")]
+
         [HttpPost]
         public IHttpActionResult GetSingle([FromBody]AgenteInput input)
         {
             try
             {
-                Person user = authorityClientService.GetPersonInformationByToken(httpService.ExtractAccessToken(Request));
+                var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
 
-                Usuario usuario = GetUsuarioActual(user);
                 Agente agente = new Agente(input, usuario);
                 return Ok(agente);
             }

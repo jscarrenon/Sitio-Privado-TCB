@@ -4,8 +4,6 @@ using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Security.Claims;
 using Sitio_Privado.Infraestructure.Constants;
-using System.ComponentModel.Design;
-using System.Runtime.CompilerServices;
 using Sitio_Privado.Helpers;
 using NLog;
 using Sitio_Privado.Infraestructure.ExceptionHandling;
@@ -31,11 +29,6 @@ namespace Sitio_Privado.Filters
         /// </summary>
         public string RequiredScopes { get; set; }
 
-        /// <summary>
-        /// If true, the attribute checks if the user exists locally in the Person table
-        /// </summary>
-        public bool CheckLocalExistence { get; set; } = true;
-
         public HttpService httpService = null;
 
         /// <summary>
@@ -45,8 +38,8 @@ namespace Sitio_Privado.Filters
         public AuthorizeWithGroupsAttribute(params string[] allowedRoles) : base()
         {
             httpService = new HttpService();
-            //RequiredGroup = ApplicationConstants.RequiredGroupName;
-            //AllowedRoles = allowedRoles;
+            RequiredGroup = ApplicationConstants.RequiredGroupName;
+            AllowedRoles = allowedRoles;
         }
 
         protected override bool IsAuthorized(HttpActionContext actionContext)
@@ -57,8 +50,7 @@ namespace Sitio_Privado.Filters
                 var username = user.FindFirst(ApplicationConstants.SubjectClaimName).Value;
 
                 List<string> userGroups = UserHelper.ExtractGroups(user).ToList();
-                //bool hasGroup = userGroups.Contains(RequiredGroup);
-                bool hasGroup = true;
+                bool hasGroup = userGroups.Contains(RequiredGroup);
 
                 List<string> userRoles = UserHelper.ExtractRolesFromGroup(user, RequiredGroup).ToList();
                 // If there are no required groups, true is assigned immediately, because Linq.Any returns false otherwise for that case

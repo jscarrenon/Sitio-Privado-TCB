@@ -5,17 +5,21 @@ using Sitio_Privado.Models;
 using Sitio_Privado.CategoriaInversionista;
 using Sitio_Privado.Filters;
 using Sitio_Privado.Services.Interfaces;
+using Sitio_Privado.Helpers;
+using System.Security.Claims;
 
 namespace Sitio_Privado.Controllers
 {
-    public class CategoriaController : ApiBaseController
+    [AuthorizeWithGroups]
+    public class CategoriaController : ApiController
     {
         IHttpService httpService = null;
-        IAuthorityClientService authorityClientService = null;
-        public CategoriaController(IHttpService httpService, IAuthorityClientService authorityClientService) 
+        IExternalUserService userService = null;
+
+        public CategoriaController(IHttpService httpService, IExternalUserService userService) 
         {
             this.httpService = httpService;
-            this.authorityClientService = authorityClientService;
+            this.userService = userService;
         }
 
         [HttpGet]
@@ -53,14 +57,12 @@ namespace Sitio_Privado.Controllers
                 return InternalServerError(e);
             }
         }
-        [AuthorizeWithGroups(CheckLocalExistence = false, RequiredScopes = "openid profile")]
         [HttpPost]
         public IHttpActionResult GetSingleCliente([FromBody]CategoriaClienteInput input)
         {
             try
             {
-                //Person user = authorityClientService.GetUserInformationByToken(httpService.ExtractAccessToken(Request));
-                var usuario = authorityClientService.GetUserInformationByToken(httpService.ExtractAccessToken(Request));
+                var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
                 Categoria categoria = new Categoria(input, usuario);
                 return Ok(categoria);
             }

@@ -102,25 +102,5 @@ namespace Sitio_Privado.Helpers
             identity.AddClaim(new Claim(ApplicationConstants.PersonIdClaimName, person.Email.ToString()));
             identity.AddClaim(new Claim(ApplicationConstants.PersonTypeClaimName, person.GetType().ToString()));
         }
-
-        /// <summary>
-        /// Builds a person instance from the claims the user has.
-        /// </summary>
-        /// <param name="principal">The claims that the user has.</param>
-        /// <returns>A person instance built with the claims that the user has.</returns>
-        public static Usuario BuildPersonFromClaims(IPrincipal principal)
-        {
-            ClaimsPrincipal claimsPrincipal = principal as ClaimsPrincipal;
-            Usuario person = new Usuario();
-            //Usuario person = new Usuario
-            //{
-            //    Id = ExtractPersonId(claimsPrincipal),
-            //    AuthorityId = ExtractAuthorityId(claimsPrincipal),
-            //    Type = ExtractPersonType(claimsPrincipal),
-            //    Roles = ExtractRolesFromGroup(claimsPrincipal, ApplicationConstants.RequiredGroupName)
-            //};
-
-            return person;
-        }
     }
 }

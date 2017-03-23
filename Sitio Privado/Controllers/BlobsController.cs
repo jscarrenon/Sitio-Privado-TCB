@@ -1,14 +1,11 @@
 ﻿using Microsoft.WindowsAzure.Storage.Blob;
-using Sitio_Privado.Models;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Web;
 using System.Web.Http;
+using Sitio_Privado.Filters;
 
 namespace Sitio_Privado.Controllers
 {
+    [AuthorizeWithGroups]
     public class BlobsController : ApiController
     {
         #region Constants
