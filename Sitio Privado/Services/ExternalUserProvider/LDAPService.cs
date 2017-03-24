@@ -193,7 +193,7 @@ namespace Sitio_Privado.Services.ExternalUserProvider
                             SiteType = description.Contains("spr") ? "Sitio Privado" : "Sitio Público",
                             Cn = description,
 #warning Change priority to read the value from LDAP when the field name is defined.
-                            Priority = i
+                            Priority = searchResults[i].Properties["gidnumber"].Count > 0 ? int.Parse(searchResults[i].Properties["gidnumber"][0].ToString()): 99999 
                         });
                     }
                 }
