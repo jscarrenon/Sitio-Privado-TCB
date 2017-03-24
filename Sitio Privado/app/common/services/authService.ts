@@ -45,7 +45,8 @@
             '$window',
             'constantService',
             'dataService',
-            'extrasService'];
+            'extrasService'
+        ];
         constructor(
             private $http: ng.IHttpService,
             private $httpParamSerializer,
@@ -96,8 +97,23 @@
             this.circularizacionPendiente = false;
             this.documentosPendientes = 0;
             this.usuario = null;
-            this.$localForage.removeItem(['accessToken', 'refreshToken', 'expiresIn', 'usuario', 'autenticado']);
-            this.extrasService.abrirRuta(this.constantService.mvcSignOutURI, "_self");
+            this.$localForage.getItem('accessToken')
+                .then((responseToken) => {
+                    if (responseToken != null) {
+                        this.dataService.postWebService(this.constantService.apiSignOutUri, "", responseToken)
+                            .then(() => {
+                                this.$localForage.removeItem(['accessToken', 'refreshToken', 'expiresIn', 'usuario', 'autenticado']);
+                                this.$window.location.href = this.constantService.homeTanner;
+                            }).catch((responseError) => {
+                                console.log(responseError);
+                                this.$localForage.removeItem(['accessToken', 'refreshToken', 'expiresIn', 'usuario', 'autenticado']);
+                                this.$window.location.href = this.constantService.homeTanner;
+                            });
+                    } else {
+                        this.$localForage.removeItem(['accessToken', 'refreshToken', 'expiresIn', 'usuario', 'autenticado']);
+                        this.$window.location.href = this.constantService.homeTanner;
+                    }
+                });
         }
 
         getFechaCircularizacion(): void {

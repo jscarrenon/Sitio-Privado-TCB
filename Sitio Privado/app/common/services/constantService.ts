@@ -28,7 +28,7 @@
         apiOAuthURI: string;
         userClientId: string;
         userClientSecret: string;
-
+        apiSignOutUri: string;
     }
 
     export class ConstantService implements IConstant {
@@ -59,11 +59,11 @@
         apiOAuthURI: string;
         userClientId: string;
         userClientSecret: string;
-
+        apiSignOutUri: string;
         constructor() {
             this.buildFolderURI = '.build/';
             this.mvcHomeURI = '/Home/';
-            this.mvcSignOutURI = '/Account/SignOut';
+            this.mvcSignOutURI = '/Authentication/signout';
 
             this.templateFooterURI = this.buildFolderURI + 'html/common/templates/footer.html';
             this.templatePaginationURI = this.buildFolderURI + 'html/common/templates/pagination.html';
@@ -85,6 +85,7 @@
             this.apiIndicesURI = '/api/indices/';
             this.apiCircularizacionURI = '/api/circularizacion/';
             this.apiUsersURI = 'api/users/';
+            this.apiSignOutUri = 'api/Authentication/signout';
             this.homeTanner = 'https://www.tanner.cl/';
             this.apiAutenticacion = '/api/authentication/';
             this.apiOAuthURI = 'http://localhost:51928/';
