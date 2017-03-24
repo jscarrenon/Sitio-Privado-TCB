@@ -104,6 +104,10 @@
                             .then(() => {
                                 this.$localForage.removeItem(['accessToken', 'refreshToken', 'expiresIn', 'usuario', 'autenticado']);
                                 this.$window.location.href = this.constantService.homeTanner;
+                            }).catch((responseError) => {
+                                console.log(responseError);
+                                this.$localForage.removeItem(['accessToken', 'refreshToken', 'expiresIn', 'usuario', 'autenticado']);
+                                this.$window.location.href = this.constantService.homeTanner;
                             });
                     } else {
                         this.$localForage.removeItem(['accessToken', 'refreshToken', 'expiresIn', 'usuario', 'autenticado']);
