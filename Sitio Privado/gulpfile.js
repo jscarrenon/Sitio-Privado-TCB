@@ -48,7 +48,7 @@ var paths = {
                         './bower_components/angular-i18n/angular-locale_es-cl.js',
                         './bower_components/angular-route/angular-route.js',
                         './bower_components/angular/angular.js',
-                        './bower_components/jquery/dist/jquery.js'                       
+                        './bower_components/jquery/dist/jquery.js'
                         ],
     better_dom: ['./bower_components/better-dom/dist/better-dom.js',
                     './bower_components/better-i18n-plugin/dist/better-i18n-plugin.js',

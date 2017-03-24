@@ -28,7 +28,7 @@
         usuario: app.domain.IUsuario;
         circularizacionPendiente: boolean;
         documentosPendientes: number;
-        susFirmaElecDoc: number;       
+        susFirmaElecDoc: number;
         fechaCircularizacion: Date;
         private qService: ng.IQService;
         private timer: ng.IPromise<any>;
