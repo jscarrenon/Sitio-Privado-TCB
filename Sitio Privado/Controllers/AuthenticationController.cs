@@ -82,7 +82,7 @@ namespace Sitio_Privado.Controllers
             logger.Info("User signed out => Rut: " + usuario.Rut + "; Email: " + usuario.Email + "; IP: " + Request.GetOwinContext().Request.RemoteIpAddress);
             Request.GetOwinContext().Authentication.SignOut();
 
-            return Redirect(ConfigurationManager.AppSettings["web:PostLogoutRedirectUrl"]);
+            return ResponseMessage(httpService.OkResponse(Request));
         }
     }
 }

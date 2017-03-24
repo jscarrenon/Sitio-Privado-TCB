@@ -43,8 +43,8 @@
 
             $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-            $httpProvider.interceptors.push(['$q', '$injector', '$window', '$location',
-                function ($q, $injector, $window, $location) {
+            $httpProvider.interceptors.push(['$q', '$injector', '$window', '$location', 'constantService',
+                function ($q, $injector, $window, $location, constantService: app.common.services.ConstantService) {
                     return {
                         request: function (config) {
 
@@ -54,7 +54,7 @@
                             var authService: app.common.services.AuthService = $injector.get('authService');
                             if (response.status === 401) {
                                 authService.cerrarSesion();
-                                $window.location.href = "https://www.tanner.cl";
+                                $window.location.href = constantService.homeTanner;
                             }
                             return $q.reject(response);
                         }
@@ -88,14 +88,13 @@
                         var refreshToken = $location.search().refreshToken;
                         var expiresIn = $location.search().expiresIn;
                         authenticationService.validateToken(token, refreshToken, expiresIn)
-                            .then(() => (authenticationService.autenticado = true, $window.location.assign("/")));
+                            .then(() => (authenticationService.autenticado = true, $location.path("/").search({})));
                     } else {
                         // we need to make sure out authorization header is valid
                         $localForage.getItem('accessToken')
                             .then((responseToken) => {
                                 if (responseToken == null) {
                                     $window.location.href = constantService.homeTanner;
-
                                 } else {
                                     authenticationService.autenticado = true;
                                     $rootScope.$evalAsync(() => $location.path($location.path() + '?'));
@@ -103,7 +102,6 @@
                             });
                     }
                 }
-
             });
         }
     }
