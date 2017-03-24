@@ -1,24 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using Sitio_Privado.Models;
 using Sitio_Privado.ConsultaSaldosFondosMutuos;
-using System.Threading.Tasks;
 using Sitio_Privado.Extras;
+using Sitio_Privado.Filters;
+using Sitio_Privado.Services.Interfaces;
+using Sitio_Privado.Helpers;
+using System.Security.Claims;
 
 namespace Sitio_Privado.Controllers
 {
-    public class FondoMutuoController : ApiBaseController
+    [AuthorizeWithGroups]
+    public class FondoMutuoController : ApiController
     {
+        IHttpService httpService = null;
+        IExternalUserService userService = null;
+
+        public FondoMutuoController(IHttpService httpService, IExternalUserService userService) 
+        {
+            this.httpService = httpService;
+            this.userService = userService;
+        }
+
         [HttpPost]
-        public async Task<IHttpActionResult> GetList([FromBody]FondoMutuoInput input)
+        public IHttpActionResult GetList([FromBody]FondoMutuoInput input)
         {
             try
             {
-                var usuario = await GetUsuarioActual();
+                var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
                 tann_fondos_mutuos webService = new tann_fondos_mutuos();
                 int rutParteEntera = Converters.getRutParteEnteraInt(usuario.Rut);
                 saldo_ffmm[] SaldosRF = webService.cn_saldo_ffmm_rf(rutParteEntera);

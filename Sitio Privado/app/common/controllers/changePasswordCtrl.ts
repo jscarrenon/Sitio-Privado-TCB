@@ -20,9 +20,10 @@
         errorMessage: string;
         processSuccess: boolean;
 
-        static $inject = ['constantService', 'dataService', 'authService'];
+        static $inject = ['constantService', 'dataService', '$localForage','authService'];
         constructor(private constantService: app.common.services.ConstantService,
             private dataService: app.common.services.DataService,
+            private $localForage,
             private authService: app.common.services.AuthService) {
 
             this.changePasswordInput = new app.domain.ChangePasswordInput();
@@ -33,36 +34,38 @@
         changePassword(): void {
             this.clearMessages();
             this.loading = true;
-            this.dataService.postWebService(this.constantService.apiUsersURI + 'changePassword', this.changePasswordInput)
-                .then((result: any) => {
-                    this.processSuccess = true;
-                    //Clear fields
-                    this.changePasswordInput.OldPassword = "";
-                    this.changePasswordInput.Password = "";
-                    this.changePasswordInput.PasswordValidation = "";
-                    //Update user data
-                    this.authService.getUsuarioActual();
-                })
-                .catch((result: any) => {
-                    this.processSuccess = false;
-                    if (result.status == 400) {
-                        this.errorMessage = "Error de validación."
-                        //Model errors
-                        var modelStateErrors = result.data.ModelState;
-                        for (var prop in modelStateErrors) {
-                            if (prop == "model.Password") {
-                                this.passwordErrors = modelStateErrors[prop];
+            this.$localForage.getItem('accessToken')
+                .then((responseToken) => {
+                    this.dataService.postWebService(this.constantService.apiOAuthURI + this.constantService.apiUsersURI + 'changePassword', this.changePasswordInput, responseToken)
+                        .then((result: any) => {
+                            this.processSuccess = true;
+                            //Clear fields
+                            this.changePasswordInput.OldPassword = "";
+                            this.changePasswordInput.NewPassword = "";
+                            this.changePasswordInput.PasswordValidation = "";
+                            //Update user data
+                        })
+                        .catch((result: any) => {
+                            this.processSuccess = false;
+                            if (result.status == 400) {
+                                this.errorMessage = "Error de validación."
+                                //Model errors
+                                var modelStateErrors = result.data.ModelState;
+                                for (var prop in modelStateErrors) {
+                                    if (prop == "model.Password") {
+                                        this.passwordErrors = modelStateErrors[prop];
+                                    }
+                                    if (prop == "model.PasswordValidation") {
+                                        this.passwordValidationErrors = modelStateErrors[prop];
+                                    }
+                                }
                             }
-                            if (prop == "model.PasswordValidation") {
-                                this.passwordValidationErrors = modelStateErrors[prop];
+                            else {
+                                this.errorMessage = result.data;
                             }
-                        }
-                    }
-                    else {
-                        this.errorMessage = result.data;
-                    }
-                })
-                .finally(() => this.loading = false);
+                        })
+                        .finally(() => this.loading = false);
+                });
         }
 
         clearMessages(): void {

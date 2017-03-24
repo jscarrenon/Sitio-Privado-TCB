@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Web;
 using System.Web.Http;
-using System.Web.Http.Routing;
+using Sitio_Privado.Filters;
 
 namespace Sitio_Privado.Controllers
 {
+    [AuthorizeWithGroups]
     public class ContainersController : ApiController
     {
         #region Constants

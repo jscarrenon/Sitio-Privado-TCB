@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Web.Http;
+﻿using System.Web.Http;
 using Sitio_Privado.DelegatingHandlers;
+using Microsoft.Practices.Unity;
+using Sitio_Privado.Configuration.Application;
+using Sitio_Privado.Infraestructure.WebApi;
+using System.Web.Http.ExceptionHandling;
+using Sitio_Privado.Infrastructure.Logging;
 
 namespace Sitio_Privado
 {
@@ -12,12 +13,15 @@ namespace Sitio_Privado
         public static void Register(HttpConfiguration config)
         {
             // Web API routes
-            config.Filters.Add(new AuthorizeAttribute());
-            config.MapHttpAttributeRoutes();
-
+            IUnityContainer container = UnityConfiguration.GetConfiguredContainer();
+            config.DependencyResolver = new UnityDependencyResolver(container);
+            WebApiUnityActionFilterProvider.RegisterFilterProviders(config, container);
             // Deserialize / Model Bind IE 8 and 9 Ajax Requests
             config.MessageHandlers.Add(new XDomainRequestDelegatingHandler());
 
+            config.Services.Add(typeof(IExceptionLogger), new WebApiNLogExceptionLogger());
+
+            config.MapHttpAttributeRoutes();
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{action}/{id}",
@@ -34,13 +38,6 @@ namespace Sitio_Privado
                     id = RouteParameter.Optional
                 }
             );
-
-            // WebAPI when dealing with JSON & JavaScript!
-            // Setup json serialization to serialize classes to camel (std. Json format)
-            /*var formatter = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
-            formatter.SerializerSettings.ContractResolver =
-                new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver();*/
-
         }
     }
 }
