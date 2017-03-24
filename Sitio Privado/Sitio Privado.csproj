@@ -426,6 +426,7 @@
     <Compile Include="Infraestructure\ExceptionHandling\ApiErrorList.cs" />
     <Compile Include="Infraestructure\ExceptionHandling\ApiErrorResult.cs" />
     <Compile Include="Infraestructure\ExceptionHandling\OwinExceptionHandler.cs" />
+    <Compile Include="Infraestructure\Logging\WebApiNLogExceptionLogger.cs" />
     <Compile Include="Infraestructure\WebApi\UnityDependencyResolver.cs" />
     <Compile Include="Infraestructure\WebApi\WebApiUnityActionFilterProvider.cs" />
     <Compile Include="Models\AuthorityUserInfo.cs" />

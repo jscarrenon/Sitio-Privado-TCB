@@ -3,6 +3,8 @@ using Sitio_Privado.DelegatingHandlers;
 using Microsoft.Practices.Unity;
 using Sitio_Privado.Configuration.Application;
 using Sitio_Privado.Infraestructure.WebApi;
+using System.Web.Http.ExceptionHandling;
+using Sitio_Privado.Infrastructure.Logging;
 
 namespace Sitio_Privado
 {
@@ -16,6 +18,8 @@ namespace Sitio_Privado
             WebApiUnityActionFilterProvider.RegisterFilterProviders(config, container);
             // Deserialize / Model Bind IE 8 and 9 Ajax Requests
             config.MessageHandlers.Add(new XDomainRequestDelegatingHandler());
+
+            config.Services.Add(typeof(IExceptionLogger), new WebApiNLogExceptionLogger());
 
             config.MapHttpAttributeRoutes();
             config.Routes.MapHttpRoute(
