@@ -1,25 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using Sitio_Privado.Models;
 using Sitio_Privado.DocumentosPendientesFirma;
-using System.Threading.Tasks;
 using Sitio_Privado.Extras;
-using Sitio_Privado.SuscripcionFirmaElecDoc;
+using Sitio_Privado.Services.Interfaces;
+using Sitio_Privado.Filters;
+using Sitio_Privado.Helpers;
+using System.Security.Claims;
 
 namespace Sitio_Privado.Controllers
 {
-    public class DocumentoController : ApiBaseController
+    [AuthorizeWithGroups]
+    public class DocumentoController : ApiController
     {
+        IHttpService httpService = null;
+        IExternalUserService userService = null;
+
+        public DocumentoController(IHttpService httpService, IExternalUserService userService) 
+        {
+            this.httpService = httpService;
+            this.userService = userService;
+        }
+
         [HttpPost]
-        public async Task<IHttpActionResult> GetListPendientes([FromBody]DocumentosPendientesInput input)
+        public IHttpActionResult GetListPendientes([FromBody]DocumentosPendientesInput input)
         {
             try
             {
-                var usuario = await GetUsuarioActual();
+                var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
+
                 tann_documentos webService = new tann_documentos();
                 _operacion[] operaciones = webService.cns_operacion_pendiente(Converters.getRutParteEntera(usuario.Rut));
 
@@ -49,11 +59,11 @@ namespace Sitio_Privado.Controllers
         }
 
         [HttpPost]
-        public async Task<IHttpActionResult> GetListFirmados([FromBody]DocumentosFirmadosInput input)
+        public IHttpActionResult GetListFirmados([FromBody]DocumentosFirmadosInput input)
         {
             try
             {
-                var usuario = await GetUsuarioActual();
+                var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
                 tann_documentos webService = new tann_documentos();
                 _operacion[] operaciones = webService.cns_operacion_firmada(Converters.getRutParteEntera(usuario.Rut), input.fechaIni, input.fechaFin);
 
@@ -83,11 +93,11 @@ namespace Sitio_Privado.Controllers
         }
 
         [HttpPost]
-        public async Task<IHttpActionResult> SetLeido([FromBody]DocumentoLeidoInput input)
+        public IHttpActionResult SetLeido([FromBody]DocumentoLeidoInput input)
         {
             try
             {
-                var usuario = await GetUsuarioActual();
+                var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
                 DocumentoLeidoResultado resultado = new DocumentoLeidoResultado(input, usuario);
 
                 return Ok(resultado);
@@ -99,11 +109,11 @@ namespace Sitio_Privado.Controllers
         }
 
         [HttpPost]
-        public async Task<IHttpActionResult> SetFirmarDocumento([FromBody]DocumentoFirmarInput input)
+        public IHttpActionResult SetFirmarDocumento([FromBody]DocumentoFirmarInput input)
         {
             try
             {
-                var usuario = await GetUsuarioActual();
+                var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
                 DocumentoFirmarResultado resultado = new DocumentoFirmarResultado(input, usuario);
 
                 return Ok(resultado);
@@ -116,11 +126,11 @@ namespace Sitio_Privado.Controllers
 
 
         [HttpPost]
-        public async Task<IHttpActionResult> SetFirmarOperacion([FromBody]OperacionFirmarInput input)
+        public IHttpActionResult SetFirmarOperacion([FromBody]OperacionFirmarInput input)
         {
             try
             {
-                var usuario = await GetUsuarioActual();
+                var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
                 DocumentoFirmarResultado resultado = new DocumentoFirmarResultado(input, usuario);
 
                 return Ok(resultado);
@@ -132,11 +142,11 @@ namespace Sitio_Privado.Controllers
         }
 
         [HttpPost]
-        public async Task<IHttpActionResult> GetCantidadPendientes([FromBody]DocumentosPendientesCantidadInput input)
+        public IHttpActionResult GetCantidadPendientes([FromBody]DocumentosPendientesCantidadInput input)
         {
             try
             {
-                var usuario = await GetUsuarioActual();
+                var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
                 DocumentosPendientesCantidadResultado resultado = new DocumentosPendientesCantidadResultado(input, usuario);
 
                 return Ok(resultado);
@@ -149,11 +159,11 @@ namespace Sitio_Privado.Controllers
 
 
         [HttpPost]
-        public async Task<IHttpActionResult> SetRespuestaSusFirmaElecDoc([FromBody]SuscripcionFirmaElectronica input)
+        public IHttpActionResult SetRespuestaSusFirmaElecDoc([FromBody]SuscripcionFirmaElectronica input)
         {
             try
             {
-                var usuario = await GetUsuarioActual();
+                var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
                 RespuestaClienteSusFirmaElectronicaDocs resultado = new RespuestaClienteSusFirmaElectronicaDocs(usuario.Rut, input.Glosa, input.Respuesta);
 
                 return Ok(resultado.Resultado);
@@ -165,12 +175,11 @@ namespace Sitio_Privado.Controllers
         }
 
         [HttpPost]
-        public async Task<IHttpActionResult> GetConsultaRespuestaSusFirmaElecDoc()
+        public IHttpActionResult GetConsultaRespuestaSusFirmaElecDoc()
         {
             try
             {
-                var usuario = await GetUsuarioActual();
-
+                var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
                 ConsultaRespuestaSusFirmaElecDocs resultado = new ConsultaRespuestaSusFirmaElecDocs(usuario.Rut);
 
                 return Ok(resultado.Resultado);
@@ -180,7 +189,5 @@ namespace Sitio_Privado.Controllers
                 return InternalServerError(e);
             }
         }
-
-
     }
 }

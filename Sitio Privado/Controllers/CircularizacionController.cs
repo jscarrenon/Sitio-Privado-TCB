@@ -1,25 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using Sitio_Privado.Models;
 using Sitio_Privado.CircularizacionCustodia;
-using System.Threading.Tasks;
 using Sitio_Privado.Extras;
 using System.Globalization;
+using Sitio_Privado.Services.Interfaces;
+using Sitio_Privado.Helpers;
+using System.Security.Claims;
+using Sitio_Privado.Filters;
 
 namespace Sitio_Privado.Controllers
 {
-    public class CircularizacionController : ApiBaseController
+    [AuthorizeWithGroups]
+    public class CircularizacionController : ApiController
     {
+        IHttpService httpService = null;
+        IExternalUserService userService = null;
+
+        public CircularizacionController(IHttpService httpService, IExternalUserService userService) 
+            
+        {
+            this.httpService = httpService;
+            this.userService = userService;
+        }
+
         [HttpPost]
-        public async Task<IHttpActionResult> GetPendiente([FromBody]CircularizacionPendienteInput input)
+        public IHttpActionResult GetPendiente([FromBody]CircularizacionPendienteInput input)
         {
             try
             {
-                var usuario = await GetUsuarioActual();
+                var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
                 CircularizacionProcesoResultado proceso = new CircularizacionProcesoResultado(input, usuario);
                 return Ok(proceso);
             }
@@ -30,11 +40,11 @@ namespace Sitio_Privado.Controllers
         }
 
         [HttpPost]
-        public async Task<IHttpActionResult> GetArchivo([FromBody]CircularizacionArchivoInput input)
+        public IHttpActionResult GetArchivo([FromBody]CircularizacionArchivoInput input)
         {
             try
             {
-                var usuario = await GetUsuarioActual();
+                var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
                 CircularizacionArchivo archivo = new CircularizacionArchivo(input, usuario);
                 return Ok(archivo);
             }
@@ -45,11 +55,11 @@ namespace Sitio_Privado.Controllers
         }
 
         [HttpPost]
-        public async Task<IHttpActionResult> SetLeida([FromBody]CircularizacionLeidaInput input)
+        public IHttpActionResult SetLeida([FromBody]CircularizacionLeidaInput input)
         {
             try
             {
-                var usuario = await GetUsuarioActual();
+                var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
                 CircularizacionProcesoResultado proceso = new CircularizacionProcesoResultado(input, usuario);
                 return Ok(proceso);
             }
@@ -60,11 +70,11 @@ namespace Sitio_Privado.Controllers
         }
 
         [HttpPost]
-        public async Task<IHttpActionResult> SetRespondida([FromBody]CircularizacionRespondidaInput input)
+        public IHttpActionResult SetRespondida([FromBody]CircularizacionRespondidaInput input)
         {
             try
             {
-                var usuario = await GetUsuarioActual();
+                var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
                 CircularizacionProcesoResultado proceso = new CircularizacionProcesoResultado(input, usuario);
                 return Ok(proceso);
             }
@@ -75,11 +85,11 @@ namespace Sitio_Privado.Controllers
         }
 
         [HttpPost]
-        public async Task<IHttpActionResult> GetFecha([FromBody]CircularizacionFechaInput input)
+        public IHttpActionResult GetFecha([FromBody]CircularizacionFechaInput input)
         {
             try
             {
-                var usuario = await GetUsuarioActual();
+                var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
                 tann_circularizacion webService = new tann_circularizacion();
                 string fecha = webService.cli_fecha_circularizacion(Converters.getRutParteEnteraInt(usuario.Rut));
                 DateTime? resultado = null;

@@ -13,9 +13,10 @@
         agenteInput: app.domain.IAgenteInput;
         loading: boolean;
 
-        static $inject = ['constantService', 'dataService', 'authService'];
+        static $inject = ['constantService', 'dataService','$localForage', 'authService'];
         constructor(private constantService: app.common.services.ConstantService,
             private dataService: app.common.services.DataService,
+            private $localForage,
             private authService: app.common.services.AuthService) {
 
             this.agenteInput = new app.domain.AgenteInput();
@@ -24,11 +25,14 @@
 
         getAgente(input: app.domain.IAgenteInput): void {
             this.loading = true;
-            this.dataService.postWebService(this.constantService.apiAgenteURI + 'getSingle', input)
-                .then((result: app.domain.IAgente) => {
-                    this.agente = result;
-                })
-                .finally(() => this.loading = false);
+            this.$localForage.getItem('accessToken')
+                .then((responseToken) => {
+                    this.dataService.postWebService(this.constantService.apiAgenteURI + 'getSingle', input, responseToken)
+                        .then((result: app.domain.IAgente) => {
+                            this.agente = result;
+                        })
+                        .finally(() => this.loading = false);
+                });
         }
     }
 

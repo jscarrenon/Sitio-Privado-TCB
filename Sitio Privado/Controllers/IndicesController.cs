@@ -1,22 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using Sitio_Privado.Models;
-using System.Threading.Tasks;
+using Sitio_Privado.Services.Interfaces;
+using Sitio_Privado.Helpers;
+using System.Security.Claims;
+using Sitio_Privado.Filters;
 
 namespace Sitio_Privado.Controllers
 {
-    public class IndicesController : ApiBaseController
+    [AuthorizeWithGroups]
+    public class IndicesController : ApiController
     {
+        IHttpService httpService = null;
+        IExternalUserService userService = null;
+
+        public IndicesController(IHttpService httpService, IExternalUserService userService) 
+        {
+            this.httpService = httpService;
+            this.userService = userService;
+        }
+        
+
         [HttpPost]
-        public async Task<IHttpActionResult> GetSingle([FromBody]IndicesInput input)
+        public IHttpActionResult GetSingle([FromBody]IndicesInput input)
         {
             try
             {
-                var usuario = await GetUsuarioActual();
+                var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
                 Indices indices = new Indices(input);
                 return Ok(indices);
             }

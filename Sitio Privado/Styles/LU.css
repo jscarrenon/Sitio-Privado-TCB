@@ -1,0 +1,158 @@
+/* desktop */
+#LU-desktop{
+	width: 34px;
+	height: 34px;
+	position: absolute;
+	z-index: 100000;
+	top: 20px;
+	right: -38px;
+}
+#LU-desktop-button{
+	width: 34px;
+	height: 34px;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+	position: absolute;
+	top: 0;
+	right: 0;
+	cursor: pointer;
+	background: #0155a5 url(/Resources/img/LU-button.svg) no-repeat center center;
+	background-size: 14px;
+}
+#LU-desktop-dropdown{
+	display: none;
+	position: absolute;
+	top: 34px;
+	right: 0;
+	width: 360px;
+}
+#LU-desktop-dropdown-arrow{
+	background: url('/Resources/img/LU-desktop-dropdown-arrow.svg') no-repeat 337px bottom;
+	background-size: 12px;
+	width: 100%;
+	height: 12px;
+}
+#LU-desktop-dropdown-container{
+	background-color: #FFF;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-box-shadow: 0px 1px 15px 0px rgba(50, 50, 50, 0.25);
+	-moz-box-shadow:    0px 1px 15px 0px rgba(50, 50, 50, 0.25);
+	box-shadow:         0px 1px 15px 0px rgba(50, 50, 50, 0.25);
+}
+
+/* mobile */
+#LU-mobile{
+	height: 38px;
+    width: 38px;
+    position: absolute;
+    right: 40px;
+    top: 15px;
+}
+#LU-mobile-button{
+	height: 38px;
+    width: 38px;
+    border-radius: 7px;
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+	position: absolute;
+	top: 0;
+	right: 0;
+    right: 0px;
+    top: 0px;
+    cursor: pointer;
+    background: #0155a5 url(/Resources/img/LU-button.svg) no-repeat center center;
+    background-size: 14px;
+}
+#LU-mobile-dropdown{
+	display: none;
+	position: absolute;
+	top: 62px;
+	left: 0;
+	width: 100%;
+}
+#LU-mobile-dropdown-container{
+	background-color: #FFF;
+	-webkit-box-shadow: 0px 1px 15px 0px rgba(50, 50, 50, 0.25);
+	-moz-box-shadow:    0px 1px 15px 0px rgba(50, 50, 50, 0.25);
+	box-shadow:         0px 1px 15px 0px rgba(50, 50, 50, 0.25);
+}
+
+/* desktop and mobile */
+.LU-dropdown-header{
+	position: relative;
+	border-bottom: 1px solid #F2F2F2
+}
+.LU-dropdown-header p{
+	font-family: 'GothamBook', "helvetica neue", Arial, sans-serif;
+	color: #005EB8;
+	font-size: 12.5px;
+	padding: 15px 60px 15px 20px;
+}
+.LU-dropdown-header p span{
+	font-family: 'GothamMedium', "helvetica neue", Arial, sans-serif;
+	color: #6A6A6A;
+	font-size: 12.5px;
+}
+.LU-dropdown-header >div{
+	position: absolute;
+	background: url(/Resources/img/LU-close.svg) no-repeat center center;
+    background-size: 10px;
+    width: 10px;
+    height: 10px;
+    right: 20px;
+    top: 17px;
+    cursor: pointer;
+}
+.LU-dropdown-instructions{
+	font-family: 'GothamMedium', "helvetica neue", Arial, sans-serif;
+	color: #1B213C;
+	font-size: 13.5px;
+	padding: 15px 60px 15px 20px;
+}
+.LU-dropdown-item{
+    position: relative;
+    width: 100%;
+    display: block;
+}
+.LU-dropdown-item:not(:last-of-type){
+    border-bottom: 1px solid #F2F2F2
+}
+.LU-dropdown-item >div:nth-of-type(1){
+	font-family: 'GothamMedium', "helvetica neue", Arial, sans-serif;
+	color: #8B8B8B;
+	font-size: 12.5px;
+	padding: 15px 60px 4px 20px;
+}
+.LU-dropdown-item >div:nth-of-type(2){
+	font-family: 'GothamMedium', "helvetica neue", Arial, sans-serif;
+	color: #424242;
+	font-size: 13px;
+	padding: 4px 60px 15px 20px;
+}
+.LU-dropdown-item .LU-dropdown-item-go{
+	position: absolute;
+	background: url(/Resources/img/LU-go.svg) no-repeat center center;
+    background-size: contain;
+    width: 12px;
+    height: 12px;
+    right: 20px;
+    top: 26px;
+}
+.LU-dropdown-item:hover{
+    background-color: rgba(1, 85, 165, 0.05);
+}
+
+/* original site styles that have to change */
+#bar, #bar_mobile{
+	background-color: rgba(0, 94, 184, 0.9);
+	opacity: 1
+}
+#bar_mobile{
+	z-index: 100;
+}
+#bar_mobile .user{
+    right: 85px;
+}

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Owin;
+using Sitio_Privado.Configuration.Application;
 using Sitio_Privado.Extras;
 using Sitio_Privado.Tasks;
 using System;
@@ -23,13 +24,13 @@ namespace Sitio_Privado
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             GlobalConfiguration.Configuration.Services.Replace(typeof(ITraceWriter), new NLogger());
+           
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            SyncUsersDataJobScheduler.Start();
         }
 
-        protected void Application_EndRequest()
+        protected void Application_EndRequest(object sender, EventArgs e)
         {
             // Any AJAX request that ends in a redirect should get mapped to an unauthorized request
             // since it should only happen when the request is not authorized and gets automatically

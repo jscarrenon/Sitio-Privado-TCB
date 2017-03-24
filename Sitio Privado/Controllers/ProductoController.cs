@@ -1,17 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using Sitio_Privado.Models;
 using Sitio_Privado.CategoriaInversionista;
-using System.Threading.Tasks;
+using Sitio_Privado.Services.Interfaces;
+using Sitio_Privado.Helpers;
+using System.Security.Claims;
+using Sitio_Privado.Filters;
 
 namespace Sitio_Privado.Controllers
 {
-    public class ProductoController : ApiBaseController
+    [AuthorizeWithGroups]
+    public class ProductoController : ApiController
     {
+        IHttpService httpService = null;
+        IExternalUserService userService = null;
+
+        public ProductoController(IHttpService httpService, IExternalUserService userService) 
+        {
+            this.httpService = httpService;
+            this.userService = userService;
+        }
+
         [HttpGet]
         public IHttpActionResult GetList()
         {
@@ -35,11 +45,11 @@ namespace Sitio_Privado.Controllers
         }
 
         [HttpPost]
-        public async Task<IHttpActionResult> GetSingle([FromBody]ProductoInput input)
+        public IHttpActionResult GetSingle([FromBody]ProductoInput input)
         {
             try
             {
-                var usuario = await GetUsuarioActual();
+                var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
                 Producto producto = new Producto(input);
                 return Ok(producto);
             }

@@ -1,3 +1,4 @@
+/// <reference path="bower_components/localforage/dist/localforage.js" />
 /// <binding BeforeBuild='clean' AfterBuild='css-task, templates-task, scripts-task, better-dom-task, vendors-task, spa-task, encoding-task, resources-task, login-task' Clean='clean' />
 /*
 This file in the main entry point for defining Gulp tasks and using Gulp plugins.
@@ -40,6 +41,8 @@ var paths = {
     stylesLess: ['./Styles/*.less', '!./Styles/login.less'],
     scripts: ['./Scripts/extras/jquery.sticky.js', './Scripts/extras/*.js', '!./Scripts/extras/jquery-1.12.0.js', '!./Scripts/extras/login.js'],
     bower_components: ['./bower_components/angular-google-analytics/dist/angular-google-analytics.js',
+                        './bower_components/angular-localforage/dist/angular-localForage.min.js',
+                        './bower_components/localforage/dist/localforage.min.js',
                         './bower_components/angular-rut/dist/angular-rut.min.js',
                         './bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
                         './bower_components/angular-i18n/angular-locale_es-cl.js',

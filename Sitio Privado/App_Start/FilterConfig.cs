@@ -9,8 +9,6 @@ namespace Sitio_Privado
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
-            filters.Add(new AuthorizeAttribute()); //Privatiza todo por default
-            filters.Add(new TemporaryPasswordAttribute()); //Revisión de contraseña temporal
         }
     }
 }
