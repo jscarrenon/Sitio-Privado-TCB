@@ -192,7 +192,7 @@ namespace Sitio_Privado.Services.ExternalUserProvider
                             Url = searchResults[i].Properties["url"].Count > 0 ? searchResults[i].Properties["url"][0].ToString().ToLower() : "",
                             SiteType = description.Contains("spr") ? "Sitio Privado" : "Sitio Público",
                             Cn = description,
-                            Priority = searchResults[i].Properties["gidnumber"].Count > 0 ? int.Parse(searchResults[i].Properties["gidnumber"][0].ToString()): 99999 
+                            Priority = searchResults[i].Properties["gidNumber"].Count > 0? int.Parse(searchResults[i].Properties["gidNumber"][0].ToString()): 99999 
                         });
                     }
                 }
