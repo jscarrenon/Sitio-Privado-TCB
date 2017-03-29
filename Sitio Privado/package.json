@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "name": "SitioPrivado",
+  "name": "sitio-privado-corredora",
   "private": true,
   "devDependencies": {
     "bower": "^1.7.7",
