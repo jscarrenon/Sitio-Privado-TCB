@@ -6,6 +6,7 @@ using System.Configuration;
 using System.Collections.Generic;
 using Sitio_Privado.Models;
 using System.Reflection;
+using System.Text;
 
 namespace Sitio_Privado.Services.ExternalUserProvider
 {
@@ -192,7 +193,7 @@ namespace Sitio_Privado.Services.ExternalUserProvider
                             Url = searchResults[i].Properties["url"].Count > 0 ? searchResults[i].Properties["url"][0].ToString().ToLower() : "",
                             SiteType = description.Contains("spr") ? "Sitio Privado" : "Sitio Público",
                             Cn = description,
-                            Priority = searchResults[i].Properties["gidNumber"].Count > 0? int.Parse(searchResults[i].Properties["gidNumber"][0].ToString()): 99999 
+                            Priority = searchResults[i].Properties["gidNumber"].Count > 0 ? ConvertPropertyToInt(searchResults[i].Properties["gidNumber"][0]) : 99999
                         });
                     }
                 }
@@ -210,6 +211,18 @@ namespace Sitio_Privado.Services.ExternalUserProvider
             }
         }
 
-       
+        /// <summary>
+        /// Converts an LDAP property to int
+        /// </summary>
+        /// <returns>The converted value</returns>
+        private int ConvertPropertyToInt(object value)
+        {
+            if (value.GetType() == typeof(byte[]))
+            {
+                value = Encoding.UTF8.GetString((byte[])value);
+            }
+
+            return int.Parse(value.ToString());
+        }
     }
 }
