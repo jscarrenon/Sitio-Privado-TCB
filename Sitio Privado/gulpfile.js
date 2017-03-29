@@ -70,7 +70,7 @@ gulp.task('default', function (callback) {
 });
 
 gulp.task('config-task', function () {
-    var configEnv = argv.c || argv.config || 'Local';
+    var configEnv = argv.c || argv.config || 'local';
 
     printLog('Copying files for environment: ' + configEnv);
     return gulp.src(paths.config + configEnv + '/**/*')

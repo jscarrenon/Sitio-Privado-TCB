@@ -1,6 +1,6 @@
 module app.config {
   export const CONFIG = {
-    ENV: 'QA',
+    ENV: 'qa',
     CLIENT_ID: '',
     CLIENT_SECRET: '',
     OAUTH2_URL: 'https://oauthqa.tanner.cl/',
