@@ -86,12 +86,11 @@
             this.apiCircularizacionURI = '/api/circularizacion/';
             this.apiUsersURI = 'api/users/';
             this.apiSignOutUri = 'api/Authentication/signout';
-            this.homeTanner = 'https://www.tanner.cl/';
             this.apiAutenticacion = '/api/authentication/';
-            this.apiOAuthURI = 'http://localhost:51928/';
-            //this.apiOAuthURI = 'https://kunder-tanner-oauth.azurewebsites.net/';
-            this.userClientId = 'passwordgrant';
-            this.userClientSecret = 'secret';
+            this.homeTanner = 'https://www.tanner.cl/';         // TODO: read from config file
+            this.apiOAuthURI = 'https://oauthdesa.tanner.cl/';  // TODO: read from config file
+            this.userClientId = 'passwordgrant';                // TODO: read from config file
+            this.userClientSecret = 'secret';                   // TODO: read from config file
         }
     }
 
