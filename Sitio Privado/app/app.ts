@@ -1,4 +1,5 @@
 ﻿module app {
+
     class Config {
         constructor($routeProvider: ng.route.IRouteProvider,
             AnalyticsProvider: ng.google.analytics.AnalyticsProvider,

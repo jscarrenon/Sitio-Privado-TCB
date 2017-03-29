@@ -60,6 +60,7 @@
         userClientId: string;
         userClientSecret: string;
         apiSignOutUri: string;
+
         constructor() {
             this.buildFolderURI = '.build/';
             this.mvcHomeURI = '/Home/';
@@ -87,10 +88,11 @@
             this.apiUsersURI = 'api/users/';
             this.apiSignOutUri = 'api/Authentication/signout';
             this.apiAutenticacion = '/api/authentication/';
-            this.homeTanner = 'https://www.tanner.cl/';         // TODO: read from config file
-            this.apiOAuthURI = 'https://oauthdesa.tanner.cl/';  // TODO: read from config file
-            this.userClientId = 'passwordgrant';                // TODO: read from config file
-            this.userClientSecret = 'secret';                   // TODO: read from config file
+            this.homeTanner = app.config.CONFIG.TANNER_PUBLIC_SITE_URL;
+            this.apiOAuthURI = app.config.CONFIG.OAUTH2_URL;
+            this.userClientId = app.config.CONFIG.CLIENT_ID;
+            this.userClientSecret = app.config.CONFIG.CLIENT_SECRET;
+
         }
     }
 

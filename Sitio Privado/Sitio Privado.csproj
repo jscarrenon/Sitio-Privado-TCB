@@ -612,6 +612,7 @@
     <Content Include="Frontend_Tests\Controllers\misInversionesDocumentosControllerSpec.js" />
     <Content Include="Frontend_Tests\Controllers\modalInstanceControllerSpec.js" />
     <Content Include="Scripts\extras\index.js" />
+    <TypeScriptCompile Include="app\config\constants.ts" />
     <TypeScriptCompile Include="app\domain\SiteInformation.ts" />
     <TypeScriptCompile Include="app\modules\login\controllers\authCtrl.ts" />
     <TypeScriptCompile Include="app\common\controllers\changePasswordCtrl.ts" />
@@ -811,6 +812,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Configuration\Environment\" />
+    <Folder Include="config\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
