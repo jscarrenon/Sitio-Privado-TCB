@@ -1,4 +1,4 @@
-/// <binding BeforeBuild='clean' AfterBuild='css-task, config-task, templates-task, scripts-task, better-dom-task, vendors-task, spa-task, encoding-task, resources-task, login-task' Clean='clean' />
+/// <binding BeforeBuild='clean' AfterBuild='css-task, templates-task, scripts-task, better-dom-task, vendors-task, spa-task, encoding-task, resources-task, login-task' Clean='clean' />
 /*
 This file in the main entry point for defining Gulp tasks and using Gulp plugins.
 Click here to learn more. http://go.microsoft.com/fwlink/?LinkId=518007
@@ -66,9 +66,10 @@ var paths = {
 };
 
 gulp.task('default', function (callback) {
-    runSequence('clean', 'config-task', 'css-task', 'templates-task', 'scripts-task', 'better-dom-task', 'vendors-task', 'spa-task', 'encoding-task', 'resources-task', 'login-task', callback);
+    runSequence('clean', 'css-task', 'templates-task', 'scripts-task', 'better-dom-task', 'vendors-task', 'spa-task', 'encoding-task', 'resources-task', 'login-task', callback);
 });
 
+// This task should not be used because it depends on execution arguments (argv) and the BeforeBuild is not configured to support them
 gulp.task('config-task', function () {
     var configEnv = argv.c || argv.config || 'local';
 
