@@ -87,7 +87,7 @@
             });
         }
         setUsuario(usuario: app.domain.IUsuario): void {
-            if (usuario != null || usuario != undefined) {
+            if (!usuario) {
                 this.usuario = usuario;
             }
 
@@ -99,7 +99,7 @@
             this.usuario = null;
             this.$localForage.getItem('accessToken')
                 .then((responseToken) => {
-                    if (responseToken != null) {
+                    if (responseToken) {
                         this.dataService.postWebService(this.constantService.apiSignOutUri, "", responseToken)
                             .then(() => {
                                 this.$localForage.removeItem(['accessToken', 'refreshToken', 'expiresIn', 'usuario', 'autenticado']);
@@ -152,7 +152,7 @@
         getSusFirmaElecDoc(): void {
             this.$localForage.getItem('accessToken')
                 .then((responseToken) => {
-                    if (responseToken != null) {
+                    if (responseToken) {
                         this.dataService.postWebService(this.constantService.apiDocumentoURI + 'GetConsultaRespuestaSusFirmaElecDoc', '', responseToken)
                             .then((result: number) => {
                                 this.susFirmaElecDoc = result;
@@ -203,9 +203,9 @@
         saveToken(accessToken: string, refreshToken?: string, expiresIn?: number) {
 
             this.$localForage.setItem('accessToken', accessToken);
-            if (refreshToken != undefined)
+            if (refreshToken)
                 this.$localForage.setItem('refreshToken', refreshToken);
-            if (expiresIn != undefined)
+            if (expiresIn)
                 this.$localForage.setItem('expiresIn', expiresIn);
         }
        
@@ -264,7 +264,7 @@
         checkRefreshToken() {
             this.$localForage.getItem('refreshToken')
                 .then((result) => {
-                    if (result == null || result === undefined)
+                    if (result)
                         this.$window.location.href = this.constantService.homeTanner;
                     else this.refreshToken();
                 });
