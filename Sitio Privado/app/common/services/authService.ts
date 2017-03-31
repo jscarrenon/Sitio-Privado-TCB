@@ -187,11 +187,11 @@
                 .then(() => this.setTimerForRefreshToken());
             return response;
         }
-        checkUserAuthentication() {
-            if (this.$location.path().indexOf('login') < 1)
-                this.verifyToken();
 
-            if (this.usuario == null || this.usuario === undefined) {
+        checkUserAuthentication() {
+            if (this.$location.path().indexOf('login') < 1) {
+                this.verifyToken();
+            } else if (this.usuario == null || this.usuario === undefined) {
                 this.$localForage.getItem('usuario')
                     .then((result) => {
                         this.setUsuario(JSON.parse(result));
