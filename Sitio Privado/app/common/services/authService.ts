@@ -179,7 +179,7 @@
                 .then((result: app.domain.IUsuario) => {
                     console.log(result);
                     this.autenticado = true;
-                    this.setUsuario(JSON.parse(result));
+                    this.setUsuario(result);
                     this.$localForage.setItem('usuario', JSON.stringify(result));
                     return result;
                 })
