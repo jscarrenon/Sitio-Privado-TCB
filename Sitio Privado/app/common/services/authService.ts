@@ -94,6 +94,7 @@
         }
         setUsuario(usuario: app.domain.IUsuario): void {
             if (usuario) {
+                console.log(usuario);
                 this.usuario = usuario;
             }
 
