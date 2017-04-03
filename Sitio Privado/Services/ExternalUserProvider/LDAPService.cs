@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Sitio_Privado.Models;
 using System.Reflection;
 using System.Text;
+using NLog;
 
 namespace Sitio_Privado.Services.ExternalUserProvider
 {
@@ -19,6 +20,7 @@ namespace Sitio_Privado.Services.ExternalUserProvider
         private static readonly string groupsBaseDN = ConfigurationManager.AppSettings["LDAPGroupsBaseDN"];
 
         private const AuthenticationTypes normalAuthenticationTypes = AuthenticationTypes.None;
+        private Logger logger;
 
         // This variable stores the mapping between the LDAP user properties and the UserInfo model.
         private Dictionary<string, string> ldapUserModelMapper;
@@ -26,7 +28,9 @@ namespace Sitio_Privado.Services.ExternalUserProvider
         public LDAPService()
         {
             SetUserSchemaEntries();
+            logger = LogManager.GetLogger("SessionLog");
         }
+
         private Dictionary<string, string> LoadUserModelMapper(IUserSchemaEntryRepository rep)
         {
             return rep.GetExternalFieldToPropetyNameDictionary();
@@ -36,6 +40,7 @@ namespace Sitio_Privado.Services.ExternalUserProvider
         {
             return rep.GetAllByPropertyName();
         }
+
         public bool Authenticate(string username, string password)
         {
             DirectoryEntry userEntry = null;
@@ -136,12 +141,18 @@ namespace Sitio_Privado.Services.ExternalUserProvider
         private UserInfo BuildUserFromDirectoryEntry(DirectoryEntry userEntry)
         {
             UserInfo userInfo = new UserInfo();
+            logger.Trace("Building user from directory entry...");
 
             foreach (string propertyName in userEntry.Properties.PropertyNames)
             {
                 string modelPropName = null;
+                logger.Trace("Property: " + propertyName);
+
                 if (ldapUserModelMapper.TryGetValue(propertyName, out modelPropName))
                 {
+                    logger.Trace("Property: " + propertyName);
+                    logger.Trace("Value is: " + userEntry.Properties[propertyName].Value.ToString());
+                    
                     PropertyInfo prop = typeof(UserInfo).GetProperty(modelPropName);
                     prop.SetValue(userInfo, userEntry.Properties[propertyName].Value.ToString());
                 }
