@@ -269,6 +269,7 @@
                                                 this.$window.location.href = this.constantService.homeTanner;
                                             
                                             this.getSusFirmaElecDoc();
+                                            this.getUserSitesByToken();
                                         });
                                 });
                         });
