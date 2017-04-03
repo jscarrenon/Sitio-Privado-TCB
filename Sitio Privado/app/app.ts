@@ -54,7 +54,7 @@
                         responseError: function (response) {
                             var authService: app.common.services.AuthService = $injector.get('authService');
                             if (response.status === 401) {
-                                authService.cerrarSesion();
+                                authService.limpiarUsuarioActual();
                                 $window.location.href = constantService.homeTanner;
                             }
                             return $q.reject(response);

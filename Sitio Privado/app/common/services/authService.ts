@@ -6,6 +6,7 @@
         autenticado: boolean;
         usuario: app.domain.IUsuario;
         getUsuarioActual(): void;
+        limpiarUsuarioActual(): void;
         cerrarSesion(): void;
         circularizacionPendiente: boolean;
         getCircularizacionPendiente(): void;
@@ -98,11 +99,16 @@
             }
 
         }
-        cerrarSesion(): void {
+
+        limpiarUsuarioActual(): void {
             this.autenticado = false;
             this.circularizacionPendiente = false;
             this.documentosPendientes = 0;
             this.usuario = null;
+        }
+
+        cerrarSesion(): void {
+            this.limpiarUsuarioActual();
             this.$localForage.getItem('accessToken')
                 .then((responseToken) => {
                     if (responseToken) {
