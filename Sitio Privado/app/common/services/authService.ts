@@ -106,24 +106,19 @@
             this.circularizacionPendiente = false;
             this.documentosPendientes = 0;
             this.usuario = null;
+            this.$localForage.removeItem(['accessToken', 'refreshToken', 'expiresIn', 'usuario', 'autenticado']);
         }
 
         cerrarSesion(): void {
-            this.limpiarUsuarioActual();
             this.$localForage.getItem('accessToken')
                 .then((responseToken) => {
                     if (responseToken) {
                         this.dataService.postWebService(this.constantService.apiSignOutUri, "", responseToken)
-                            .then(() => {
-                                this.$localForage.removeItem(['accessToken', 'refreshToken', 'expiresIn', 'usuario', 'autenticado']);
-                                this.$window.location.href = this.constantService.homeTanner;
-                            }).catch((responseError) => {
-                                this.$localForage.removeItem(['accessToken', 'refreshToken', 'expiresIn', 'usuario', 'autenticado']);
-                                this.$window.location.href = this.constantService.homeTanner;
-                            });
-                    } else {
-                        this.$localForage.removeItem(['accessToken', 'refreshToken', 'expiresIn', 'usuario', 'autenticado']);
-                        this.$window.location.href = this.constantService.homeTanner;
+                            .then(() => { })
+                            .finally(() => { this.limpiarUsuarioActual(); });
+                    }
+                    else {
+                        this.limpiarUsuarioActual();
                     }
                 });
         }
