@@ -115,10 +115,14 @@
                     if (responseToken) {
                         this.dataService.postWebService(this.constantService.apiSignOutUri, "", responseToken)
                             .then(() => { })
-                            .finally(() => { this.limpiarUsuarioActual(); });
+                            .finally(() => {
+                                this.limpiarUsuarioActual();
+                                this.$window.location.href = this.constantService.homeTanner;
+                            });
                     }
                     else {
                         this.limpiarUsuarioActual();
+                        this.$window.location.href = this.constantService.homeTanner;
                     }
                 });
         }
