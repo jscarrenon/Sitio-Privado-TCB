@@ -146,7 +146,6 @@ namespace Sitio_Privado.Services.ExternalUserProvider
             foreach (string propertyName in userEntry.Properties.PropertyNames)
             {
                 string modelPropName = null;
-                logger.Trace("Property: " + propertyName);
 
                 if (ldapUserModelMapper.TryGetValue(propertyName, out modelPropName))
                 {
