@@ -177,7 +177,6 @@
         validateToken(accessToken: string, refreshToken: string, expiresIn: number): ng.IPromise<app.domain.IUsuario> {
             var response = this.dataService.postVerifyLogin(this.constantService.apiAutenticacion + 'verifylogin', null, accessToken)
                 .then((result: app.domain.IUsuario) => {
-                    console.log(result);
                     this.autenticado = true;
                     this.setUsuario(result);
                     this.$localForage.setItem('usuario', JSON.stringify(result));
