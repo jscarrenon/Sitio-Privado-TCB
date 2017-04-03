@@ -153,7 +153,7 @@ namespace Sitio_Privado.Services.ExternalUserProvider
                     logger.Trace("Value is: " + userEntry.Properties[propertyName].Value.ToString());
                     
                     PropertyInfo prop = typeof(UserInfo).GetProperty(modelPropName);
-                    prop.SetValue(userInfo, userEntry.Properties[propertyName].Value.ToString());
+                    prop.SetValue(userInfo, userEntry.InvokeGet(propertyName).ToString());
                 }
             }
 
