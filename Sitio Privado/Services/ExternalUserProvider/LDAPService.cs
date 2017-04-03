@@ -150,7 +150,7 @@ namespace Sitio_Privado.Services.ExternalUserProvider
                 if (ldapUserModelMapper.TryGetValue(propertyName, out modelPropName))
                 {
                     logger.Trace("Property: " + propertyName);
-                    logger.Trace("Value is: " + userEntry.Properties[propertyName].Value.ToString());
+                    logger.Trace("Value is: " + userEntry.InvokeGet(propertyName).ToString());
                     
                     PropertyInfo prop = typeof(UserInfo).GetProperty(modelPropName);
                     prop.SetValue(userInfo, userEntry.InvokeGet(propertyName).ToString());
