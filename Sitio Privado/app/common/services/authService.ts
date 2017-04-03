@@ -105,7 +105,6 @@
                                 this.$localForage.removeItem(['accessToken', 'refreshToken', 'expiresIn', 'usuario', 'autenticado']);
                                 this.$window.location.href = this.constantService.homeTanner;
                             }).catch((responseError) => {
-                                console.log(responseError);
                                 this.$localForage.removeItem(['accessToken', 'refreshToken', 'expiresIn', 'usuario', 'autenticado']);
                                 this.$window.location.href = this.constantService.homeTanner;
                             });
@@ -195,7 +194,6 @@
                 this.$localForage.getItem('usuario')
                     .then((result) => {
                         this.setUsuario(JSON.parse(result));
-                        console.log("Calling getSusFirmaElecDoc from checkUserAuthentication");
                         this.getSusFirmaElecDoc();
                     });
             }
@@ -256,7 +254,6 @@
                                             if (this.usuario)
                                                 this.$window.location.href = this.constantService.homeTanner;
                                             
-                                            console.log("Calling getSusFirmaElecDoc from verifyToken");
                                             this.getSusFirmaElecDoc();
                                         });
                                 });
