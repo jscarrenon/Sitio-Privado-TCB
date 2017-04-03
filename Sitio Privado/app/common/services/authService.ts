@@ -21,6 +21,8 @@
         saveToken(accessToken: string, refreshToken: string, expiresIn: number): void;
         refreshToken(): ng.IPromise<void>;
         setTimerForRefreshToken(): void;
+        sites: Array<app.domain.SiteInformation>;
+        multiples: boolean;
     }
 
     export class AuthService implements IAuth {
@@ -33,6 +35,8 @@
         private qService: ng.IQService;
         private timer: ng.IPromise<any>;
         private httpParamSerializerProvider: any;
+        sites: Array<app.domain.SiteInformation>;
+        multiples: boolean;
 
         static $inject = [
             '$http',
@@ -63,6 +67,8 @@
             this.fechaCircularizacion = null;
             this.circularizacionPendiente = false;
             this.documentosPendientes = 0;
+            this.sites = [];
+            this.multiples = false;
             this.checkUserAuthentication();
             
             this.qService = $q;
@@ -195,6 +201,7 @@
                     .then((result) => {
                         this.setUsuario(JSON.parse(result));
                         this.getSusFirmaElecDoc();
+                        this.getUserSitesByToken();
                     });
             }
         }
@@ -267,6 +274,29 @@
                     if (result)
                         this.$window.location.href = this.constantService.homeTanner;
                     else this.refreshToken();
+                });
+        }
+
+        getUserSitesByToken(): void {
+            this.$localForage.getItem('accessToken')
+                .then((responseToken) => {
+                    this.$localForage.getItem('refreshToken')
+                        .then((refreshTokenResult) => {
+                            this.$localForage.getItem('expiresIn')
+                                .then((expiresInResult) => {
+                                    if (responseToken != null) {
+                                        this.dataService.postWebService(this.constantService.apiAutenticacion + 'usersites', null, responseToken)
+                                            .then((result: Array<app.domain.SiteInformation>) => {
+                                                result.forEach((site) => {
+                                                    site.Url = site.Url + '?accessToken=' + responseToken + '&refreshToken=' + refreshTokenResult + '&expiresIn=' + expiresInResult;
+                                                });
+                                                this.sites = result;
+                                                if (result.length > 1)
+                                                    this.multiples = true;
+                                            });
+                                    }
+                                });
+                        });
                 });
         }
     }
