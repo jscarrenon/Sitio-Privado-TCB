@@ -93,7 +93,7 @@
             });
         }
         setUsuario(usuario: app.domain.IUsuario): void {
-            if (!usuario) {
+            if (usuario) {
                 this.usuario = usuario;
             }
 
@@ -196,7 +196,7 @@
         checkUserAuthentication() {
             if (this.$location.path().indexOf('login') < 1) {
                 this.verifyToken();
-            } else if (this.usuario) {
+            } else if (!this.usuario) {
                 this.$localForage.getItem('usuario')
                     .then((result) => {
                         this.setUsuario(JSON.parse(result));

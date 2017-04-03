@@ -146,15 +146,14 @@ namespace Sitio_Privado.Services.ExternalUserProvider
             foreach (string propertyName in userEntry.Properties.PropertyNames)
             {
                 string modelPropName = null;
-                logger.Trace("Property: " + propertyName);
 
                 if (ldapUserModelMapper.TryGetValue(propertyName, out modelPropName))
                 {
                     logger.Trace("Property: " + propertyName);
-                    logger.Trace("Value is: " + userEntry.Properties[propertyName].Value.ToString());
+                    logger.Trace("Value is: " + userEntry.InvokeGet(propertyName) != null ? userEntry.InvokeGet(propertyName) : "null");
                     
                     PropertyInfo prop = typeof(UserInfo).GetProperty(modelPropName);
-                    prop.SetValue(userInfo, userEntry.Properties[propertyName].Value.ToString());
+                    prop.SetValue(userInfo, userEntry.InvokeGet(propertyName));
                 }
             }
 
