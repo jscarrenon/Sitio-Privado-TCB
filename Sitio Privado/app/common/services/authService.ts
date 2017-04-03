@@ -87,7 +87,7 @@
             });
         }
         setUsuario(usuario: app.domain.IUsuario): void {
-            if (!usuario) {
+            if (usuario) {
                 this.usuario = usuario;
             }
 
