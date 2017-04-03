@@ -191,10 +191,11 @@
         checkUserAuthentication() {
             if (this.$location.path().indexOf('login') < 1) {
                 this.verifyToken();
-            } else if (this.usuario == null || this.usuario === undefined) {
+            } else if (this.usuario) {
                 this.$localForage.getItem('usuario')
                     .then((result) => {
                         this.setUsuario(JSON.parse(result));
+                        console.log("Calling getSusFirmaElecDoc from checkUserAuthentication");
                         this.getSusFirmaElecDoc();
                     });
             }
@@ -252,8 +253,10 @@
                                 .then((expiresInResult) => {
                                     this.validateToken(accessTokenResult, refreshTokenResult, expiresInResult)
                                         .then((response) => {
-                                            if (this.usuario == null || this.usuario === undefined)
+                                            if (this.usuario)
                                                 this.$window.location.href = this.constantService.homeTanner;
+                                            
+                                            console.log("Calling getSusFirmaElecDoc from verifyToken");
                                             this.getSusFirmaElecDoc();
                                         });
                                 });
