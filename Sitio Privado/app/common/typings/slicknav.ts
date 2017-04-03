@@ -126,7 +126,7 @@
         var items = $this.mobileNav.find('li');
         $(items).each(function () {
             var item = $(this),
-                data = { children: [] };
+                data = { children: [] as any };
             data.children = item.children('ul').attr('role', 'menu');
             item.data('menu', data);
 
@@ -245,7 +245,7 @@
 
         // check for enter key on menu button and menu parents
         $($this.btn).keydown(function (e) {
-            var ev = e || event;
+            var ev = e || event as any;
             if (ev.keyCode == 13) {
                 e.preventDefault();
                 $this._menuToggle();
