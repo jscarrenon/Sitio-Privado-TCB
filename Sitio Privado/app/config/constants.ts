@@ -6,6 +6,7 @@ module app.config {
         CLIENT_SECRET: 'secret',
         OAUTH2_URL: 'https://oauthdesa.tanner.cl/',
         TANNER_PUBLIC_SITE_URL: 'http://www.kunder.cl/tannercl2/',
-        TANNER_AUTHENTICATION_API: 'http://localhost:63800/api/authentication/'
+        TANNER_AUTHENTICATION_API: 'http://localhost:63800/api/authentication/',
+        REQUIRED_GROUP: 'clientescorredora'
     };
 }

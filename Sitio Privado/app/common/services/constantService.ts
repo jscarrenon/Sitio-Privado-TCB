@@ -29,6 +29,7 @@
         userClientId: string;
         userClientSecret: string;
         tannerAuthenticationAPI: string;
+        requiredGroup: string;
     }
 
     export class ConstantService implements IConstant {
@@ -60,6 +61,7 @@
         userClientId: string;
         userClientSecret: string;
         tannerAuthenticationAPI: string;
+        requiredGroup: string;
 
         constructor() {
             this.buildFolderURI = '.build/';
@@ -92,6 +94,7 @@
             this.userClientId = app.config.CONFIG.CLIENT_ID;
             this.userClientSecret = app.config.CONFIG.CLIENT_SECRET;
             this.tannerAuthenticationAPI = app.config.CONFIG.TANNER_AUTHENTICATION_API;
+            this.requiredGroup = app.config.CONFIG.REQUIRED_GROUP;
 
         }
     }

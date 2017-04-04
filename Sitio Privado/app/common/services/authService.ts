@@ -291,9 +291,22 @@
                                     if (responseToken != null) {
                                         this.dataService.get(this.constantService.tannerAuthenticationAPI + 'usersites')
                                             .then((result: app.domain.SiteInformation[]) => {
-                                                result.forEach((site) => {
+                                                let requiredGroupSiteIndex: number = 0;
+                                                result.forEach((site, index) => {
                                                     site.url = site.url + '?accessToken=' + responseToken + '&refreshToken=' + refreshTokenResult + '&expiresIn=' + expiresInResult;
+                                                    if (site.cn) {
+                                                        let cnSplit = site.cn.split("_");
+                                                        if (cnSplit.length > 1 && cnSplit[1] === this.constantService.requiredGroup) {
+                                                            requiredGroupSiteIndex = index;
+                                                        }
+                                                    }
                                                 });
+                                                //Site with same required group goes first. Swap.
+                                                if (requiredGroupSiteIndex !== 0) {
+                                                    let temp = result[requiredGroupSiteIndex];
+                                                    result[requiredGroupSiteIndex] = result[0];
+                                                    result[0] = temp;
+                                                }
                                                 this.sites = result;
                                             });
                                     }
