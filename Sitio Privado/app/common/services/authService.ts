@@ -266,10 +266,6 @@
                                     this.verifyLogin(accessTokenResult, refreshTokenResult, expiresInResult)
                                         .then((response) => {
                                             console.log("verifyToken");
-                                            if (this.usuario) {
-                                                console.log("hay usuario, redirecciona a público");
-                                                this.$window.location.href = this.constantService.homeTanner;
-                                            }
                                             console.log("llamando getSusFirmaElecDoc y getUserSitesByToken");
                                             this.getSusFirmaElecDoc();
                                             this.getUserSitesByToken();
