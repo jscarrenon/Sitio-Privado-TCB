@@ -16,14 +16,12 @@ namespace Sitio_Privado.Controllers
     public class AuthenticationController : ApiController
     {
         IHttpService httpService = null;
-        IAuthorityClientService authorityClientService = null;
         IExternalUserService userService = null;
         Logger logger;
 
-        public AuthenticationController(IHttpService httpService, IAuthorityClientService authorityClientService, IExternalUserService userService)
+        public AuthenticationController(IHttpService httpService, IExternalUserService userService)
         {
             this.httpService = httpService;
-            this.authorityClientService = authorityClientService;
             this.userService = userService;
             logger = LogManager.GetLogger("SessionLog");
         }
@@ -48,27 +46,6 @@ namespace Sitio_Privado.Controllers
             else
             {
                 logger.Warn("User not found in the user service => Username: " + username);
-                return Redirect(ConfigurationManager.AppSettings["web:PostLogoutRedirectUrl"] + "?action=login");
-            }
-        }
-        /// <summary>
-        /// Verifies if the logged user has the minimum group requirements to use the application
-        /// and return the user sites allowed to view
-        /// </summary>
-        /// <returns></returns>
-        [AuthorizeWithGroups]
-        [Route("usersites")]
-        [HttpPost]
-        public IHttpActionResult GetUserSites()
-        {
-            List<SiteInformation> userSites = authorityClientService.GetUserSites(UserHelper.ExtractGroups(User as ClaimsPrincipal));
-
-            if (userSites != null)
-            {
-                return Ok(userSites);
-            }
-            else
-            {
                 return Redirect(ConfigurationManager.AppSettings["web:PostLogoutRedirectUrl"] + "?action=login");
             }
         }
