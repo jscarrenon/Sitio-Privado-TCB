@@ -92,7 +92,6 @@
         }
         setUsuario(usuario: app.domain.IUsuario): void {
             if (usuario) {
-                console.log(usuario);
                 this.usuario = usuario;
             }
 
@@ -202,7 +201,6 @@
             } else if (!this.usuario) {
                 this.$localForage.getItem('usuario')
                     .then((result) => {
-                        console.log("checkUserAuthentication");
                         this.setUsuario(JSON.parse(result));
                         this.getSusFirmaElecDoc();
                         this.getUserSitesByToken();
@@ -262,8 +260,6 @@
                                 .then((expiresInResult) => {
                                     this.verifyLogin(accessTokenResult, refreshTokenResult, expiresInResult)
                                         .then((response) => {
-                                            console.log("verifyToken");
-                                            console.log("llamando getSusFirmaElecDoc y getUserSitesByToken");
                                             this.getSusFirmaElecDoc();
                                             this.getUserSitesByToken();
                                         });

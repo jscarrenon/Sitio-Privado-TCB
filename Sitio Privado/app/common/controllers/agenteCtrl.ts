@@ -31,10 +31,8 @@
                         .then((result: app.domain.IAgente) => {
                             this.agente = result;
                         })
-                        .catch((reason) => { console.log(reason);})
                         .finally(() => this.loading = false);
-                })
-                .catch((reason) => { console.log(reason); });
+                });
         }
     }
 
