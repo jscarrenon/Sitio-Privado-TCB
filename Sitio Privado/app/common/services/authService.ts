@@ -16,7 +16,7 @@
         setSusFirmaElecDoc(glosa: string, respuesta: string): ng.IPromise<number>;
         fechaCircularizacion: Date;
         getFechaCircularizacion(): void;
-        validateToken(accessToken: string, refreshToken: string, expiresIn: number): ng.IPromise<app.domain.IUsuario>;
+        verifyLogin(accessToken: string, refreshToken: string, expiresIn: number): ng.IPromise<app.domain.IUsuario>;
         setUsuario(usuario: app.domain.IUsuario): void;
         checkUserAuthentication(): void;
         saveToken(accessToken: string, refreshToken: string, expiresIn: number): void;
@@ -186,7 +186,7 @@
             return deferred.promise;
         }
 
-        validateToken(accessToken: string, refreshToken: string, expiresIn: number): ng.IPromise<app.domain.IUsuario> {
+        verifyLogin(accessToken: string, refreshToken: string, expiresIn: number): ng.IPromise<app.domain.IUsuario> {
             var response = this.dataService.postVerifyLogin(this.constantService.apiAutenticacion + 'verifylogin', null, accessToken)
                 .then((result: app.domain.IUsuario) => {
                     this.autenticado = true;
@@ -263,11 +263,14 @@
                         .then((refreshTokenResult) => {
                             this.$localForage.getItem('expiresIn')
                                 .then((expiresInResult) => {
-                                    this.validateToken(accessTokenResult, refreshTokenResult, expiresInResult)
+                                    this.verifyLogin(accessTokenResult, refreshTokenResult, expiresInResult)
                                         .then((response) => {
-                                            if (this.usuario)
-                                                this.$window.location.href = this.constantService.homeTanner;
                                             console.log("verifyToken");
+                                            if (this.usuario) {
+                                                console.log("hay usuario, redirecciona a público");
+                                                this.$window.location.href = this.constantService.homeTanner;
+                                            }
+                                            console.log("llamando getSusFirmaElecDoc y getUserSitesByToken");
                                             this.getSusFirmaElecDoc();
                                             this.getUserSitesByToken();
                                         });

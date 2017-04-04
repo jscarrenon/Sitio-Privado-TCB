@@ -84,13 +84,15 @@
                     event.preventDefault();
 
                     if ($location.path() === '/login') {
+                        console.log("caso /login");
                         // we need to validate token
                         var token = $location.search().accessToken;
                         var refreshToken = $location.search().refreshToken;
                         var expiresIn = $location.search().expiresIn;
-                        authenticationService.validateToken(token, refreshToken, expiresIn)
+                        authenticationService.verifyLogin(token, refreshToken, expiresIn)
                             .then(() => (authenticationService.autenticado = true, $location.path("/").search({})));
                     } else {
+                        console.log("caso no /login");
                         // we need to make sure out authorization header is valid
                         $localForage.getItem('accessToken')
                             .then((responseToken) => {
