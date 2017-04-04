@@ -459,10 +459,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Services\AuthorityClientService.cs" />
     <Compile Include="Services\ExternalUserProvider\LDAPService.cs" />
     <Compile Include="Services\HttpService.cs" />
-    <Compile Include="Services\Interfaces\IAuthorityClientService.cs" />
     <Compile Include="Services\Interfaces\IExternalUserProvider.cs" />
     <Compile Include="Services\Interfaces\IHttpService.cs" />
     <Compile Include="Services\Interfaces\IUserSchemaEntryRepository.cs" />
