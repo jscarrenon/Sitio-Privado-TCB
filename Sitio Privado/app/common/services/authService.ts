@@ -22,8 +22,7 @@
         saveToken(accessToken: string, refreshToken: string, expiresIn: number): void;
         refreshToken(): ng.IPromise<void>;
         setTimerForRefreshToken(): void;
-        sites: Array<app.domain.SiteInformation>;
-        multiples: boolean;
+        sites: app.domain.SiteInformation[];
     }
 
     export class AuthService implements IAuth {
@@ -36,8 +35,7 @@
         private qService: ng.IQService;
         private timer: ng.IPromise<any>;
         private httpParamSerializerProvider: any;
-        sites: Array<app.domain.SiteInformation>;
-        multiples: boolean;
+        sites: app.domain.SiteInformation[];
 
         static $inject = [
             '$http',
@@ -69,7 +67,6 @@
             this.circularizacionPendiente = false;
             this.documentosPendientes = 0;
             this.sites = [];
-            this.multiples = false;
             this.checkUserAuthentication();
             
             this.qService = $q;
@@ -293,13 +290,11 @@
                                 .then((expiresInResult) => {
                                     if (responseToken != null) {
                                         this.dataService.get(this.constantService.tannerAuthenticationAPI + 'usersites')
-                                            .then((result: Array<app.domain.SiteInformation>) => {
+                                            .then((result: app.domain.SiteInformation[]) => {
                                                 result.forEach((site) => {
-                                                    site.Url = site.Url + '?accessToken=' + responseToken + '&refreshToken=' + refreshTokenResult + '&expiresIn=' + expiresInResult;
+                                                    site.url = site.url + '?accessToken=' + responseToken + '&refreshToken=' + refreshTokenResult + '&expiresIn=' + expiresInResult;
                                                 });
                                                 this.sites = result;
-                                                if (result.length > 1)
-                                                    this.multiples = true;
                                             });
                                     }
                                 });
