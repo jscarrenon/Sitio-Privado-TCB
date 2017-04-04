@@ -113,7 +113,7 @@
             this.$localForage.getItem('accessToken')
                 .then((responseToken) => {
                     if (responseToken) {
-                        this.dataService.postWebService(this.constantService.apiSignOutUri, "", responseToken)
+                        this.dataService.postWebService(this.constantService.apiAutenticacionURI + 'signout', null, responseToken)
                             .then(() => { })
                             .finally(() => {
                                 this.limpiarUsuarioActual();
@@ -187,7 +187,7 @@
         }
 
         verifyLogin(accessToken: string, refreshToken: string, expiresIn: number): ng.IPromise<app.domain.IUsuario> {
-            var response = this.dataService.postVerifyLogin(this.constantService.apiAutenticacion + 'verifylogin', null, accessToken)
+            var response = this.dataService.postWebService(this.constantService.apiAutenticacionURI + 'verifylogin', null, accessToken)
                 .then((result: app.domain.IUsuario) => {
                     this.autenticado = true;
                     this.setUsuario(result);
@@ -292,7 +292,7 @@
                             this.$localForage.getItem('expiresIn')
                                 .then((expiresInResult) => {
                                     if (responseToken != null) {
-                                        this.dataService.postWebService(this.constantService.apiAutenticacion + 'usersites', null, responseToken)
+                                        this.dataService.get(this.constantService.tannerAuthenticationAPI + 'usersites')
                                             .then((result: Array<app.domain.SiteInformation>) => {
                                                 result.forEach((site) => {
                                                     site.Url = site.Url + '?accessToken=' + responseToken + '&refreshToken=' + refreshTokenResult + '&expiresIn=' + expiresInResult;
