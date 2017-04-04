@@ -205,6 +205,7 @@
             } else if (!this.usuario) {
                 this.$localForage.getItem('usuario')
                     .then((result) => {
+                        console.log("checkUserAuthentication");
                         this.setUsuario(JSON.parse(result));
                         this.getSusFirmaElecDoc();
                         this.getUserSitesByToken();
@@ -266,7 +267,7 @@
                                         .then((response) => {
                                             if (this.usuario)
                                                 this.$window.location.href = this.constantService.homeTanner;
-                                            
+                                            console.log("verifyToken");
                                             this.getSusFirmaElecDoc();
                                             this.getUserSitesByToken();
                                         });
