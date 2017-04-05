@@ -2,11 +2,11 @@ module app.config {
     // Kunder development and testing servers
     export const CONFIG = {
         ENV: 'debug',
-        CLIENT_ID: 'passwordgrant',
-        CLIENT_SECRET: 'secret',
+        CLIENT_ID: 'dev_customer_password',
+        CLIENT_SECRET: 'rdkbKVM7neKs15wX0YgOzQjTZ8JF4SRNYs-KAjNr',
         OAUTH2_URL: 'https://oauthdesa.tanner.cl/',
-        TANNER_PUBLIC_SITE_URL: 'http://www.kunder.cl/tannercl2/',
-        TANNER_AUTHENTICATION_API: 'http://localhost:63800/api/authentication/',
+        TANNER_PUBLIC_SITE_URL: 'http://www.kunder.cl/tannercl/',
+        TANNER_AUTHENTICATION_API: 'https://proxylogindesa.scm.azurewebsites.net/api/authentication/',
         REQUIRED_GROUP: 'clientescorredora'
     };
 }
