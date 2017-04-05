@@ -36,7 +36,7 @@ namespace Sitio_Privado.Controllers
         public IHttpActionResult VerifyLogin()
         {
             var username = UserHelper.ExtractAuthorityId(User as ClaimsPrincipal);
-            Usuario user = userService.GetUserInfoByUsername(username);
+            Usuario user = userService.GetUserInfoByUsernameV2(username);
 
             if (user != null)
             {
