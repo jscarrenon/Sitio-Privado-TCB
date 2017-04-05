@@ -155,8 +155,9 @@ namespace Sitio_Privado.Services.ExternalUserProvider
 
                     try
                     {
-                        var property = userEntry.Properties[propertyName].Value;
-                        logger.Trace("LDAP Property is: " + property.ToString());
+                        var property = userEntry.Properties[propertyName][0];
+                        logger.Trace("LDAP Property type is: " + property.GetType());
+                        logger.Trace("LDAP Property value is: " + property.ToString());
                     }
                     catch (Exception)
                     {
