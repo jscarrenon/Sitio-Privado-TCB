@@ -152,7 +152,17 @@ namespace Sitio_Privado.Services.ExternalUserProvider
                     logger.Trace("Property: " + propertyName);
                     string aux = userEntry.InvokeGet(propertyName) != null ? userEntry.InvokeGet(propertyName).ToString() : "null";
                     logger.Trace("Value is: " + aux);
-                    
+
+                    try
+                    {
+                        var property = userEntry.Properties[propertyName].Value;
+                        logger.Trace("LDAP Property is: " + property.ToString());
+                    }
+                    catch (Exception)
+                    {
+                        // For testing LDAP cusotm properties reading
+                    }
+
                     PropertyInfo prop = typeof(UserInfo).GetProperty(modelPropName);
                     prop.SetValue(userInfo, userEntry.InvokeGet(propertyName));
                 }
