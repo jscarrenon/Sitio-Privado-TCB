@@ -19,7 +19,7 @@ namespace Sitio_Privado.Services.ExternalUserProvider
         private static readonly string usersBaseDN = ConfigurationManager.AppSettings["LDAPUsersBaseDN"];
         private static readonly string groupsBaseDN = ConfigurationManager.AppSettings["LDAPGroupsBaseDN"];
 
-        private const AuthenticationTypes normalAuthenticationTypes = AuthenticationTypes.None;
+        private const AuthenticationTypes normalAuthenticationTypes = AuthenticationTypes.Delegation;
         private Logger logger;
 
         // This variable stores the mapping between the LDAP user properties and the UserInfo model.
