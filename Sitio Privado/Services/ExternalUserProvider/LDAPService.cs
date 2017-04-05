@@ -147,7 +147,7 @@ namespace Sitio_Privado.Services.ExternalUserProvider
             {
                 string modelPropName = null;
 
-                if (ldapUserModelMapper.TryGetValue(propertyName, out modelPropName))
+                if (ldapUserModelMapper.TryGetValue(propertyName.ToLower(), out modelPropName))
                 {
                     logger.Trace("Property: " + propertyName);
                     logger.Trace("Value is: " + userEntry.InvokeGet(propertyName) != null ? userEntry.InvokeGet(propertyName) : "null");
@@ -161,20 +161,21 @@ namespace Sitio_Privado.Services.ExternalUserProvider
         }
         private void SetUserSchemaEntries()
         {
+            // IMPORTANT: All keys of the mapper should be lowercase!
             this.ldapUserModelMapper = new Dictionary<string, string>
             {
-                {"uid","Rut" },
-                {"givenname","FirstName" },
-                { "sn","LastName"},
-                { "mail","Email"},
-                { "cuenta_corriente","CheckingAccount"},
-                { "banco","Bank"},
-                { "fono_comercial","WorkPhone"},
-                { "fono_particular","HomePhone"},
-                { "domicilio_particular","HomeAddress"},
-                { "domicilio_comercial","WorkAddress"},
-                { "city","City"},
-                { "countryCode","Country"}
+                { "uid", "Rut" },
+                { "givenname", "FirstName" },
+                { "sn", "LastName"},
+                { "mail", "Email"},
+                { "cuenta_corriente", "CheckingAccount"},
+                { "banco", "Bank"},
+                { "fono_comercial", "WorkPhone"},
+                { "fono_particular", "HomePhone"},
+                { "domicilio_particular", "HomeAddress"},
+                { "domicilio_comercial", "WorkAddress"},
+                { "city", "City"},
+                { "countrycode", "Country"}
             };
         }
 
