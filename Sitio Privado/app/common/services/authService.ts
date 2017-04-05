@@ -5,7 +5,6 @@
     interface IAuth {
         autenticado: boolean;
         usuario: app.domain.IUsuario;
-        getUsuarioActual(): void;
         limpiarUsuarioActual(): void;
         cerrarSesion(): void;
         circularizacionPendiente: boolean;
@@ -73,26 +72,6 @@
             this.qService = $q;
         }
 
-        getUsuarioActual(): void {
-            console.log("calling getUsuarioActual");
-            this.dataService.getSingle(this.constantService.mvcHomeURI + 'GetUsuarioActual').then((result: app.domain.IUsuario) => {
-
-                this.usuario = result;
-                if (this.usuario.Autenticado) {
-                    this.autenticado = true;
-                    console.log("calling 3 methods after getUsuarioActual");
-                    this.getFechaCircularizacion();
-                    this.getCircularizacionPendiente();
-                    this.getDocumentosPendientes();
-                }
-                else {
-                    this.autenticado = true;
-                    this.fechaCircularizacion = null;
-                    this.circularizacionPendiente = false;
-                    this.documentosPendientes = 0;
-                }
-            });
-        }
         setUsuario(usuario: app.domain.IUsuario): void {
             if (usuario) {
                 this.usuario = usuario;
