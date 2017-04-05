@@ -26,7 +26,7 @@
         getAgente(): void;
         loadingAgente: boolean;
         callsAfterLogin(): void;
-        loadingVerifyLogin: boolean;
+        waitingResponse: boolean;
     }
 
     export class AuthService implements IAuth {
@@ -42,7 +42,7 @@
         sites: app.domain.SiteInformation[];
         agente: app.domain.IAgente;
         loadingAgente: boolean;
-        loadingVerifyLogin: boolean;
+        waitingResponse: boolean;
 
         static $inject = [
             '$http',
@@ -70,7 +70,7 @@
             private dataService: DataService,
             private extrasService: ExtrasService
         ) {
-            this.loadingVerifyLogin = true;
+            this.waitingResponse = true;
 
             this.fechaCircularizacion = null;
             this.circularizacionPendiente = false;
@@ -98,6 +98,7 @@
         }
 
         cerrarSesion(): void {
+            this.waitingResponse = true;
             this.$localForage.getItem('accessToken')
                 .then((responseToken) => {
                     if (responseToken) {
@@ -175,7 +176,7 @@
 
         verifyLogin(accessToken: string, refreshToken: string, expiresIn: number): ng.IPromise<app.domain.IUsuario> {
             console.log("calling verifyLogin");
-            this.loadingVerifyLogin = true;
+            this.waitingResponse = true;
             var response = this.dataService.postWebService(this.constantService.apiAutenticacionURI + 'verifylogin', null, accessToken)
                 .then((result: app.domain.IUsuario) => {
                     console.log("set user after calling verifyLogin")
@@ -186,7 +187,7 @@
                 })
                 .then((response) => this.saveToken(accessToken, refreshToken, expiresIn))
                 .then(() => this.setTimerForRefreshToken())
-                .finally(() => this.loadingVerifyLogin = false);
+                .finally(() => this.waitingResponse = false);
             return response;
         }
 
