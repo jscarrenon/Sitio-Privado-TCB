@@ -159,9 +159,10 @@ namespace Sitio_Privado.Services.ExternalUserProvider
                         logger.Trace("LDAP Property type is: " + property.GetType());
                         logger.Trace("LDAP Property value is: " + property.ToString());
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
                         // For testing LDAP cusotm properties reading
+                        logger.Error(ex, ex.Message);
                     }
 
                     PropertyInfo prop = typeof(UserInfo).GetProperty(modelPropName);
