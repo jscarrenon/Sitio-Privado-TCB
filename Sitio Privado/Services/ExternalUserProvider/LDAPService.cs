@@ -2,12 +2,14 @@
 using System;
 using System.Runtime.InteropServices;
 using System.DirectoryServices;
+using System.DirectoryServices.Protocols;
 using System.Configuration;
 using System.Collections.Generic;
 using Sitio_Privado.Models;
 using System.Reflection;
 using System.Text;
 using NLog;
+using System.Net;
 
 namespace Sitio_Privado.Services.ExternalUserProvider
 {
@@ -70,6 +72,10 @@ namespace Sitio_Privado.Services.ExternalUserProvider
 
         public Usuario GetUserInfoByUsername(string username)
         {
+#warning Remove GetUserInfoByUsernameV2
+            GetUserInfoByUsernameV2(username);
+
+
             DirectorySearcher searcher = InitializeSearcher(usersBaseDN);
             UserInfo userInfo = null;
             Usuario usuario = null;
@@ -128,11 +134,38 @@ namespace Sitio_Privado.Services.ExternalUserProvider
                     normalAuthenticationTypes);
 
             searcher = new DirectorySearcher(searchRoot);
-            searcher.SearchScope = SearchScope.OneLevel;
+            searcher.SearchScope = System.DirectoryServices.SearchScope.OneLevel;
             searcher.CacheResults = false;
 
             return searcher;
         }
+
+        /// <summary>
+        /// Initializes a new instance of the DirectorySearcher class, pointing to differents base DN based on the user type given.
+        /// </summary>
+        /// <returns>The initialized DirectorySearcher instance</returns>
+        private static void GetUserInfoByUsernameV2(string username)
+        {
+            NetworkCredential credential = new NetworkCredential(
+                ConfigurationManager.AppSettings["LDAPAdminUsername"],
+                ConfigurationManager.AppSettings["LDAPAdminPassword"]);
+
+            LdapConnection connection = new LdapConnection(string.Format("LDAP://{0}", domain));
+            connection.Credential = credential;
+            connection.SessionOptions.ProtocolVersion = 3;
+
+            var searchRequest = new SearchRequest(
+                    usersBaseDN,
+                    string.Format("cn={0}", username),
+                    System.DirectoryServices.Protocols.SearchScope.Subtree);
+
+            var searchOptions = new SearchOptionsControl(SearchOption.DomainScope);
+            searchRequest.Controls.Add(searchOptions);
+
+            var searchResponse = (SearchResponse)connection.SendRequest(searchRequest);
+
+        }
+
         /// <summary>
         /// Builds a UserInfo instance from the PropertyCollection property of a DirectoryService entry using Reflection.
         /// </summary>
