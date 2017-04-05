@@ -23,6 +23,7 @@
         refreshToken(): ng.IPromise<void>;
         setTimerForRefreshToken(): void;
         sites: app.domain.SiteInformation[];
+        callsAfterLogin(): void;
     }
 
     export class AuthService implements IAuth {
@@ -295,24 +296,31 @@
         getUserSitesByToken(): void {
             this.$localForage.getItem('accessToken')
                 .then((responseToken) => {
-                    this.dataService.get(this.constantService.tannerAuthenticationAPI + 'usersites')
-                        .then((result: app.domain.SiteInformation[]) => {
-                            let requiredGroupSiteIndex: number = 0;
-                            result.forEach((site, index) => {
-                                if (site.cn) {
-                                    let cnSplit = site.cn.split("_");
-                                    if (cnSplit.length > 1 && cnSplit[1] === this.constantService.requiredGroup) {
-                                        requiredGroupSiteIndex = index;
-                                    }
-                                }
-                            });
-                            //Site with same required group goes first. Swap.
-                            if (requiredGroupSiteIndex !== 0) {
-                                let temp = result[requiredGroupSiteIndex];
-                                result[requiredGroupSiteIndex] = result[0];
-                                result[0] = temp;
-                            }
-                            this.sites = result;
+                    this.$localForage.getItem('refreshToken')
+                        .then((refreshTokenResult) => {
+                            this.$localForage.getItem('expiresIn')
+                                .then((expiresInResult) => {
+                                    this.dataService.get(this.constantService.tannerAuthenticationAPI + 'usersites')
+                                        .then((result: app.domain.SiteInformation[]) => {
+                                            let requiredGroupSiteIndex: number = 0;
+                                            result.forEach((site, index) => {
+                                                site.url = site.url + '?accessToken=' + responseToken + '&refreshToken=' + refreshTokenResult + '&expiresIn=' + expiresInResult;
+                                                if (site.cn) {
+                                                    let cnSplit = site.cn.split("_");
+                                                    if (cnSplit.length > 1 && cnSplit[1] === this.constantService.requiredGroup) {
+                                                        requiredGroupSiteIndex = index;
+                                                    }
+                                                }
+                                            });
+                                            //Site with same required group goes first. Swap.
+                                            if (requiredGroupSiteIndex !== 0) {
+                                                let temp = result[requiredGroupSiteIndex];
+                                                result[requiredGroupSiteIndex] = result[0];
+                                                result[0] = temp;
+                                            }
+                                            this.sites = result;
+                                        });
+                                });
                         });
                 });
         }
