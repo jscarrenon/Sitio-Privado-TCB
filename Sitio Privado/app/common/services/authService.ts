@@ -22,6 +22,9 @@
         refreshToken(): ng.IPromise<void>;
         setTimerForRefreshToken(): void;
         sites: app.domain.SiteInformation[];
+        agente: app.domain.IAgente;
+        getAgente(): void;
+        loadingAgente: boolean;
         callsAfterLogin(): void;
     }
 
@@ -36,6 +39,8 @@
         private timer: ng.IPromise<any>;
         private httpParamSerializerProvider: any;
         sites: app.domain.SiteInformation[];
+        agente: app.domain.IAgente;
+        loadingAgente: boolean;
 
         static $inject = [
             '$http',
@@ -304,13 +309,27 @@
                 });
         }
 
+        getAgente(): void {
+            this.loadingAgente = true;
+            this.$localForage.getItem('accessToken')
+                .then((responseToken) => {
+                    this.dataService.postWebService(this.constantService.apiAgenteURI + 'getSingle', null, responseToken)
+                        .then((result: app.domain.IAgente) => {
+                            this.agente = result;
+                        })
+                        .finally(() => this.loadingAgente = false);
+                })
+                .catch(() => this.loadingAgente = false);
+        }
+
         callsAfterLogin(): void {
-            console.log("calling 5 methods after calling verifyToken and verifyLogin");
+            console.log("calling 6 methods after calling verifyToken and verifyLogin");
             this.getSusFirmaElecDoc();
             this.getUserSitesByToken();
             this.getFechaCircularizacion();
             this.getCircularizacionPendiente();
             this.getDocumentosPendientes();
+            this.getAgente();
         }
     }
 
