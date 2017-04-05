@@ -225,8 +225,8 @@ namespace Sitio_Privado.Services.ExternalUserProvider
                         groups.Add(new SiteInformation()
                         {
                             AbbreviateName = searchResults[i].Properties["shortName"].Count > 0 ? searchResults[i].Properties["shortName"][0].ToString().ToUpper() : "",
-                            Description = searchResults[i].Properties["description"].Count > 0 ? searchResults[i].Properties["description"][0].ToString().ToLower() : "",
-                            SiteName = searchResults[i].Properties["name"].Count > 0 ? searchResults[i].Properties["name"][0].ToString().ToLower() : "",
+                            Description = searchResults[i].Properties["description"].Count > 0 ? searchResults[i].Properties["description"][0].ToString() : "",
+                            SiteName = searchResults[i].Properties["name"].Count > 0 ? searchResults[i].Properties["name"][0].ToString() : "",
                             Url = searchResults[i].Properties["url"].Count > 0 ? searchResults[i].Properties["url"][0].ToString().ToLower() : "",
                             SiteType = description.Contains("spr") ? "Sitio Privado" : "Sitio Público",
                             Cn = description,
