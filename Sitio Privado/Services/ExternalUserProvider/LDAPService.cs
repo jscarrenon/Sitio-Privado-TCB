@@ -151,7 +151,7 @@ namespace Sitio_Privado.Services.ExternalUserProvider
                 {
                     logger.Trace("Property name: " + propertyName);
                     logger.Trace("LDAP Property type: " + userEntry.Properties[propertyName].Value.GetType());
-                    //string aux = userEntry.Properties[propertyName].Value != null ? userEntry.Properties[propertyName].Value.ToString() : "null";
+                    string aux = userEntry.Properties[propertyName].Value != null ? userEntry.Properties[propertyName].Value.ToString() : "null";
                     logger.Trace("Value is: " + aux);
                     
                     PropertyInfo prop = typeof(UserInfo).GetProperty(modelPropName);
