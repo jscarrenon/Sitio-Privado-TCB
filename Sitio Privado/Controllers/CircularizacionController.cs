@@ -29,7 +29,7 @@ namespace Sitio_Privado.Controllers
         {
             try
             {
-                var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
+                var usuario = userService.GetUserInfoByUsernameV2(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
                 CircularizacionProcesoResultado proceso = new CircularizacionProcesoResultado(input, usuario);
                 return Ok(proceso);
             }
@@ -44,7 +44,7 @@ namespace Sitio_Privado.Controllers
         {
             try
             {
-                var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
+                var usuario = userService.GetUserInfoByUsernameV2(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
                 CircularizacionArchivo archivo = new CircularizacionArchivo(input, usuario);
                 return Ok(archivo);
             }
@@ -59,7 +59,7 @@ namespace Sitio_Privado.Controllers
         {
             try
             {
-                var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
+                var usuario = userService.GetUserInfoByUsernameV2(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
                 CircularizacionProcesoResultado proceso = new CircularizacionProcesoResultado(input, usuario);
                 return Ok(proceso);
             }
@@ -74,7 +74,7 @@ namespace Sitio_Privado.Controllers
         {
             try
             {
-                var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
+                var usuario = userService.GetUserInfoByUsernameV2(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
                 CircularizacionProcesoResultado proceso = new CircularizacionProcesoResultado(input, usuario);
                 return Ok(proceso);
             }
@@ -89,7 +89,7 @@ namespace Sitio_Privado.Controllers
         {
             try
             {
-                var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
+                var usuario = userService.GetUserInfoByUsernameV2(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
                 tann_circularizacion webService = new tann_circularizacion();
                 string fecha = webService.cli_fecha_circularizacion(Converters.getRutParteEnteraInt(usuario.Rut));
                 DateTime? resultado = null;

@@ -49,7 +49,7 @@ namespace Sitio_Privado.Controllers
         {
             try
             {
-                var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
+                var usuario = userService.GetUserInfoByUsernameV2(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
                 Producto producto = new Producto(input);
                 return Ok(producto);
             }

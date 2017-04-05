@@ -72,8 +72,6 @@ namespace Sitio_Privado.Services.ExternalUserProvider
 
         public Usuario GetUserInfoByUsername(string username)
         {
-            GetUserInfoByUsernameV2(username);
-
             DirectorySearcher searcher = InitializeSearcher(usersBaseDN);
             UserInfo userInfo = null;
             Usuario usuario = null;
@@ -178,7 +176,9 @@ namespace Sitio_Privado.Services.ExternalUserProvider
                     DireccionParticular = userInfo.HomeAddress,
                     Email = userInfo.Email,
                     TelefonoComercial = userInfo.WorkPhone,
-                    TelefonoParticular = userInfo.HomePhone
+                    TelefonoParticular = userInfo.HomePhone,
+                    Ciudad = userInfo.City,
+                    Pais = userInfo.Country
                 };
             }
 
@@ -270,7 +270,6 @@ namespace Sitio_Privado.Services.ExternalUserProvider
         private UserInfo BuildUserFromDirectoryEntry(DirectoryEntry userEntry)
         {
             UserInfo userInfo = new UserInfo();
-            logger.Trace("Building user from directory entry...");
 
             foreach (string propertyName in userEntry.Properties.PropertyNames)
             {
@@ -278,22 +277,6 @@ namespace Sitio_Privado.Services.ExternalUserProvider
 
                 if (ldapUserModelMapper.TryGetValue(propertyName.ToLower(), out modelPropName))
                 {
-                    logger.Trace("Property: " + propertyName);
-                    string aux = userEntry.InvokeGet(propertyName) != null ? userEntry.InvokeGet(propertyName).ToString() : "null";
-                    logger.Trace("Value is: " + aux);
-
-                    try
-                    {
-                        var property = userEntry.Properties[propertyName][0];
-                        logger.Trace("LDAP Property type is: " + property.GetType());
-                        logger.Trace("LDAP Property value is: " + property.ToString());
-                    }
-                    catch (Exception ex)
-                    {
-                        // For testing LDAP cusotm properties reading
-                        logger.Error(ex, ex.Message);
-                    }
-
                     PropertyInfo prop = typeof(UserInfo).GetProperty(modelPropName);
                     prop.SetValue(userInfo, userEntry.InvokeGet(propertyName));
                 }
@@ -303,14 +286,13 @@ namespace Sitio_Privado.Services.ExternalUserProvider
         }
 
         /// <summary>
-        /// Builds a UserInfo instance from the PropertyCollection property of a DirectoryService entry using Reflection.
+        /// Builds a UserInfo instance from a SearchResultEntry using Reflection.
         /// </summary>
         /// <param name="userEntry">The directory entry to extract the properties from</param>
         /// <returns></returns>
         private UserInfo BuildUserFromDirectoryEntryV2(SearchResultEntry userEntry)
         {
             UserInfo userInfo = new UserInfo();
-            logger.Trace("Building user from directory entry...");
 
             foreach (string propertyName in userEntry.Attributes.AttributeNames)
             {
@@ -318,18 +300,6 @@ namespace Sitio_Privado.Services.ExternalUserProvider
 
                 if (ldapUserModelMapper.TryGetValue(propertyName.ToLower(), out modelPropName))
                 {
-                    try
-                    {
-                        var property = userEntry.Attributes[propertyName][0];
-                        logger.Trace("LDAP Property type is: " + property.GetType());
-                        logger.Trace("LDAP Property value is: " + property.ToString());
-                    }
-                    catch (Exception ex)
-                    {
-                        // For testing LDAP cusotm properties reading
-                        logger.Error(ex, ex.Message);
-                    }
-
                     PropertyInfo prop = typeof(UserInfo).GetProperty(modelPropName);
                     prop.SetValue(userInfo, userEntry.Attributes[propertyName][0]);
                 }
