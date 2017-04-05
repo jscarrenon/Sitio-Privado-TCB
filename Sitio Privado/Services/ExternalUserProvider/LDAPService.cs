@@ -2,12 +2,14 @@
 using System;
 using System.Runtime.InteropServices;
 using System.DirectoryServices;
+using System.DirectoryServices.Protocols;
 using System.Configuration;
 using System.Collections.Generic;
 using Sitio_Privado.Models;
 using System.Reflection;
 using System.Text;
 using NLog;
+using System.Net;
 
 namespace Sitio_Privado.Services.ExternalUserProvider
 {
@@ -19,7 +21,7 @@ namespace Sitio_Privado.Services.ExternalUserProvider
         private static readonly string usersBaseDN = ConfigurationManager.AppSettings["LDAPUsersBaseDN"];
         private static readonly string groupsBaseDN = ConfigurationManager.AppSettings["LDAPGroupsBaseDN"];
 
-        private const AuthenticationTypes normalAuthenticationTypes = AuthenticationTypes.None;
+        private const AuthenticationTypes normalAuthenticationTypes = AuthenticationTypes.Delegation;
         private Logger logger;
 
         // This variable stores the mapping between the LDAP user properties and the UserInfo model.
@@ -84,21 +86,21 @@ namespace Sitio_Privado.Services.ExternalUserProvider
                 {
                     userEntry = searchResult.GetDirectoryEntry();
                     userInfo = BuildUserFromDirectoryEntry(userEntry);
-                }
 
-                usuario = new Usuario()
-                {
-                    Nombres = userInfo.FirstName,
-                    Apellidos = userInfo.LastName,
-                    Rut = userInfo.Rut.Insert(userInfo.Rut.Length - 1, "-"),
-                    Banco = userInfo.Bank,
-                    CuentaCorriente = userInfo.CheckingAccount,
-                    DireccionComercial = userInfo.WorkAddress,
-                    DireccionParticular = userInfo.HomeAddress,
-                    Email = userInfo.Email,
-                    TelefonoComercial = userInfo.WorkPhone,
-                    TelefonoParticular = userInfo.HomePhone
-                };
+                    usuario = new Usuario()
+                    {
+                        Nombres = userInfo.FirstName,
+                        Apellidos = userInfo.LastName,
+                        Rut = userInfo.Rut.Insert(userInfo.Rut.Length - 1, "-"),
+                        Banco = userInfo.Bank,
+                        CuentaCorriente = userInfo.CheckingAccount,
+                        DireccionComercial = userInfo.WorkAddress,
+                        DireccionParticular = userInfo.HomeAddress,
+                        Email = userInfo.Email,
+                        TelefonoComercial = userInfo.WorkPhone,
+                        TelefonoParticular = userInfo.HomePhone
+                    };
+                }
             }
             catch (COMException ex)
             {
@@ -117,7 +119,7 @@ namespace Sitio_Privado.Services.ExternalUserProvider
         /// Initializes a new instance of the DirectorySearcher class, pointing to differents base DN based on the user type given.
         /// </summary>
         /// <returns>The initialized DirectorySearcher instance</returns>
-        private static DirectorySearcher InitializeSearcher(string baseDN)
+        private DirectorySearcher InitializeSearcher(string baseDN)
         {
             DirectoryEntry searchRoot = null;
             DirectorySearcher searcher = null;
@@ -128,53 +130,78 @@ namespace Sitio_Privado.Services.ExternalUserProvider
                     normalAuthenticationTypes);
 
             searcher = new DirectorySearcher(searchRoot);
-            searcher.SearchScope = SearchScope.OneLevel;
+            searcher.SearchScope = System.DirectoryServices.SearchScope.OneLevel;
             searcher.CacheResults = false;
 
             return searcher;
         }
-        /// <summary>
-        /// Builds a UserInfo instance from the PropertyCollection property of a DirectoryService entry using Reflection.
-        /// </summary>
-        /// <param name="userEntry">The directory entry to extract the properties from</param>
-        /// <returns></returns>
-        private UserInfo BuildUserFromDirectoryEntry(DirectoryEntry userEntry)
+
+        public  Usuario GetUserInfoByUsernameV2(string username)
         {
-            UserInfo userInfo = new UserInfo();
-            logger.Trace("Building user from directory entry...");
+            Usuario usuario = null;
 
-            foreach (string propertyName in userEntry.Properties.PropertyNames)
+            NetworkCredential credential = new NetworkCredential(
+                ConfigurationManager.AppSettings["LDAPAdminUsername"],
+                ConfigurationManager.AppSettings["LDAPAdminPassword"]);
+
+            LdapDirectoryIdentifier identifier = new LdapDirectoryIdentifier(domain, 389);
+            LdapConnection connection = new LdapConnection(identifier, credential);
+            connection.AuthType = AuthType.Basic;
+            connection.Bind(credential);
+            connection.SessionOptions.ProtocolVersion = 3;
+
+            var searchRequest = new SearchRequest(
+                    usersBaseDN,
+                    string.Format("cn={0}", username),
+                    System.DirectoryServices.Protocols.SearchScope.Subtree);
+
+            var searchOptions = new SearchOptionsControl(SearchOption.DomainScope);
+            searchRequest.Controls.Add(searchOptions);
+
+            var searchResponse = (SearchResponse)connection.SendRequest(searchRequest);
+
+            if (searchResponse != null)
             {
-                string modelPropName = null;
+                var userEntry = searchResponse.Entries[0];
+                UserInfo userInfo = BuildUserFromDirectoryEntryV2(userEntry);
 
-                if (ldapUserModelMapper.TryGetValue(propertyName, out modelPropName))
+                usuario = new Usuario()
                 {
-                    logger.Trace("Property: " + propertyName);
-                    logger.Trace("Value is: " + userEntry.InvokeGet(propertyName) != null ? userEntry.InvokeGet(propertyName) : "null");
-                    
-                    PropertyInfo prop = typeof(UserInfo).GetProperty(modelPropName);
-                    prop.SetValue(userInfo, userEntry.InvokeGet(propertyName));
-                }
+                    Nombres = userInfo.FirstName,
+                    Apellidos = userInfo.LastName,
+                    Rut = userInfo.Rut.Insert(userInfo.Rut.Length - 1, "-"),
+                    Banco = userInfo.Bank,
+                    CuentaCorriente = userInfo.CheckingAccount,
+                    DireccionComercial = userInfo.WorkAddress,
+                    DireccionParticular = userInfo.HomeAddress,
+                    Email = userInfo.Email,
+                    TelefonoComercial = userInfo.WorkPhone,
+                    TelefonoParticular = userInfo.HomePhone,
+                    Ciudad = userInfo.City,
+                    Pais = userInfo.Country
+                };
             }
 
-            return userInfo;
+            return usuario;
         }
+
         private void SetUserSchemaEntries()
         {
+            // IMPORTANT: All keys of the mapper should be lowercase!
             this.ldapUserModelMapper = new Dictionary<string, string>
             {
-                {"uid","Rut" },
-                {"givenname","FirstName" },
-                { "sn","LastName"},
-                { "mail","Email"},
-                { "cuenta_corriente","CheckingAccount"},
-                { "banco","Bank"},
-                { "fono_comercial","WorkPhone"},
-                { "fono_particular","HomePhone"},
-                { "domicilio_particular","HomeAddress"},
-                { "domicilio_comercial","WorkAddress"},
-                { "city","City"},
-                { "countryCode","Country"}
+                { "uid", "Rut" },
+                { "givenname", "FirstName" },
+                { "sn", "LastName"},
+                { "mail", "Email"},
+                { "cuenta_corriente", "CheckingAccount"},
+                { "banco", "Bank"},
+                { "fono_comercial", "WorkPhone"},
+                { "fono_particular", "HomePhone"},
+                { "domicilio_particular", "HomeAddress"},
+                { "domicilio_comercial", "WorkAddress"},
+                { "city", "City"},
+                { "countrycode", "Country"}
             };
         }
 
@@ -198,8 +225,8 @@ namespace Sitio_Privado.Services.ExternalUserProvider
                         groups.Add(new SiteInformation()
                         {
                             AbbreviateName = searchResults[i].Properties["shortName"].Count > 0 ? searchResults[i].Properties["shortName"][0].ToString().ToUpper() : "",
-                            Description = searchResults[i].Properties["description"].Count > 0 ? searchResults[i].Properties["description"][0].ToString().ToLower() : "",
-                            SiteName = searchResults[i].Properties["name"].Count > 0 ? searchResults[i].Properties["name"][0].ToString().ToLower() : "",
+                            Description = searchResults[i].Properties["description"].Count > 0 ? searchResults[i].Properties["description"][0].ToString() : "",
+                            SiteName = searchResults[i].Properties["name"].Count > 0 ? searchResults[i].Properties["name"][0].ToString() : "",
                             Url = searchResults[i].Properties["url"].Count > 0 ? searchResults[i].Properties["url"][0].ToString().ToLower() : "",
                             SiteType = description.Contains("spr") ? "Sitio Privado" : "Sitio Público",
                             Cn = description,
@@ -233,6 +260,52 @@ namespace Sitio_Privado.Services.ExternalUserProvider
             }
 
             return int.Parse(value.ToString());
+        }
+
+        /// <summary>
+        /// Builds a UserInfo instance from the PropertyCollection property of a DirectoryService entry using Reflection.
+        /// </summary>
+        /// <param name="userEntry">The directory entry to extract the properties from</param>
+        /// <returns></returns>
+        private UserInfo BuildUserFromDirectoryEntry(DirectoryEntry userEntry)
+        {
+            UserInfo userInfo = new UserInfo();
+
+            foreach (string propertyName in userEntry.Properties.PropertyNames)
+            {
+                string modelPropName = null;
+
+                if (ldapUserModelMapper.TryGetValue(propertyName.ToLower(), out modelPropName))
+                {
+                    PropertyInfo prop = typeof(UserInfo).GetProperty(modelPropName);
+                    prop.SetValue(userInfo, userEntry.InvokeGet(propertyName));
+                }
+            }
+
+            return userInfo;
+        }
+
+        /// <summary>
+        /// Builds a UserInfo instance from a SearchResultEntry using Reflection.
+        /// </summary>
+        /// <param name="userEntry">The directory entry to extract the properties from</param>
+        /// <returns></returns>
+        private UserInfo BuildUserFromDirectoryEntryV2(SearchResultEntry userEntry)
+        {
+            UserInfo userInfo = new UserInfo();
+
+            foreach (string propertyName in userEntry.Attributes.AttributeNames)
+            {
+                string modelPropName = null;
+
+                if (ldapUserModelMapper.TryGetValue(propertyName.ToLower(), out modelPropName))
+                {
+                    PropertyInfo prop = typeof(UserInfo).GetProperty(modelPropName);
+                    prop.SetValue(userInfo, userEntry.Attributes[propertyName][0]);
+                }
+            }
+
+            return userInfo;
         }
     }
 }

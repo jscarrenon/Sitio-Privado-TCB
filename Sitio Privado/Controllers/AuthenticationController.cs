@@ -36,7 +36,7 @@ namespace Sitio_Privado.Controllers
         public IHttpActionResult VerifyLogin()
         {
             var username = UserHelper.ExtractAuthorityId(User as ClaimsPrincipal);
-            Usuario user = userService.GetUserInfoByUsername(username);
+            Usuario user = userService.GetUserInfoByUsernameV2(username);
 
             if (user != null)
             {
@@ -54,7 +54,7 @@ namespace Sitio_Privado.Controllers
         [HttpPost]
         public IHttpActionResult SignOut()
         {
-            var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
+            var usuario = userService.GetUserInfoByUsernameV2(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
             logger.Info("User signed out => Rut: " + usuario.Rut + "; Email: " + usuario.Email + "; IP: " + Request.GetOwinContext().Request.RemoteIpAddress);
             Request.GetOwinContext().Authentication.SignOut();
 
