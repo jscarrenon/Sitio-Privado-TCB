@@ -45,12 +45,12 @@
 </head>
 <body ng-controller="BodyCtrl as bodyCtrl" ng-cloak>
 
-    <div id="prebar">
+    <div id="prebar" ng-show="!bodyCtrl.authService.loadingVerifyLogin">
         <div class="user"><a href="#/mis-datos" class="clink" ng-click="bodyCtrl.seleccionarSeccion(-1)">{{ bodyCtrl.authService.usuario.NombreCompleto }} | Mis Datos</a></div>
         <div class="logout"><a href="" ng-click="bodyCtrl.authService.cerrarSesion()">Cerrar Sesión</a></div>
     </div>
 
-    <div id="bar">
+    <div id="bar" ng-show="!bodyCtrl.authService.loadingVerifyLogin">
         <div class="in">
             <div class="logo"><a href="#/" class="clink" ng-click="bodyCtrl.seleccionarSeccion(0)"></a></div>
             <div class="menubar">
@@ -82,7 +82,7 @@
         </div>
     </div>
 
-    <div id="bar_mobile">
+    <div id="bar_mobile" ng-show="!bodyCtrl.authService.loadingVerifyLogin">
         <div ng-show="bodyCtrl.authService.sites.length >= 1" id="LU-mobile-dropdown">
             <div id="LU-mobile-dropdown-container">
                 <div class="LU-dropdown-header">
@@ -99,7 +99,7 @@
                 </div>
             </div>
         </div>
-        <div class="in">
+        <div class="in" ng-show="!bodyCtrl.authService.loadingVerifyLogin">
             <div class="logo"><a href="#/" class="clink" ng-click="bodyCtrl.seleccionarSeccion(0)"></a></div>
             <div class="user"><a href="#/mis-datos" class="clink" ng-click="bodyCtrl.seleccionarSeccion(-1)"></a></div>
             <div ng-show="bodyCtrl.authService.sites.length >= 1" id="LU-mobile">
@@ -109,7 +109,7 @@
         </div>
     </div>
 
-    <div id="tabbar">
+    <div id="tabbar" ng-show="!bodyCtrl.authService.loadingVerifyLogin">
         <div class="tab home" ng-class="{'active':bodyCtrl.seccionId == 0}">
             <a href="#/" class="clink" ng-click="bodyCtrl.seleccionarSeccion(0)"></a>
         </div>
@@ -127,6 +127,8 @@
         </div>
     </div>
 
-    <ng-view></ng-view>
+    <ng-view ng-show="!bodyCtrl.authService.loadingVerifyLogin"></ng-view>
+
+    <loading param="bodyCtrl.authService.loadingVerifyLogin"></loading>
 </body>
 </html>
