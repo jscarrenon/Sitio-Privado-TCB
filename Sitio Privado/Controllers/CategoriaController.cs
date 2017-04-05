@@ -62,7 +62,7 @@ namespace Sitio_Privado.Controllers
         {
             try
             {
-                var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
+                var usuario = userService.GetUserInfoByUsernameV2(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
                 Categoria categoria = new Categoria(input, usuario);
                 return Ok(categoria);
             }

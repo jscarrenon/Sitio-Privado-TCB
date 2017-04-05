@@ -54,7 +54,7 @@
                         responseError: function (response) {
                             var authService: app.common.services.AuthService = $injector.get('authService');
                             if (response.status === 401) {
-                                authService.cerrarSesion();
+                                authService.limpiarUsuarioActual();
                                 $window.location.href = constantService.homeTanner;
                             }
                             return $q.reject(response);
@@ -82,25 +82,34 @@
                 if (!current && !authenticationService.autenticado) {
                     // two options
                     event.preventDefault();
-
+                    console.log("checking $routeChangeStart");
                     if ($location.path() === '/login') {
+                        console.log("/login");
                         // we need to validate token
                         var token = $location.search().accessToken;
                         var refreshToken = $location.search().refreshToken;
                         var expiresIn = $location.search().expiresIn;
-                        authenticationService.validateToken(token, refreshToken, expiresIn)
-                            .then(() => (authenticationService.autenticado = true, $location.path("/").search({})));
+                        authenticationService.verifyLogin(token, refreshToken, expiresIn)
+                            .then(() => {
+                                authenticationService.autenticado = true;
+                                authenticationService.callsAfterLogin();
+                                $location.path("/").search({});
+                            });
                     } else {
+                        console.log("no /login");
                         // we need to make sure out authorization header is valid
                         $localForage.getItem('accessToken')
                             .then((responseToken) => {
                                 if (responseToken == null) {
+                                    console.log("responseToken null");
                                     $window.location.href = constantService.homeTanner;
                                 } else {
+                                    console.log("responseToken not null");
                                     authenticationService.autenticado = true;
                                     $rootScope.$evalAsync(() => $location.path($location.path() + '?'));
                                 }
-                            });
+                            })
+                            .catch(() => { console.log("fail getting responseToken from localforage") });
                     }
                 }
             });

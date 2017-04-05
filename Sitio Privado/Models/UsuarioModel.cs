@@ -61,9 +61,9 @@ namespace Sitio_Privado.Models
 
         public string DireccionParticular { get; set; }
 
-        public string Ciudad { get { return this.Autenticado ? this.FindFirst(CustomClaimTypes.Ciudad) != null ? this.FindFirst(CustomClaimTypes.Ciudad).Value : "" : ""; } }
+        public string Ciudad { get; set; }
 
-        public string Pais { get { return this.Autenticado ? this.FindFirst(CustomClaimTypes.Pais) != null ? this.FindFirst(CustomClaimTypes.Pais).Value : "" : ""; } }
+        public string Pais { get; set; }
 
         public string TelefonoComercial { get; set; }
 

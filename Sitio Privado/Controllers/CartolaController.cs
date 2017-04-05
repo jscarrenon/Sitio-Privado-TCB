@@ -33,7 +33,7 @@ namespace Sitio_Privado.Controllers
         {
             try
             {
-                var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
+                var usuario = userService.GetUserInfoByUsernameV2(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
                 Cartola cartola = new Cartola(input, usuario);
                 return Ok(cartola);
             }
@@ -48,7 +48,7 @@ namespace Sitio_Privado.Controllers
         {
             try
             {
-                var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
+                var usuario = userService.GetUserInfoByUsernameV2(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
 
                 CartolaConceptosTituloResultado resultado = new CartolaConceptosTituloResultado();
 

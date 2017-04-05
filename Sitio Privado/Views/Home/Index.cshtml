@@ -59,20 +59,20 @@
                 <div class="menuitem"><a href="#/informacion-financiera" class="clink" ng-click="bodyCtrl.seleccionarSeccion(3)">Información Financiera</a></div>
                 <div class="menuitem"><a href="#/inversiones" class="clink" ng-click="bodyCtrl.seleccionarSeccion(4)">Inversión a su Medida</a></div>
             </div>
-            <div ng-show="bodyCtrl.multiples" id="LU-desktop">
+            <div ng-show="bodyCtrl.authService.sites.length >= 1" id="LU-desktop">
                 <div id="LU-desktop-button"></div>
                 <div id="LU-desktop-dropdown">
                     <div id="LU-desktop-dropdown-arrow"></div>
                     <div id="LU-desktop-dropdown-container">
                         <div class="LU-dropdown-header">
-                            <p ng-if="bodyCtrl.sites.length >= 1"><span>Estás en: </span>{{bodyCtrl.sites[0].SiteName}}</p>
+                            <p><span>Estás en: </span>{{bodyCtrl.authService.sites[0].siteName}}</p>
                             <div></div>
                         </div>
                         <div class="LU-dropdown-instructions">Ingresa a otro sitio de Tanner</div>
-                        <div ng-repeat="site in bodyCtrl.sites" ng-if="!$first">
-                            <a href="{{site.Url}}" class="LU-dropdown-item">
-                                <div>{{site.SiteType}}</div>
-                                <div>{{site.SiteName}}</div>
+                        <div ng-repeat="site in bodyCtrl.authService.sites" ng-if="!$first">
+                            <a href="{{site.url}}" class="LU-dropdown-item">
+                                <div>{{site.siteType}}</div>
+                                <div>{{site.siteName}}</div>
                                 <div class="LU-dropdown-item-go"></div>
                             </a>
                         </div>
@@ -83,17 +83,17 @@
     </div>
 
     <div id="bar_mobile">
-        <div ng-show="bodyCtrl.multiples" id="LU-mobile-dropdown">
+        <div ng-show="bodyCtrl.authService.sites.length >= 1" id="LU-mobile-dropdown">
             <div id="LU-mobile-dropdown-container">
                 <div class="LU-dropdown-header">
-                    <p ng-if="bodyCtrl.sites.length >= 1"><span>Estás en: </span>{{bodyCtrl.sites[0].SiteName}}</p>
+                    <p><span>Estás en: </span>{{bodyCtrl.authService.sites[0].siteName}}</p>
                     <div></div>
                 </div>
                 <div class="LU-dropdown-instructions">Ingresa a otro sitio de Tanner</div>
-                <div ng-repeat="site in bodyCtrl.sites" ng-if="!$first">
-                    <a href="{{site.Url}}" class="LU-dropdown-item">
-                        <div>{{site.SiteType}}</div>
-                        <div>{{site.SiteName}}</div>
+                <div ng-repeat="site in bodyCtrl.authService.sites" ng-if="!$first">
+                    <a href="{{site.url}}" class="LU-dropdown-item">
+                        <div>{{site.siteType}}</div>
+                        <div>{{site.siteName}}</div>
                         <div class="LU-dropdown-item-go"></div>
                     </a>
                 </div>
@@ -102,7 +102,7 @@
         <div class="in">
             <div class="logo"><a href="#/" class="clink" ng-click="bodyCtrl.seleccionarSeccion(0)"></a></div>
             <div class="user"><a href="#/mis-datos" class="clink" ng-click="bodyCtrl.seleccionarSeccion(-1)"></a></div>
-            <div ng-show="bodyCtrl.multiples" id="LU-mobile">
+            <div ng-show="bodyCtrl.authService.sites.length >= 1" id="LU-mobile">
                 <div id="LU-mobile-button"></div>
             </div>
             <div class="logout"><a href="" class="clink" ng-click="bodyCtrl.authService.cerrarSesion()"></a></div>
