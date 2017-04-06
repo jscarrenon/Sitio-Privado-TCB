@@ -28,7 +28,7 @@
 
             this.errorResponseMessages = {
                 40001: "Error de validación.",
-                40005: "No se puedo autenticar el usuario.",
+                40005: "No se pudo autenticar el usuario.",
                 40099: "Contraseñas ingresadas no coinciden", // Special case
                 50000: "Error interno del servidor.",
             }
