@@ -124,8 +124,7 @@
                         .then((result: Date) => {
                             this.fechaCircularizacion = result;
                         });
-                })
-                .catch(() => { });
+                });
         }
 
         getCircularizacionPendiente(): void {
@@ -197,11 +196,7 @@
                 this.$localForage.getItem('usuario')
                     .then((result) => {
                         this.setUsuario(JSON.parse(result));
-                    })
-                    .catch(() => { });
-            }
-            else {
-                //do nothing
+                    });
             }
         }
 

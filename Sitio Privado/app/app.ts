@@ -106,8 +106,7 @@
                                     authenticationService.autenticado = true;
                                     $rootScope.$evalAsync(() => $location.path($location.path() + '?'));
                                 }
-                            })
-                            .catch(() => { });
+                            });
                     }
                 }
             });
