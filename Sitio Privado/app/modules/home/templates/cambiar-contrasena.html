@@ -29,15 +29,9 @@
                             Nueva contraseña
                             <input type="password" ng-model="ctrl.changePasswordInput.NewPassword">
                         </div>
-                        <div class="do-not-match" ng-show="ctrl.passwordErrors">
-                            <p ng-repeat="error in ctrl.passwordErrors">{{error}}</p>
-                        </div>
                         <div class="info-input">
                             Repetir nueva contraseña
                             <input type="password" ng-model="ctrl.changePasswordInput.PasswordValidation">
-                        </div>
-                        <div class="do-not-match" ng-show="ctrl.passwordValidationErrors">
-                            <p ng-repeat="error in ctrl.passwordValidationErrors">{{error}}</p>
                         </div>
                         <div class="button green">
                             <a href="" ng-click="ctrl.changePassword()">Guardar</a>
