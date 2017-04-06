@@ -49,23 +49,23 @@
 
             </div><!--end two-col-->
 
-            <div class="three-col home" ng-controller="AgenteCtrl as agenteCtrl">
+            <div class="three-col home">
                 <div class="executive white-box">
-                    <loading param="agenteCtrl.loading"></loading>
-                    <div ng-show="!agenteCtrl.loading">
-                        <div class="photo" ng-style="{'background-image':'url({{agenteCtrl.agente.PathImg}})'}"></div>
+                    <loading param="bodyCtrl.authService.loadingAgente"></loading>
+                    <div ng-show="!bodyCtrl.authService.loadingAgente">
+                        <div class="photo" ng-style="{'background-image':'url({{bodyCtrl.authService.agente.PathImg}})'}"></div>
                         <div class="text">
-                            <div class="name">{{agenteCtrl.agente.Nombre}}</div>
+                            <div class="name">{{bodyCtrl.authService.agente.Nombre}}</div>
                             <div class="contact">
-                                Tel: {{agenteCtrl.agente.Telefono}}<br />
-                                E-mail: <a href="mailto:{{agenteCtrl.agente.Email}}">{{agenteCtrl.agente.Email}}</a>
+                                Tel: {{bodyCtrl.authService.agente.Telefono}}<br />
+                                E-mail: <a href="mailto:{{bodyCtrl.authService.agente.Email}}">{{bodyCtrl.authService.agente.Email}}</a>
                             </div>
                             <div class="info">
-                                Fecha de acreditación: {{agenteCtrl.agente.FechaInicioAcreditacion}}<br />
-                                Sucursal: {{agenteCtrl.agente.Sucursal}}
+                                Fecha de acreditación: {{bodyCtrl.authService.agente.FechaInicioAcreditacion}}<br />
+                                Sucursal: {{bodyCtrl.authService.agente.Sucursal}}
                             </div>
                         </div>
-                        <div class="button blue call" ng-show="agenteCtrl.agente.Telefono"><a href="tel:{{agenteCtrl.agente.Telefono}}" class="clink">Llamar</a></div>
+                        <div class="button blue call" ng-show="bodyCtrl.authService.agente.Telefono"><a href="tel:{{bodyCtrl.authService.agente.Telefono}}" class="clink">Llamar</a></div>
                     </div>
                     <div id="clear"></div>
                 </div>
