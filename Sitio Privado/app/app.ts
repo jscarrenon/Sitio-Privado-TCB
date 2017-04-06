@@ -82,9 +82,9 @@
                 if (!current && !authenticationService.autenticado) {
                     // two options
                     event.preventDefault();
-                    console.log("checking $routeChangeStart");
+
                     if ($location.path() === '/login') {
-                        console.log("/login");
+
                         // we need to validate token
                         var token = $location.search().accessToken;
                         var refreshToken = $location.search().refreshToken;
@@ -96,20 +96,18 @@
                                 $location.path("/").search({});
                             });
                     } else {
-                        console.log("no /login");
+
                         // we need to make sure out authorization header is valid
                         $localForage.getItem('accessToken')
                             .then((responseToken) => {
                                 if (responseToken == null) {
-                                    console.log("responseToken null");
                                     $window.location.href = constantService.homeTanner;
                                 } else {
-                                    console.log("responseToken not null");
                                     authenticationService.autenticado = true;
                                     $rootScope.$evalAsync(() => $location.path($location.path() + '?'));
                                 }
                             })
-                            .catch(() => { console.log("fail getting responseToken from localforage") });
+                            .catch(() => { });
                     }
                 }
             });

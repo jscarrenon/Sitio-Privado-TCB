@@ -125,7 +125,7 @@
                             this.fechaCircularizacion = result;
                         });
                 })
-                .catch(() => { console.log("no accessToken in getFechaCircularizacion"); });
+                .catch(() => { });
         }
 
         getCircularizacionPendiente(): void {
@@ -175,11 +175,10 @@
         }
 
         verifyLogin(accessToken: string, refreshToken: string, expiresIn: number): ng.IPromise<app.domain.IUsuario> {
-            console.log("calling verifyLogin");
+
             this.waitingResponse = true;
             var response = this.dataService.postWebService(this.constantService.apiAutenticacionURI + 'verifylogin', null, accessToken)
                 .then((result: app.domain.IUsuario) => {
-                    console.log("set user after calling verifyLogin")
                     this.autenticado = true;
                     this.setUsuario(result);
                     this.$localForage.setItem('usuario', JSON.stringify(result));
@@ -192,26 +191,21 @@
         }
 
         checkUserAuthentication() {
-            console.log("calling checkUserAuthentication");
             if (this.$location.path().indexOf('login') < 1) {
-                console.log("calling verifyToken after check indexOf('login') < 1");
                 this.verifyToken();
             } else if (!this.usuario) {
-                console.log("not user in checkUserAuthentication");
                 this.$localForage.getItem('usuario')
                     .then((result) => {
-                        console.log("set user after calling checkUserAuthentication");
                         this.setUsuario(JSON.parse(result));
                     })
-                    .catch(() => { console.log("err calling localforage in  checkUserAuthentication"); });
+                    .catch(() => { });
             }
             else {
-                console.log("else in checkUserAuthentication");
+                //do nothing
             }
         }
 
         saveToken(accessToken: string, refreshToken?: string, expiresIn?: number) {
-            console.log("calling saveToken: " + accessToken + " - " + refreshToken + " - " + expiresIn);
             this.$localForage.setItem('accessToken', accessToken);
             if (refreshToken)
                 this.$localForage.setItem('refreshToken', refreshToken);
@@ -220,7 +214,6 @@
         }
        
         refreshToken(): ng.IPromise<any> {
-            console.log("calling refreshToken");
             return this.$localForage.getItem('refreshToken')
                 .then((token) => {
                     if (!token)
@@ -247,7 +240,6 @@
         }
 
         setTimerForRefreshToken() {
-            console.log("calling setTimerForRefreshToken");
             return this.$localForage.getItem('expiresIn')
                 .then((expiresIn) => {
                     this.$timeout.cancel(this.timer);
@@ -256,7 +248,6 @@
         }
 
         verifyToken() {
-            console.log("calling verifyToken");
             this.$localForage.getItem('accessToken')
                 .then((accessTokenResult) => {
                     this.$localForage.getItem('refreshToken')
@@ -273,11 +264,9 @@
         }
 
         checkRefreshToken() {
-            console.log("calling checkRefreshToken");
             this.$localForage.getItem('refreshToken')
                 .then((result) => {
                     if (result) {
-                        console.log("redirect after return refreshToken");
                         this.$window.location.href = this.constantService.homeTanner;
                     }                        
                     else this.refreshToken();
@@ -330,7 +319,6 @@
         }
 
         callsAfterLogin(): void {
-            console.log("calling 6 methods after calling verifyToken and verifyLogin");
             this.getSusFirmaElecDoc();
             this.getUserSitesByToken();
             this.getFechaCircularizacion();
