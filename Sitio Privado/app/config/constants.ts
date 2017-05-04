@@ -1,7 +1,7 @@
 module app.config {
     // Kunder development and testing servers
     export const CONFIG = {
-        ENV: 'QA',
+        ENV: 'qa',
         /* CLIENT_ID: 'dev_customer_password_4',
         CLIENT_SECRET: 'rdkbKVM7neKs15wX0YgOzQjTZ8JF4SRNYs-KAjNr',
         OAUTH2_URL: 'https://oauthdesa.tanner.cl/',
