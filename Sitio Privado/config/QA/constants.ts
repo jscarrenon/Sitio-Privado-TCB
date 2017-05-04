@@ -6,6 +6,6 @@ module app.config {
     OAUTH2_URL: 'https://oauthqa.tanner.cl/',
     TANNER_PUBLIC_SITE_URL: 'http://sitiopublicoqa.tanner.cl/',
     TANNER_AUTHENTICATION_API: 'https://proxyloginqa.azurewebsites.net/api/authentication/',
-    REQUIRED_GROUP: 'ClientesCorredora'
+    REQUIRED_GROUP: 'clientescorredora'
   };
 }
