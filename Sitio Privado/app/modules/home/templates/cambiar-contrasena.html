@@ -19,30 +19,33 @@
             <div class="two-col">
                 <div class="user-info white-box">
                     <loading param="ctrl.loading" extra-class="'top1'"></loading>
-                    <div class="info-col" ng-show="!ctrl.loading">
-                        <div class="in-title">Cambiar contraseña</div>
-                        <div class="info-input">
-                            Contraseña actual
-                            <input type="password" ng-model="ctrl.changePasswordInput.OldPassword">
+                    <form name="form" novalidate>
+                        <div class="info-col" ng-show="!ctrl.loading">
+                            <div class="in-title">Cambiar contraseña</div>
+                            <div class="info-input">
+                                Contraseña actual
+                                <input type="password" ng-model="ctrl.changePasswordInput.OldPassword">
+                            </div>
+                            <div class="info-input">
+                                Nueva contraseña
+                                <input type="password" ng-minlength="1" ng-maxlength="15" ng-model="ctrl.changePasswordInput.NewPassword">
+                            </div>
+                            <div class="do-not-match" ng-show="ctrl.passwordErrors">
+                                <p ng-repeat="error in ctrl.passwordErrors">{{error}}</p>
+                            </div>
+                            <div class="info-input">
+                                Repetir nueva contraseña
+                                <input type="password" ng-minlength="1" ng-maxlength="15" ng-model="ctrl.changePasswordInput.PasswordValidation">
+                            </div>
+                            <div class="do-not-match" ng-show="ctrl.passwordValidationErrors || form.$error.maxlength">
+                                <p ng-repeat="error in ctrl.passwordValidationErrors">{{error}}</p>
+                                <p class="" ng-show="form.$error.maxlength">Largo de clave no es válido.</p>
+                            </div>
+                            <div class="button green" ng-class="{'disabled':!form.$valid}">
+                                <a href="" ng-click="form.$valid && ctrl.changePassword()">Guardar</a>
+                            </div>
                         </div>
-                        <div class="info-input">
-                            Nueva contraseña
-                            <input type="password" ng-model="ctrl.changePasswordInput.NewPassword">
-                        </div>
-                        <div class="do-not-match" ng-show="ctrl.passwordErrors">
-                            <p ng-repeat="error in ctrl.passwordErrors">{{error}}</p>
-                        </div>
-                        <div class="info-input">
-                            Repetir nueva contraseña
-                            <input type="password" ng-model="ctrl.changePasswordInput.PasswordValidation">
-                        </div>
-                        <div class="do-not-match" ng-show="ctrl.passwordValidationErrors">
-                            <p ng-repeat="error in ctrl.passwordValidationErrors">{{error}}</p>
-                        </div>
-                        <div class="button green">
-                            <a href="" ng-click="ctrl.changePassword()">Guardar</a>
-                        </div>
-                    </div>
+                    </form>
                     <div class="edit-note none">
                     </div>
                 </div>
