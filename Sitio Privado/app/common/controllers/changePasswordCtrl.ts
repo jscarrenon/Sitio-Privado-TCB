@@ -18,11 +18,12 @@
         processSuccess: boolean;
         errorResponseMessages: { [key: number]: string };
 
-        static $inject = ['constantService', 'dataService', '$localForage','authService'];
+        static $inject = ['constantService', 'dataService', '$localForage','authService','$scope'];
         constructor(private constantService: app.common.services.ConstantService,
             private dataService: app.common.services.DataService,
             private $localForage,
-            private authService: app.common.services.AuthService) {
+            private authService: app.common.services.AuthService,
+            private $scope: any) {
 
             this.changePasswordInput = new app.domain.ChangePasswordInput();
 
@@ -57,7 +58,9 @@
                             this.changePasswordInput.OldPassword = "";
                             this.changePasswordInput.NewPassword = "";
                             this.changePasswordInput.PasswordValidation = "";
-                            //Update user data
+                            
+                            //Set form pristine
+                            this.$scope.form.$pristine = true;
                         })
                         .catch((result: any) => {
                             this.processSuccess = false;
