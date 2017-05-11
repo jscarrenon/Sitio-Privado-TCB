@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Text;
 using NLog;
 using System.Net;
+using Sitio_Privado.Helpers;
 
 namespace Sitio_Privado.Services.ExternalUserProvider
 {
@@ -43,33 +44,6 @@ namespace Sitio_Privado.Services.ExternalUserProvider
             return rep.GetAllByPropertyName();
         }
 
-        public bool Authenticate(string username, string password)
-        {
-            DirectoryEntry userEntry = null;
-
-            try
-            {
-                string path = string.Format("LDAP://{0}/{1}", domain, usersBaseDN);
-                string ldapUsername = string.Format("cn={0},{1}", username, usersBaseDN);
-                userEntry = new DirectoryEntry(path, ldapUsername, password, normalAuthenticationTypes);
-                var cnStat = userEntry.NativeObject;    // If the authentication fails, this line throws an exception
-                return true;
-            }
-            catch (COMException ex)
-            {
-                if (ex.ErrorCode != invalidCredentialsErrorCode)
-                {
-                    throw ex;
-                }
-            }
-            finally
-            {
-                if (userEntry != null) userEntry.Dispose();
-            }
-
-            return false;
-        }
-
         public Usuario GetUserInfoByUsername(string username)
         {
             DirectorySearcher searcher = InitializeSearcher(usersBaseDN);
@@ -79,7 +53,7 @@ namespace Sitio_Privado.Services.ExternalUserProvider
 
             try
             {
-                searcher.Filter = string.Format("cn={0}", username);
+                searcher.Filter = string.Format("cn={0}", LdapSanitizer.CanonicalizeStringForLdapFilter(username));
                 SearchResult searchResult = searcher.FindOne();
 
                 if (searchResult != null)
@@ -136,7 +110,7 @@ namespace Sitio_Privado.Services.ExternalUserProvider
             return searcher;
         }
 
-        public  Usuario GetUserInfoByUsernameV2(string username)
+        public Usuario GetUserInfoByUsernameV2(string username)
         {
             Usuario usuario = null;
 
@@ -152,7 +126,7 @@ namespace Sitio_Privado.Services.ExternalUserProvider
 
             var searchRequest = new SearchRequest(
                     usersBaseDN,
-                    string.Format("cn={0}", username),
+                    string.Format("cn={0}", LdapSanitizer.CanonicalizeStringForLdapDN(username)),
                     System.DirectoryServices.Protocols.SearchScope.Subtree);
 
             var searchOptions = new SearchOptionsControl(SearchOption.DomainScope);
