@@ -59,12 +59,8 @@
                             this.changePasswordInput.NewPassword = "";
                             this.changePasswordInput.PasswordValidation = "";
 
-                            this.$scope.form.oldPassword.setPristine();
-                            this.$scope.form.newPassword.setPristine();
-                            this.$scope.form.passwordValidation.setPristine();
-
                             //Set form pristine
-                            this.$scope.form.setPristine();
+                            this.$scope.form.$setPristine();
                         })
                         .catch((result: any) => {
                             this.processSuccess = false;
