@@ -30,7 +30,7 @@
                                 Nueva contraseña
                                 <input name="newPassword" type="password" ng-minlength="1" ng-maxlength="15" ng-model="ctrl.changePasswordInput.NewPassword">
                             </div>
-                            <div class="do-not-match" ng-show="ctrl.passwordErrors">
+                            <div class="do-not-match" ng-show="ctrl.passwordErrors || form.$error">
                                 <p ng-repeat="error in ctrl.passwordErrors">{{error}}</p>
                                 <p class="" ng-show="form.newPassword.$error.maxlength">Largo de clave no es válido.</p>
                             </div>
@@ -38,7 +38,7 @@
                                 Repetir nueva contraseña
                                 <input name="passwordValidation" type="password" ng-minlength="1" ng-maxlength="15" ng-model="ctrl.changePasswordInput.PasswordValidation">
                             </div>
-                            <div class="do-not-match" ng-show="ctrl.passwordValidationErrors">
+                            <div class="do-not-match" ng-show="ctrl.passwordValidationErrors || form.$error">
                                 <p ng-repeat="error in ctrl.passwordValidationErrors">{{error}}</p>
                                 <p class="" ng-show="form.passwordValidation.$error.maxlength">Largo de clave no es válido.</p>
                             </div>
