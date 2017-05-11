@@ -207,6 +207,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.DirectoryServices.Protocols" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IdentityModel" />
     <Reference Include="System.IdentityModel.Tokens.Jwt, Version=4.0.20622.1351, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -352,7 +353,6 @@
     <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\CircularizacionController.cs" />
     <Compile Include="Controllers\IndicesController.cs" />
-    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="DelegatingHandlers\XDomainRequestDelegatingHandler.cs" />
     <Compile Include="Extras\ExtraHelpers.cs" />
     <Compile Include="Extras\HttpRequestMessageExtensions.cs" />
@@ -408,16 +408,14 @@
     <Compile Include="Controllers\AgenteController.cs" />
     <Compile Include="Controllers\FondoMutuoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\SyncApiController.cs" />
-    <Compile Include="Helpers\GraphApiClientHelper.cs" />
     <Compile Include="Extras\BaseViewPage.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\JSONConverter.cs" />
+    <Compile Include="Helpers\LdapSanitizer.cs" />
     <Compile Include="Helpers\PasswordGeneratorHelper.cs" />
     <Compile Include="Helpers\TannerDatabaseHelper.cs" />
-    <Compile Include="Helpers\SignInHelper.cs" />
     <Compile Include="Helpers\UserHelper.cs" />
     <Compile Include="Infraestructure\Constants\ApplicationConstants.cs" />
     <Compile Include="Infraestructure\Constants\RoleConstants.cs" />
@@ -432,7 +430,6 @@
     <Compile Include="Models\AuthorityUserInfo.cs" />
     <Compile Include="Models\AzureFolderModel.cs" />
     <Compile Include="Models\AzureBlobModel.cs" />
-    <Compile Include="Helpers\GraphApiResponseInfo.cs" />
     <Compile Include="Models\ChangePasswordModel.cs" />
     <Compile Include="Models\CircularizacionModel.cs" />
     <Compile Include="Models\SiteInformation.cs" />
@@ -464,16 +461,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Services\AuthorityClientService.cs" />
     <Compile Include="Services\ExternalUserProvider\LDAPService.cs" />
     <Compile Include="Services\HttpService.cs" />
-    <Compile Include="Services\Interfaces\IAuthorityClientService.cs" />
     <Compile Include="Services\Interfaces\IExternalUserProvider.cs" />
     <Compile Include="Services\Interfaces\IHttpService.cs" />
     <Compile Include="Services\Interfaces\IUserSchemaEntryRepository.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="Tasks\SyncUsersDataJob.cs" />
-    <Compile Include="Tasks\SyncUsersDataJobScheduler.cs" />
     <Compile Include="Web References\CartolaResumida\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -612,6 +605,7 @@
     <Content Include="Frontend_Tests\Controllers\misInversionesDocumentosControllerSpec.js" />
     <Content Include="Frontend_Tests\Controllers\modalInstanceControllerSpec.js" />
     <Content Include="Scripts\extras\index.js" />
+    <TypeScriptCompile Include="app\config\constants.ts" />
     <TypeScriptCompile Include="app\domain\SiteInformation.ts" />
     <TypeScriptCompile Include="app\modules\login\controllers\authCtrl.ts" />
     <TypeScriptCompile Include="app\common\controllers\changePasswordCtrl.ts" />
@@ -811,6 +805,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Configuration\Environment\" />
+    <Folder Include="config\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

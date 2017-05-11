@@ -1,26 +1,26 @@
 ﻿module app.domain {
     export interface ISiteInformation {
-        Id: number;
-        UserId: number;
-        AbbreviateName: string;
-        SiteName: string;
-        SiteType: string;
-        Description: string;
-        Url: string;
-        CN: string;
-        Priority: number;
+        id: number;
+        userId: number;
+        abbreviateName: string;
+        siteName: string;
+        siteType: string;
+        description: string;
+        url: string;
+        cn: string;
+        priority: number;
     }
 
     export class SiteInformation extends app.domain.EntityBase implements ISiteInformation {
-        constructor(public Id: number,
-            public UserId: number,
-            public AbbreviateName: string,
-            public SiteName: string,
-            public SiteType: string,
-            public Description: string,
-            public Url: string,
-            public CN: string,
-            public Priority: number) {
+        constructor(public id: number,
+            public userId: number,
+            public abbreviateName: string,
+            public siteName: string,
+            public siteType: string,
+            public description: string,
+            public url: string,
+            public cn: string,
+            public priority: number) {
 
             super();
         }

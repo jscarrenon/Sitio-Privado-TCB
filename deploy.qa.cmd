@@ -153,7 +153,7 @@ IF EXIST "%DEPLOYMENT_TARGET%\bower.json" (
 IF EXIST "%DEPLOYMENT_TARGET%\gulpfile.js" (
   echo gulpfile.js file found
   pushd "%DEPLOYMENT_TARGET%"
-  call :ExecuteCmd .\node_modules\.bin\gulp
+  call :ExecuteCmd .\node_modules\.bin\gulp -c qa
   IF !ERRORLEVEL! NEQ 0 goto error
   popd
   echo Finish gulp

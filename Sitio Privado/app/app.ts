@@ -1,4 +1,5 @@
 ﻿module app {
+
     class Config {
         constructor($routeProvider: ng.route.IRouteProvider,
             AnalyticsProvider: ng.google.analytics.AnalyticsProvider,
@@ -53,7 +54,7 @@
                         responseError: function (response) {
                             var authService: app.common.services.AuthService = $injector.get('authService');
                             if (response.status === 401) {
-                                authService.cerrarSesion();
+                                authService.limpiarUsuarioActual();
                                 $window.location.href = constantService.homeTanner;
                             }
                             return $q.reject(response);
@@ -83,13 +84,19 @@
                     event.preventDefault();
 
                     if ($location.path() === '/login') {
+
                         // we need to validate token
                         var token = $location.search().accessToken;
                         var refreshToken = $location.search().refreshToken;
                         var expiresIn = $location.search().expiresIn;
-                        authenticationService.validateToken(token, refreshToken, expiresIn)
-                            .then(() => (authenticationService.autenticado = true, $location.path("/").search({})));
+                        authenticationService.verifyLogin(token, refreshToken, expiresIn)
+                            .then(() => {
+                                authenticationService.autenticado = true;
+                                authenticationService.callsAfterLogin();
+                                $location.path("/").search({});
+                            });
                     } else {
+
                         // we need to make sure out authorization header is valid
                         $localForage.getItem('accessToken')
                             .then((responseToken) => {

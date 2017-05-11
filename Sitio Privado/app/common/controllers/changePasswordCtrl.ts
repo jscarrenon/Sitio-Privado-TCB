@@ -4,21 +4,19 @@
         changePasswordInput: app.domain.IChangePasswordInput;
         changePassword(): void;
         loading: boolean;
-        passwordErrors: string[];
-        passwordValidationErrors: string[];
         errorMessage: string;
         clearMessages(): void;
         processSuccess: boolean;
+        errorResponseMessages: { [key: number]: string };
     }
 
     export class ChangePasswordCtrl implements IChangePasswordViewModel {
 
         changePasswordInput: app.domain.IChangePasswordInput;
         loading: boolean;
-        passwordErrors: string[];
-        passwordValidationErrors: string[];
         errorMessage: string;
         processSuccess: boolean;
+        errorResponseMessages: { [key: number]: string };
 
         static $inject = ['constantService', 'dataService', '$localForage','authService'];
         constructor(private constantService: app.common.services.ConstantService,
@@ -27,12 +25,28 @@
             private authService: app.common.services.AuthService) {
 
             this.changePasswordInput = new app.domain.ChangePasswordInput();
-            this.passwordErrors = [];
-            this.passwordValidationErrors = [];
+
+            this.errorResponseMessages = {
+                40001: "Error de validación.",
+                40005: "No se pudo autenticar el usuario.",
+                40099: "Contraseñas ingresadas no coinciden", // Special case
+                50000: "Error interno del servidor.",
+            }
         }
 
         changePassword(): void {
             this.clearMessages();
+
+            if (!this.changePasswordInput.OldPassword || !this.changePasswordInput.NewPassword || !this.changePasswordInput.PasswordValidation) {
+                this.errorMessage = this.errorResponseMessages[40001];
+                return;
+            }
+
+            if (this.changePasswordInput.NewPassword !== this.changePasswordInput.PasswordValidation) {
+                this.errorMessage = this.errorResponseMessages[40099];
+                return;
+            }
+
             this.loading = true;
             this.$localForage.getItem('accessToken')
                 .then((responseToken) => {
@@ -47,18 +61,8 @@
                         })
                         .catch((result: any) => {
                             this.processSuccess = false;
-                            if (result.status == 400) {
-                                this.errorMessage = "Error de validación."
-                                //Model errors
-                                var modelStateErrors = result.data.ModelState;
-                                for (var prop in modelStateErrors) {
-                                    if (prop == "model.Password") {
-                                        this.passwordErrors = modelStateErrors[prop];
-                                    }
-                                    if (prop == "model.PasswordValidation") {
-                                        this.passwordValidationErrors = modelStateErrors[prop];
-                                    }
-                                }
+                            if (result.data && result.data["errorCode"] && this.errorResponseMessages[result.data["errorCode"]]) {
+                                this.errorMessage = this.errorResponseMessages[result.data["errorCode"]];
                             }
                             else {
                                 this.errorMessage = result.data;
@@ -71,8 +75,6 @@
         clearMessages(): void {
             this.processSuccess = false;
             this.errorMessage = "";
-            this.passwordErrors = [];
-            this.passwordValidationErrors = [];
         }
     }
 

@@ -24,11 +24,12 @@
         templateSusConfFirmaElecDocModalURI: string;
         apiUsersURI: string;
         homeTanner: string;
-        apiAutenticacion: string;
+        apiAutenticacionURI: string;
         apiOAuthURI: string;
         userClientId: string;
         userClientSecret: string;
-        apiSignOutUri: string;
+        tannerAuthenticationAPI: string;
+        requiredGroup: string;
     }
 
     export class ConstantService implements IConstant {
@@ -55,11 +56,13 @@
         templateSusConfFirmaElecDocModalURI: string;
         apiUsersURI: string;
         homeTanner: string;
-        apiAutenticacion: string;
+        apiAutenticacionURI: string;
         apiOAuthURI: string;
         userClientId: string;
         userClientSecret: string;
-        apiSignOutUri: string;
+        tannerAuthenticationAPI: string;
+        requiredGroup: string;
+
         constructor() {
             this.buildFolderURI = '.build/';
             this.mvcHomeURI = '/Home/';
@@ -85,12 +88,14 @@
             this.apiIndicesURI = '/api/indices/';
             this.apiCircularizacionURI = '/api/circularizacion/';
             this.apiUsersURI = 'api/users/';
-            this.apiSignOutUri = 'api/Authentication/signout';
-            this.apiAutenticacion = '/api/authentication/';
-            this.homeTanner = 'https://www.tanner.cl/';         // TODO: read from config file
-            this.apiOAuthURI = 'https://oauthdesa.tanner.cl/';  // TODO: read from config file
-            this.userClientId = 'passwordgrant';                // TODO: read from config file
-            this.userClientSecret = 'secret';                   // TODO: read from config file
+            this.apiAutenticacionURI = '/api/authentication/';
+            this.homeTanner = app.config.CONFIG.TANNER_PUBLIC_SITE_URL;
+            this.apiOAuthURI = app.config.CONFIG.OAUTH2_URL;
+            this.userClientId = app.config.CONFIG.CLIENT_ID;
+            this.userClientSecret = app.config.CONFIG.CLIENT_SECRET;
+            this.tannerAuthenticationAPI = app.config.CONFIG.TANNER_AUTHENTICATION_API;
+            this.requiredGroup = app.config.CONFIG.REQUIRED_GROUP;
+
         }
     }
 

@@ -1,8 +1,8 @@
 ﻿module app.domain {
     export interface IChangePasswordInput {
-        OldPassword: string;
-        NewPassword: string;
-        PasswordValidation: string;
+        OldPassword?: string;
+        NewPassword?: string;
+        PasswordValidation?: string;
     }
 
     export class ChangePasswordInput extends app.domain.InputBase implements IChangePasswordInput {
