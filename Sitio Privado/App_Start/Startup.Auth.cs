@@ -9,6 +9,7 @@ using System.Threading;
 using IdentityServer3.AccessTokenValidation;
 using System.Web.Http;
 using Sitio_Privado.Infraestructure.ExceptionHandling;
+using NLog;
 
 namespace Sitio_Privado
 {
@@ -39,12 +40,20 @@ namespace Sitio_Privado
 
         public void ConfigureAuth(IAppBuilder app)
         {
+            Logger logger = LogManager.GetLogger("SessionLog");
+
+            logger.Info("Starting server...");
+            logger.Info("Authority url is: " + ConfigurationManager.AppSettings["AuthorityUrl"]);
+            logger.Info("Required group is: " + ConfigurationManager.AppSettings["RequiredGroup"]);
+
             app.Use<OwinExceptionHandler>(app);
             app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions
             {
                 ValidationMode = ValidationMode.ValidationEndpoint,
                 Authority = ConfigurationManager.AppSettings["AuthorityUrl"]
             });
+
+            logger.Info("Server started.");
         }
 
         // This notification can be used to manipulate the OIDC request before it is sent.  Here we use it to send the correct policy.

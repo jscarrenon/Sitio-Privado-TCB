@@ -10,8 +10,7 @@
 
         seccionId: number;
         suscripcionFirmaElectronica: number;
-        sites: Array<app.domain.SiteInformation>;
-        multiples: boolean;
+
         static $inject = ['constantService', '$localForage', 'dataService', 'authService', 'extrasService', '$scope', '$uibModal', '$location', 'Analytics'];
         constructor(private constantService: app.common.services.ConstantService,
             private $localForage,
@@ -46,8 +45,6 @@
             this.$scope.$on('$routeChangeSuccess', (event: any) => {
                 Analytics.trackPage(Analytics.getUrl());
             });
-
-            this.getUserSitesByToken();
         }
 
         seleccionarSeccion(id: number): void {
@@ -98,31 +95,6 @@
                     if ((newValue != oldValue) && newValue) {
                         this.crearInstanciaModal("circularizacion");
                     }
-                });
-        }
-
-        getUserSitesByToken(): void {
-            this.$localForage.getItem('accessToken')
-                .then((responseToken) => {
-                    this.$localForage.getItem('refreshToken')
-                        .then((refreshTokenResult) => {
-                            this.$localForage.getItem('expiresIn')
-                                .then((expiresInResult) => {
-                                    if (responseToken != null) {
-                                        this.dataService.postWebService(this.constantService.apiAutenticacion + 'usersites', null, responseToken)
-                                            .then((result: Array<app.domain.SiteInformation>) => {
-                                                result.forEach((site) => {
-                                                    site.Url = site.Url + '?accessToken=' + responseToken + '&refreshToken=' + refreshTokenResult + '&expiresIn=' + expiresInResult;
-                                                });
-                                                this.sites = result;
-                                                if (result.length > 1)
-                                                    this.multiples = true;
-
-                                                return result;
-                                            });
-                                    }
-                                });
-                        });
                 });
         }
 

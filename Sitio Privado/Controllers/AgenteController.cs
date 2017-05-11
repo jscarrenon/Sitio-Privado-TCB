@@ -25,7 +25,7 @@ namespace Sitio_Privado.Controllers
         {
             try
             {
-                var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
+                var usuario = userService.GetUserInfoByUsernameV2(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
 
                 Agente agente = new Agente(input, usuario);
                 return Ok(agente);

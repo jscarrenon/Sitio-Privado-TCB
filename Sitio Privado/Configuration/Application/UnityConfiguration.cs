@@ -23,7 +23,6 @@ namespace Sitio_Privado.Configuration.Application
             return container.Value;
         }
 
-
         /// <summary>Registers the type mappings with the Unity container.</summary>
         /// <param name="container">The unity container to configure.</param>
         /// <remarks>There is no need to register concrete types such as controllers or API controllers (unless you want to
@@ -32,7 +31,6 @@ namespace Sitio_Privado.Configuration.Application
         {
             // Services
             container.RegisterType<IHttpService, HttpService>();
-            container.RegisterType<IAuthorityClientService, AuthorityClientService>();
 
             // Services (single instance)
             container.RegisterInstance(typeof(IExternalUserService), container.Resolve<LDAPService>(), new ContainerControlledLifetimeManager());

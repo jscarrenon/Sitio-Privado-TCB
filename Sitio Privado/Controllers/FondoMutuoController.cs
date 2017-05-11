@@ -28,7 +28,7 @@ namespace Sitio_Privado.Controllers
         {
             try
             {
-                var usuario = userService.GetUserInfoByUsername(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
+                var usuario = userService.GetUserInfoByUsernameV2(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
                 tann_fondos_mutuos webService = new tann_fondos_mutuos();
                 int rutParteEntera = Converters.getRutParteEnteraInt(usuario.Rut);
                 saldo_ffmm[] SaldosRF = webService.cn_saldo_ffmm_rf(rutParteEntera);

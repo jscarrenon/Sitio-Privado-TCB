@@ -1,10 +1,10 @@
-/// <reference path="bower_components/localforage/dist/localforage.js" />
 /// <binding BeforeBuild='clean' AfterBuild='css-task, templates-task, scripts-task, better-dom-task, vendors-task, spa-task, encoding-task, resources-task, login-task' Clean='clean' />
 /*
 This file in the main entry point for defining Gulp tasks and using Gulp plugins.
 Click here to learn more. http://go.microsoft.com/fwlink/?LinkId=518007
 */
 
+var argv = require('yargs').argv;
 var gulp = require('gulp');
 var runSequence = require('run-sequence');
 var inject = require('gulp-inject');
@@ -17,10 +17,12 @@ var less = require('gulp-less');
 var merge = require('merge-stream');
 var del = require('del');
 var templateCache = require('gulp-angular-templatecache');
+var util = require('gulp-util');
 
 var appName = 'tannerPrivadoApp';
 
 var paths = {
+    config: './config/',
     buildFolder: '.build',
     index: './Views/Home/Index.cshtml',
     login: {
@@ -32,6 +34,7 @@ var paths = {
     homeFolder: './Views/Home',
     domainFiles: ['./app/domain/IEntity.js', './app/domain/IInput.js', './app/domain/*.js'],
     appFiles: ['./app/*.js',
+                './app/config/*.js',
                 './app/common/directives/*.js',
                 './app/common/services/*.js',
                 './app/common/controllers/*.js',
@@ -64,6 +67,15 @@ var paths = {
 
 gulp.task('default', function (callback) {
     runSequence('clean', 'css-task', 'templates-task', 'scripts-task', 'better-dom-task', 'vendors-task', 'spa-task', 'encoding-task', 'resources-task', 'login-task', callback);
+});
+
+// This task should not be used because it depends on execution arguments (argv) and the BeforeBuild is not configured to support them
+gulp.task('config-task', function () {
+    var configEnv = argv.c || argv.config || 'local';
+
+    printLog('Copying files for environment: ' + configEnv);
+    return gulp.src(paths.config + configEnv + '/**/*')
+        .pipe(gulp.dest('./app/config/'));
 });
 
 gulp.task('clean', function () {
@@ -152,7 +164,6 @@ gulp.task('css-task', function () {
 
 gulp.task('scripts-task', function () {
     var target = gulp.src(paths.index);
-
     var extrasJsStream = gulp.src(paths.scripts);
 
     return target
@@ -230,3 +241,6 @@ gulp.task('login-task', function () {
 
     return merge(css, scripts, encoding);
 });
+
+function printLog(msg) { return util.log(util.colors.cyan(msg)); }
+function printError(msg) { return util.log(util.colors.red(msg)); }
