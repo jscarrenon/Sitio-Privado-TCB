@@ -26,7 +26,7 @@
                                 Contraseña actual
                                 <input name="oldPassword" type="password" ng-model="ctrl.changePasswordInput.OldPassword" required>
                             </div>
-                            <div class="do-not-match" ng-show="ctrl.passwordErrors || form.$error">
+                            <div class="do-not-match" ng-show="ctrl.passwordErrors || (form.$error && !form.$pristine)">
                                 <p ng-repeat="error in ctrl.passwordErrors">{{error}}</p>
                                 <p ng-show="form.oldPassword.$error.required">Campo obligatorio.</p>
                             </div>
@@ -34,7 +34,7 @@
                                 Nueva contraseña
                                 <input name="newPassword" type="password" ng-minlength="1" ng-maxlength="15" ng-model="ctrl.changePasswordInput.NewPassword" required>
                             </div>
-                            <div class="do-not-match" ng-show="ctrl.passwordErrors || form.$error">
+                            <div class="do-not-match" ng-show="ctrl.passwordErrors || (form.$error && !form.$pristine)">
                                 <p ng-repeat="error in ctrl.passwordErrors">{{error}}</p>
                                 <p ng-show="form.newPassword.$error.maxlength">Largo de clave no es válido.</p>
                                 <p ng-show="form.newPassword.$error.required">Campo obligatorio.</p>
@@ -43,7 +43,7 @@
                                 Repetir nueva contraseña
                                 <input name="passwordValidation" type="password" ng-minlength="1" ng-maxlength="15" ng-model="ctrl.changePasswordInput.PasswordValidation" required>
                             </div>
-                            <div class="do-not-match" ng-show="ctrl.passwordValidationErrors || form.$error">
+                            <div class="do-not-match" ng-show="ctrl.passwordValidationErrors || (form.$error && !form.$pristine)">
                                 <p ng-repeat="error in ctrl.passwordValidationErrors">{{error}}</p>
                                 <p ng-show="form.passwordValidation.$error.maxlength">Largo de clave no es válido.</p>
                                 <p ng-show="form.passwordValidation.$error.required">Campo obligatorio.</p>
