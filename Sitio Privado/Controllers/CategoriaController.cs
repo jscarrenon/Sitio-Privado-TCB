@@ -1,17 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using Sitio_Privado.Models;
 using Sitio_Privado.CategoriaInversionista;
-using System.Threading.Tasks;
+using Sitio_Privado.Filters;
+using Sitio_Privado.Services.Interfaces;
+using Sitio_Privado.Helpers;
+using System.Security.Claims;
 
 namespace Sitio_Privado.Controllers
 {
-    public class CategoriaController : ApiBaseController
+    [AuthorizeWithGroups]
+    public class CategoriaController : ApiController
     {
+        IHttpService httpService = null;
+        IExternalUserService userService = null;
+
+        public CategoriaController(IHttpService httpService, IExternalUserService userService) 
+        {
+            this.httpService = httpService;
+            this.userService = userService;
+        }
+
         [HttpGet]
         public IHttpActionResult GetList()
         {
@@ -47,13 +57,12 @@ namespace Sitio_Privado.Controllers
                 return InternalServerError(e);
             }
         }
-
         [HttpPost]
-        public async Task<IHttpActionResult> GetSingleCliente([FromBody]CategoriaClienteInput input)
+        public IHttpActionResult GetSingleCliente([FromBody]CategoriaClienteInput input)
         {
             try
             {
-                var usuario = await GetUsuarioActual();
+                var usuario = userService.GetUserInfoByUsernameV2(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
                 Categoria categoria = new Categoria(input, usuario);
                 return Ok(categoria);
             }

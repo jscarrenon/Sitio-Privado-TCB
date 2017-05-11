@@ -12,6 +12,7 @@
     <!-- stylesCss:css -->
     <link rel="stylesheet" href="/.build/css/stylesCss.css">
     <!-- endinject -->
+    <link href="~/Styles/LU.css" rel="stylesheet" />
     <!-- extras:js -->
     <script src="/.build/js/extras.js"></script>
     <!-- endinject -->
@@ -40,17 +41,16 @@
     <link rel="icon" href=".build/img/favicon.ico" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <script type="text/javascript">  var appInsights=window.appInsights||function(config){    function r(config){t[config]=function(){var i=arguments;t.queue.push(function(){t[config].apply(t,i)})}}var t={config:config},u=document,e=window,o="script",s=u.createElement(o),i,f;for(s.src=config.url||"//az416426.vo.msecnd.net/scripts/a/ai.0.js",u.getElementsByTagName(o)[0].parentNode.appendChild(s),t.cookie=u.cookie,t.queue=[],i=["Event","Exception","Metric","PageView","Trace"];i.length;)r("track"+i.pop());return r("setAuthenticatedUserContext"),r("clearAuthenticatedUserContext"),config.disableExceptionTracking||(i="onerror",r("_"+i),f=e[i],e[i]=function(config,r,u,e,o){var s=f&&f(config,r,u,e,o);return s!==!0&&t["_"+i](config,r,u,e,o),s}),t    }({        instrumentationKey:"bbf416ca-6238-427a-82ed-be8dc8c3d9b2"    });           window.appInsights=appInsights;    appInsights.trackPageView();</script>
 
 </head>
-<body ng-controller="BodyCtrl as bodyCtrl">
+<body ng-controller="BodyCtrl as bodyCtrl" ng-cloak>
 
-    <div id="prebar">
+    <div id="prebar" ng-show="!bodyCtrl.authService.waitingResponse">
         <div class="user"><a href="#/mis-datos" class="clink" ng-click="bodyCtrl.seleccionarSeccion(-1)">{{ bodyCtrl.authService.usuario.NombreCompleto }} | Mis Datos</a></div>
         <div class="logout"><a href="" ng-click="bodyCtrl.authService.cerrarSesion()">Cerrar Sesión</a></div>
     </div>
 
-    <div id="bar">
+    <div id="bar" ng-show="!bodyCtrl.authService.waitingResponse">
         <div class="in">
             <div class="logo"><a href="#/" class="clink" ng-click="bodyCtrl.seleccionarSeccion(0)"></a></div>
             <div class="menubar">
@@ -59,18 +59,57 @@
                 <div class="menuitem"><a href="#/informacion-financiera" class="clink" ng-click="bodyCtrl.seleccionarSeccion(3)">Información Financiera</a></div>
                 <div class="menuitem"><a href="#/inversiones" class="clink" ng-click="bodyCtrl.seleccionarSeccion(4)">Inversión a su Medida</a></div>
             </div>
+            <div ng-show="bodyCtrl.authService.sites.length >= 1" id="LU-desktop">
+                <div id="LU-desktop-button"></div>
+                <div id="LU-desktop-dropdown">
+                    <div id="LU-desktop-dropdown-arrow"></div>
+                    <div id="LU-desktop-dropdown-container">
+                        <div class="LU-dropdown-header">
+                            <p><span>Estás en: </span>{{bodyCtrl.authService.sites[0].siteName}}</p>
+                            <div></div>
+                        </div>
+                        <div class="LU-dropdown-instructions">Ingresa a otro sitio de Tanner</div>
+                        <div ng-repeat="site in bodyCtrl.authService.sites" ng-if="!$first">
+                            <a href="{{site.url}}" class="LU-dropdown-item">
+                                <div>{{site.siteType}}</div>
+                                <div>{{site.siteName}}</div>
+                                <div class="LU-dropdown-item-go"></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div id="bar_mobile">
-        <div class="in">
+    <div id="bar_mobile" ng-show="!bodyCtrl.authService.waitingResponse">
+        <div ng-show="bodyCtrl.authService.sites.length >= 1" id="LU-mobile-dropdown">
+            <div id="LU-mobile-dropdown-container">
+                <div class="LU-dropdown-header">
+                    <p><span>Estás en: </span>{{bodyCtrl.authService.sites[0].siteName}}</p>
+                    <div></div>
+                </div>
+                <div class="LU-dropdown-instructions">Ingresa a otro sitio de Tanner</div>
+                <div ng-repeat="site in bodyCtrl.authService.sites" ng-if="!$first">
+                    <a href="{{site.url}}" class="LU-dropdown-item">
+                        <div>{{site.siteType}}</div>
+                        <div>{{site.siteName}}</div>
+                        <div class="LU-dropdown-item-go"></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="in" ng-show="!bodyCtrl.authService.waitingResponse">
             <div class="logo"><a href="#/" class="clink" ng-click="bodyCtrl.seleccionarSeccion(0)"></a></div>
             <div class="user"><a href="#/mis-datos" class="clink" ng-click="bodyCtrl.seleccionarSeccion(-1)"></a></div>
+            <div ng-show="bodyCtrl.authService.sites.length >= 1" id="LU-mobile">
+                <div id="LU-mobile-button"></div>
+            </div>
             <div class="logout"><a href="" class="clink" ng-click="bodyCtrl.authService.cerrarSesion()"></a></div>
         </div>
     </div>
 
-    <div id="tabbar">
+    <div id="tabbar" ng-show="!bodyCtrl.authService.waitingResponse">
         <div class="tab home" ng-class="{'active':bodyCtrl.seccionId == 0}">
             <a href="#/" class="clink" ng-click="bodyCtrl.seleccionarSeccion(0)"></a>
         </div>
@@ -88,7 +127,8 @@
         </div>
     </div>
 
-    <ng-view ng-if="bodyCtrl.authService.autenticado"></ng-view>
+    <ng-view ng-show="!bodyCtrl.authService.waitingResponse"></ng-view>
 
+    <loading param="bodyCtrl.authService.waitingResponse"></loading>
 </body>
 </html>
