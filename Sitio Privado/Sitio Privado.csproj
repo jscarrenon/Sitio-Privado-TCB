@@ -413,6 +413,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\JSONConverter.cs" />
+    <Compile Include="Helpers\LdapSanitizer.cs" />
     <Compile Include="Helpers\PasswordGeneratorHelper.cs" />
     <Compile Include="Helpers\TannerDatabaseHelper.cs" />
     <Compile Include="Helpers\UserHelper.cs" />
