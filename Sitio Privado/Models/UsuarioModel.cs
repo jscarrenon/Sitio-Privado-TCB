@@ -44,16 +44,16 @@ namespace Sitio_Privado.Models
     }
 
     public class Usuario : ClaimsPrincipal, ICustomPrincipal
-    {//Obtener el aud desde Identity, obtener el usuario y guardar los extension attributes
+    {
         public Usuario() { }
 
         public Usuario(ClaimsPrincipal principal) : base (principal) { }
 
-        public bool Autenticado { get { return this.Identity.IsAuthenticated; } }
+        public bool Autenticado { get { return this.Identity != null ? this.Identity.IsAuthenticated : false; } }
 
-        public string Nombres { get { return this.Autenticado ? this.FindFirst(CustomClaimTypes.Nombres) != null ? this.FindFirst(CustomClaimTypes.Nombres).Value : "" : ""; } }
+        public string Nombres { get; set; }
 
-        public string Apellidos { get { return this.Autenticado ? this.FindFirst(CustomClaimTypes.Apellidos) != null ? this.FindFirst(CustomClaimTypes.Apellidos).Value : "" : ""; } }
+        public string Apellidos { get; set; }
 
         public string Rut { get; set; }
 
@@ -61,9 +61,9 @@ namespace Sitio_Privado.Models
 
         public string DireccionParticular { get; set; }
 
-        public string Ciudad { get { return this.Autenticado ? this.FindFirst(CustomClaimTypes.Ciudad) != null ? this.FindFirst(CustomClaimTypes.Ciudad).Value : "" : ""; } }
+        public string Ciudad { get; set; }
 
-        public string Pais { get { return this.Autenticado ? this.FindFirst(CustomClaimTypes.Pais) != null ? this.FindFirst(CustomClaimTypes.Pais).Value : "" : ""; } }
+        public string Pais { get; set; }
 
         public string TelefonoComercial { get; set; }
 

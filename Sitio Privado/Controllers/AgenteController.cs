@@ -1,22 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using Sitio_Privado.Models;
-using System.Threading.Tasks;
+using Sitio_Privado.Services.Interfaces;
+using Sitio_Privado.Filters;
+using Sitio_Privado.Helpers;
+using System.Security.Claims;
 
 namespace Sitio_Privado.Controllers
 {
-    public class AgenteController : ApiBaseController
+    [AuthorizeWithGroups]
+    public class AgenteController : ApiController
     {
+        IHttpService httpService = null;
+        IExternalUserService userService = null;
+
+        public AgenteController(IHttpService httpService, IExternalUserService userService) 
+        {
+            this.httpService = httpService;
+            this.userService = userService;
+        }
+
         [HttpPost]
-        public async Task<IHttpActionResult> GetSingle([FromBody]AgenteInput input)
+        public IHttpActionResult GetSingle([FromBody]AgenteInput input)
         {
             try
             {
-                Usuario usuario = await GetUsuarioActual();
+                var usuario = userService.GetUserInfoByUsernameV2(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
+
                 Agente agente = new Agente(input, usuario);
                 return Ok(agente);
             }

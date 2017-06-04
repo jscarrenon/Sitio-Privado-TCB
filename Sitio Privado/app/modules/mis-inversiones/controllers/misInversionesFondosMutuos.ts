@@ -20,9 +20,10 @@
         fondosMutuosRVTotal: number;
         loading: boolean;
 
-        static $inject = ['constantService', 'dataService', 'authService', 'extrasService', '$routeParams'];
+        static $inject = ['constantService', 'dataService', '$localForage','authService', 'extrasService', '$routeParams'];
         constructor(private constantService: app.common.services.ConstantService,
             private dataService: app.common.services.DataService,
+            private $localForage,
             private authService: app.common.services.AuthService,
             private extrasService: app.common.services.ExtrasService,
             private $routeParams: app.misInversiones.IMisInversionesRouteParams) {
@@ -33,13 +34,16 @@
 
         getFondosMutuos(input: app.domain.IFondoMutuoInput): void {
             this.loading = true;
-            this.dataService.postWebService(this.constantService.apiFondosMutuosURI + 'getList', input)
-                .then((result: app.domain.IFondoMutuo[]) => {
-                    this.fondosMutuosRF = result["fondosMutuosRF"];
-                    this.fondosMutuosRV = result["fondosMutuosRV"];
-                    this.getFondosMutuosTotal();
-                })
-                .finally(() => this.loading = false);
+            this.$localForage.getItem('accessToken')
+                .then((responseToken) => {
+                    this.dataService.postWebService(this.constantService.apiFondosMutuosURI + 'getList', input, responseToken)
+                        .then((result: app.domain.IFondoMutuo[]) => {
+                            this.fondosMutuosRF = result["fondosMutuosRF"];
+                            this.fondosMutuosRV = result["fondosMutuosRV"];
+                            this.getFondosMutuosTotal();
+                        })
+                        .finally(() => this.loading = false);
+                });
         }
 
         getFondosMutuosTotal(): void {

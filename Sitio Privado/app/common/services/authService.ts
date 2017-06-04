@@ -1,9 +1,11 @@
 ﻿module app.common.services {
-
+    export interface IAuthenticationRouteParams extends ng.route.IRouteParamsService {
+        accessToken?: string;
+    }
     interface IAuth {
         autenticado: boolean;
         usuario: app.domain.IUsuario;
-        getUsuarioActual(): void;
+        limpiarUsuarioActual(): void;
         cerrarSesion(): void;
         circularizacionPendiente: boolean;
         getCircularizacionPendiente(): void;
@@ -13,6 +15,18 @@
         setSusFirmaElecDoc(glosa: string, respuesta: string): ng.IPromise<number>;
         fechaCircularizacion: Date;
         getFechaCircularizacion(): void;
+        verifyLogin(accessToken: string, refreshToken: string, expiresIn: number): ng.IPromise<app.domain.IUsuario>;
+        setUsuario(usuario: app.domain.IUsuario): void;
+        checkUserAuthentication(): void;
+        saveToken(accessToken: string, refreshToken: string, expiresIn: number): void;
+        refreshToken(): ng.IPromise<void>;
+        setTimerForRefreshToken(): void;
+        sites: app.domain.SiteInformation[];
+        agente: app.domain.IAgente;
+        getAgente(): void;
+        loadingAgente: boolean;
+        callsAfterLogin(): void;
+        waitingResponse: boolean;
     }
 
     export class AuthService implements IAuth {
@@ -23,87 +37,289 @@
         susFirmaElecDoc: number;
         fechaCircularizacion: Date;
         private qService: ng.IQService;
-                
-        static $inject = ['constantService', 'dataService', 'extrasService', '$q'];
-        constructor(private constantService: ConstantService,
+        private timer: ng.IPromise<any>;
+        private httpParamSerializerProvider: any;
+        sites: app.domain.SiteInformation[];
+        agente: app.domain.IAgente;
+        loadingAgente: boolean;
+        waitingResponse: boolean;
+
+        static $inject = [
+            '$http',
+            '$httpParamSerializer',
+            '$localForage',
+            '$location',
+            '$q',
+            '$routeParams',
+            '$timeout',
+            '$window',
+            'constantService',
+            'dataService',
+            'extrasService'
+        ];
+        constructor(
+            private $http: ng.IHttpService,
+            private $httpParamSerializer,
+            private $localForage,
+            private $location: ng.ILocationService,
+            private $q: ng.IQService,
+            private $routeParams: IAuthenticationRouteParams,
+            private $timeout: angular.ITimeoutService,
+            private $window: ng.IWindowService,
+            private constantService: ConstantService,
             private dataService: DataService,
-            private extrasService: ExtrasService,
-            $q: ng.IQService) {
+            private extrasService: ExtrasService
+        ) {
+            this.waitingResponse = true;
+
             this.fechaCircularizacion = null;
             this.circularizacionPendiente = false;
             this.documentosPendientes = 0;
-            this.getUsuarioActual();
-            this.getSusFirmaElecDoc();
+            this.sites = [];
+            this.checkUserAuthentication();
+            
             this.qService = $q;
         }
 
-        getUsuarioActual(): void {
-            this.dataService.getSingle(this.constantService.mvcHomeURI + 'GetUsuarioActual').then((result: app.domain.IUsuario) => {
-                this.usuario = result;
-                if (this.usuario.Autenticado) {
-                    this.autenticado = true;
-                    this.getFechaCircularizacion();
-                    this.getCircularizacionPendiente();
-                    this.getDocumentosPendientes();
-                }
-                else {
-                    this.autenticado = false;
-                    this.fechaCircularizacion = null;
-                    this.circularizacionPendiente = false;
-                    this.documentosPendientes = 0;
-                }
-            });
+        setUsuario(usuario: app.domain.IUsuario): void {
+            if (usuario) {
+                this.usuario = usuario;
+            }
+
         }
 
-        cerrarSesion(): void {
+        limpiarUsuarioActual(): void {
             this.autenticado = false;
+            this.fechaCircularizacion = null;
             this.circularizacionPendiente = false;
             this.documentosPendientes = 0;
             this.usuario = null;
-            this.extrasService.abrirRuta(this.constantService.mvcSignOutURI, "_self");
+            this.$localForage.removeItem(['accessToken', 'refreshToken', 'expiresIn', 'usuario', 'autenticado']);
+        }
+
+        cerrarSesion(): void {
+            this.waitingResponse = true;
+            this.$localForage.getItem('accessToken')
+                .then((responseToken) => {
+                    if (responseToken) {
+                        this.dataService.postWebService(this.constantService.apiAutenticacionURI + 'signout', null, responseToken)
+                            .then(() => { })
+                            .finally(() => {
+                                this.limpiarUsuarioActual();
+                                this.$window.location.href = this.constantService.homeTanner;
+                            });
+                    }
+                    else {
+                        this.limpiarUsuarioActual();
+                        this.$window.location.href = this.constantService.homeTanner;
+                    }
+                });
         }
 
         getFechaCircularizacion(): void {
             var input: app.domain.ICircularizacionFechaInput = new app.domain.CircularizacionFechaInput();
-            this.dataService.postWebService(this.constantService.apiCircularizacionURI + 'getFecha', input)
-                .then((result: Date) => {
-                    this.fechaCircularizacion = result;
+            this.$localForage.getItem('accessToken')
+                .then((responseToken) => {
+                    this.dataService.postWebService(this.constantService.apiCircularizacionURI + 'getFecha', input, responseToken)
+                        .then((result: Date) => {
+                            this.fechaCircularizacion = result;
+                        });
                 });
         }
 
         getCircularizacionPendiente(): void {
             var input: app.domain.ICircularizacionPendienteInput = new app.domain.CircularizacionPendienteInput();
-            this.dataService.postWebService(this.constantService.apiCircularizacionURI + 'getPendiente', input)
-                .then((result: app.domain.ICircularizacionProcesoResultado) => {
-                    this.circularizacionPendiente = result.Resultado;
+            this.$localForage.getItem('accessToken')
+                .then((responseToken) => {
+                    this.dataService.postWebService(this.constantService.apiCircularizacionURI + 'getPendiente', input, responseToken)
+                        .then((result: app.domain.ICircularizacionProcesoResultado) => {
+                            this.circularizacionPendiente = result.Resultado;
+                        });
                 });
         }
 
         getDocumentosPendientes(): void {
             var input: app.domain.IDocumentosPendientesCantidadInput = new app.domain.DocumentosPendientesCantidadInput();
-            this.dataService.postWebService(this.constantService.apiDocumentoURI + 'getCantidadPendientes', input)
-                .then((result: app.domain.IDocumentosPendientesCantidadResultado) => {
-                    this.documentosPendientes = result.Resultado;
+            this.$localForage.getItem('accessToken')
+                .then((responseToken) => {
+                    this.dataService.postWebService(this.constantService.apiDocumentoURI + 'getCantidadPendientes', input, responseToken)
+                        .then((result: app.domain.IDocumentosPendientesCantidadResultado) => {
+                            this.documentosPendientes = result.Resultado;
+                        });
                 });
         }
 
         getSusFirmaElecDoc(): void {
-            this.dataService.postWebService(this.constantService.apiDocumentoURI + 'GetConsultaRespuestaSusFirmaElecDoc','')
-                .then((result: number) => {
-                    this.susFirmaElecDoc = result;
+            this.$localForage.getItem('accessToken')
+                .then((responseToken) => {
+                    this.dataService.postWebService(this.constantService.apiDocumentoURI + 'GetConsultaRespuestaSusFirmaElecDoc', '', responseToken)
+                        .then((result: number) => {
+                            this.susFirmaElecDoc = result;
+                        });
                 });
         }
 
         setSusFirmaElecDoc(glosa: string, respuesta: string): ng.IPromise<number> {
             var self = this;
             var deferred = self.qService.defer();
-            var input: app.domain.ISuscripcionFirmaElectronica = new app.domain.SuscripcionFirmaElectronica(respuesta,glosa);
-            this.dataService.postWebService(this.constantService.apiDocumentoURI + 'SetRespuestaSusFirmaElecDoc', input )
-                .then((result: number) => {
-                    deferred.resolve(result);
-                }).finally(() => deferred.resolve(-1));
-
+            var input: app.domain.ISuscripcionFirmaElectronica = new app.domain.SuscripcionFirmaElectronica(respuesta, glosa);
+            this.$localForage.getItem('accessToken')
+                .then((responseToken) => {
+                    this.dataService.postWebService(this.constantService.apiDocumentoURI + 'SetRespuestaSusFirmaElecDoc', input, responseToken)
+                        .then((result: number) => {
+                            deferred.resolve(result);
+                        }).finally(() => deferred.resolve(-1));
+                });
             return deferred.promise;
+        }
+
+        verifyLogin(accessToken: string, refreshToken: string, expiresIn: number): ng.IPromise<app.domain.IUsuario> {
+
+            this.waitingResponse = true;
+            var response = this.dataService.postWebService(this.constantService.apiAutenticacionURI + 'verifylogin', null, accessToken)
+                .then((result: app.domain.IUsuario) => {
+                    this.autenticado = true;
+                    this.setUsuario(result);
+                    this.$localForage.setItem('usuario', JSON.stringify(result));
+                    return result;
+                })
+                .then((response) => this.saveToken(accessToken, refreshToken, expiresIn))
+                .then(() => this.setTimerForRefreshToken())
+                .finally(() => this.waitingResponse = false);
+            return response;
+        }
+
+        checkUserAuthentication() {
+            if (this.$location.path().indexOf('login') < 1) {
+                this.verifyToken();
+            } else if (!this.usuario) {
+                this.$localForage.getItem('usuario')
+                    .then((result) => {
+                        this.setUsuario(JSON.parse(result));
+                    });
+            }
+        }
+
+        saveToken(accessToken: string, refreshToken?: string, expiresIn?: number) {
+            this.$localForage.setItem('accessToken', accessToken);
+            if (refreshToken)
+                this.$localForage.setItem('refreshToken', refreshToken);
+            if (expiresIn)
+                this.$localForage.setItem('expiresIn', expiresIn);
+        }
+       
+        refreshToken(): ng.IPromise<any> {
+            return this.$localForage.getItem('refreshToken')
+                .then((token) => {
+                    if (!token)
+                        return;
+
+                    const refreshRequest = {
+                        method: 'POST',
+                        url: `${this.constantService.apiOAuthURI}auth/connect/token`,
+                        data: this.$httpParamSerializer({
+                            'grant_type': 'refresh_token',
+                            'refresh_token': token
+                        }),
+                        headers: {
+                            'Authorization': 'Basic ' + btoa(`${this.constantService.userClientId}:${this.constantService.userClientSecret}`),
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        }
+                    } as ng.IRequestConfig;
+
+                    return this.$http<any>(refreshRequest);
+                })
+                .then((response) =>
+                    this.saveToken(response.data["access_token"], response.data["refresh_token"], response.data["expires_in"]))
+                .then(() => this.setTimerForRefreshToken());
+        }
+
+        setTimerForRefreshToken() {
+            return this.$localForage.getItem('expiresIn')
+                .then((expiresIn) => {
+                    this.$timeout.cancel(this.timer);
+                    this.timer = this.$timeout(() => this.refreshToken(), 1000 * expiresIn / 2);
+                });
+        }
+
+        verifyToken() {
+            this.$localForage.getItem('accessToken')
+                .then((accessTokenResult) => {
+                    this.$localForage.getItem('refreshToken')
+                        .then((refreshTokenResult) => {
+                            this.$localForage.getItem('expiresIn')
+                                .then((expiresInResult) => {
+                                    this.verifyLogin(accessTokenResult, refreshTokenResult, expiresInResult)
+                                        .then((response) => {
+                                            this.callsAfterLogin();
+                                        });
+                                });
+                        });
+                });
+        }
+
+        checkRefreshToken() {
+            this.$localForage.getItem('refreshToken')
+                .then((result) => {
+                    if (result) {
+                        this.$window.location.href = this.constantService.homeTanner;
+                    }                        
+                    else this.refreshToken();
+                });
+        }
+
+        getUserSitesByToken(): void {
+            this.$localForage.getItem('accessToken')
+                .then((responseToken) => {
+                    this.$localForage.getItem('refreshToken')
+                        .then((refreshTokenResult) => {
+                            this.$localForage.getItem('expiresIn')
+                                .then((expiresInResult) => {
+                                    this.dataService.get(this.constantService.tannerAuthenticationAPI + 'usersites')
+                                        .then((result: app.domain.SiteInformation[]) => {
+                                            let requiredGroupSiteIndex: number = 0;
+                                            result.forEach((site, index) => {
+                                                site.url = site.url + '?accessToken=' + responseToken + '&refreshToken=' + refreshTokenResult + '&expiresIn=' + expiresInResult;
+                                                if (site.cn) {
+                                                    let cnSplit = site.cn.split("_");
+                                                    if (cnSplit.length > 1 && cnSplit[1] === this.constantService.requiredGroup) {
+                                                        requiredGroupSiteIndex = index;
+                                                    }
+                                                }
+                                            });
+                                            //Site with same required group goes first. Swap.
+                                            if (requiredGroupSiteIndex !== 0) {
+                                                let temp = result[requiredGroupSiteIndex];
+                                                result[requiredGroupSiteIndex] = result[0];
+                                                result[0] = temp;
+                                            }
+                                            this.sites = result;
+                                        });
+                                });
+                        });
+                });
+        }
+
+        getAgente(): void {
+            this.loadingAgente = true;
+            this.$localForage.getItem('accessToken')
+                .then((responseToken) => {
+                    this.dataService.postWebService(this.constantService.apiAgenteURI + 'getSingle', null, responseToken)
+                        .then((result: app.domain.IAgente) => {
+                            this.agente = result;
+                        })
+                        .finally(() => this.loadingAgente = false);
+                })
+                .catch(() => this.loadingAgente = false);
+        }
+
+        callsAfterLogin(): void {
+            this.getSusFirmaElecDoc();
+            this.getUserSitesByToken();
+            this.getFechaCircularizacion();
+            this.getCircularizacionPendiente();
+            this.getDocumentosPendientes();
+            this.getAgente();
         }
     }
 

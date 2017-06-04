@@ -21,9 +21,10 @@
         categoriaClienteLoading: boolean;
         productosLoading: boolean;
 
-        static $inject = ['constantService', 'dataService', 'authService', 'extrasService', '$anchorScroll'];
+        static $inject = ['constantService', 'dataService', '$localForage','authService', 'extrasService', '$anchorScroll'];
         constructor(private constantService: app.common.services.ConstantService,
             private dataService: app.common.services.DataService,
+            private $localForage,
             private authService: app.common.services.AuthService,
             private extrasService: app.common.services.ExtrasService,
             private $anchorScroll: ng.IAnchorScrollService) {
@@ -36,12 +37,15 @@
         getCategoriaCliente(input: app.domain.ICategoriaClienteInput): void {
             this.categoriaClienteLoading = true;
             this.productosLoading = true;
-            this.dataService.postWebService(this.constantService.apiCategoriaURI + 'getSingleCliente', input)
-                .then((result: app.domain.ICategoria) => {
-                    this.categoriaCliente = result;
-                    this.productos = result.Productos;
-                })
-                .finally(() => { this.categoriaClienteLoading = false; this.productosLoading = false; });
+            this.$localForage.getItem('accessToken')
+                .then((responseToken) => {
+                    this.dataService.postWebService(this.constantService.apiCategoriaURI + 'getSingleCliente', input, responseToken)
+                        .then((result: app.domain.ICategoria) => {
+                            this.categoriaCliente = result;
+                            this.productos = result.Productos;
+                        })
+                        .finally(() => { this.categoriaClienteLoading = false; this.productosLoading = false; });
+                });
         }
 
         getProductos(): void {
