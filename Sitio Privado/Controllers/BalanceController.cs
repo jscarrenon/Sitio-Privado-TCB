@@ -1,22 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+using System.Security.Claims;
 using System.Web.Http;
+using Sitio_Privado.Filters;
+using Sitio_Privado.Helpers;
 using Sitio_Privado.Models;
-using System.Threading.Tasks;
+using Sitio_Privado.Services.Interfaces;
 
 namespace Sitio_Privado.Controllers
 {
-    public class BalanceController : ApiBaseController
+    [AuthorizeWithGroups]
+    public class BalanceController : ApiController
     {
+        IHttpService httpService = null;
+        IExternalUserService userService = null;
+
+        public BalanceController(IHttpService httpService, IExternalUserService userService) 
+        {
+            this.httpService = httpService;
+            this.userService = userService;
+        }
+
         [HttpPost]
-        public async Task<IHttpActionResult> GetSingle([FromBody]BalanceInput input)
+        public IHttpActionResult GetSingle([FromBody]BalanceInput input)
         {
             try
             {
-                var usuario = await GetUsuarioActual();
+                var usuario = userService.GetUserInfoByUsernameV2(UserHelper.ExtractAuthorityId(User as ClaimsPrincipal));
                 Balance balance = new Balance(input, usuario);
                 return Ok(balance);
             }
