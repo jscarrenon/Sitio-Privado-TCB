@@ -275,7 +275,10 @@ namespace Sitio_Privado.Services.ExternalUserProvider
                 if (ldapUserModelMapper.TryGetValue(propertyName.ToLower(), out modelPropName))
                 {
                     PropertyInfo prop = typeof(UserInfo).GetProperty(modelPropName);
-                    prop.SetValue(userInfo, userEntry.Attributes[propertyName][0]);
+                    if (userEntry.Attributes[propertyName] != null && userEntry.Attributes[propertyName].Count > 0)
+                    {
+                        prop.SetValue(userInfo, userEntry.Attributes[propertyName][0]);
+                    }
                 }
             }
 
