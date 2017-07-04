@@ -4,18 +4,16 @@
 
     <div class="one-pending" ng-if="circularizacionCtrl.authService.circularizacionPendiente" ng-show="!circularizacionCtrl.pendienteLoading">
         <div class="title">
+            Estimado Cliente : <br />
             Usted tiene una circularización pendiente de aprobación.<br />
-            <strong>Circularización Anual de Custodia {{circularizacionCtrl.fecha|date:'y'}}</strong>
+            <strong>Confirmación Saldos En Custodia {{circularizacionCtrl.fecha|date:'y'}}</strong>
         </div>
         <div class="button green"><a href="" ng-click="circularizacionCtrl.seleccionarSeccion(1)">Revisar</a></div>
     </div>
 
     <div class="none-pending" ng-if="!circularizacionCtrl.authService.circularizacionPendiente" ng-show="!circularizacionCtrl.pendienteLoading">
-        <div class="none">No hay ninguna circularización pendiente.</div>
+        <div class="none">
+            Con fecha {{circularizacionCtrl.fechaHoy|date:'longDate'}} , hemos recibido su confirmación/rechazo a los saldos registrados a su nombre en nuestra Custodia al 30 de junio de 2017.
+        </div><br />
     </div>
-
-    <div class="legal">
-        La información sobre los saldos presentados más arriba corresponde exclusivamente a aquellos clientes titulares directos, en Principal Administradores General de Fondos S.A.
-    </div>
-
 </div><!--end one-col -->

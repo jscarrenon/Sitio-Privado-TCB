@@ -3,6 +3,7 @@
     enum TipoDocumento { Cartola, Circularizacion }
 
     interface IMisInversionesCircularizacionViewModel extends app.common.interfaces.ISeccion {
+        fechaHoy: Date;
         fecha: Date;
         getFecha(input: app.domain.ICircularizacionFechaInput): void;
         pendienteResultado: app.domain.ICircularizacionProcesoResultado;
@@ -29,6 +30,7 @@
         seccionURI: string;
         seccionId: number;
 
+        fechaHoy: Date;
         fecha: Date;
         fechaInput: app.domain.ICircularizacionFechaInput;
         pendienteResultado: app.domain.ICircularizacionProcesoResultado;
@@ -57,7 +59,7 @@
             this.leida = false;
             this.respuestaInput = new app.domain.CircularizacionRespondidaInput("S", null);
             this.pendienteInput = new app.domain.CircularizacionPendienteInput();
-            this.getPendiente(this.pendienteInput);                       
+            this.getPendiente(this.pendienteInput);
         }
 
         seleccionarSeccion(id: number): void {
@@ -88,6 +90,7 @@
                             this.authService.circularizacionPendiente = result.Resultado;
                         })
                         .finally(() => this.pendienteLoading = false);
+                    this.fechaHoy = new Date(Date.now());
                 });
         }
 

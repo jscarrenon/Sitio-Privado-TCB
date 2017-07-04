@@ -10,6 +10,7 @@
 
         seccionId: number;
         suscripcionFirmaElectronica: number;
+        fechaHoy: Date;
 
         static $inject = ['constantService', '$localForage', 'dataService', 'authService', 'extrasService', '$scope', '$uibModal', '$location', 'Analytics'];
         constructor(private constantService: app.common.services.ConstantService,
@@ -39,6 +40,7 @@
                 if (value > 0) {
                     this.modalDocumentosPendientes();
                     this.modalCircularizacion();
+                    this.fechaHoy = new Date(Date.now());
                 }
             });
 
@@ -91,8 +93,8 @@
 
         modalCircularizacion() {
             this.$scope.$watch(() => this.authService.circularizacionPendiente,
-                (newValue: boolean, oldValue: boolean) => {
-                    if ((newValue != oldValue) && newValue) {
+                (newValue: boolean) => {
+                    if (newValue) {
                         this.crearInstanciaModal("circularizacion");
                     }
                 });
