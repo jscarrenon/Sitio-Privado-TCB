@@ -3,6 +3,7 @@
     enum TipoDocumento { Cartola, Circularizacion }
 
     interface IMisInversionesCircularizacionViewModel extends app.common.interfaces.ISeccion {
+        fechaHoy: Date;
         fecha: Date;
         getFecha(input: app.domain.ICircularizacionFechaInput): void;
         pendienteResultado: app.domain.ICircularizacionProcesoResultado;
@@ -29,6 +30,7 @@
         seccionURI: string;
         seccionId: number;
 
+        fechaHoy: Date;
         fecha: Date;
         fechaInput: app.domain.ICircularizacionFechaInput;
         pendienteResultado: app.domain.ICircularizacionProcesoResultado;
@@ -43,9 +45,10 @@
         respondidaLoading: boolean;
         respondidaError: boolean;
 
-        static $inject = ['constantService', 'dataService', 'authService', 'extrasService'];
+        static $inject = ['constantService', 'dataService', '$localForage','authService', 'extrasService'];
         constructor(private constantService: app.common.services.ConstantService,
             private dataService: app.common.services.DataService,
+            private $localForage,
             private authService: app.common.services.AuthService,
             private extrasService: app.common.services.ExtrasService) {
             this.setTemplates();
@@ -56,7 +59,7 @@
             this.leida = false;
             this.respuestaInput = new app.domain.CircularizacionRespondidaInput("S", null);
             this.pendienteInput = new app.domain.CircularizacionPendienteInput();
-            this.getPendiente(this.pendienteInput);                       
+            this.getPendiente(this.pendienteInput);
         }
 
         seleccionarSeccion(id: number): void {
@@ -79,51 +82,64 @@
 
         getPendiente(input: app.domain.ICircularizacionPendienteInput): void {
             this.pendienteLoading = true;
-            this.dataService.postWebService(this.constantService.apiCircularizacionURI + 'getPendiente', input)
-                .then((result: app.domain.ICircularizacionProcesoResultado) => {
-                    this.pendienteResultado = result;
-                    this.authService.circularizacionPendiente = result.Resultado;
-                })
-                .finally(() => this.pendienteLoading = false);
+            this.$localForage.getItem('accessToken')
+                .then((responseToken) => {
+                    this.dataService.postWebService(this.constantService.apiCircularizacionURI + 'getPendiente', input, responseToken)
+                        .then((result: app.domain.ICircularizacionProcesoResultado) => {
+                            this.pendienteResultado = result;
+                            this.authService.circularizacionPendiente = result.Resultado;
+                        })
+                        .finally(() => this.pendienteLoading = false);
+                    this.fechaHoy = new Date(Date.now());
+                });
         }
 
         getArchivo(input: app.domain.ICircularizacionArchivoInput): void {
             this.archivoLoading = true;
-            this.dataService.postWebService(this.constantService.apiCircularizacionURI + 'getArchivo', input)
-                .then((result: app.domain.ICircularizacionArchivo) => {
-                    this.archivo = result;
-                })
-                .finally(() => this.archivoLoading = false);
+            this.$localForage.getItem('accessToken')
+                .then((responseToken) => {
+                    this.dataService.postWebService(this.constantService.apiCircularizacionURI + 'getArchivo', input, responseToken)
+                        .then((result: app.domain.ICircularizacionArchivo) => {
+                            this.archivo = result;
+                        })
+                        .finally(() => this.archivoLoading = false);
+                });
         }
 
         setLeida(input: app.domain.ICircularizacionLeidaInput): void {
-            this.dataService.postWebService(this.constantService.apiCircularizacionURI + 'setLeida', input)
-                .then((result: app.domain.ICircularizacionProcesoResultado) => {
-                    this.leidaResultado = result;
-                    if (this.leidaResultado.Resultado == true) {
-                        this.leida = true;
-                    }
+            this.$localForage.getItem('accessToken')
+                .then((responseToken) => {
+                    this.dataService.postWebService(this.constantService.apiCircularizacionURI + 'setLeida', input, responseToken)
+                        .then((result: app.domain.ICircularizacionProcesoResultado) => {
+                            this.leidaResultado = result;
+                            if (this.leidaResultado.Resultado == true) {
+                                this.leida = true;
+                            }
+                        });
                 });
         }
 
         setRespondida(input: app.domain.ICircularizacionRespondidaInput): void {
             this.respondidaLoading = true;
             this.respondidaError = false;
-            this.dataService.postWebService(this.constantService.apiCircularizacionURI + 'setRespondida', input)
-                .then((result: app.domain.ICircularizacionProcesoResultado) => {
-                    this.respondidaResultado = result;
-                    if (this.respondidaResultado.Resultado == true) {
-                        this.seleccionarSeccion(0);
-                        this.getPendiente(this.pendienteInput);
-                    }
-                    else {
-                        this.respondidaError = true;
-                    }
-                })
-                .catch(() => {
-                    this.respondidaError = true;
-                })
-                .finally(() => this.respondidaLoading = false);
+            this.$localForage.getItem('accessToken')
+                .then((responseToken) => {
+                    this.dataService.postWebService(this.constantService.apiCircularizacionURI + 'setRespondida', input, responseToken)
+                        .then((result: app.domain.ICircularizacionProcesoResultado) => {
+                            this.respondidaResultado = result;
+                            if (this.respondidaResultado.Resultado == true) {
+                                this.seleccionarSeccion(0);
+                                this.getPendiente(this.pendienteInput);
+                            }
+                            else {
+                                this.respondidaError = true;
+                            }
+                        })
+                        .catch(() => {
+                            this.respondidaError = true;
+                        })
+                        .finally(() => this.respondidaLoading = false);
+                });
         }
 
         verDocumento(tipoDocumento: TipoDocumento): void {
@@ -150,10 +166,13 @@
         }
 
         getFecha(input: app.domain.ICircularizacionFechaInput): void {
-            this.dataService.postWebService(this.constantService.apiCircularizacionURI + 'getFecha', input)
-                .then((result: Date) => {
-                    this.fecha = result;
-                    this.authService.fechaCircularizacion = result;
+            this.$localForage.getItem('accessToken')
+                .then((responseToken) => {
+                    this.dataService.postWebService(this.constantService.apiCircularizacionURI + 'getFecha', input, responseToken)
+                        .then((result: Date) => {
+                            this.fecha = result;
+                            this.authService.fechaCircularizacion = result;
+                        });
                 });
         }
     }

@@ -22,6 +22,14 @@
         apiIndicesURI: string;
         apiCircularizacionURI: string;
         templateSusConfFirmaElecDocModalURI: string;
+        apiUsersURI: string;
+        homeTanner: string;
+        apiAutenticacionURI: string;
+        apiOAuthURI: string;
+        userClientId: string;
+        userClientSecret: string;
+        tannerAuthenticationAPI: string;
+        requiredGroup: string;
     }
 
     export class ConstantService implements IConstant {
@@ -46,11 +54,19 @@
         apiIndicesURI: string;
         apiCircularizacionURI: string;
         templateSusConfFirmaElecDocModalURI: string;
+        apiUsersURI: string;
+        homeTanner: string;
+        apiAutenticacionURI: string;
+        apiOAuthURI: string;
+        userClientId: string;
+        userClientSecret: string;
+        tannerAuthenticationAPI: string;
+        requiredGroup: string;
 
         constructor() {
             this.buildFolderURI = '.build/';
             this.mvcHomeURI = '/Home/';
-            this.mvcSignOutURI = '/Account/SignOut';
+            this.mvcSignOutURI = '/Authentication/signout';
 
             this.templateFooterURI = this.buildFolderURI + 'html/common/templates/footer.html';
             this.templatePaginationURI = this.buildFolderURI + 'html/common/templates/pagination.html';
@@ -71,6 +87,15 @@
             this.apiDocumentoURI = '/api/documento/';
             this.apiIndicesURI = '/api/indices/';
             this.apiCircularizacionURI = '/api/circularizacion/';
+            this.apiUsersURI = 'api/users/';
+            this.apiAutenticacionURI = '/api/authentication/';
+            this.homeTanner = app.config.CONFIG.TANNER_PUBLIC_SITE_URL;
+            this.apiOAuthURI = app.config.CONFIG.OAUTH2_URL;
+            this.userClientId = app.config.CONFIG.CLIENT_ID;
+            this.userClientSecret = app.config.CONFIG.CLIENT_SECRET;
+            this.tannerAuthenticationAPI = app.config.CONFIG.TANNER_AUTHENTICATION_API;
+            this.requiredGroup = app.config.CONFIG.REQUIRED_GROUP;
+
         }
     }
 

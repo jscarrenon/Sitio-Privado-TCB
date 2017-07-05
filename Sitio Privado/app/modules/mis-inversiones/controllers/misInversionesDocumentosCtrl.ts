@@ -72,9 +72,10 @@
         firmarLoading: boolean;
         errorFechas: string;
 
-        static $inject = ['constantService', 'dataService', 'authService', 'extrasService', '$filter', '$uibModal'];
+        static $inject = ['constantService', 'dataService','$localForage', 'authService', 'extrasService', '$filter', '$uibModal'];
         constructor(private constantService: app.common.services.ConstantService,
             private dataService: app.common.services.DataService,
+            private $localForage,
             private authService: app.common.services.AuthService,
             private extrasService: app.common.services.ExtrasService,
             private $filter: ng.IFilterService,
@@ -144,22 +145,28 @@
 
         getDocumentosPendientes(input: app.domain.IDocumentosPendientesInput): void {
             this.pendientesLoading = true;
-            this.dataService.postWebService(this.constantService.apiDocumentoURI + 'getListPendientes', input)
-                .then((result: app.domain.IDocumento[]) => {
-                    this.operacionesPendientes = result["operaciones"];
-                    this.documentosPendientes = result["documentos"];
-                })
-                .finally(() => this.pendientesLoading = false);
+            this.$localForage.getItem('accessToken')
+                .then((responseToken) => {
+                    this.dataService.postWebService(this.constantService.apiDocumentoURI + 'getListPendientes', input, responseToken)
+                        .then((result: app.domain.IDocumento[]) => {
+                            this.operacionesPendientes = result["operaciones"];
+                            this.documentosPendientes = result["documentos"];
+                        })
+                        .finally(() => this.pendientesLoading = false);
+                });
         }
 
         getDocumentosFirmados(input: app.domain.IDocumentosFirmadosInput): void {
             this.firmadosLoading = true;
-            this.dataService.postWebService(this.constantService.apiDocumentoURI + 'getListFirmados', input)
-                .then((result: app.domain.IDocumento[]) => {
-                    this.operacionesFirmadas = result["operaciones"];
-                    this.documentosFirmados = result["documentos"];
-                })
-                .finally(() => this.firmadosLoading = false);
+            this.$localForage.getItem('accessToken')
+                .then((responseToken) => {
+                    this.dataService.postWebService(this.constantService.apiDocumentoURI + 'getListFirmados', input, responseToken)
+                        .then((result: app.domain.IDocumento[]) => {
+                            this.operacionesFirmadas = result["operaciones"];
+                            this.documentosFirmados = result["documentos"];
+                        })
+                        .finally(() => this.firmadosLoading = false);
+                });
         }
 
         verDocumento(documento: app.domain.IDocumento): void {
@@ -167,13 +174,15 @@
 
             //Abrir documento
             this.extrasService.abrirRuta(documento.Ruta);
-
-            this.dataService.postWebService(this.constantService.apiDocumentoURI + 'setLeido', documentoLeidoInput)
-                .then((result: app.domain.IDocumentoLeidoResultado) => {
-                    var documentoLeidoResultado: app.domain.IDocumentoLeidoResultado = result;
-                    if (result.Resultado == true) {
-                        documento.Leido = 'S';
-                    }
+            this.$localForage.getItem('accessToken')
+                .then((responseToken) => {
+                    this.dataService.postWebService(this.constantService.apiDocumentoURI + 'setLeido', documentoLeidoInput, responseToken)
+                        .then((result: app.domain.IDocumentoLeidoResultado) => {
+                            var documentoLeidoResultado: app.domain.IDocumentoLeidoResultado = result;
+                            if (result.Resultado == true) {
+                                documento.Leido = 'S';
+                            }
+                        });
                 });
         }
 
@@ -212,16 +221,18 @@
 
                         firmarOperacionesLoading = true;
                         this.firmarLoading = firmarOperacionesLoading || firmarDocumentosLoading;
-                        
-                        this.dataService.postWebService(this.constantService.apiDocumentoURI + 'setFirmarOperacion', operacionFirmarInput)
-                            .then((result: app.domain.IDocumentoFirmarResultado) => {
-                                var operacionFirmarResultado: app.domain.IDocumentoFirmarResultado = result;
-                                this.seleccionarSeccion(1);
-                                this.actualizarDocumentosPendientes();
-                                this.actualizarDocumentosFirmados();
-                            })
-                            .catch(() => { })
-                            .finally(() => { firmarOperacionesLoading = false; this.firmarLoading = firmarOperacionesLoading || firmarDocumentosLoading; });
+                        this.$localForage.getItem('accessToken')
+                            .then((responseToken) => {
+                                this.dataService.postWebService(this.constantService.apiDocumentoURI + 'setFirmarOperacion', operacionFirmarInput, responseToken)
+                                    .then((result: app.domain.IDocumentoFirmarResultado) => {
+                                        var operacionFirmarResultado: app.domain.IDocumentoFirmarResultado = result;
+                                        this.seleccionarSeccion(1);
+                                        this.actualizarDocumentosPendientes();
+                                        this.actualizarDocumentosFirmados();
+                                    })
+                                    .catch(() => { })
+                                    .finally(() => { firmarOperacionesLoading = false; this.firmarLoading = firmarOperacionesLoading || firmarDocumentosLoading; });
+                            });
                     }
                 }
 
@@ -233,16 +244,18 @@
 
                         firmarDocumentosLoading = true;
                         this.firmarLoading = firmarOperacionesLoading || firmarDocumentosLoading;
-
-                        this.dataService.postWebService(this.constantService.apiDocumentoURI + 'setFirmarDocumento', documentoFirmarInput)
-                            .then((result: app.domain.IDocumentoFirmarResultado) => {
-                                var documentoFirmarResultado: app.domain.IDocumentoFirmarResultado = result;
-                                this.seleccionarSeccion(1);
-                                this.actualizarDocumentosPendientes();
-                                this.actualizarDocumentosFirmados();
-                            })
-                            .catch(() => { })
-                            .finally(() => { firmarDocumentosLoading = false; this.firmarLoading = firmarOperacionesLoading || firmarDocumentosLoading; });
+                        this.$localForage.getItem('accessToken')
+                            .then((responseToken) => {
+                                this.dataService.postWebService(this.constantService.apiDocumentoURI + 'setFirmarDocumento', documentoFirmarInput, responseToken)
+                                    .then((result: app.domain.IDocumentoFirmarResultado) => {
+                                        var documentoFirmarResultado: app.domain.IDocumentoFirmarResultado = result;
+                                        this.seleccionarSeccion(1);
+                                        this.actualizarDocumentosPendientes();
+                                        this.actualizarDocumentosFirmados();
+                                    })
+                                    .catch(() => { })
+                                    .finally(() => { firmarDocumentosLoading = false; this.firmarLoading = firmarOperacionesLoading || firmarDocumentosLoading; });
+                            });
                     }
                 }
             }

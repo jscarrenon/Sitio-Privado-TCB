@@ -24,5 +24,7 @@ namespace Sitio_Privado.Models
         public string TemporalPassword { get; set; }
         public string UpdatedAt { get; set; }
         public bool CanResetPassword { get; set; }
+        public bool IsTemporalPassword { get; set; }
+        public string TemporalPasswordTimestamp { get; set; }
     }
 }

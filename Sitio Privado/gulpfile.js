@@ -1,9 +1,10 @@
-/// <binding BeforeBuild='clean' AfterBuild='css-task, templates-task, scripts-task, better-dom-task, vendors-task, spa-task, encoding-task, resources-task' Clean='clean' />
+/// <binding BeforeBuild='clean' AfterBuild='css-task, templates-task, scripts-task, better-dom-task, vendors-task, spa-task, encoding-task, resources-task, login-task' Clean='clean' />
 /*
 This file in the main entry point for defining Gulp tasks and using Gulp plugins.
 Click here to learn more. http://go.microsoft.com/fwlink/?LinkId=518007
 */
 
+var argv = require('yargs').argv;
 var gulp = require('gulp');
 var runSequence = require('run-sequence');
 var inject = require('gulp-inject');
@@ -16,24 +17,35 @@ var less = require('gulp-less');
 var merge = require('merge-stream');
 var del = require('del');
 var templateCache = require('gulp-angular-templatecache');
+var util = require('gulp-util');
 
 var appName = 'tannerPrivadoApp';
 
 var paths = {
+    config: './config/',
     buildFolder: '.build',
     index: './Views/Home/Index.cshtml',
+    login: {
+        src: './Views/Account/SignInExternal.cshtml',
+        stylesLess: ['./Styles/login.less'],
+        scripts: ['./Scripts/extras/login.js'],
+        folder: './Views/Account'
+    },
     homeFolder: './Views/Home',
     domainFiles: ['./app/domain/IEntity.js', './app/domain/IInput.js', './app/domain/*.js'],
     appFiles: ['./app/*.js',
+                './app/config/*.js',
                 './app/common/directives/*.js',
                 './app/common/services/*.js',
                 './app/common/controllers/*.js',
                 './app/common/typings/*.js',
                 './app/modules/**/*.js'],
     stylesCss: ['./Styles/*.css'],
-    stylesLess: ['./Styles/*.less'],
-    scripts: ['./Scripts/extras/jquery.sticky.js','./Scripts/extras/*.js','!./Scripts/extras/jquery-1.12.0.js'],
+    stylesLess: ['./Styles/*.less', '!./Styles/login.less'],
+    scripts: ['./Scripts/extras/jquery.sticky.js', './Scripts/extras/*.js', '!./Scripts/extras/jquery-1.12.0.js', '!./Scripts/extras/login.js'],
     bower_components: ['./bower_components/angular-google-analytics/dist/angular-google-analytics.js',
+                        './bower_components/angular-localforage/dist/angular-localForage.min.js',
+                        './bower_components/localforage/dist/localforage.min.js',
                         './bower_components/angular-rut/dist/angular-rut.min.js',
                         './bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
                         './bower_components/angular-i18n/angular-locale_es-cl.js',
@@ -54,7 +66,16 @@ var paths = {
 };
 
 gulp.task('default', function (callback) {
-    runSequence('clean', 'css-task', 'templates-task', 'scripts-task', 'better-dom-task', 'vendors-task', 'spa-task', 'encoding-task', 'resources-task', callback);
+    runSequence('clean', 'css-task', 'templates-task', 'scripts-task', 'better-dom-task', 'vendors-task', 'spa-task', 'encoding-task', 'resources-task', 'login-task', callback);
+});
+
+// This task should not be used because it depends on execution arguments (argv) and the BeforeBuild is not configured to support them
+gulp.task('config-task', function () {
+    var configEnv = argv.c || argv.config || 'local';
+
+    printLog('Copying files for environment: ' + configEnv);
+    return gulp.src(paths.config + configEnv + '/**/*')
+        .pipe(gulp.dest('./app/config/'));
 });
 
 gulp.task('clean', function () {
@@ -143,7 +164,6 @@ gulp.task('css-task', function () {
 
 gulp.task('scripts-task', function () {
     var target = gulp.src(paths.index);
-
     var extrasJsStream = gulp.src(paths.scripts);
 
     return target
@@ -192,3 +212,35 @@ gulp.task('encoding-task', function () {
             .pipe(header('\ufeff'))
             .pipe(gulp.dest(paths.homeFolder));
 });
+
+gulp.task('login-task', function () {
+    var target = gulp.src(paths.login.src);
+
+    var customLessStream = gulp.src(paths.login.stylesLess);
+    var css =  target
+            .pipe(inject(
+                customLessStream.pipe(print())
+                .pipe(concat('stylesLoginLess.css'))
+                .pipe(less())
+                .pipe(gulp.dest(paths.buildFolder+'/css')), { name: 'stylesLess' })
+                )
+            .pipe(gulp.dest(paths.login.folder));
+
+    var extrasJsStream = gulp.src(paths.login.scripts);
+    var scripts = target
+            .pipe(inject(
+                extrasJsStream.pipe(print())
+                .pipe(concat('extrasLogin.js'))
+                .pipe(gulp.dest(paths.buildFolder + '/js')), { name: 'extras' })
+                )
+            .pipe(gulp.dest(paths.login.folder));
+
+    var encoding = target
+            .pipe(header('\ufeff'))
+            .pipe(gulp.dest(paths.login.folder));
+
+    return merge(css, scripts, encoding);
+});
+
+function printLog(msg) { return util.log(util.colors.cyan(msg)); }
+function printError(msg) { return util.log(util.colors.red(msg)); }

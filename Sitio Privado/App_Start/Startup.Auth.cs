@@ -1,72 +1,59 @@
-﻿using System;
-using Owin;
-using Microsoft.Owin.Security;
-using Microsoft.Owin.Security.Cookies;
+﻿using Owin;
 using Microsoft.Owin.Security.OpenIdConnect;
 using System.Threading.Tasks;
 using Microsoft.Owin.Security.Notifications;
 using Microsoft.IdentityModel.Protocols;
 using System.Configuration;
-using System.IdentityModel.Tokens;
 using Sitio_Privado.Policies;
 using System.Threading;
-using System.Globalization;
+using IdentityServer3.AccessTokenValidation;
+using System.Web.Http;
+using Sitio_Privado.Infraestructure.ExceptionHandling;
+using NLog;
 
 namespace Sitio_Privado
 {
     public partial class Startup
     {
+        
         // The ACR claim is used to indicate which policy was executed
         public const string AcrClaimType = "http://schemas.microsoft.com/claims/authnclassreference";
         public const string PolicyKey = "b2cpolicy";
         public const string OIDCMetadataSuffix = "/.well-known/openid-configuration";
 
         // App config settings
-        private static string clientId = ConfigurationManager.AppSettings["ida:ClientId"];
-        private static string aadInstance = ConfigurationManager.AppSettings["ida:AadInstance"];
-        private static string tenant = ConfigurationManager.AppSettings["ida:Tenant"];
-        private static string redirectUri = ConfigurationManager.AppSettings["ida:RedirectUri"];
+        public static string clientId = ConfigurationManager.AppSettings["ida:ClientId"];
+        public static string aadInstance = ConfigurationManager.AppSettings["ida:AadInstance"];
+        public static string tenant = ConfigurationManager.AppSettings["ida:Tenant"];
+        public static string redirectUri = ConfigurationManager.AppSettings["ida:RedirectUri"];
 
         // B2C policy identifiers
         public static string SignUpPolicyId = ConfigurationManager.AppSettings["ida:SignUpPolicyId"];
         public static string SignInPolicyId = ConfigurationManager.AppSettings["ida:SignInPolicyId"];
         public static string ProfilePolicyId = ConfigurationManager.AppSettings["ida:UserProfilePolicyId"];
 
+        // Custom login process parameters
+        public const string objectIdClaimKey = "http://schemas.microsoft.com/identity/claims/objectidentifier";
+        public static string temporalPasswordTimeout = ConfigurationManager.AppSettings["tempPass:Timeout"];
+        public const string isTemporalPasswordClaimKey = "isTemporalPassword";
+        public const string temporalPasswordTimestampClaimKey = "temporalPasswordTimestamp";
+
         public void ConfigureAuth(IAppBuilder app)
         {
-            app.SetDefaultSignInAsAuthenticationType(CookieAuthenticationDefaults.AuthenticationType);
+            Logger logger = LogManager.GetLogger("SessionLog");
 
-            app.UseCookieAuthentication(new CookieAuthenticationOptions());
+            logger.Info("Starting server...");
+            logger.Info("Authority url is: " + ConfigurationManager.AppSettings["AuthorityUrl"]);
+            logger.Info("Required group is: " + ConfigurationManager.AppSettings["RequiredGroup"]);
 
-            OpenIdConnectAuthenticationOptions options = new OpenIdConnectAuthenticationOptions
+            app.Use<OwinExceptionHandler>(app);
+            app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions
             {
-                // These are standard OpenID Connect parameters, with values pulled from web.config
-                ClientId = clientId,
-                RedirectUri = redirectUri,
-                PostLogoutRedirectUri = redirectUri,
-                Notifications = new OpenIdConnectAuthenticationNotifications
-                {
-                    AuthenticationFailed = AuthenticationFailed,
-                    //RedirectToIdentityProvider = OnRedirectToIdentityProvider,
-                },
-                Scope = "openid",
-                ResponseType = "id_token",
+                ValidationMode = ValidationMode.ValidationEndpoint,
+                Authority = ConfigurationManager.AppSettings["AuthorityUrl"]
+            });
 
-                // The PolicyConfigurationManager takes care of getting the correct Azure AD authentication
-                // endpoints from the OpenID Connect metadata endpoint.  It is included in the PolicyAuthHelpers folder.
-                ConfigurationManager = new PolicyConfigurationManager(
-                    String.Format(CultureInfo.InvariantCulture, aadInstance, tenant, "/v2.0", OIDCMetadataSuffix),
-                    new string[] { SignInPolicyId }),
-
-                // This piece is optional - it is used for displaying the user's name in the navigation bar.
-                TokenValidationParameters = new TokenValidationParameters
-                {
-                    NameClaimType = "name",
-                },
-            };
-
-            app.UseOpenIdConnectAuthentication(options);
-
+            logger.Info("Server started.");
         }
 
         // This notification can be used to manipulate the OIDC request before it is sent.  Here we use it to send the correct policy.

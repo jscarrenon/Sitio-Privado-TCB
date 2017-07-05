@@ -1,0 +1,89 @@
+﻿<div id="container-full">
+
+    <div id="header">
+        <div class="in">
+            <div class="head">
+                <div class="title">Mis Datos</div>
+                <div class="subtitle"></div>
+            </div>
+        </div>
+    </div>
+    <div id="content">
+        <div class="in">
+
+            <div class="status-message" ng-show="ctrl.processSuccess || (!ctrl.processSuccess && ctrl.errorMessage)">
+                <div class="ok" ng-show="ctrl.processSuccess">La contraseña se ha cambiado exitosamente.</div>
+                <div class="error" ng-show="!ctrl.processSuccess && ctrl.errorMessage">Ha ocurrido un error: {{ctrl.errorMessage}}</div>
+            </div>
+
+            <div class="two-col">
+                <div class="user-info white-box">
+                    <loading param="ctrl.loading" extra-class="'top1'"></loading>
+                    <form name="form" novalidate>
+                        <div class="info-col" ng-show="!ctrl.loading">
+                            <div class="in-title">Cambiar contraseña</div>
+                            <div class="info-input">
+                                Contraseña actual
+                                <input name="oldPassword" type="password" ng-model="ctrl.changePasswordInput.OldPassword" required>
+                            </div>
+                            <div class="do-not-match" ng-show="ctrl.passwordErrors || (form.$error && !form.$pristine)">
+                                <p ng-repeat="error in ctrl.passwordErrors">{{error}}</p>
+                                <p ng-show="form.oldPassword.$error.required">Campo obligatorio.</p>
+                            </div>
+                            <div class="info-input">
+                                Nueva contraseña
+                                <input name="newPassword" type="password" ng-minlength="1" ng-maxlength="15" ng-model="ctrl.changePasswordInput.NewPassword" required>
+                            </div>
+                            <div class="do-not-match" ng-show="ctrl.passwordErrors || (form.$error && !form.$pristine)">
+                                <p ng-repeat="error in ctrl.passwordErrors">{{error}}</p>
+                                <p ng-show="form.newPassword.$error.maxlength">Largo de clave no es válido.</p>
+                                <p ng-show="form.newPassword.$error.required">Campo obligatorio.</p>
+                            </div>
+                            <div class="info-input">
+                                Repetir nueva contraseña
+                                <input name="passwordValidation" type="password" ng-minlength="1" ng-maxlength="15" ng-model="ctrl.changePasswordInput.PasswordValidation" required>
+                            </div>
+                            <div class="do-not-match" ng-show="ctrl.passwordValidationErrors || (form.$error && !form.$pristine)">
+                                <p ng-repeat="error in ctrl.passwordValidationErrors">{{error}}</p>
+                                <p ng-show="form.passwordValidation.$error.maxlength">Largo de clave no es válido.</p>
+                                <p ng-show="form.passwordValidation.$error.required">Campo obligatorio.</p>
+                            </div>
+                            <div class="button green" ng-class="{'disabled':!form.$valid}">
+                                <a href="" ng-click="form.$valid && ctrl.changePassword()">Guardar</a>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="edit-note none">
+                    </div>
+                </div>
+
+            </div><!--end two-col-->
+
+            <div class="three-col home">
+                <div class="executive white-box">
+                    <loading param="bodyCtrl.authService.loadingAgente" extra-class="'top1'"></loading>
+                    <div ng-show="!bodyCtrl.authService.loadingAgente">
+                        <div class="photo" ng-style="{'background-image':'url({{bodyCtrl.authService.agente.PathImg}})'}"></div>
+                        <div class="text">
+                            <div class="name">{{bodyCtrl.authService.agente.Nombre}}</div>
+                            <div class="contact">
+                                Tel: {{bodyCtrl.authService.agente.Telefono}}<br />
+                                E-mail: <a href="mailto:{{bodyCtrl.authService.agente.Email}}">{{bodyCtrl.authService.agente.Email}}</a>
+                            </div>
+                            <div class="info">
+                                Fecha de acreditación: {{bodyCtrl.authService.agente.FechaInicioAcreditacion}}<br />
+                                Sucursal: {{bodyCtrl.authService.agente.Sucursal}}
+                            </div>
+                        </div>
+                        <div class="button blue call" ng-show="bodyCtrl.authService.agente.Telefono"><a href="tel:{{bodyCtrl.authService.agente.Telefono}}" class="clink">Llamar</a></div>
+                    </div>
+                    <div id="clear"></div>
+                </div>
+            </div>
+            <div id="clear"></div>
+
+            <ng-include src="ctrl.constantService.templateFooterURI"></ng-include>
+
+        </div><!--end in-->
+    </div><!--end content-->
+</div><!--end container-full-->
